@@ -74,35 +74,6 @@ flatten_form_schema <- function(form.schema) {
   data.frame(res, stringsAsFactors = FALSE)
 }
 
-get_narrative_texts <- function(queryTable) {
-
-  .Defunct()
-  if (anyDuplicated(names(query.table)) > 0)
-    stop("provide unique values in query table")
-
-  ## remove lists which don't elements greater than zero:
-  qt <- queryTable[sapply(queryTable, length) > 0]
-
-  do.call(rbind, lapply(seq_along(qt), function(i) {
-    query <- qt[[i]]
-    query.name <- names(qt)[i]
-
-    lookup.code <- subset(narrativeForm, id == query.name, "code", drop = TRUE)
-
-    records <- do.call(rbind, lapply(seq_along(query), function(q) {
-      record <- query[[q]]
-      ## replace NULLs with NAs:
-      nulls <- sapply(record, is.null)
-      record[nulls] <- NA_character_
-      data.frame(record, stringsAsFactors = FALSE)
-    }))
-
-    data.frame(formId = query.name,
-               records,
-               stringsAsFactors = FALSE)
-  }))
-}
-
 #' Get elements of query
 #'
 #' @param formId form ID as character.
