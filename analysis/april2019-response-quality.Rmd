@@ -1,0 +1,205 @@
+---
+title: "Response quality"
+author: "Metin Yazici, BeDataDriven"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  word_document: default
+  md_document:
+    variant: markdown_github
+---
+
+```{r setup, include=FALSE}
+## Libraries
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+## functions
+source(file.path("..", "R", "analysis-methods.R"))
+## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
+ggplot2::theme_set(ggplot2::theme_bw())
+## knitr options
+knitr::opts_chunk$set(echo = TRUE, paged.print = FALSE)
+```
+
+## Introduction
+
+*RQs:* What is the quality of textual responses in the narrative fields?
+
+- Do responses with a larger word count have more quality than the responses with less word count?
+
+- What is the distribution between response word count and explanatory variables such as question, form topic, canton name, partner name etc.
+
+- Is there any relationship between the word count of responses and question word count?
+
+The strive is to find if any relation exists and, as a result, see which responses worked and which did not work.
+
+## Data import & preparation
+
+Read the data from source that has been extracted, cleaned and transformed:
+
+```{r data}
+source(file.path("..", "R", "/global-header.R"))
+## read data from disk:
+form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
+```
+
+Select the rows where the field type equals to `NARRATIVE`, which indicates that is a multi-line text field in the *ActivityInfo*. Select these columns and analyze them by comparing and contrasting with other fields types associated to the textual field types.
+
+```{r}
+## order matters for display purposes:
+col.names <- c(
+  "labelFolder",
+  "labelForms",
+  "Month",
+  "question",
+  "response",
+  "description",
+  "partnerName",
+  "cantonName",
+  "cantonParentName",
+  "id",
+  "recordId"
+)
+## if we choose a column name by mistake:
+stopifnot(!anyDuplicated(col.names) > 0)
+compact <- subset(
+  x = form.table, 
+  subset = !is.na(form.table$response) & type == "NARRATIVE", 
+  select = col.names
+)
+```
+
+## Analysis
+
+One issue with the nature of the questions is that they are only unique in a
+form. These questions can be distributed across multiple forms. The questions
+sharing the same name will have different meanings. For instance, the question
+"*Cualitativo*" from the form "*Salud*" should imply different thing than the
+question "*Cualitativo*" from the form "*Protección_VBG*".
+
+In order to solve this kind of problem:
+
++ We can merge question with the form and also its folder label. There we can achieve a unique name for each question.
+
++ Another thing to resolve this would be doing analysis to move the analysis up to form level. In this file, we did both, therefore the analysis shown as below:
+
+Count of responses per topic/question:
+```{r}
+cp <- compact %>%
+  mutate(.responseWordCount = word_count(response)) %>%
+  mutate(.questionWordCount = word_count(question)) %>%
+  group_by(labelForms) %>%
+  select(
+    labelForms, question, response, 
+    .responseWordCount, .questionWordCount, partnerName, cantonName
+  )
+head(cp)
+```
+
+It's also a good practice to see the number of questions. For example, one question has two responses, therefore they're short. Therefore, jittered points are added to give a glance about the number of observations in the same plot.
+
+We recode form topics as they are too long and clutters the plots. This can be
+called the **recode table** to look up form labels:
+```{r}
+## make the label forms factor for recoding:
+cp$labelFormsRecode <- as.factor(cp$labelForms)
+recode.lvls <- sapply(seq_along(unique(cp$labelFormsRecode)), function(x) paste0("F", x))
+levels(cp$labelFormsRecode) <- recode.lvls
+
+cp %>% 
+  arrange(labelFormsRecode) %>% 
+  select(labelFormsRecode, labelForms) %>% 
+  distinct()
+```
+
+Box plot form topics and response word counts (based on raw data):
+```{r}
+cp %>%
+  gather(variable, value, .responseWordCount, .questionWordCount) %>%
+  ggplot(aes(labelFormsRecode, value, fill = variable)) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
+  coord_flip() +
+  geom_jitter(alpha = 0.35) +
+  labs(
+    title = "Plot of response & question word counts per form topic",
+    subtitle = "<a subtitle placeholder>",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  theme_ecuador1()
+```
+
+If we look at the distribution per partner:
+```{r}
+cp %>%
+  gather(variable, value, .responseWordCount) %>% 
+  ggplot(aes(labelFormsRecode, value)) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
+  coord_flip() +
+  geom_jitter(alpha = 0.35) +
+  facet_wrap(partnerName ~ ., scales = "free") +
+  labs(
+    title = "Word count of responses by form topics per partner",
+    subtitle = "<a subtitle placeholder>",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  theme_ecuador1()
+```
+
+A caveat:
+Reducing multiple values down to a single value should be avoided in the early stages of the analysis because reducing hides a lot e.g. a bar chart showing average the word count per partner. Some partners may write longer than others, because:
+
+1. They *really* write longer than other partners.
+
+2. The questions they answered require short answers.
+
+### The "Description" field
+
+Some questions have the description field giving extra details about the questions.
+
+Do some questions with the extra description field have better *response quality* than the questions which does not have it?
+
+Looking at the table containing form name, question, description and so on:
+
+```{r}
+dsp <- compact %>% 
+  select(labelForms, question, description, response) %>% 
+  distinct(.keep_all = TRUE)
+```
+
+Have a plot:
+
+```{r}
+pc <- dsp %>% 
+  mutate(.hasDescription = ifelse(is.na(description), FALSE, TRUE)) %>% 
+  mutate(.questionWordCount = word_count(question)) %>% 
+  mutate(.descriptionWordCount = word_count(description)) %>%
+  mutate(.responseWordCount = word_count(response))
+```
+
+```{r}
+pc %>% 
+  ggplot(aes(.responseWordCount, .questionWordCount, color = .hasDescription)) +
+  geom_point() +
+  theme_ecuador1()
+```
+
+(Some projection TBC)
+```{r}
+plot(pc$.responseWordCount, pc$.descriptionWordCount)
+plot(pc$.responseWordCount, pc$.questionWordCount)
+```
+
+## Conclusion
+
+On the whole, we assumed that *the more is better*. The limitations, as
+described above, are based on the unequal distribution of the data. The word
+count of responses and questions can be related to other things, such as the
+questions require short answers so then the responses tend to be shorter.
+
+Additionally, we can have a cross-analysis to test these outcomes. It might be a
+good idea to have a small subset of data and ask an expert to test the
+assumptions qualitatively. For instance, we can take the first twenty reponses
+with the highest word count and the last twenty responses with the lowest word
+count. We chose the extreme directions because they point out the greatest
+differences which are easier to test assumptions.
