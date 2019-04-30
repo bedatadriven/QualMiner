@@ -1,0 +1,9 @@
+data/*
+.Rproj.user
+.Rhistory
+.Rapp.history
+.RData
+.Ruserdata
+.Rproj.user/
+analysis/*.html
+analysis/*.pdf
