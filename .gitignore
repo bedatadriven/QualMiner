@@ -7,3 +7,4 @@ data/*
 .Rproj.user/
 analysis/*.html
 analysis/*.pdf
+analysis/*.tex
