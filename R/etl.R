@@ -3,12 +3,12 @@ source(file.path("R", "global-header.R"))
 source(file.path("R", "etl-methods.R"))
 source(file.path("R", "api-calls.R"))
 
-# 'ECUADOR_MONITOREO' database
+## 'ECUADOR_MONITOREO' database:
 database.id <- "10297"
 
 db.resources <- database_resources(database.id)
 
-# Exclude FOLDER and P.IDs (partner) in order to select FORM and SUB_FORM:
+## exclude FOLDER and P.IDs (partner) in order to select FORM and SUB_FORM:
 form.ids <- subset(db.resources,
                    type != "FOLDER" & visibility != "REFERENCE",
                    "id", drop = TRUE)
