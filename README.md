@@ -7,7 +7,11 @@ Exploring qualitative indicators via text mining methods.
 
 ### Main steps
 
-    {a graph}
+<center>
+
+<img src="media/diagram.png" width="85%" />
+
+</center>
 
 ### Notes
 

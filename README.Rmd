@@ -9,6 +9,9 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+library(DiagrammeR)
+library(DiagrammeRsvg)
+library(rsvg)
 ```
 
 # QualMiner
@@ -17,14 +20,52 @@ Exploring qualitative indicators via text mining methods.
 
 ### Main steps
 
+```{r graph generation, include=FALSE}
+script <- 'digraph diagram {
+  
+  rankdir=LR;
+  edge [decorate=true]
+
+  // AI color codes:
+  // #DBF1F1 (light turquoise)
+  // #242934 (almost black)
+	
+	// OBJECTS:
+	ActivityInfoSource [shape=cylinder, 
+	                    label="ActivityInfo Source", 
+	                    style=filled color="#242934" fillcolor="#DBF1F1"];
+	MainData [shape=parallelogram, label="Data generated and loaded"];
+	Analysis [shape=note, label="Analysis"]
+	
+	// ACTIONS:
+	DataPulling [shape=rect, label="Pull data with\nActivityInfo API"];
+	ETL [shape=rect, label="ETL\ndata preparation"];
+	
+	// FLOW:
+  {rank=same
+	  ActivityInfoSource -> DataPulling;
+	}
+	DataPulling -> ETL;
+	ETL -> MainData;
+	MainData -> Analysis;
+}'
+graph <- DiagrammeR::grViz(script)
 ```
-{a graph}
+```{r svg to file, include=FALSE}
+svg <- DiagrammeRsvg::export_svg(graph)
+diagram.fname <- file.path("media", "diagram.png")
+rsvg::rsvg_png(charToRaw(svg), diagram.fname)
 ```
+<center>
+```{r display, echo=FALSE, out.width = "85%"}
+knitr::include_graphics(diagram.fname)
+```
+</center>
 
 ### Notes
 
 + The data can be accessed with *ActivityInfo* API by using user credentials.
-See 
+See
 [**ActivityInfo R Language Client**](https://github.com/bedatadriven/activityinfo-R)
 for more details.
 
