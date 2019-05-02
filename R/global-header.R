@@ -8,7 +8,7 @@ library(activityinfo)
 #' incompatibility issues.
 #'
 #' @noRd
-check_version <- function() {
+check_R_version <- function() {
   rv <- R.version
   current.version <- paste(rv$major, rv$minor, sep = ".")
   tested.versions <- c("3.5.3", "3.6.0")
@@ -29,7 +29,7 @@ check_version <- function() {
     invisible(NULL)
   }
 }
-check_version()
+check_R_version()
 
 ### ----------------------------------------------------------------- ###
 ### GLOBAL VARIABLES & OPTIONS ----
