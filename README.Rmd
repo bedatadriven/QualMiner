@@ -18,6 +18,9 @@ library(rsvg)
 
 Exploring qualitative indicators via text mining methods.
 
+This repository contains the analysis code. The data used here can only be
+accessed by using *ActivityInfo*.
+
 ### Main steps
 
 In order to reproduce the code, follow the steps below:
@@ -63,13 +66,13 @@ script <- 'digraph diagram {
 	
 	// OBJECTS:
 	ActivityInfoSource [shape=cylinder, 
-	                    label="ActivityInfo Source", 
+	                    label="ActivityInfo\nSource", 
 	                    style=filled color="#242934" fillcolor="#DBF1F1"];
 	MainData [shape=parallelogram, label="Data generated and loaded"];
 	Analysis [shape=note, label="Analysis"]
 	
 	// ACTIONS:
-	DataPulling [shape=rect, label="Pull data with\nActivityInfo API"];
+	DataPulling [shape=rect, label="Pull data\nActivityInfo API"];
 	ETL [shape=rect, label="ETL\ndata preparation"];
 	
 	// FLOW:
