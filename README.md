@@ -30,7 +30,7 @@ end, a JSON file will be saved in the `data/` directory.
 
 #### 2\. Analysis
 
-Render RMarkdown files placed in the `/analysis` directory. For
+Render RMarkdown files placed in the `analysis/` directory. For
 instance;
 
 ``` r

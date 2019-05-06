@@ -42,7 +42,7 @@ be saved in the `data/` directory.
 
 #### 2. Analysis
 
-Render RMarkdown files placed in the `/analysis` directory. For instance;
+Render RMarkdown files placed in the `analysis/` directory. For instance;
 
 ```{r, eval=FALSE}
 path <- file.path("analysis", "april2019-response-quality.Rmd")

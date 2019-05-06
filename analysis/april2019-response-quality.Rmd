@@ -11,9 +11,9 @@ output:
 
 ```{r setup, include=FALSE}
 ## Libraries
-library(ggplot2)
 library(dplyr)
 library(tidyr)
+library(ggplot2)
 ## functions
 source(file.path("..", "R", "analysis-methods.R"))
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
@@ -80,9 +80,11 @@ question "*Cualitativo*" from the form "*Protección_VBG*".
 
 In order to solve this kind of problem:
 
-+ We can merge question with the form and also its folder label. There we can achieve a unique name for each question.
++ We can merge question with the form and also its folder label. There we can
+achieve a unique name for each question.
 
-+ Another thing to resolve this would be doing analysis to move the analysis up to form level. In this file, we did both, therefore the analysis shown as below:
++ Another thing to resolve this would be doing analysis to move the analysis up
+to form level. In this file, we did both, therefore the analysis shown as below:
 
 Count of responses per topic/question:
 ```{r}
@@ -92,7 +94,9 @@ cp <- compact %>%
   group_by(labelForms) %>%
   select(
     labelForms, question, response, 
-    .responseWordCount, .questionWordCount, partnerName, cantonName
+    .responseWordCount, .questionWordCount, 
+    partnerName, cantonName,
+    description
   )
 head(cp)
 ```
@@ -107,10 +111,12 @@ cp$labelFormsRecode <- as.factor(cp$labelForms)
 recode.lvls <- sapply(seq_along(unique(cp$labelFormsRecode)), function(x) paste0("F", x))
 levels(cp$labelFormsRecode) <- recode.lvls
 
-cp %>% 
+recode_tbl <- cp %>% 
   arrange(labelFormsRecode) %>% 
   select(labelFormsRecode, labelForms) %>% 
   distinct()
+
+knitr::kable(recode_tbl)
 ```
 
 Box plot form topics and response word counts (based on raw data):
@@ -122,14 +128,14 @@ cp %>%
   coord_flip() +
   geom_jitter(alpha = 0.35) +
   labs(
-    title = "Plot of response & question word counts per form topic",
-    subtitle = "<a subtitle placeholder>",
+    title = "Response and Question word counts per form topic",
+    subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
   theme_ecuador1()
 ```
 
-If we look at the distribution per partner:
+The response word count distribution per form topic categorized by partner name:
 ```{r}
 cp %>%
   gather(variable, value, .responseWordCount) %>% 
@@ -140,7 +146,26 @@ cp %>%
   facet_wrap(partnerName ~ ., scales = "free") +
   labs(
     title = "Word count of responses by form topics per partner",
-    subtitle = "<a subtitle placeholder>",
+    subtitle = "A box plot distribution",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  theme_ecuador1()
+```
+
+In the plots above, the outliers are shown in orange color. Outliers are the points placed outside the whiskers, which is the long line, of the boxplot[^1].
+
+The response word count distribution per form topic categorized by canton name:
+```{r}
+cp %>%
+  gather(variable, value, .responseWordCount) %>% 
+  ggplot(aes(labelFormsRecode, value)) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
+  coord_flip() +
+  geom_jitter(alpha = 0.35) +
+  facet_wrap(cantonName ~ ., scales = "free") +
+  labs(
+    title = "Word count of responses by form topics per canton",
+    subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
   theme_ecuador1()
@@ -162,32 +187,61 @@ Do some questions with the extra description field have better *response quality
 Looking at the table containing form name, question, description and so on:
 
 ```{r}
-dsp <- compact %>% 
-  select(labelForms, question, description, response) %>% 
-  distinct(.keep_all = TRUE)
-```
-
-Have a plot:
-
-```{r}
-pc <- dsp %>% 
+dsp <- cp %>% 
   mutate(.hasDescription = ifelse(is.na(description), FALSE, TRUE)) %>% 
-  mutate(.questionWordCount = word_count(question)) %>% 
   mutate(.descriptionWordCount = word_count(description)) %>%
-  mutate(.responseWordCount = word_count(response))
+  select(labelForms, labelFormsRecode, 
+         .responseWordCount, .questionWordCount, .descriptionWordCount, 
+         .hasDescription)
 ```
 
+We see in the plot below that the response word counts per form and colored if a
+response has a description field or not. the responses with the longest word
+counts are the ones with description. Nevertheless, it is not so easy to see a
+clear trend that there's a correlation between response word count and
+description fields. Interesingly, the form *F15*, which is *Protección_VBG*, has
+no description fields at all.
 ```{r}
-pc %>% 
-  ggplot(aes(.responseWordCount, .questionWordCount, color = .hasDescription)) +
+dsp %>% 
+  ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
   geom_point() +
   theme_ecuador1()
 ```
 
-(Some projection TBC)
+Having a description field or not is calculated as that a description field has
+minimum one word. We look below the description word count, and compare with the
+response word count (and remove the categorical field displaying if the question
+of a response has a description field).
+
+### The regression line
+
+We can look multiple continuous variables in our data.
+
+- word count of response field: the dependent variable.
+
+- word count of question field: an independent variable.
+
+- word count of description field: an independent variable.
+
+We apply linear and LOESS regressions to look at the relations.
 ```{r}
-plot(pc$.responseWordCount, pc$.descriptionWordCount)
-plot(pc$.responseWordCount, pc$.questionWordCount)
+p1 <- dsp %>% 
+  ggplot(aes(x = .responseWordCount, y = .questionWordCount)) +
+  geom_jitter(alpha = 0.35) +
+  geom_smooth(aes(colour = "linear"), method = "lm") +
+  geom_smooth(aes(colour = "LOESS"), method = "loess") +
+  scale_colour_manual(name = "Regression", values = c("blue", "red")) +
+  theme_ecuador1() +
+  theme(legend.position = "bottom")
+p2 <- dsp %>% 
+  ggplot(aes(x = .responseWordCount, y = .descriptionWordCount)) +
+  geom_jitter(alpha = 0.35) +
+  geom_smooth(aes(colour = "linear"), method = "lm") +
+  geom_smooth(aes(colour = "LOESS"), method = "loess") +
+  scale_colour_manual(name = "Regression", values = c("blue", "red")) +
+  theme_ecuador1() +
+  theme(legend.position = "bottom")
+gridExtra::grid.arrange(p1, p2, ncol = 2)
 ```
 
 ## Conclusion
