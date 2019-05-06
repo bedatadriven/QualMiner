@@ -196,7 +196,9 @@ dsp <- cp %>%
 ```
 
 We see in the plot below that the response word counts per form and colored if a
-response has a description field or not. the responses with the longest word
+response has a description field or not. Having a description field or not is
+calculated as that a description field has minimum one word.
+The responses with the longest word
 counts are the ones with description. Nevertheless, it is not so easy to see a
 clear trend that there's a correlation between response word count and
 description fields. Interesingly, the form *F15*, which is *Protección_VBG*, has
@@ -208,8 +210,7 @@ dsp %>%
   theme_ecuador1()
 ```
 
-Having a description field or not is calculated as that a description field has
-minimum one word. We look below the description word count, and compare with the
+We look below the description word count, and compare with the
 response word count (and remove the categorical field displaying if the question
 of a response has a description field).
 
@@ -223,7 +224,10 @@ We can look multiple continuous variables in our data.
 
 - word count of description field: an independent variable.
 
-We apply linear and LOESS regressions to look at the relations.
+Scatter plots help understand the characteristics of those variables.
+However, we miss a general understanding that is the *trend line*.
+We apply linear and LOESS regressions to look see the trend if longer question
+and description fields result to longer responses.
 ```{r}
 p1 <- dsp %>% 
   ggplot(aes(x = .responseWordCount, y = .questionWordCount)) +
@@ -243,6 +247,11 @@ p2 <- dsp %>%
   theme(legend.position = "bottom")
 gridExtra::grid.arrange(p1, p2, ncol = 2)
 ```
+
+The gray area around the lines shows the confidence band at the 0.95 level.
+Although there's a some straight slope in the linear regression line, we cannot
+say that the trend line is robust because the confidence band representing the
+uncertainty in the estimate is wide.
 
 ## Conclusion
 
