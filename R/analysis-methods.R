@@ -30,3 +30,4 @@ word_count <- function(x, no.punc = TRUE, show.names = FALSE) {
     length(splitted[nchars > 0])
   }, numeric(1), USE.NAMES = show.names)
 }
+

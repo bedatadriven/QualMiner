@@ -1,0 +1,51 @@
+---
+title: "QualMiner: Exploring qualitative indicators via text mining methods"
+author: "Metin Yazici, BeDataDriven"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    theme: cosmo
+    css: style.css
+    highlight: pygments
+    toc: true
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+<script>
+<!-- TOC indentation. Source: https://stackoverflow.com/a/46221718/ -->
+    $(document).ready(function() {
+      $items = $('div#TOC li');
+      $items.each(function(idx) {
+        num_ul = $(this).parentsUntil('#TOC').length;
+        $(this).css({'text-indent': num_ul * 10, 'padding-left': 0});
+      });
+    });
+</script>
+
+## Introduction
+
+```{r}
+ggplot2::ggplot(mtcars)
+```
+
+## Data preparation
+
+### Extracting data from the ActivityInfo
+
+### Data preprocessing
+
+## Analysis
+
+### Descriptive results
+
+### Inferential results
+
+## References
+
+```{r, echo=FALSE, results='asis'}
+bib <- RefManageR::ReadBib(file.path("..", "analysis", "references.bib"))
+print(bib)
+```
+
