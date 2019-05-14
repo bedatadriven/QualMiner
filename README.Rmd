@@ -6,6 +6,7 @@ output: github_document
 
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
+  eval = FALSE,
   collapse = TRUE,
   comment = "#>"
 )
@@ -30,7 +31,7 @@ In order to reproduce the code, follow the steps below:
 The call below authenticates the current user for the requests to get the data
 from *ActivityInfo*. See [**Notes**](#notes) section for more details.
 
-```{r, eval=FALSE}
+```{r}
 activityinfo::activityInfoLogin()
 ```
 
@@ -44,7 +45,7 @@ be saved in the `data/` directory.
 
 Render RMarkdown files placed in the `analysis/` directory. For instance;
 
-```{r, eval=FALSE}
+```{r}
 path <- file.path("analysis", "april2019-response-quality.Rmd")
 rmarkdown::render(path)
 ```
@@ -54,7 +55,7 @@ JSON data file must exist in the `data/` directory.
 
 ### Process diagram
 <!-- DIAGRAM START -->
-```{r graph generation, include=FALSE}
+```{r graph generation, eval=TRUE, include=FALSE}
 script <- 'digraph diagram {
   graph [layout=dot]
   edge [decorate=true]
@@ -101,13 +102,9 @@ knitr::include_graphics(diagram.fname)
 The [**ActivityInfo R Language Client**](https://github.com/bedatadriven/activityinfo-R)
 provides a good documentation.
 
-+ Create `index.html` shown in the project website with:
-```{r}
-rmarkdown::render(
-  file.path("analysis", "_generate-index.Rmd"),
-  output_file = "index.html",
-  output_dir = "media"
-)
++ Render `index.html` for the project website with:
+```{r render-index, eval=TRUE, results="hide", message=FALSE}
+rmarkdown::render(file.path("docs", "index.Rmd"), output_file = "index.html")
 ```
 
 + [**dplyr**](https://cran.r-project.org/package=dplyr) package is chosen as it is

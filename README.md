@@ -45,14 +45,23 @@ but the JSON data file must exist in the `data/` directory.
 
 <!-- DIAGRAM START -->
 
-<img src="media/diagram.png" width="95%" /> <!-- DIAGRAM END -->
+<!-- DIAGRAM END -->
 
-### Notes
+### Technical notes
 
   - The data can be accessed with *ActivityInfo* API by using user
     credentials. The [**ActivityInfo R Language
     Client**](https://github.com/bedatadriven/activityinfo-R) provides a
     good documentation.
+
+  - Render `index.html` for the project website
+with:
+
+<!-- end list -->
+
+``` r
+rmarkdown::render(file.path("docs", "index.Rmd"), output_file = "index.html")
+```
 
   - [**dplyr**](https://cran.r-project.org/package=dplyr) package is
     chosen as it is useful for rapid ad-hoc analyses. The selected
