@@ -95,11 +95,20 @@ knitr::include_graphics(diagram.fname)
 ```
 <!-- DIAGRAM END -->
 
-### Notes
+### Technical notes
 
 + The data can be accessed with *ActivityInfo* API by using user credentials.
 The [**ActivityInfo R Language Client**](https://github.com/bedatadriven/activityinfo-R)
 provides a good documentation.
+
++ Create `index.html` shown in the project website with:
+```{r}
+rmarkdown::render(
+  file.path("analysis", "_generate-index.Rmd"),
+  output_file = "index.html",
+  output_dir = "media"
+)
+```
 
 + [**dplyr**](https://cran.r-project.org/package=dplyr) package is chosen as it is
 useful for rapid ad-hoc analyses. The selected analysis code can be rewritten in
