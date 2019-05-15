@@ -8,7 +8,7 @@ Exploring qualitative indicators via text mining methods.
 This repository contains the analysis code. The data used here can only
 be accessed by using *ActivityInfo*.
 
-### Main steps
+### Usage
 
 In order to reproduce the code, follow the steps below:
 
@@ -45,7 +45,7 @@ but the JSON data file must exist in the `data/` directory.
 
 <!-- DIAGRAM START -->
 
-<!-- DIAGRAM END -->
+<img src="media/diagram.png" width="95%" /> <!-- DIAGRAM END -->
 
 ### Technical notes
 
@@ -54,8 +54,9 @@ but the JSON data file must exist in the `data/` directory.
     Client**](https://github.com/bedatadriven/activityinfo-R) provides a
     good documentation.
 
-  - Render `index.html` for the project website
-with:
+  - Run the code below to render `index.html` that used for the
+    interactive notebook displayed in the [**project
+    website**](https://bedatadriven.github.io/QualMiner/):
 
 <!-- end list -->
 

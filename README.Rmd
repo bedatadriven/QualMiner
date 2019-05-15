@@ -22,7 +22,7 @@ Exploring qualitative indicators via text mining methods.
 This repository contains the analysis code. The data used here can only be
 accessed by using *ActivityInfo*.
 
-### Main steps
+### Usage
 
 In order to reproduce the code, follow the steps below:
 
@@ -57,8 +57,8 @@ JSON data file must exist in the `data/` directory.
 <!-- DIAGRAM START -->
 ```{r graph generation, eval=TRUE, include=FALSE}
 script <- 'digraph diagram {
-  graph [layout=dot]
-  edge [decorate=true]
+  graph [layout=dot];
+  edge [decorate=true];
   rankdir=LR;
 
   // AI color codes:
@@ -70,7 +70,8 @@ script <- 'digraph diagram {
 	                    label="ActivityInfo\nSource", 
 	                    style=filled color="#242934" fillcolor="#DBF1F1"];
 	MainData [shape=parallelogram, label="Data generated and loaded"];
-	Analysis [shape=note, label="Analysis"]
+	Analyses [shape=note, label="Analyses"];
+	InteractiveNotebook [shape=tab, label="Interactive\nNotebook"];
 	
 	// ACTIONS:
 	DataPulling [shape=rect, label="Pull data\nActivityInfo API"];
@@ -82,16 +83,17 @@ script <- 'digraph diagram {
 	}
 	DataPulling->ETL;
 	ETL->MainData;
-	MainData->Analysis;
+	MainData->Analyses;
+	Analyses->InteractiveNotebook;
 }'
 graph <- DiagrammeR::grViz(script)
 ```
-```{r svg to file, include=FALSE}
+```{r svg to file, eval=TRUE, include=FALSE}
 svg <- DiagrammeRsvg::export_svg(graph)
 diagram.fname <- file.path("media", "diagram.png")
 rsvg::rsvg_png(charToRaw(svg), diagram.fname)
 ```
-```{r display, echo=FALSE, out.width = "95%"}
+```{r display, eval=TRUE, echo=FALSE, out.width = "95%"}
 knitr::include_graphics(diagram.fname)
 ```
 <!-- DIAGRAM END -->
@@ -102,8 +104,10 @@ knitr::include_graphics(diagram.fname)
 The [**ActivityInfo R Language Client**](https://github.com/bedatadriven/activityinfo-R)
 provides a good documentation.
 
-+ Render `index.html` for the project website with:
-```{r render-index, eval=TRUE, results="hide", message=FALSE}
++ Run the code below to render `index.html` that used for the interactive
+notebook displayed in the
+[**project website**](https://bedatadriven.github.io/QualMiner/):
+```{r}
 rmarkdown::render(file.path("docs", "index.Rmd"), output_file = "index.html")
 ```
 
