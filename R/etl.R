@@ -1,4 +1,8 @@
 
+### ----------------------------------------------------------------- ###
+### RETRIEVE, CLEAN AND TRANSFORM DATA FROM ACTIVITYINFO ----
+### ----------------------------------------------------------------- ###
+
 source(file.path("R", "global-header.R"))
 source(file.path("R", "etl-methods.R"))
 source(file.path("R", "api-calls.R"))

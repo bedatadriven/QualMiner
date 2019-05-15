@@ -31,3 +31,16 @@ word_count <- function(x, no.punc = TRUE, show.names = FALSE) {
   }, numeric(1), USE.NAMES = show.names)
 }
 
+#' A list of Spanish stop words
+#'
+#' @param colname choose a column name for the data.frame. Default is
+#'   \emph{word}.
+#' @references
+#' \url{https://github.com/stopwords-iso/stopwords-es}
+get_es_stopwords <- function(colname = "word") {
+  link <- "https://raw.githubusercontent.com/stopwords-iso/stopwords-es/master/stopwords-es.json"
+  res <- data.frame(jsonlite::fromJSON(link), stringsAsFactors = FALSE)
+  names(res) <- colname
+  res
+}
+
