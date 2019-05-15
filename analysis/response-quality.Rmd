@@ -9,7 +9,11 @@ output:
     variant: markdown_github
 ---
 
-```{r setup, include=FALSE}
+```{r header,include=FALSE}
+source(file.path("..", "R", "global-header.R"))
+```
+
+```{r code-setup, include=FALSE}
 ## Libraries
 library(dplyr)
 library(tidyr)
@@ -19,7 +23,7 @@ source(file.path("..", "R", "analysis-methods.R"))
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
-knitr::opts_chunk$set(echo = TRUE, paged.print = FALSE)
+knitr::opts_chunk$set(echo = TRUE, paged.print = FALSE, cache = FALSE)
 ```
 
 ## Introduction
@@ -38,15 +42,14 @@ The strive is to find if any relation exists and, as a result, see which respons
 
 Read the data from source that has been extracted, cleaned and transformed:
 
-```{r data}
-source(file.path("..", "R", "/global-header.R"))
+```{r data-source}
 ## read data from disk:
 form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
 ```
 
 Select the rows where the field type equals to `NARRATIVE`, which indicates that is a multi-line text field in the *ActivityInfo*. Select these columns and analyze them by comparing and contrasting with other fields types associated to the textual field types.
 
-```{r}
+```{r data-preparation}
 ## order matters for display purposes:
 col.names <- c(
   "labelFolder",
@@ -68,6 +71,9 @@ compact <- subset(
   subset = !is.na(form.table$response) & type == "NARRATIVE", 
   select = col.names
 )
+## save `compact` object for later use:
+pat <- file.path("..", "data", "compact.RDS")
+saveRDS(compact, file = pat)
 ```
 
 ## Analysis
@@ -80,14 +86,14 @@ question "*Cualitativo*" from the form "*Protección_VBG*".
 
 In order to solve this kind of problem:
 
-+ We can merge question with the form and also its folder label. There we can
++ We can combine question with the form and also its folder label. There we can
 achieve a unique name for each question.
 
 + Another thing to resolve this would be doing analysis to move the analysis up
 to form level. In this file, we did both, therefore the analysis shown as below:
 
 Count of responses per topic/question:
-```{r}
+```{r count-response}
 cp <- compact %>%
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
@@ -97,7 +103,8 @@ cp <- compact %>%
     .responseWordCount, .questionWordCount, 
     partnerName, cantonName,
     description
-  )
+  ) %>% 
+  ungroup()
 head(cp)
 ```
 
@@ -105,7 +112,7 @@ It's also a good practice to see the number of questions. For example, one quest
 
 We recode form topics as they are too long and clutters the plots. This can be
 called the **recode table** to look up form labels:
-```{r}
+```{r recode-table}
 ## make the label forms factor for recoding:
 cp$labelFormsRecode <- as.factor(cp$labelForms)
 recode.lvls <- sapply(seq_along(unique(cp$labelFormsRecode)), function(x) paste0("F", x))
@@ -120,7 +127,7 @@ knitr::kable(recode_tbl)
 ```
 
 Box plot form topics and response word counts (based on raw data):
-```{r}
+```{r plot-topic-response-wc, paged.print=FALSE}
 cp %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
   ggplot(aes(labelFormsRecode, value, fill = variable)) +
@@ -136,7 +143,7 @@ cp %>%
 ```
 
 The response word count distribution per form topic categorized by partner name:
-```{r}
+```{r plot-partner-response-wc}
 cp %>%
   gather(variable, value, .responseWordCount) %>% 
   ggplot(aes(labelFormsRecode, value)) +
@@ -155,7 +162,7 @@ cp %>%
 In the plots above, the outliers are shown in orange color. Outliers are the points placed outside the whiskers, which is the long line, of the boxplot[^1].
 
 The response word count distribution per form topic categorized by canton name:
-```{r}
+```{r plot-canton-response-wc}
 cp %>%
   gather(variable, value, .responseWordCount) %>% 
   ggplot(aes(labelFormsRecode, value)) +
@@ -186,7 +193,7 @@ Do some questions with the extra description field have better *response quality
 
 Looking at the table containing form name, question, description and so on:
 
-```{r}
+```{r, table1}
 dsp <- cp %>% 
   mutate(.hasDescription = ifelse(is.na(description), FALSE, TRUE)) %>% 
   mutate(.descriptionWordCount = word_count(description)) %>%
@@ -203,7 +210,7 @@ counts are the ones with description. Nevertheless, it is not so easy to see a
 clear trend that there's a correlation between response word count and
 description fields. Interesingly, the form *F15*, which is *Protección_VBG*, has
 no description fields at all.
-```{r}
+```{r, plot1}
 dsp %>% 
   ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
   geom_point() +
@@ -228,7 +235,7 @@ Scatter plots help understand the characteristics of those variables.
 However, we miss a general understanding that is the *trend line*.
 We apply linear and LOESS regressions to look see the trend if longer question
 and description fields result to longer responses.
-```{r}
+```{r, plot-linear-regression}
 p1 <- dsp %>% 
   ggplot(aes(x = .responseWordCount, y = .questionWordCount)) +
   geom_jitter(alpha = 0.35) +
