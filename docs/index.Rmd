@@ -1,51 +1,427 @@
 ---
 title: "QualMiner: Exploring qualitative indicators via text mining methods"
-author: "Metin Yazici, BeDataDriven"
+author: "Metin Yazici, BeDataDriven B.V."
 date: "`r Sys.Date()`"
 output:
   html_document:
     theme: cosmo
     css: style.css
     highlight: pygments
+    code_folding: show
     toc: true
     toc_float:
-      collapsed: false
+      collapsed: true
       smooth_scroll: false
 ---
 
-<script>
-<!-- TOC indentation. Source: https://stackoverflow.com/a/46221718/ -->
-    $(document).ready(function() {
-      $items = $('div#TOC li');
-      $items.each(function(idx) {
-        num_ul = $(this).parentsUntil('#TOC').length;
-        $(this).css({'text-indent': num_ul * 10, 'padding-left': 0});
-      });
-    });
-</script>
+<script src="script.js"></script>
 
-## Introduction
-
-```{r}
-ggplot2::ggplot(mtcars)
+```{r setup, include=FALSE}
+## Header file
+source(file.path("..", "R", "global-header.R"))
+## Functions
+source(file.path("..", "R", "analysis-methods.R"))
+## Libraries
+library(tidyverse)
+library(tidytext)
+library(knitr)
+library(kableExtra)
+## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
+ggplot2::theme_set(ggplot2::theme_bw())
+## knitr options
+knitr::opts_chunk$set(echo = TRUE,
+                      paged.print = FALSE)
 ```
 
-## Data preparation
+# Introduction
 
-### Extracting data from the ActivityInfo
+This document explores qualitative indicators from an ActivityInfo database that is monitoring Ecuador.
 
-### Data preprocessing
+# Data preparation
 
-## Analysis
+The data has been extracted from *ActivityInfo* and pre-processed to make it
+ready for the analysis. Check the calls in the `R/` directory to see how the
+process went on.
 
-### Descriptive results
+# Analysis
 
-### Inferential results
+## Response quality
 
-## References
+*RQs:* What is the quality of textual responses in the narrative fields?
+
+- Do responses with a larger word count have more quality than the responses
+with less word count?
+
+- What is the distribution between response word count and explanatory variables
+such as the question, form topic, canton name, partner name, etc.
+
+- Is there any relationship between the word count of responses and question
+word count?
+
+The strive is to find if any relation exists and, as a result, see which
+responses worked and which did not work.
+
+### Data import & preparation
+
+Read the data from the source that has been extracted, cleaned, and transformed.
+Select the rows where the field type equals to `NARRATIVE`, which indicates that
+is a multi-line text field in the *ActivityInfo*. Select these columns and
+analyze them by comparing and contrasting with other fields types associated with
+the textual field types.
+
+```{r data-source-preparation}
+## read data from disk:
+form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
+## order matters for display purposes:
+col.names <- c(
+  "labelFolder",
+  "labelForms",
+  "Month",
+  "question",
+  "response",
+  "description",
+  "partnerName",
+  "cantonName",
+  "cantonParentName",
+  "id",
+  "recordId"
+)
+## if we choose a column name by mistake:
+stopifnot(!anyDuplicated(col.names) > 0)
+compact <- subset(
+  x = form.table, 
+  subset = !is.na(form.table$response) & type == "NARRATIVE", 
+  select = col.names
+)
+head(as_tibble(compact))
+```
+
+We recode form topics as they are too long and clutters the plots. This can be
+called the **recode table** to look up form labels:
+
+```{r recode-table}
+## make the label forms factor for recoding:
+compact$labelFormsRecode <- as.factor(compact$labelForms)
+recode.lvls <- sapply(seq_along(unique(compact$labelFormsRecode)), function(x) paste0("F", x))
+levels(compact$labelFormsRecode) <- recode.lvls
+
+recode_tbl <- compact %>% 
+  arrange(labelFormsRecode) %>% 
+  select(labelFormsRecode, labelForms) %>% 
+  distinct()
+
+knitr::kable(recode_tbl) %>% 
+  kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+```
+
+### Word count 
+
+One issue with the nature of the questions is that they are only unique in a
+form. These questions can be distributed across multiple forms. The questions
+sharing the same name will have different meanings. For instance, the question
+"*Cualitativo*" from the form "*Salud*" should imply different thing than the
+question "*Cualitativo*" from the form "*Protección_VBG*".
+
+In order to solve this kind of problem:
+
++ We can combine question with the form and also its folder label. There we can
+achieve a unique name for each question.
+
++ Another thing to resolve this would be doing analysis to move the analysis up
+to form level. In this file, we did both, therefore the analysis shown as below:
+
+Count of responses per topic/question:
+```{r count-response}
+cp <- compact %>%
+  mutate(.responseWordCount = word_count(response)) %>%
+  mutate(.questionWordCount = word_count(question)) %>%
+  group_by(labelForms) %>%
+  select(
+    labelForms, question, response, 
+    .responseWordCount, .questionWordCount, 
+    partnerName, cantonName,
+    description, labelFormsRecode
+  ) %>% 
+  ungroup()
+head(cp)
+```
+
+It's also a good practice to see the number of questions. For example, one
+question has two responses, therefore they're short. Therefore, jittered points
+are added to give a glance about the number of observations in the same plot.
+
+Box plot form topics and response word counts (based on raw data):
+```{r plot-topic-response-wc, paged.print=FALSE}
+cp %>%
+  gather(variable, value, .responseWordCount, .questionWordCount) %>%
+  ggplot(aes(labelFormsRecode, value, fill = variable)) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
+  coord_flip() +
+  geom_jitter(alpha = 0.35) +
+  labs(
+    title = "Response and Question word counts per form topic",
+    subtitle = "A box plot distribution",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  theme_ecuador1()
+```
+
+The response word count distribution per form topic categorized by partner name:
+```{r plot-partner-response-wc}
+cp %>%
+  gather(variable, value, .responseWordCount) %>% 
+  ggplot(aes(labelFormsRecode, value)) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
+  coord_flip() +
+  geom_jitter(alpha = 0.35) +
+  facet_wrap(partnerName ~ ., scales = "free") +
+  labs(
+    title = "Word count of responses by form topics per partner",
+    subtitle = "A box plot distribution",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  theme_ecuador1()
+```
+
+In the plots above, the outliers are shown in orange color. Outliers are the
+points placed outside the whiskers, which is the long line, of the boxplot[^1].
+
+The response word count distribution per form topic categorized by canton name:
+```{r plot-canton-response-wc}
+cp %>%
+  gather(variable, value, .responseWordCount) %>% 
+  ggplot(aes(labelFormsRecode, value)) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
+  coord_flip() +
+  geom_jitter(alpha = 0.35) +
+  facet_wrap(cantonName ~ ., scales = "free") +
+  labs(
+    title = "Word count of responses by form topics per canton",
+    subtitle = "A box plot distribution",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  theme_ecuador1()
+```
+
+*A caveat:* Reducing multiple values down to a single value should be avoided in
+the early stages of the analysis because reducing hides a lot e.g. a bar chart
+showing average the word count per partner. Some partners may write longer than
+others, because:
+
+1. They *actually* write longer than other partners.
+
+2. The questions they answered require short answers.
+
+### The "Description" field
+
+Some questions have the description field giving extra details about the
+questions.
+
+Do some questions with the extra description field have better *response
+quality* than the questions which does not have it?
+
+Looking at the table containing form name, question, description and so on:
+
+```{r, table1}
+dsp <- cp %>% 
+  mutate(.hasDescription = ifelse(is.na(description), FALSE, TRUE)) %>% 
+  mutate(.descriptionWordCount = word_count(description)) %>%
+  select(labelForms, labelFormsRecode, 
+         .responseWordCount, .questionWordCount, .descriptionWordCount, 
+         .hasDescription)
+```
+
+We see in the plot below that the response word counts per form and colored if a
+response has a description field or not. Having a description field or not is
+calculated as that a description field has a minimum one word.
+The responses with the longest word
+counts are the ones with description. Nevertheless, it is not so easy to see a
+clear trend that there's a correlation between response word count and
+description fields. Interestingly, the form *F15*, which is *Protección_VBG*, has
+no description fields at all.
+```{r, plot1}
+dsp %>% 
+  ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
+  geom_point() +
+  theme_ecuador1()
+```
+
+We look below the description word count and compare with the
+response word count (and remove the categorical field displaying if the question
+of response has a description field).
+
+#### The regression line
+
+We can look at multiple continuous variables in our data.
+
+- word count of response field: the dependent variable.
+
+- word count of question field: an independent variable.
+
+- word count of description field: an independent variable.
+
+Scatter plots help understand the characteristics of those variables.
+However, we miss a general understanding that is the *trend line*.
+We apply linear and LOESS regressions to look see the trend if the longer question
+and description fields result in longer responses.
+
+```{r, plot-linear-regression}
+p1 <- dsp %>% 
+  ggplot(aes(x = .responseWordCount, y = .questionWordCount)) +
+  geom_jitter(alpha = 0.35) +
+  geom_smooth(aes(colour = "linear"), method = "lm") +
+  geom_smooth(aes(colour = "LOESS"), method = "loess") +
+  scale_colour_manual(name = "Regression", values = c("blue", "red")) +
+  theme_ecuador1() +
+  theme(legend.position = "bottom")
+p2 <- dsp %>% 
+  ggplot(aes(x = .responseWordCount, y = .descriptionWordCount)) +
+  geom_jitter(alpha = 0.35) +
+  geom_smooth(aes(colour = "linear"), method = "lm") +
+  geom_smooth(aes(colour = "LOESS"), method = "loess") +
+  scale_colour_manual(name = "Regression", values = c("blue", "red")) +
+  theme_ecuador1() +
+  theme(legend.position = "bottom")
+gridExtra::grid.arrange(p1, p2, ncol = 2)
+```
+
+The gray area around the lines shows the confidence band at the 0.95 level.
+Although there's a straight slope in the linear regression line, we cannot
+say that the trend line is robust because the confidence band representing the
+uncertainty in the estimate is wide.
+
+### Logistic regression
+
+`TODO`
+
+### Conclusion
+
+On the whole, we assumed that *the more word the better is*. The limitations, as
+described above, are based on the unequal distribution of the data. The word
+count of responses and questions can be related to other things, such as the
+questions require short answers so then the responses tend to be shorter.
+
+Additionally, we can have a cross-analysis to test these outcomes. It might be a
+good idea to have a small subset of data and ask an expert to test the
+assumptions qualitatively. For instance, we can take the first twenty responses
+with the highest word count and the last twenty responses with the lowest word
+count. We chose the extreme directions because they point out the greatest
+differences which are easier to test assumptions.
+
+## Text analysis
+
+In that section, we take text as data.
+
+### Textual data preparation
+
+Describe how to process textual data and what common steps are usually performed.
+
+#### Tokenization
+
+Tokenization means to split a text into tokens considered
+meaningful units of text. A token can either be a word (and often it is) or a
+group of words (such as *bigram*), or even a sentence that depends on the level
+of analysis.
+
+```{r}
+tokens <- compact %>% 
+  as_tibble() %>% 
+  unnest_tokens(word, response)
+head(tokens)
+```
+
+Perform stemming, which you bring nouns/verbs back to infinitive forms, and
+tokenization, which is separating words in meaningful pieces.
+
+There is usually a list of such words for each language and they are called as
+stop-words as they are overly distributed in the text and they will not give so
+meaningful results itself. Stop-words are including articles (*el/la*),
+conjunctions (*y*), pronouns (*yo/tú/etc.*) and so on. We explain below how to
+remove them.
+
+#### Strip punctuation
+
+Punctuation is often not required in text analysis (unless a researcher wants to
+tokenize the text based on a specific classifier *such as sentence tokens*);
+therefore, they create noise.
+
+#### Convert text into lowercase
+
+When the text turned into lowercase, for instance, the words *respuesta* and
+*Respuesta* will no longer be taken as different words.
+
+#### Exclude stopwords & numbers
+
+Stop words usually mean the most common words in a language that will bring no
+significant results in analysis. In text mining, this process is usually done
+after the text converted into lowercase so one does not have to provide stop
+words including both lower and sentence case versions.
+
+We import a list of Spanish stopwords data (source
+[**here**](https://github.com/stopwords-iso/stopwords-es)) and perform a
+*filtering join* returning tokens from textual data by excluding the words
+listed in the stopwords.
+that only returns the tokens not listed in the stopwords.
+
+```{r}
+es_stopwords <- get_es_stopwords()
+tokens_sw <- tokens %>% 
+  anti_join(es_stopwords, by = "word")
+head(tokens_sw)
+```
+
+It's also possible to add more custom words such as *ACNUR* or *HIAS* if such
+organization names are not desired in the results.
+
+The original tokens had *`r nrow(tokens)`* rows but after stop words, it
+decreased to *`r nrow(tokens_sw)`* and that
+the change in between is *`r round(nrow(tokens_sw)*100/nrow(tokens))`*%.
+
+### The most common words
+
+The most common words in all responses:
+
+```{r}
+tokens_sw %>% 
+  count(word, sort = TRUE) %>% 
+  top_n(20) %>% 
+  mutate(word = reorder(word, n)) %>% 
+  ggplot(aes(word, n)) +
+  geom_col() +
+  coord_flip() +
+  theme_ecuador1()
+```
+
+```{r, paged.print=FALSE}
+top.n <- 10L
+tokens_sw %>% 
+  count(labelFormsRecode, word) %>%
+  arrange(desc(n)) %>% 
+  group_by(labelFormsRecode) %>% 
+  slice(seq_len(top.n)) %>% 
+  ungroup() %>% 
+  ggplot(aes(word, n)) +
+  geom_col() +
+  facet_wrap(~ labelFormsRecode, scales = "free") +
+  labs(
+    title = "The most common words per topic label",
+    subtitle = sprintf("Top %d words", top.n),
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  xlab(NULL) +
+  ylab(NULL) +
+  coord_flip() +
+  theme_ecuador1()
+```
+
+### Word frequencies
+
+The word frequencies per topic
+
+# References
 
 ```{r, echo=FALSE, results='asis'}
-bib <- RefManageR::ReadBib(file.path("..", "analysis", "references.bib"))
+bib <- RefManageR::ReadBib("references.bib")
 print(bib)
 ```
 

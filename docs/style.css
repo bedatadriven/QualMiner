@@ -7,3 +7,8 @@ h1.title {
   background-color: #3fae29;
 }
 
+.btn-default {
+  background-color: #ddd;
+  border-color: #aaaaaa;
+}
+
