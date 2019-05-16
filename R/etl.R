@@ -29,6 +29,11 @@ all <- merge(all.form.tbl, wide.db.resources, by.x = "id", by.y = "idSubForms")
 cols <- c("idFolder", "labelFolder", "idForms", "labelForms", "labelSubForms")
 all <- all[, c(cols, setdiff(names(all), cols)) ]
 
+## rename canton names based on this
+## https://en.wikipedia.org/wiki/Provinces_of_Ecuador
+colnames(all)[colnames(all) == "cantonName"] <- "capital"
+colnames(all)[colnames(all) == "cantonParentName"] <- "province"
+
 ## Writing data to disk
 ## Use JSON format bcs CSV isn't very suitable for storing textual data (e.g.
 ## quotes, commas etc. cause errors).
