@@ -38,9 +38,35 @@ word_count <- function(x, no.punc = TRUE, show.names = FALSE) {
 #' @references
 #' \url{https://github.com/stopwords-iso/stopwords-es}
 get_es_stopwords <- function(colname = "word") {
-  link <- "https://raw.githubusercontent.com/stopwords-iso/stopwords-es/master/stopwords-es.json"
+  link <- "https://raw.githubusercontent.com/bedatadriven/QualMiner/master/data-raw/stopwords-es.json"
   res <- data.frame(jsonlite::fromJSON(link), stringsAsFactors = FALSE)
   names(res) <- colname
   res
+}
+
+#' A list of Spanish sentiment words
+#'
+#' @references
+#' \url{https://sites.google.com/site/datascienceslab/projects/multilingualsentiment}
+get_es_sentiments <- function() {
+  link.positive <- "https://raw.githubusercontent.com/bedatadriven/QualMiner/master/data-raw/positive_words_es.txt"
+  link.negative <- "https://raw.githubusercontent.com/bedatadriven/QualMiner/master/data-raw/negative_words_es.txt"
+  data.positive <- readLines(link.positive)
+  data.negative <- readLines(link.negative)
+  sent <- rbind(
+    data.frame(word = data.positive, sentiment = "positive", stringsAsFactors = FALSE),
+    data.frame(word = data.negative, sentiment = "negative", stringsAsFactors = FALSE)
+  )
+  sent <- sent[order(sent$word), ]
+  rownames(sent) <- NULL
+  sent
+}
+
+#' Do abbreviate
+do_abb <- function(x, max = 3) {
+  x <- gsub("\\_", "[[:punct:]]+", x)
+  x <- unlist(strsplit(x, " "))
+  x <- paste(sapply(x, function(i) substr(tools::toTitleCase(i), 1, max)), collapse = "")
+  x
 }
 
