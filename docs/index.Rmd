@@ -10,8 +10,8 @@ output:
     code_folding: show
     toc: true
     toc_float:
-      collapsed: true
-      smooth_scroll: false
+      collapsed: false
+      smooth_scroll: true
 ---
 
 <script src="script.js"></script>
@@ -24,8 +24,6 @@ source(file.path("..", "R", "analysis-methods.R"))
 ## Libraries
 library(tidyverse)
 library(tidytext)
-library(knitr)
-library(kableExtra)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
@@ -37,29 +35,15 @@ knitr::opts_chunk$set(echo = TRUE,
 
 This document explores qualitative indicators from an ActivityInfo database that is monitoring Ecuador.
 
+The document includes the source code used in the analysis. Choose `Hide All
+Code` option from the top right corner if you do not desire to see the code
+chunks.
+
 # Data preparation
 
 The data has been extracted from *ActivityInfo* and pre-processed to make it
 ready for the analysis. Check the calls in the `R/` directory to see how the
 process went on.
-
-# Analysis
-
-## Response quality
-
-*RQs:* What is the quality of textual responses in the narrative fields?
-
-- Do responses with a larger word count have more quality than the responses
-with less word count?
-
-- What is the distribution between response word count and explanatory variables
-such as the question, form topic, canton name, partner name, etc.
-
-- Is there any relationship between the word count of responses and question
-word count?
-
-The strive is to find if any relation exists and, as a result, see which
-responses worked and which did not work.
 
 ### Data import & preparation
 
@@ -81,8 +65,8 @@ col.names <- c(
   "response",
   "description",
   "partnerName",
-  "cantonName",
-  "cantonParentName",
+  "capital",
+  "province",
   "id",
   "recordId"
 )
@@ -93,26 +77,62 @@ compact <- subset(
   subset = !is.na(form.table$response) & type == "NARRATIVE", 
   select = col.names
 )
-head(as_tibble(compact))
+compact <- as_tibble(compact)
+head(compact)
 ```
 
-We recode form topics as they are too long and clutters the plots. This can be
-called the **recode table** to look up form labels:
+We abbreviate and therefore recode form topics because they seem to be too long
+and disarray the plots. The **recode table** is placed below to look up form
+labels and their abbreviations:
 
 ```{r recode-table}
 ## make the label forms factor for recoding:
 compact$labelFormsRecode <- as.factor(compact$labelForms)
-recode.lvls <- sapply(seq_along(unique(compact$labelFormsRecode)), function(x) paste0("F", x))
+recode.lvls <- sapply(unique(compact$labelFormsRecode), function(x) do_abb(x))
 levels(compact$labelFormsRecode) <- recode.lvls
+stopifnot(anyDuplicated(levels(compact$labelFormsRecode)) == 0)
 
 recode_tbl <- compact %>% 
   arrange(labelFormsRecode) %>% 
   select(labelFormsRecode, labelForms) %>% 
   distinct()
 
-knitr::kable(recode_tbl) %>% 
-  kableExtra::kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+knitr::kable(recode_tbl)
 ```
+
+# Analysis
+
+Before we start, here's some descriptive tables about the nature of data.
+
+Number of partners
+```{r}
+compact %>% count(partnerName, sort = TRUE) %>% knitr::kable()
+```
+
+Number of Capitals and Provinces
+
+```{r}
+compact %>% count(capital, province, sort = TRUE) %>% knitr::kable()
+```
+
+## Response quality
+
+Response quality means how much response the questions receive. The idea is to find relations that affect the response quality to understand if they work or not under some conditions.
+
+*Research questions:*
+
++ What is the quality of textual responses in the narrative fields?
+
++ Is there any relationship between the word counts of response, question and
+description fields?
+
++ What is the distribution between response word count and explanatory variables
+such as the question, form topic, canton name, partner name, etc.
+
+*Assumptions:*
+
++ Responses with a larger word count have more quality than the responses
+with less word count.
 
 ### Word count 
 
@@ -139,7 +159,7 @@ cp <- compact %>%
   select(
     labelForms, question, response, 
     .responseWordCount, .questionWordCount, 
-    partnerName, cantonName,
+    partnerName, capital,
     description, labelFormsRecode
   ) %>% 
   ungroup()
@@ -166,6 +186,9 @@ cp %>%
   theme_ecuador1()
 ```
 
+In the plot above, the outliers are shown in orange color. Outliers are the
+points placed outside the whiskers, which is the long line, of the boxplot[^1].
+
 The response word count distribution per form topic categorized by partner name:
 ```{r plot-partner-response-wc}
 cp %>%
@@ -174,7 +197,7 @@ cp %>%
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   coord_flip() +
   geom_jitter(alpha = 0.35) +
-  facet_wrap(partnerName ~ ., scales = "free") +
+  facet_wrap(partnerName ~ ., scales = "free", ncol = 2) +
   labs(
     title = "Word count of responses by form topics per partner",
     subtitle = "A box plot distribution",
@@ -183,10 +206,7 @@ cp %>%
   theme_ecuador1()
 ```
 
-In the plots above, the outliers are shown in orange color. Outliers are the
-points placed outside the whiskers, which is the long line, of the boxplot[^1].
-
-The response word count distribution per form topic categorized by canton name:
+The response word count distribution per form topic categorized by capital name:
 ```{r plot-canton-response-wc}
 cp %>%
   gather(variable, value, .responseWordCount) %>% 
@@ -194,9 +214,9 @@ cp %>%
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   coord_flip() +
   geom_jitter(alpha = 0.35) +
-  facet_wrap(cantonName ~ ., scales = "free") +
+  facet_wrap(capital ~ ., scales = "free", ncol = 2) +
   labs(
-    title = "Word count of responses by form topics per canton",
+    title = "Word count of responses by form topics per capital",
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
@@ -234,11 +254,13 @@ dsp <- cp %>%
 We see in the plot below that the response word counts per form and colored if a
 response has a description field or not. Having a description field or not is
 calculated as that a description field has a minimum one word.
+
 The responses with the longest word
 counts are the ones with description. Nevertheless, it is not so easy to see a
 clear trend that there's a correlation between response word count and
 description fields. Interestingly, the form *F15*, which is *Protección_VBG*, has
 no description fields at all.
+
 ```{r, plot1}
 dsp %>% 
   ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
