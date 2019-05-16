@@ -6,7 +6,7 @@
 Exploring qualitative indicators via text mining methods.
 
 This repository contains the analysis code. The data used here can only
-be accessed by using *ActivityInfo*.
+be accessed by using *ActivityInfo* with proper permissions.
 
 ### Usage
 

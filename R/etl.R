@@ -24,7 +24,8 @@ all.form.tbl <- do.call(rbind, lapply(form.ids, function(x) {
 ## merge folder and form information with (sub-)form table:
 wide.db.resources <- wide_format_db_resources(db.resources)
 all <- merge(all.form.tbl, wide.db.resources, by.x = "id", by.y = "idSubForms")
-# bring some colnames to the left:
+
+## bring some colnames to the left:
 cols <- c("idFolder", "labelFolder", "idForms", "labelForms", "labelSubForms")
 all <- all[, c(cols, setdiff(names(all), cols)) ]
 
@@ -33,3 +34,4 @@ all <- all[, c(cols, setdiff(names(all), cols)) ]
 ## quotes, commas etc. cause errors).
 all.form.json <- jsonlite::toJSON(all, pretty = TRUE)
 writeLines(all.form.json, con = TEXT.DATA.PATH)
+

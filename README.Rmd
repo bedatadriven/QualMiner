@@ -20,7 +20,7 @@ library(rsvg)
 Exploring qualitative indicators via text mining methods.
 
 This repository contains the analysis code. The data used here can only be
-accessed by using *ActivityInfo*.
+accessed by using *ActivityInfo* with proper permissions.
 
 ### Usage
 
@@ -70,7 +70,7 @@ script <- 'digraph diagram {
 	                    label="ActivityInfo\nSource", 
 	                    style=filled color="#242934" fillcolor="#DBF1F1"];
 	MainData [shape=parallelogram, label="Data generated and loaded"];
-	Analyses [shape=note, label="Analyses"];
+	Analyses [shape=box, label="Analyses"];
 	InteractiveNotebook [shape=tab, label="Interactive\nNotebook"];
 	
 	// ACTIONS:
