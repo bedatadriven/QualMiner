@@ -15,7 +15,7 @@ library(DiagrammeRsvg)
 library(rsvg)
 ```
 
-# QualMiner
+# QualMiner <a href='https://bedatadriven.github.io/QualMiner/'><img src='https://raw.githubusercontent.com/bedatadriven/QualMiner/master/media/qualminer-logo.png' align="right" width="200"/></a>
 
 Exploring qualitative indicators via text mining methods.
 

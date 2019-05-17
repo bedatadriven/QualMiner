@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# QualMiner
+# QualMiner <a href='https://bedatadriven.github.io/QualMiner/'><img src='https://raw.githubusercontent.com/bedatadriven/QualMiner/master/media/qualminer-logo.png' align="right" width="200"/></a>
 
 Exploring qualitative indicators via text mining methods.
 
