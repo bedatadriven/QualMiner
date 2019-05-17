@@ -114,7 +114,7 @@ compact %>% count(partnerName, sort = TRUE) %>% knitr::kable()
 Number of Capitals and Provinces
 
 ```{r}
-compact %>% count(capital, province, sort = TRUE) %>% knitr::kable()
+compact %>% count(province, capital, sort = TRUE) %>% knitr::kable()
 ```
 
 ## Response quality
@@ -216,13 +216,16 @@ cp %>%
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   coord_flip() +
   geom_jitter(alpha = 0.35) +
-  facet_wrap(capital ~ ., scales = "free", ncol = 2) +
+  facet_grid(~capital, scales = "free") +
   labs(
     title = "Word count of responses by form topics per capital",
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
-  theme_ecuador1()
+  xlab(NULL) +
+  ylab(NULL) +
+  theme_ecuador1() +
+  theme(panel.spacing = unit(0, "lines"))
 ```
 
 *A caveat:* Reducing multiple values down to a single value should be avoided in
@@ -346,26 +349,20 @@ We can look at multiple continuous variables in our data.
 
 Scatter plots help understand the characteristics of those variables.
 However, we miss a general understanding that is the *trend line*.
-We apply linear and LOESS regressions to look see the trend if the longer question
-and description fields result in longer responses.
 
 ```{r, plot-linear-regression}
 p1 <- dsp %>% 
   ggplot(aes(x = .responseWordCount, y = .questionWordCount)) +
   geom_jitter(alpha = 0.35) +
   geom_smooth(aes(colour = "linear"), method = "lm") +
-  geom_smooth(aes(colour = "LOESS"), method = "loess") +
-  scale_colour_manual(name = "Regression", values = c("blue", "red")) +
   theme_ecuador1() +
-  theme(legend.position = "bottom")
+  theme(legend.position = "none")
 p2 <- dsp %>% 
   ggplot(aes(x = .responseWordCount, y = .descriptionWordCount)) +
   geom_jitter(alpha = 0.35) +
   geom_smooth(aes(colour = "linear"), method = "lm") +
-  geom_smooth(aes(colour = "LOESS"), method = "loess") +
-  scale_colour_manual(name = "Regression", values = c("blue", "red")) +
   theme_ecuador1() +
-  theme(legend.position = "bottom")
+  theme(legend.position = "none")
 gridExtra::grid.arrange(p1, p2, ncol = 2)
 ```
 
@@ -398,9 +395,11 @@ In that section, we take text as data.
 
 ### Textual data preparation
 
-Describe how to process textual data and what common steps are usually performed.
+Describe how to prepare textual data and what common steps are usually performed.
 
-#### Tokenization
+They are usually four steps involved in this process:
+
+#### 1. Tokenization
 
 Tokenization means to split a text into tokens considered
 meaningful units of text. A token can either be a word (and often it is) or a
@@ -417,27 +416,25 @@ head(tokens)
 Perform stemming, which you bring nouns/verbs back to infinitive forms, and
 tokenization, which is separating words in meaningful pieces.
 
-There is usually a list of such words for each language and they are called as
-stop-words as they are overly distributed in the text and they will not give so
-meaningful results itself. Stop-words are including articles (*el/la*),
-conjunctions (*y*), pronouns (*yo/tú/etc.*) and so on. We explain below how to
-remove them.
-
-#### Strip punctuation
+#### 2. Strip punctuation
 
 Punctuation is often not required in text analysis (unless a researcher wants to
 tokenize the text based on a specific classifier *such as sentence tokens*);
 therefore, they create noise.
 
-#### Convert text into lowercase
+#### 3. Convert text into lowercase
 
 When the text turned into lowercase, for instance, the words *respuesta* and
 *Respuesta* will no longer be taken as different words.
 
-#### Exclude stopwords & numbers
+#### 4. Exclude stopwords & numbers
 
 Stop words usually mean the most common words in a language that will bring no
-significant results in analysis. In text mining, this process is usually done
+significant results in analysis. They are overly distributed in the text and
+they will not give so meaningful results itself. Stop-words are including
+articles (*el/la*), conjunctions (*y*), pronouns (*yo/tú/etc.*) and so on.
+
+In text mining, this process is usually done
 after the text converted into lowercase so one does not have to provide stop
 words including both lower and sentence case versions.
 
@@ -468,7 +465,7 @@ The most common words in all responses:
 ```{r}
 tokens_sw %>% 
   count(word, sort = TRUE) %>% 
-  top_n(20) %>% 
+  top_n(20, n) %>% 
   mutate(word = reorder(word, n)) %>% 
   ggplot(aes(word, n)) +
   geom_col() +
@@ -498,14 +495,39 @@ tokens_sw %>%
   theme_ecuador1()
 ```
 
-### Word frequencies
+### Sentiment analysis
 
-The word frequencies per topic
+Sentiment analysis (also called as opinion mining) is a technique to understand
+the emotional meanings of text given by a dictionary describing the
+positive/negative words that already done by humans.
+
+The responses seem to be written with a formal tone of voice; therefore, the
+responses may not show any sentiment at all.
+
+First, we find a sentiment lexicon for the Spanish language 
+(source [here](https://sites.google.com/site/datascienceslab/projects/multilingualsentiment)).
+
+```{r}
+sentiments <- get_es_sentiments()
+```
+
+A wordcloud showing positive and negative words:
+```{r}
+tokens_sw %>%
+  inner_join(sentiments, by = "word") %>%
+  count(word, sentiment, sort = TRUE) %>%
+  reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  wordcloud::comparison.cloud(
+    colors = c("#FF6961", "#228FCF"),
+    max.words = 100,
+    title.colors = "#5c5c5c"
+  )
+```
+
 
 # References
 
 ```{r, echo=FALSE, results='asis'}
-bib <- RefManageR::ReadBib("references.bib")
-print(bib)
+bibtex::read.bib("references.bib")
 ```
 
