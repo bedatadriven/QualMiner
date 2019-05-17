@@ -60,3 +60,17 @@ theme_ecuador1 <- function() {
     )
 }
 
+### ----------------------------------------------------------------- ###
+### DYGRAPH OPTIONS ----
+### ----------------------------------------------------------------- ###
+
+#' @references
+#' \url{https://rstudio.github.io/dygraphs/gallery-plugins.html}
+dyUnzoom <-function(dygraph) {
+  dyPlugin(
+    dygraph = dygraph,
+    name = "Unzoom",
+    path = system.file("plugins/unzoom.js", package = "dygraphs")
+  )
+}
+

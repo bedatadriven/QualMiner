@@ -24,6 +24,8 @@ source(file.path("..", "R", "analysis-methods.R"))
 ## Libraries
 library(tidyverse)
 library(tidytext)
+library(scales)
+library(dygraphs)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
@@ -271,6 +273,66 @@ dsp %>%
 We look below the description word count and compare with the
 response word count (and remove the categorical field displaying if the question
 of response has a description field).
+
+`TODO ANOVA`
+
+### General trends
+
+<hr>
+
+```{r}
+cp %>% 
+  group_by(partnerName) %>% 
+  summarise(median = median(.responseWordCount)) %>% 
+  ungroup() %>% 
+  ggplot(aes(reorder(partnerName, -median), median)) +
+  geom_bar(stat = "identity", width = 0.5, fill = "tomato2") + 
+  labs(title = "Median word count of responses per partner",
+       subtitle = sprintf("The total median rate %s", median(cp$.responseWordCount))) +
+  xlab("Partners") +
+  ylab("Median value") +
+  theme(axis.text.x = element_text(angle=65, vjust=0.6))
+```
+
+<hr>
+
+```{r}
+med.wc <-compact %>%
+  mutate(.responseWordCount = word_count(response)) %>%
+  mutate(Month = as.Date(paste0(Month, "-01"), format = "%Y-%m-%d")) %>%
+  group_by(partnerName, Month) %>%
+  summarize(median = median(.responseWordCount))
+
+ggplot(med.wc, aes(Month, median, color = partnerName)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Word count per partner",
+       subtitle = "Median word count of responses") +
+  xlab("Month") +
+  ylab("Median word count") +
+  scale_x_date(labels = date_format("%Y-%m")) +
+  scale_color_brewer(palette = "Paired") +
+  theme_ecuador1() +
+  theme(legend.position = "bottom") +
+  theme(legend.title = element_blank())
+```
+
+<hr>
+
+Interactive version:
+```{r, fig.width=6, fig.height=2.5}
+cast.med.wc <- reshape2::dcast(med.wc, Month ~ partnerName, value.var = "median")
+ts.med.wc <- xts::xts(cast.med.wc[, -1], order.by = cast.med.wc$Month)
+dygraph(ts.med.wc, main = "Word count per partner") %>%
+  dyHighlight(
+    highlightCircleSize = 4,
+    highlightSeriesBackgroundAlpha = 0.65,
+    hideOnMouseOut = TRUE
+  ) %>%
+  dyLegend(show = "follow") %>%
+  dyOptions(colors = RColorBrewer::brewer.pal(12, "Paired")) %>% 
+  dyUnzoom()
+```
 
 #### The regression line
 
