@@ -67,7 +67,7 @@ col.names <- c(
   "response",
   "description",
   "partnerName",
-  "capital",
+  "canton",
   "province",
   "id",
   "recordId"
@@ -111,10 +111,10 @@ Number of partners
 compact %>% count(partnerName, sort = TRUE) %>% knitr::kable()
 ```
 
-Number of Capitals and Provinces
+Number of Cantons and Provinces
 
 ```{r}
-compact %>% count(province, capital, sort = TRUE) %>% knitr::kable()
+compact %>% count(province, canton, sort = TRUE) %>% knitr::kable()
 ```
 
 ## Response quality
@@ -161,7 +161,7 @@ cp <- compact %>%
   select(
     labelForms, question, response, 
     .responseWordCount, .questionWordCount, 
-    partnerName, capital,
+    partnerName, canton,
     description, labelFormsRecode
   ) %>% 
   ungroup()
@@ -208,7 +208,7 @@ cp %>%
   theme_ecuador1()
 ```
 
-The response word count distribution per form topic categorized by capital name:
+The response word count distribution per form topic categorized by canton name:
 ```{r plot-canton-response-wc}
 cp %>%
   gather(variable, value, .responseWordCount) %>% 
@@ -216,9 +216,9 @@ cp %>%
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   coord_flip() +
   geom_jitter(alpha = 0.35) +
-  facet_grid(~capital, scales = "free") +
+  facet_grid(~canton, scales = "free") +
   labs(
-    title = "Word count of responses by form topics per capital",
+    title = "Word count of responses by form topics per canton",
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +

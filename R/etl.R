@@ -31,7 +31,7 @@ all <- all[, c(cols, setdiff(names(all), cols)) ]
 
 ## rename canton names based on this
 ## https://en.wikipedia.org/wiki/Provinces_of_Ecuador
-colnames(all)[colnames(all) == "cantonName"] <- "capital"
+colnames(all)[colnames(all) == "cantonName"] <- "canton"
 colnames(all)[colnames(all) == "cantonParentName"] <- "province"
 
 ## Writing data to disk
