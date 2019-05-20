@@ -61,7 +61,7 @@ theme_ecuador1 <- function() {
 }
 
 ### ----------------------------------------------------------------- ###
-### HTML DISPLAY ----
+### RMARKDOWN HELPERS ----
 ### ----------------------------------------------------------------- ###
 
 #' A wrapper to knitr::kable that truncates the data frame/tibble columns
@@ -87,5 +87,42 @@ kable_truncate <- function(tbl, which, trunc.level = 50) {
     })
   }
   knitr::kable(tbl)
+}
+
+#' Create RMarkdown tabset programmatically
+#'
+#' @param main main title where a tabbed section starts.
+#' @param tabs tabset names
+#' @param body the function body run on each tabset body.
+#' @details
+#' It's important that the call must be in a chunk which has a \code{echo=FALSE}
+#' and \code{results='asis'} option.
+#' @references
+#' \url{https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections}
+create_tabset <- function(main, tabs, body) {
+  stopifnot(.has_hash(main))
+  hash.length <- .length_hash(main)
+  tab.titles <- sprintf("%s %s", .make_hash(hash.length + 1L), tabs)
+  cat(main, "{.tabset}", "\n\n")
+  for (i in seq_along(tabs)) {
+    cat(tab.titles[i])
+    cat("\n\n")
+    print(eval(parse(text=body[i])))
+    cat("\n\n")
+  }
+  cat("\n")
+}
+
+.has_hash <- function(text) {
+  if (length(grep("^#+", text)) > 0) TRUE else FALSE
+}
+
+#' Count number of hash symbols in the main title:
+.length_hash <- function(text) {
+  lengths(regmatches(text, gregexpr("#", text)))
+}
+
+.make_hash <- function(length) {
+  paste(rep("#", length), collapse = "")
 }
 
