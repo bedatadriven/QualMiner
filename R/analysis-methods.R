@@ -61,12 +61,3 @@ get_es_sentiments <- function() {
   rownames(sent) <- NULL
   sent
 }
-
-#' Do abbreviate
-do_abb <- function(x, max = 3) {
-  x <- gsub("\\_", "[[:punct:]]+", x)
-  x <- unlist(strsplit(x, " "))
-  x <- paste(sapply(x, function(i) substr(tools::toTitleCase(i), 1, max)), collapse = "")
-  x
-}
-
