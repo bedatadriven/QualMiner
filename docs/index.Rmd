@@ -7,7 +7,7 @@ output:
     theme: cosmo
     css: style.css
     highlight: pygments
-    code_folding: show
+    code_folding: hide
     toc: true
     toc_float:
       collapsed: false
@@ -29,17 +29,17 @@ library(dygraphs)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
-knitr::opts_chunk$set(echo = TRUE,
-                      paged.print = FALSE)
+knitr::opts_chunk$set(echo = TRUE, paged.print = FALSE)
 ```
 
 # Introduction
 
-This document explores qualitative indicators from an ActivityInfo database that is monitoring Ecuador.
+This document explores qualitative indicators from an *ActivityInfo* database
+that is monitoring Ecuador.
 
-The document includes the source code used in the analysis. Choose `Hide All
-Code` option from the top right corner if you do not desire to see the code
-chunks.
+The document includes the source code used in the analysis. You can choose to
+`show` or `hide` by selecting the option from the top right corner if you do not
+desire to see the code chunks.
 
 # Data preparation
 
@@ -68,37 +68,51 @@ col.names <- c(
   "description",
   "partnerName",
   "canton",
-  "province",
-  "id",
-  "recordId"
+  "province"
 )
 ## if we choose a column name by mistake:
 stopifnot(!anyDuplicated(col.names) > 0)
-compact <- subset(
-  x = form.table, 
-  subset = !is.na(form.table$response) & type == "NARRATIVE", 
-  select = col.names
-)
-compact <- as_tibble(compact)
-head(compact)
+compact <- form.table %>% 
+  as_tibble() %>% 
+  filter(!is.na(response) & type == "NARRATIVE") %>% 
+  select(col.names)
+kable_truncate(head(compact), c("question", "response", "description"), trunc.level = 10)
 ```
 
-We abbreviate and therefore recode form topics because they seem to be too long
+We do shorten and therefore recode form topics because they seem to be too long
 and disarray the plots. The **recode table** is placed below to look up form
 labels and their abbreviations:
 
+#### Recode table
 ```{r recode-table}
-## make the label forms factor for recoding:
-compact$labelFormsRecode <- as.factor(compact$labelForms)
-recode.lvls <- sapply(unique(compact$labelFormsRecode), function(x) do_abb(x))
-levels(compact$labelFormsRecode) <- recode.lvls
-stopifnot(anyDuplicated(levels(compact$labelFormsRecode)) == 0)
+## only recode some long label forms, shorter names can stay as it is (e.g.
+## `Salud`)
+compact <- compact %>% 
+  mutate(
+    labelFormsRecode = recode(
+      labelForms,
+      "Alojamiento Temporal" = "Alojamiento",
+      "Necesidades básicas/Otro" = "Necesidades",
+      "Manejo de la información y entrega directa de la información a la población" = "Población",
+      "Manejo de la información para socios y análisis de las necesidades" = "Socios",
+      "Protección_VBG" = "VBG",
+      "Trata_y_tráfico" = "Tráfico",
+      "Acceso_a_educación" = "Educación",
+      "Acceso a vivienda y hábitat dignos en comunidades receptoras" = "Hábitat",
+      "Medios de vida y formación técnico-profesional" = "Técnico",
+      "Cohesión_social" = "SocialCohesión",
+      "Apoyo Educacional a Comunidades Receptoras" = "Educacional",
+      "Asistencia técnica para VBG-SSR" = "VBG_SSR",
+      "Asistencia técnica para protección/gestión de fronteras" = "Fronteras",
+      "Asistencia técnica para gestion de la informacion y coordinacion" = "Coordinacion",
+      "Asistencia técnica para el sector laboral" = "SectorLaboral",
+      "Asistencia técnica para protección" = "Protección",
+      "Asistencia técnica para protección de la infancia" = "ProtecciónInfancia",
+      "Protección_LGBTI" = "LGBTI"
+    )
+  )
 
-recode_tbl <- compact %>% 
-  arrange(labelFormsRecode) %>% 
-  select(labelFormsRecode, labelForms) %>% 
-  distinct()
-
+recode_tbl <- compact %>% select(labelFormsRecode, labelForms) %>% distinct()
 knitr::kable(recode_tbl)
 ```
 
@@ -119,7 +133,9 @@ compact %>% count(province, canton, sort = TRUE) %>% knitr::kable()
 
 ## Response quality
 
-Response quality means how much response the questions receive. The idea is to find relations that affect the response quality to understand if they work or not under some conditions.
+Response quality means how much response the questions receive. The idea is to
+find relations that affect the response quality to understand if they work or
+not under some conditions.
 
 *Research questions:*
 
@@ -133,8 +149,20 @@ such as the question, form topic, canton name, partner name, etc.
 
 *Assumptions:*
 
-+ Responses with a larger word count have more quality than the responses
-with less word count.
++ Responses with a *larger word count* have more quality than the responses
+with *smaller word count*.
+
+In other words, we assume that *the more word the better is*. The limitations
+are based on the unequal distribution of the data. The word count of responses
+and questions can be related to other things, such as the questions require
+short answers so then the responses tend to be shorter.
+
+Additionally, we can have a cross-analysis to test these outcomes. It might be a
+good idea to have a small subset of data anda sk an expert to test the
+assumptions qualitatively. For instance, we can take the first twenty responses
+with the highest word count and the last twenty responses with the lowest word
+count. We chose the extreme directions because they point out the greatest
+differences which are easier to test assumptions.
 
 ### Word count 
 
@@ -358,20 +386,6 @@ uncertainty in the estimate is wide.
 
 `TODO`
 
-### Conclusion
-
-On the whole, we assumed that *the more word the better is*. The limitations, as
-described above, are based on the unequal distribution of the data. The word
-count of responses and questions can be related to other things, such as the
-questions require short answers so then the responses tend to be shorter.
-
-Additionally, we can have a cross-analysis to test these outcomes. It might be a
-good idea to have a small subset of data and ask an expert to test the
-assumptions qualitatively. For instance, we can take the first twenty responses
-with the highest word count and the last twenty responses with the lowest word
-count. We chose the extreme directions because they point out the greatest
-differences which are easier to test assumptions.
-
 ## Text analysis
 
 In that section, we take text as data.
@@ -382,7 +396,7 @@ Describe how to prepare textual data and what common steps are usually performed
 
 They are usually four steps involved in this process:
 
-#### 1. Tokenization
+**1. Tokenization**
 
 Tokenization means to split a text into tokens considered
 meaningful units of text. A token can either be a word (and often it is) or a
@@ -393,24 +407,24 @@ of analysis.
 tokens <- compact %>% 
   as_tibble() %>% 
   unnest_tokens(word, response)
-head(tokens)
+kable_truncate(head(tokens), names(tokens)[seq(9)], trunc.level = 5)
 ```
 
 Perform stemming, which you bring nouns/verbs back to infinitive forms, and
 tokenization, which is separating words in meaningful pieces.
 
-#### 2. Strip punctuation
+**2. Strip punctuation**
 
 Punctuation is often not required in text analysis (unless a researcher wants to
 tokenize the text based on a specific classifier *such as sentence tokens*);
 therefore, they create noise.
 
-#### 3. Convert text into lowercase
+**3. Convert text into lowercase**
 
 When the text turned into lowercase, for instance, the words *respuesta* and
 *Respuesta* will no longer be taken as different words.
 
-#### 4. Exclude stopwords & numbers
+**4. Exclude stopwords & numbers**
 
 Stop words usually mean the most common words in a language that will bring no
 significant results in analysis. They are overly distributed in the text and
@@ -431,7 +445,6 @@ that only returns the tokens not listed in the stopwords.
 es_stopwords <- get_es_stopwords()
 tokens_sw <- tokens %>% 
   anti_join(es_stopwords, by = "word")
-head(tokens_sw)
 ```
 
 It's also possible to add more custom words such as *ACNUR* or *HIAS* if such
@@ -456,26 +469,29 @@ tokens_sw %>%
   theme_ecuador1()
 ```
 
-```{r, paged.print=FALSE}
+```{r, echo=FALSE, results='asis'}
+recode.names <- unique(compact$labelFormsRecode)
+body <- glue::glue(
+  '
 top.n <- 10L
-tokens_sw %>% 
-  count(labelFormsRecode, word) %>%
+tokens_sw %>%
+  filter(labelFormsRecode == "{label.form.code}") %>%
+  count(word) %>%
   arrange(desc(n)) %>% 
-  group_by(labelFormsRecode) %>% 
   slice(seq_len(top.n)) %>% 
-  ungroup() %>% 
   ggplot(aes(word, n)) +
   geom_col() +
-  facet_wrap(~ labelFormsRecode, scales = "free") +
   labs(
-    title = "The most common words per topic label",
+    title = "{label.form.code}",
     subtitle = sprintf("Top %d words", top.n),
     caption = "*Please refer to recode table for label forms"
   ) +
-  xlab(NULL) +
-  ylab(NULL) +
   coord_flip() +
   theme_ecuador1()
+',
+  label.form.code = recode.names
+)
+create_tabset(main = "### The most common words per topic", tabs = recode.names, body = body)
 ```
 
 ### Sentiment analysis
