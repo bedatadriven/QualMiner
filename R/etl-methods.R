@@ -46,7 +46,11 @@ flatten_form_schema <- function(form.schema) {
                stringsAsFactors = FALSE)
   }))
 
-  res <- data.frame(as.data.frame(form.sans.elements), elements, stringsAsFactors = FALSE)
+  res <- data.frame(
+      as.data.frame(form.sans.elements, stringsAsFactors = FALSE),
+      elements,
+      stringsAsFactors = FALSE
+    )
 
   ## remove rows where code is NA:
   res <- res[!is.na(res$code), ]
@@ -116,7 +120,7 @@ get_query_element <- function(formId, field.code.names) {
 
     ## convert into long format:
     qt.t <- local({
-      p <- data.frame(response = t(qt.sub.df))
+      p <- data.frame(response = t(qt.sub.df), stringsAsFactors = FALSE)
       p[["code"]] <- rownames(p)
       rownames(p) <- NULL
       p[c("code", "response")]
@@ -135,7 +139,7 @@ get_query_element <- function(formId, field.code.names) {
     }, USE.NAMES = FALSE)
     req.names <- c(fix.names, found.rel.names)
 
-    res <- cbind(data.frame(qt[req.names]), qt.t)
+    res <- cbind(data.frame(qt[req.names], stringsAsFactors = FALSE), qt.t)
 
     ## rename columns:
     colnames(res)[which(colnames(res) == "X.id")] <- "recordId"
