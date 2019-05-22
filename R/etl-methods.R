@@ -91,10 +91,10 @@ get_query_element <- function(formId, field.code.names) {
   queryTable <- get_query_table(formId)
 
   if (length(queryTable) > 0) {
-    message("getting query table: ", formId)
+    cat("getting query table: \033[1m", formId, "\033[0m\n")
   } else {
     ## gracefully return for empty tables:
-    message("query table empty: ", formId)
+    cat("query table empty: \033[1m", formId, "\033[0m\n")
     return(NULL)
   }
 

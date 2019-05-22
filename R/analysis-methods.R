@@ -61,3 +61,4 @@ get_es_sentiments <- function() {
   rownames(sent) <- NULL
   sent
 }
+

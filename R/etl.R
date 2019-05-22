@@ -18,6 +18,7 @@ form.ids <- subset(db.resources,
                    "id", drop = TRUE)
 
 all.form.tbl <- do.call(rbind, lapply(form.ids, function(x) {
+  cat(sprintf("[%d] ", which(form.ids == x)))
   make_question_response_tbl(x)
 }))
 
