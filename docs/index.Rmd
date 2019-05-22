@@ -5,10 +5,10 @@ date: "`r Sys.Date()`"
 output:
   html_document:
     includes:
-      in_header: header.html
-      after_body: footer.html
+      in_header: assets/header.html
+      after_body: assets/footer.html
     theme: cosmo
-    css: style.css
+    css: assets/style.css
     highlight: pygments
     code_folding: hide
     toc: true
@@ -17,13 +17,14 @@ output:
       smooth_scroll: true
 ---
 
-<script src="script.js"></script>
+<script src="assets/script.js"></script>
 
 ```{r setup, include=FALSE}
 ## Header file
 source(file.path("..", "R", "global-header.R"))
-## Functions
+## Analysis related calls
 source(file.path("..", "R", "analysis-methods.R"))
+source(file.path("..", "R", "analysis-helpers.R"))
 ## Libraries
 library(tidyverse)
 library(tidytext)
@@ -33,6 +34,10 @@ library(dygraphs)
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
 knitr::opts_chunk$set(echo = TRUE, paged.print = FALSE)
+## read Data from disk:
+form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
+## (force it to be a tibble):
+form.table <- tibble::as_tibble(form.table)
 ```
 
 # Introduction
@@ -40,9 +45,10 @@ knitr::opts_chunk$set(echo = TRUE, paged.print = FALSE)
 This document explores qualitative indicators from an *ActivityInfo* database
 that is monitoring Ecuador.
 
-The document includes the source code used in the analysis. You can choose to
-`show` or `hide` by selecting the option from the top right corner if you do not
-desire to see the code chunks.
+The document includes the source code used in the analysis. You can click on the
+`Code` in the areas to see the related code. You can change this behavior
+globally in the document either by choosing `Show all code` or `Hide all code`
+from the top right corner.
 
 # Data preparation
 
@@ -53,14 +59,33 @@ process went on.
 ### Data import & preparation
 
 Read the data from the source that has been extracted, cleaned, and transformed.
-Select the rows where the field type equals to `NARRATIVE`, which indicates that
-is a multi-line text field in the *ActivityInfo*. Select these columns and
+Select the rows where the field type equals to `NARRATIVE`, this indicates that
+is a multi-line text field in *ActivityInfo*. Select these columns and
 analyze them by comparing and contrasting with other fields types associated with
 the textual field types.
 
-```{r data-source-preparation}
-## read data from disk:
-form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
+```{r, include=FALSE}
+form.table %>% 
+  group_by(recordId) %>% 
+  summarize(length = length(recordId))
+
+## Code names per record
+code.nms <- form.table %>% group_by(recordId) %>% select(recordId, code) %>% 
+  summarize(names = list(code))
+head(code.nms$names)
+
+## Do all records have "Socio" field?
+socio.fields <- sapply(seq_along(code.nms$names), function(i) "Socio" %in% code.nms$names[[i]])
+all(socio.fields)
+
+## Do all records have "direct_indirect" field?
+direct_indirect.fields <- sapply(seq_along(code.nms$names), function(i) "direct_indirect" %in% code.nms$names[[i]])
+all(direct_indirect.fields)
+## Which records do have a "direct_indirect" field and which don't have?
+
+```
+
+```{r data-source-preparation, paged.print=FALSE}
 ## order matters for display purposes:
 col.names <- c(
   "labelFolder",
@@ -82,11 +107,12 @@ compact <- form.table %>%
 kable_truncate(head(compact), c("question", "response", "description"), trunc.level = 10)
 ```
 
-We do shorten and therefore recode form topics because they seem to be too long
-and disarray the plots. The **recode table** is placed below to look up form
-labels and their abbreviations:
+We shorten the names and therefore re code form topics because they appear to be
+too long and disarray the plots. The *re coded table* below provides a  look up
+for form labels and their abbreviations:
 
 #### Recode table
+
 ```{r recode-table}
 ## only recode some long label forms, shorter names can stay as it is (e.g.
 ## `Salud`)
@@ -116,23 +142,28 @@ compact <- compact %>%
   )
 
 recode_tbl <- compact %>% select(labelFormsRecode, labelForms) %>% distinct()
-knitr::kable(recode_tbl)
+knitr::kable(cbind("i" = seq(nrow(recode_tbl)), recode_tbl))
 ```
 
 # Analysis
 
 Before we start, here's some descriptive tables about the nature of data.
 
-Number of partners
+### Summary tables {.tabset}
+
+#### Number of partners
 ```{r}
 compact %>% count(partnerName, sort = TRUE) %>% knitr::kable()
 ```
 
-Number of Cantons and Provinces
+***
 
+#### Number of Cantons and Provinces
 ```{r}
 compact %>% count(province, canton, sort = TRUE) %>% knitr::kable()
 ```
+
+***
 
 ## Response quality
 
@@ -161,7 +192,7 @@ and questions can be related to other things, such as the questions require
 short answers so then the responses tend to be shorter.
 
 Additionally, we can have a cross-analysis to test these outcomes. It might be a
-good idea to have a small subset of data anda sk an expert to test the
+good idea to have a small subset of data and ask an expert to test the
 assumptions qualitatively. For instance, we can take the first twenty responses
 with the highest word count and the last twenty responses with the lowest word
 count. We chose the extreme directions because they point out the greatest
@@ -203,8 +234,7 @@ It's also a good practice to see the number of questions. For example, one
 question has two responses, therefore they're short. Therefore, jittered points
 are added to give a glance about the number of observations in the same plot.
 
-Box plot form topics and response word counts (based on raw data):
-```{r plot-topic-response-wc, paged.print=FALSE}
+```{r plot-topic-response-wc, fig.cap="Figure: Box plot form topics and response word counts based on the raw data"}
 cp %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
   ggplot(aes(labelFormsRecode, value, fill = variable)) +
@@ -216,7 +246,8 @@ cp %>%
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
-  theme_ecuador1()
+  theme_ecuador1() +
+  theme(legend.position = "bottom")
 ```
 
 In the plot above, the outliers are shown in orange color. Outliers are the
@@ -274,7 +305,7 @@ Some questions have the description field giving extra details about the
 questions.
 
 Do some questions with the extra description field have better *response
-quality* than the questions which does not have it?
+quality* than the questions which do not have it?
 
 Looking at the table containing form name, question, description and so on:
 
@@ -298,11 +329,20 @@ description fields. Interestingly, the form *F15*, which is *Protección_VBG*, h
 no description fields at all.
 
 ```{r, plot1}
+dsp_mean <- mean(dsp$.responseWordCount)
 dsp %>% 
   ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
   geom_point() +
+  geom_vline(xintercept = dsp_mean, color = "orange", size = 0.6) +
+  geom_text(
+    aes(x = 65, label = "mean", y = 11),
+    colour = "orange",
+    angle = 90,
+    size = 4
+  ) +
   theme_ecuador1()
 ```
+
 
 We look below the description word count and compare with the
 response word count (and remove the categorical field displaying if the question
@@ -393,139 +433,8 @@ uncertainty in the estimate is wide.
 
 In that section, we take text as data.
 
-### Textual data preparation
-
-Describe how to prepare textual data and what common steps are usually performed.
-
-They are usually four steps involved in this process:
-
-**1. Tokenization**
-
-Tokenization means to split a text into tokens considered
-meaningful units of text. A token can either be a word (and often it is) or a
-group of words (such as *bigram*), or even a sentence that depends on the level
-of analysis.
-
-```{r}
-tokens <- compact %>% 
-  as_tibble() %>% 
-  unnest_tokens(word, response)
-kable_truncate(head(tokens), names(tokens)[seq(9)], trunc.level = 5)
+```{r child = 'analysis/text-analysis.Rmd', include=FALSE}
 ```
-
-Perform stemming, which you bring nouns/verbs back to infinitive forms, and
-tokenization, which is separating words in meaningful pieces.
-
-**2. Strip punctuation**
-
-Punctuation is often not required in text analysis (unless a researcher wants to
-tokenize the text based on a specific classifier *such as sentence tokens*);
-therefore, they create noise.
-
-**3. Convert text into lowercase**
-
-When the text turned into lowercase, for instance, the words *respuesta* and
-*Respuesta* will no longer be taken as different words.
-
-**4. Exclude stopwords & numbers**
-
-Stop words usually mean the most common words in a language that will bring no
-significant results in analysis. They are overly distributed in the text and
-they will not give so meaningful results itself. Stop-words are including
-articles (*el/la*), conjunctions (*y*), pronouns (*yo/tú/etc.*) and so on.
-
-In text mining, this process is usually done
-after the text converted into lowercase so one does not have to provide stop
-words including both lower and sentence case versions.
-
-We import a list of Spanish stopwords data (source
-[**here**](https://github.com/stopwords-iso/stopwords-es)) and perform a
-*filtering join* returning tokens from textual data by excluding the words
-listed in the stopwords.
-that only returns the tokens not listed in the stopwords.
-
-```{r}
-es_stopwords <- get_es_stopwords()
-tokens_sw <- tokens %>% 
-  anti_join(es_stopwords, by = "word")
-```
-
-It's also possible to add more custom words such as *ACNUR* or *HIAS* if such
-organization names are not desired in the results.
-
-The original tokens had *`r nrow(tokens)`* rows but after stop words, it
-decreased to *`r nrow(tokens_sw)`* and that
-the change in between is *`r round(nrow(tokens_sw)*100/nrow(tokens))`*%.
-
-### The most common words
-
-The most common words in all responses:
-
-```{r}
-tokens_sw %>% 
-  count(word, sort = TRUE) %>% 
-  top_n(20, n) %>% 
-  mutate(word = reorder(word, n)) %>% 
-  ggplot(aes(word, n)) +
-  geom_col() +
-  coord_flip() +
-  theme_ecuador1()
-```
-
-```{r, echo=FALSE, results='asis'}
-recode.names <- unique(compact$labelFormsRecode)
-body <- glue::glue(
-  '
-top.n <- 10L
-tokens_sw %>%
-  filter(labelFormsRecode == "{label.form.code}") %>%
-  count(word) %>%
-  arrange(desc(n)) %>% 
-  slice(seq_len(top.n)) %>% 
-  ggplot(aes(word, n)) +
-  geom_col() +
-  labs(
-    title = "{label.form.code}",
-    subtitle = sprintf("Top %d words", top.n),
-    caption = "*Please refer to recode table for label forms"
-  ) +
-  coord_flip() +
-  theme_ecuador1()
-',
-  label.form.code = recode.names
-)
-create_tabset(main = "### The most common words per topic", tabs = recode.names, body = body)
-```
-
-### Sentiment analysis
-
-Sentiment analysis (also called as opinion mining) is a technique to understand
-the emotional meanings of text given by a dictionary describing the
-positive/negative words that already done by humans.
-
-The responses seem to be written with a formal tone of voice; therefore, the
-responses may not show any sentiment at all.
-
-First, we find a sentiment lexicon for the Spanish language 
-(source [here](https://sites.google.com/site/datascienceslab/projects/multilingualsentiment)).
-
-```{r}
-sentiments <- get_es_sentiments()
-```
-
-A wordcloud showing positive and negative words:
-```{r}
-tokens_sw %>%
-  inner_join(sentiments, by = "word") %>%
-  count(word, sentiment, sort = TRUE) %>%
-  reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
-  wordcloud::comparison.cloud(
-    colors = c("#FF6961", "#228FCF"),
-    max.words = 100,
-    title.colors = "#5c5c5c"
-  )
-```
-
 
 # References
 
