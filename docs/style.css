@@ -12,3 +12,11 @@ h1.title {
   border-color: #aaaaaa;
 }
 
+p.caption {
+  font-size: 1.1em;
+  font-style: italic;
+  color: grey;
+  margin-right: 10%;
+  margin-left: 10%;
+  text-align: justify;
+}
