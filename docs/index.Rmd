@@ -4,6 +4,9 @@ author: "Metin Yazici, BeDataDriven B.V."
 date: "`r Sys.Date()`"
 output:
   html_document:
+    includes:
+      in_header: header.html
+      after_body: footer.html
     theme: cosmo
     css: style.css
     highlight: pygments
