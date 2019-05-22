@@ -10,7 +10,6 @@ output:
     theme: cosmo
     css: assets/style.css
     highlight: pygments
-    code_folding: hide
     toc: true
     toc_float:
       collapsed: false
@@ -33,7 +32,7 @@ library(dygraphs)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
-knitr::opts_chunk$set(echo = TRUE, paged.print = FALSE)
+knitr::opts_chunk$set(echo = FALSE, paged.print = FALSE)
 ## read Data from disk:
 form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
 ## (force it to be a tibble):
@@ -44,11 +43,6 @@ form.table <- tibble::as_tibble(form.table)
 
 This document explores qualitative indicators from an *ActivityInfo* database
 that is monitoring Ecuador.
-
-The document includes the source code used in the analysis. You can click on the
-`Code` in the areas to see the related code. You can change this behavior
-globally in the document either by choosing `Show all code` or `Hide all code`
-from the top right corner.
 
 # Data preparation
 
@@ -227,7 +221,7 @@ cp <- compact %>%
     description, labelFormsRecode
   ) %>% 
   ungroup()
-head(cp)
+kable_truncate(head(cp), c("labelForms", "question", "response", "description"), trunc.level = 10)
 ```
 
 It's also a good practice to see the number of questions. For example, one
@@ -433,7 +427,7 @@ uncertainty in the estimate is wide.
 
 In that section, we take text as data.
 
-```{r child = 'analysis/text-analysis.Rmd', include=FALSE}
+```{r child = 'analysis/text-analysis.Rmd', eval=TRUE}
 ```
 
 # References
