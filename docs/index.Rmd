@@ -19,6 +19,7 @@ output:
 <script src="assets/script.js"></script>
 
 ```{r setup, include=FALSE}
+knitr::clean_cache()
 ## Header file
 source(file.path("..", "R", "global-header.R"))
 ## Analysis related calls
@@ -32,7 +33,7 @@ library(dygraphs)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
-knitr::opts_chunk$set(echo = FALSE, paged.print = FALSE)
+knitr::opts_chunk$set(echo = FALSE, paged.print = FALSE, cache = TRUE)
 ## read Data from disk:
 form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
 ## (force it to be a tibble):
@@ -59,9 +60,14 @@ analyze them by comparing and contrasting with other fields types associated wit
 the textual field types.
 
 ```{r, include=FALSE}
+## unique record ids
+unique(form.table$recordId)
+
+## record ids and unique fields
 form.table %>% 
   group_by(recordId) %>% 
-  summarize(length = length(recordId))
+  summarize(len = length(recordId)) %>% 
+  arrange(desc(len))
 
 ## Code names per record
 code.nms <- form.table %>% group_by(recordId) %>% select(recordId, code) %>% 
@@ -75,11 +81,85 @@ all(socio.fields)
 ## Do all records have "direct_indirect" field?
 direct_indirect.fields <- sapply(seq_along(code.nms$names), function(i) "direct_indirect" %in% code.nms$names[[i]])
 all(direct_indirect.fields)
-## Which records do have a "direct_indirect" field and which don't have?
-
 ```
 
-```{r data-source-preparation, paged.print=FALSE}
+```{r}
+partners <- form.table %>% 
+  group_by(recordId) %>% 
+  filter(code == "Socio") %>% 
+  mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE
+  select(recordId, partnerName, response, canton, province) %>% 
+  rename(subPartnerName = response)
+```
+
+The table showing partner count per each record:
+```{r}
+p <- partners %>% 
+  group_by(partnerName) %>% 
+  count(partnerName, sort=TRUE) %>% 
+  ungroup() %>% 
+  mutate(prop = round(n/sum(n), 3)) %>% 
+  mutate(freq = paste0(round(100 * n/sum(n), 0), "%"))
+p %>% knitr::kable()
+```
+
+In this table, **`r p[1,"partnerName",drop=T]`** has most of the records with
+a frequency of *`r p[1,"freq",drop=T]`*.
+Second, **`r p[2,"partnerName",drop=T]`** comes with a frequency of 
+*`r p[2,"freq",drop=T]`*. 
+The frequency difference between partners **`r p[1,"partnerName",drop=T]`** and
+**`r p[2,"partnerName",drop=T]`** is 
+*`r paste0(floor(convolve((p[1,"prop",drop=T]-p[2,"prop",drop=T]), 100)), '%')`*
+
+The table showing sub-partner count per each record:
+```{r}
+psb <- partners %>% 
+  group_by(subPartnerName) %>% 
+  count(subPartnerName, sort=TRUE) %>% 
+  drop_na() %>% 
+  ungroup() %>% 
+  mutate(prop = round(n/sum(n), 3)) %>% 
+  mutate(freq = paste0(round(100 * n/sum(n), 0), "%"))
+psb %>% knitr::kable()
+```
+
+In sub-partners, **`r psb[1,"subPartnerName",drop=T]`** has the most frequency 
+which is *`r psb[1,"freq",drop=T]`*.
+
+The table showing partner and sub-partner count per each record:
+```{r}
+ppsb <- partners %>% 
+  group_by(partnerName, subPartnerName) %>% 
+  count(partnerName, subPartnerName, sort=TRUE) %>% 
+  ungroup()
+head(ppsb) %>% knitr::kable()
+```
+
+```{r ppsb-for-text-template, echo=FALSE}
+PartnerSubProp <- partners %>% 
+  group_by(partnerName, subPartnerName) %>% 
+  count(partnerName, subPartnerName, sort=TRUE) %>% 
+  group_by(partnerName) %>% 
+  mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName)) %>% 
+  group_by(partnerName, subPartnerName) %>% 
+  summarize(n = sum(n)) %>% 
+  mutate(prop = round(n/sum(n), 3)) %>% 
+  mutate(freq = paste0(floor(100 * n/sum(n)), "%"))
+acnur.hias.part <- PartnerSubProp %>% filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
+```
+
+This table clearly shows what proportion of records are entered by a sub-partner of a partner?
+*`r acnur.hias.part[,"n",drop=T]`* out of total 
+*`r sum(PartnerSubProp %>% filter(partnerName %in% "ACNUR") %>% pull(n))`* responses of **ACNUR** is actually coming from **HIAS**.
+
+***
+
+```{r child = 'analysis/tabset-partner.Rmd', eval=TRUE}
+```
+
+## Data source preparation
+
+```{r data-source-preparation}
 ## order matters for display purposes:
 col.names <- c(
   "labelFolder",
@@ -94,9 +174,9 @@ col.names <- c(
 )
 ## if we choose a column name by mistake:
 stopifnot(!anyDuplicated(col.names) > 0)
-compact <- form.table %>% 
-  as_tibble() %>% 
-  filter(!is.na(response) & type == "NARRATIVE") %>% 
+compact <- form.table %>%
+  as_tibble() %>%
+  filter(!is.na(response) & type == "NARRATIVE") %>%
   select(col.names)
 kable_truncate(head(compact), c("question", "response", "description"), trunc.level = 10)
 ```
@@ -105,7 +185,7 @@ We shorten the names and therefore re code form topics because they appear to be
 too long and disarray the plots. The *re coded table* below provides a  look up
 for form labels and their abbreviations:
 
-#### Recode table
+## Label forms recode table
 
 ```{r recode-table}
 ## only recode some long label forms, shorter names can stay as it is (e.g.
@@ -427,7 +507,7 @@ uncertainty in the estimate is wide.
 
 In that section, we take text as data.
 
-```{r child = 'analysis/text-analysis.Rmd', eval=TRUE}
+```{r child = 'analysis/text-analysis.Rmd', eval=FALSE}
 ```
 
 # References
