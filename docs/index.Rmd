@@ -89,10 +89,10 @@ partners <- form.table %>%
   filter(code == "Socio") %>% 
   mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE
   select(recordId, partnerName, response, canton, province) %>% 
-  rename(subPartnerName = response)
+  rename(subPartnerName = response) %>% 
+  mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
 ```
 
-The table showing partner count per each record:
 ```{r}
 p <- partners %>% 
   group_by(partnerName) %>% 
@@ -103,15 +103,17 @@ p <- partners %>%
 p %>% knitr::kable()
 ```
 
-In this table, **`r p[1,"partnerName",drop=T]`** has most of the records with
-a frequency of *`r p[1,"freq",drop=T]`*.
-Second, **`r p[2,"partnerName",drop=T]`** comes with a frequency of 
-*`r p[2,"freq",drop=T]`*. 
-The frequency difference between partners **`r p[1,"partnerName",drop=T]`** and
-**`r p[2,"partnerName",drop=T]`** is 
-*`r paste0(floor(convolve((p[1,"prop",drop=T]-p[2,"prop",drop=T]), 100)), '%')`*
+The table above shows partner count per each record:
 
-The table showing sub-partner count per each record:
++ **`r p[1,"partnerName",drop=T]`** has most of the records with
+a frequency of *`r p[1,"freq",drop=T]`*.
+
++ Second, **`r p[2,"partnerName",drop=T]`** comes with a frequency of 
+*`r p[2,"freq",drop=T]`*. 
+The frequency difference between the partners **`r p[1,"partnerName",drop=T]`** and
+**`r p[2,"partnerName",drop=T]`** is 
+*`r paste0(floor(convolve((p[1,"prop",drop=T]-p[2,"prop",drop=T]), 100)), '%')`*.
+
 ```{r}
 psb <- partners %>% 
   group_by(subPartnerName) %>% 
@@ -123,44 +125,51 @@ psb <- partners %>%
 psb %>% knitr::kable()
 ```
 
-In sub-partners, **`r psb[1,"subPartnerName",drop=T]`** has the most frequency 
-which is *`r psb[1,"freq",drop=T]`*.
+The table above shows sub-partner count per each record.
 
-The table showing partner and sub-partner count per each record:
-```{r}
-ppsb <- partners %>% 
-  group_by(partnerName, subPartnerName) %>% 
-  count(partnerName, subPartnerName, sort=TRUE) %>% 
-  ungroup()
-head(ppsb) %>% knitr::kable()
-```
++ The sub-partner reporting the most is **`r psb[1,"subPartnerName",drop=T]`**, 
+which is by *`r psb[1,"freq",drop=T]`*.
+
++ The rest of the sub-partners have small numbers in the responses, however,
+they might be reporting much with their partners. We will see this in the next
+plot.
 
 ```{r ppsb-for-text-template, echo=FALSE}
 PartnerSubProp <- partners %>% 
   group_by(partnerName, subPartnerName) %>% 
   count(partnerName, subPartnerName, sort=TRUE) %>% 
-  group_by(partnerName) %>% 
-  mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName)) %>% 
-  group_by(partnerName, subPartnerName) %>% 
   summarize(n = sum(n)) %>% 
   mutate(prop = round(n/sum(n), 3)) %>% 
   mutate(freq = paste0(floor(100 * n/sum(n)), "%"))
 acnur.hias.part <- PartnerSubProp %>% filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
 ```
 
-This table clearly shows what proportion of records are entered by a sub-partner of a partner?
-*`r acnur.hias.part[,"n",drop=T]`* out of total 
-*`r sum(PartnerSubProp %>% filter(partnerName %in% "ACNUR") %>% pull(n))`* responses of **ACNUR** is actually coming from **HIAS**.
+The plots placed in the tabs below show the proportion of records entered by
+sub-partners and partners.
 
-***
++ *`r acnur.hias.part[,"n",drop=T]`* out of 
+*`r sum(PartnerSubProp %>% filter(partnerName %in% "ACNUR") %>% pull(n))`* 
+total responses of **ACNUR** is actually coming from **HIAS**.
+
++ **UNICEF** has more diversed partners in terms of reporting.
+*`r PartnerSubProp%>%filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS") %>% pull(freq)`*
+of responses of **UNICEF** comes from **HIAS**.
+*`r PartnerSubProp%>%filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF") %>% pull(freq)`*
+of reporting comes from the **UNICEF** itself.
+
++ The most diversed partner is **PMA**. There are 
+*`r nrow(PartnerSubProp %>% filter(partnerName %in% "PMA"))`* partners reporting. 
+**HIAS** reports
+*`r PartnerSubProp %>% filter(partnerName %in% "PMA", subPartnerName %in% "HIAS") %>% pull("freq")`* of the records.
+
+Those are the total numbers of reporting, not specific to the narratives. In the next section, we count the number of reportings done in the narrative sections.
 
 ```{r child = 'analysis/tabset-partner.Rmd', eval=TRUE}
 ```
 
-## Data source preparation
+## Narrative data
 
 ```{r data-source-preparation}
-## order matters for display purposes:
 col.names <- c(
   "labelFolder",
   "labelForms",
@@ -169,23 +178,74 @@ col.names <- c(
   "response",
   "description",
   "partnerName",
+  "subPartnerName",
   "canton",
   "province"
 )
-## if we choose a column name by mistake:
-stopifnot(!anyDuplicated(col.names) > 0)
-compact <- form.table %>%
-  as_tibble() %>%
+narratives <- form.table %>%
   filter(!is.na(response) & type == "NARRATIVE") %>%
+  inner_join(
+    select(partners, recordId, partnerName, subPartnerName),
+    by = c("partnerName", "recordId")
+  ) %>%
   select(col.names)
-kable_truncate(head(compact), c("question", "response", "description"), trunc.level = 10)
 ```
+
+### The number of partners and sub-partners recording narrative data
+
+```{r}
+narratives_part_count <- narratives %>% 
+  group_by(partnerName, subPartnerName) %>% 
+  count(partnerName, subPartnerName, sort=TRUE) %>% 
+  summarize(n = sum(n)) %>% 
+  mutate(prop = round(n/sum(n), 3)) %>% 
+  mutate(freq = paste0(floor(100 * n/sum(n)), "%"))
+```
+
+Not all partners (and sub-partners) enter narrative records.
+
+```{r, warning=FALSE, fig.width=8, fig.height=8}
+## grouped facet wraps. Source: https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
+plot_partners_splitted <- split(narratives_part_count, f = narratives_part_count$partnerName)
+plot_partners_splitted_front <- plot_partners_splitted[c(c("ACNUR", "UNICEF"), setdiff(names(plot_partners_splitted), c("ACNUR", "UNICEF")))] 
+plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i) {
+  ggplot(plot_partners_splitted_front[[i]], aes(x = partnerName, y = prop)) +
+    geom_bar(aes(fill = reorder(subPartnerName,-prop)), position = "dodge", stat =
+               "identity") +
+    facet_wrap(~ partnerName, scales = "free") +
+    geom_label(
+      aes(
+        label = freq,
+        group = reorder(subPartnerName,-prop),
+        vjust = 0.65
+      ),
+      position = position_dodge(width = 1),
+      label.size = 0.35
+    ) +
+    xlab(NULL) +
+    ylab(NULL) +
+    theme_ecuador1() +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      legend.title = element_blank(),
+      legend.position = "bottom"
+    ) +
+    scale_fill_brewer(palette = "Set2")
+})
+# "cowplot" is really civilized version of 'gridExtra'
+do.call(cowplot::plot_grid, plot_partners_list)
+```
+
+`r knitr::knit_exit()`
+
+***
+
+## Label forms recode table
 
 We shorten the names and therefore re code form topics because they appear to be
 too long and disarray the plots. The *re coded table* below provides a  look up
 for form labels and their abbreviations:
-
-## Label forms recode table
 
 ```{r recode-table}
 ## only recode some long label forms, shorter names can stay as it is (e.g.
@@ -328,7 +388,7 @@ In the plot above, the outliers are shown in orange color. Outliers are the
 points placed outside the whiskers, which is the long line, of the boxplot[^1].
 
 The response word count distribution per form topic categorized by partner name:
-```{r plot-partner-response-wc}
+```{r plot-partner-response-wc, fig.width=10, fig.height=20}
 cp %>%
   gather(variable, value, .responseWordCount) %>% 
   ggplot(aes(labelFormsRecode, value)) +
