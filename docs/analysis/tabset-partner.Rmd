@@ -1,18 +1,22 @@
 
 ```{r tabset, results='asis'}
+fill.colors <-c(
+  RColorBrewer::brewer.pal(name = "Set1", n = 8),
+  RColorBrewer::brewer.pal(name = "Accent", n = 8)
+)
 partner.names <- unique(PartnerSubProp$partnerName)
 bodies <- list()
 PartnerSubProp_sub <- list()
 percents <- list()
 for (p in seq_along(partner.names)) {
-  PartnerSubProp_sub[[p]] <- PartnerSubProp %>% filter(partnerName == partner.names[p])
+  PartnerSubProp_sub[[p]] <- PartnerSubProp %>% filter(partnerName == partner.names[p]) %>% arrange(desc(prop))
   percents[[p]] <- paste(sapply(seq_along(PartnerSubProp_sub[[p]]$subPartnerName), function(i) {
     sprintf("%s: %s", PartnerSubProp_sub[[p]]$subPartnerName[i], PartnerSubProp_sub[[p]]$freq[i])
   }), collapse = ", ")
   bodies[[p]] <- glue::glue('
   PartnerSubProp_sub[[{p}]] %>% 
     ggplot(aes(x=partnerName, y=prop, fill=reorder(subPartnerName, -prop))) +
-    geom_bar(position="dodge", stat="identity") +
+    geom_bar(position="dodge", stat="identity", color="black") +
     labs(
       title = "{partner.name}",
       subtitle = stringr::str_wrap("{percent}", width = 60)
@@ -20,7 +24,8 @@ for (p in seq_along(partner.names)) {
     xlab(NULL) +
     ylab(NULL) +
     theme_ecuador1() +
-    theme(legend.title=element_blank())
+    theme(legend.title=element_blank())+
+    scale_fill_manual(values = fill.colors)
   ',
   p = p,
   partner.name = partner.names[p],
