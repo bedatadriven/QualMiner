@@ -29,7 +29,7 @@ source(file.path("..", "R", "analysis-helpers.R"))
 library(tidyverse)
 library(tidytext)
 library(scales)
-library(dygraphs)
+library(treemapify)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
@@ -48,8 +48,8 @@ that is monitoring Ecuador.
 # Data preparation
 
 The data has been extracted from *ActivityInfo* and pre-processed to make it
-ready for the analysis. Check the calls in the `R/` directory to see how the
-process went on.
+ready for the analysis. Check the calls in the `R/` directory of the project
+repository to see how the process went on.
 
 ### Data import & preparation
 
@@ -179,8 +179,8 @@ col.names <- c(
   "description",
   "partnerName",
   "subPartnerName",
-  "canton",
-  "province"
+  "province",
+  "canton"
 )
 narratives <- form.table %>%
   filter(!is.na(response) & type == "NARRATIVE") %>%
@@ -211,7 +211,7 @@ plot_partners_splitted_front <- plot_partners_splitted[c(c("ACNUR", "UNICEF"), s
 plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i) {
   ggplot(plot_partners_splitted_front[[i]], aes(x = partnerName, y = prop)) +
     geom_bar(aes(fill = reorder(subPartnerName,-prop)), position = "dodge", stat =
-               "identity") +
+               "identity", color = "black") +
     facet_wrap(~ partnerName, scales = "free") +
     geom_label(
       aes(
@@ -237,20 +237,61 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
 do.call(cowplot::plot_grid, plot_partners_list)
 ```
 
+***
+
+### The number cantons and provinces recording narrative data
+
+```{r}
+locations <- 
+  narratives %>% 
+  count(province, canton) %>%
+  group_by(province, canton) %>% 
+  summarize(n = sum(n)) %>%
+  mutate(canton.prop = round(n/sum(n), 3)) %>% 
+  mutate(canton.freq = paste0(floor(100 * n/sum(n)), "%")) %>% 
+  ungroup() %>% 
+  mutate(province.prop = round(n/sum(n), 3)) %>% 
+  mutate(province.freq = paste0(floor(100 * n/sum(n)), "%")) %>% 
+  arrange(desc(n))
+knitr::kable(locations) # TODO hux table
+```
+
+```{r}
+tree.colors <-c(
+  RColorBrewer::brewer.pal(name = "Dark2", n = 8),
+  RColorBrewer::brewer.pal(name = "Set2", n = 8)
+)
+
+ggplot(locations,
+       aes(
+         area = province.prop,
+         fill = province,
+         #label = sprintf("%s (%s)", canton, canton.freq),
+         label = canton,
+         subgroup = sprintf("%s\n(%s)", province, province.freq)
+       )) +
+  geom_treemap()+
+  geom_treemap_subgroup_border(color="gray25")+
+  geom_treemap_text(colour = "black", place = "centre", alpha = 0.45, reflow = TRUE, min.size = 0)+
+  geom_treemap_subgroup_text(grow = TRUE, colour="white", alpha = 0.85, place = "topleft", fontface = "italic")+
+  theme(legend.position = "none") +
+  scale_fill_manual(values = tree.colors)
+```
+
 `r knitr::knit_exit()`
 
-***
+# Analysis
 
 ## Label forms recode table
 
-We shorten the names and therefore re code form topics because they appear to be
+First of all, we shorten the names and therefore re code form topics because they appear to be
 too long and disarray the plots. The *re coded table* below provides a  look up
 for form labels and their abbreviations:
 
 ```{r recode-table}
 ## only recode some long label forms, shorter names can stay as it is (e.g.
 ## `Salud`)
-compact <- compact %>% 
+narratives <- narratives %>% 
   mutate(
     labelFormsRecode = recode(
       labelForms,
@@ -275,29 +316,9 @@ compact <- compact %>%
     )
   )
 
-recode_tbl <- compact %>% select(labelFormsRecode, labelForms) %>% distinct()
+recode_tbl <- narratives %>% select(labelFormsRecode, labelForms) %>% distinct()
 knitr::kable(cbind("i" = seq(nrow(recode_tbl)), recode_tbl))
 ```
-
-# Analysis
-
-Before we start, here's some descriptive tables about the nature of data.
-
-### Summary tables {.tabset}
-
-#### Number of partners
-```{r}
-compact %>% count(partnerName, sort = TRUE) %>% knitr::kable()
-```
-
-***
-
-#### Number of Cantons and Provinces
-```{r}
-compact %>% count(province, canton, sort = TRUE) %>% knitr::kable()
-```
-
-***
 
 ## Response quality
 
@@ -467,7 +488,7 @@ dsp_mean <- mean(dsp$.responseWordCount)
 dsp %>% 
   ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
   geom_point() +
-  geom_vline(xintercept = dsp_mean, color = "orange", size = 0.6) +
+  geom_vline(xintercept = dsp_mean, color = "orange", size = 0.6, linetype="dashed") +
   geom_text(
     aes(x = 65, label = "mean", y = 11),
     colour = "orange",
