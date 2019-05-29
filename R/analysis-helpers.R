@@ -82,6 +82,8 @@ create_tabset <- function(main, tabs, body) {
     cat("\n\n")
     print(eval(parse(text=body[i])))
     cat("\n\n")
+    cat("***\n") # <hr> tag for rmarkdown..
+    cat("\n")
   }
   cat("\n")
 }
