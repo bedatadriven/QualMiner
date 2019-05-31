@@ -28,8 +28,10 @@ source(file.path("..", "R", "analysis-helpers.R"))
 ## Libraries
 library(tidyverse)
 library(tidytext)
+library(tsibble)
 library(scales)
 library(treemapify)
+library(gt)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
@@ -212,7 +214,7 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
   ggplot(plot_partners_splitted_front[[i]], aes(x = partnerName, y = prop)) +
     geom_bar(aes(fill = reorder(subPartnerName,-prop)), position = "dodge", stat =
                "identity", color = "black") +
-    facet_wrap(~ partnerName, scales = "free") +
+    facet_wrap(~ partnerName, scales = "fixed") +
     geom_label(
       aes(
         label = freq,
@@ -253,8 +255,38 @@ locations <-
   mutate(province.prop = round(n/sum(n), 3)) %>% 
   mutate(province.freq = paste0(floor(100 * n/sum(n)), "%")) %>% 
   arrange(desc(n))
-knitr::kable(locations) # TODO hux table
 ```
+
+The table is alphabetically ordered.
+```{r canton-locations-tbl}
+locations.tbl <- locations %>%
+  arrange(province, desc(n))
+rl <- rle(locations.tbl$province)$lengths
+res <- c()
+for (r in rl) {
+  if (r == 1) {
+    res <- c(res, TRUE)
+  } else {
+    res <- c(res, c(TRUE, rep(FALSE, r-1)))
+  }
+}
+locations.tbl <- cbind(locations.tbl, res)
+for (i in seq_along(locations.tbl$res)) {
+  if (!locations.tbl$res[i]) {
+    locations.tbl$province[i] <- ""
+  }
+}
+locations.tbl %>%
+  as_tibble() %>%
+  select(province, canton, n, province.prop, province.freq) %>%
+  gt() %>% 
+  tab_options(
+    row.striping.include_table_body = FALSE,
+    row.striping.include_stub = TRUE
+  )
+```
+
+Treemap plot showing canton and province reporting frequencies.
 
 ```{r}
 tree.colors <-c(
@@ -371,7 +403,7 @@ to form level. In this file, we did both, therefore the analysis shown as below:
 
 Count of responses per topic/question:
 ```{r count-response}
-cp <- compact %>%
+narratives.wc <- narratives %>%
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
   group_by(labelForms) %>%
@@ -382,7 +414,11 @@ cp <- compact %>%
     description, labelFormsRecode
   ) %>% 
   ungroup()
-kable_truncate(head(cp), c("labelForms", "question", "response", "description"), trunc.level = 10)
+kable_truncate(
+  head(narratives.wc),
+  c("labelForms", "question", "response", "description"),
+  trunc.level = 10
+)
 ```
 
 It's also a good practice to see the number of questions. For example, one
@@ -390,7 +426,7 @@ question has two responses, therefore they're short. Therefore, jittered points
 are added to give a glance about the number of observations in the same plot.
 
 ```{r plot-topic-response-wc, fig.cap="Figure: Box plot form topics and response word counts based on the raw data"}
-cp %>%
+narratives.wc %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
   ggplot(aes(labelFormsRecode, value, fill = variable)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
@@ -410,7 +446,7 @@ points placed outside the whiskers, which is the long line, of the boxplot[^1].
 
 The response word count distribution per form topic categorized by partner name:
 ```{r plot-partner-response-wc, fig.width=10, fig.height=20}
-cp %>%
+narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
   ggplot(aes(labelFormsRecode, value)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
@@ -426,14 +462,14 @@ cp %>%
 ```
 
 The response word count distribution per form topic categorized by canton name:
-```{r plot-canton-response-wc}
-cp %>%
+```{r plot-canton-response-wc, fig.width=10, fig.height=20}
+narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
   ggplot(aes(labelFormsRecode, value)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
-  coord_flip() +
   geom_jitter(alpha = 0.35) +
-  facet_grid(~canton, scales = "free") +
+  coord_flip() +
+  facet_wrap(~canton, scales = "free", ncol = 2) +
   labs(
     title = "Word count of responses by form topics per canton",
     subtitle = "A box plot distribution",
@@ -465,7 +501,7 @@ quality* than the questions which do not have it?
 Looking at the table containing form name, question, description and so on:
 
 ```{r, table1}
-dsp <- cp %>% 
+description.field.wc <- narratives.wc %>% 
   mutate(.hasDescription = ifelse(is.na(description), FALSE, TRUE)) %>% 
   mutate(.descriptionWordCount = word_count(description)) %>%
   select(labelForms, labelFormsRecode, 
@@ -484,20 +520,23 @@ description fields. Interestingly, the form *F15*, which is *Protección_VBG*, h
 no description fields at all.
 
 ```{r, plot1}
-dsp_mean <- mean(dsp$.responseWordCount)
-dsp %>% 
+description.field.wc.mean <- mean(description.field.wc$.responseWordCount)
+description.field.wc %>% 
   ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
   geom_point() +
-  geom_vline(xintercept = dsp_mean, color = "orange", size = 0.6, linetype="dashed") +
+  geom_vline(xintercept = description.field.wc.mean, color = "orange", size = 0.6, linetype="dashed") +
   geom_text(
     aes(x = 65, label = "mean", y = 11),
     colour = "orange",
     angle = 90,
     size = 4
   ) +
+  labs(
+    title = "Word count of responses & description field",
+    subtitle = sprintf("Response word count mean: %i", round(description.field.wc.mean))
+  )
   theme_ecuador1()
 ```
-
 
 We look below the description word count and compare with the
 response word count (and remove the categorical field displaying if the question
@@ -510,14 +549,14 @@ of response has a description field).
 #### Median word count per partner
 
 ```{r}
-cp %>% 
+narratives.wc %>% 
   group_by(partnerName) %>% 
   summarise(median = median(.responseWordCount)) %>% 
   ungroup() %>% 
   ggplot(aes(reorder(partnerName, -median), median)) +
   geom_bar(stat = "identity", width = 0.5, fill = "tomato2") + 
   labs(title = "Median word count of responses per partner",
-       subtitle = sprintf("The total median rate %s", round(median(cp$.responseWordCount), 2))) +
+       subtitle = sprintf("The total median rate %s", round(median(narratives.wc$.responseWordCount), 2))) +
   xlab("Partners") +
   ylab("Median value") +
   theme(axis.text.x = element_text(angle=65, vjust=0.6))
@@ -525,26 +564,38 @@ cp %>%
 
 #### Median word count of responses
 
-```{r}
-med.wc <- compact %>% 
+```{r, fig.width=10, fig.height=10}
+narratives.med.wc <- narratives %>% 
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(Month = as.Date(paste0(Month, "-01"), format = "%Y-%m-%d")) %>%
   group_by(partnerName, Month) %>%
-  summarize(median = median(.responseWordCount))
+  summarize(median = median(.responseWordCount)) %>% 
+  ungroup()
 
-ggplot(med.wc, aes(Month, median, color = partnerName)) +
+narratives.med.wc.ts <-
+  narratives.med.wc %>%
+  mutate(Month = yearmonth(Month)) %>% 
+  as_tsibble(index = "Month", key = "partnerName") %>% 
+  fill_gaps(median = 0, .full = TRUE)
+
+ggplot(narratives.med.wc.ts, aes(Month, median, color = partnerName)) +
   geom_line() +
   geom_point() +
   labs(title = "Median word count of responses per partner over months",
-       subtitle = sprintf("The average median rate %s", round(mean(med.wc$median), 2))) +
+       subtitle = sprintf("The average median rate %s", round(mean(narratives.med.wc$median), 2))) +
   xlab("Month") +
   ylab("Median word count") +
   scale_x_date(labels = date_format("%Y-%m")) +
   scale_color_brewer(palette = "Paired") +
+  facet_wrap(~partnerName, scales = "free", ncol=2) +
   theme_ecuador1() +
   theme(legend.position = "bottom") +
   theme(legend.title = element_blank())
 ```
+
+### Correlation
+
+`TODO`
 
 ### The regression line
 
@@ -560,13 +611,13 @@ Scatter plots help understand the characteristics of those variables.
 However, we miss a general understanding that is the *trend line*.
 
 ```{r, plot-linear-regression}
-p1 <- dsp %>% 
+p1 <- description.field.wc %>% 
   ggplot(aes(x = .responseWordCount, y = .questionWordCount)) +
   geom_jitter(alpha = 0.35) +
   geom_smooth(aes(colour = "linear"), method = "lm") +
   theme_ecuador1() +
   theme(legend.position = "none")
-p2 <- dsp %>% 
+p2 <- description.field.wc %>% 
   ggplot(aes(x = .responseWordCount, y = .descriptionWordCount)) +
   geom_jitter(alpha = 0.35) +
   geom_smooth(aes(colour = "linear"), method = "lm") +
