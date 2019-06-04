@@ -11,6 +11,7 @@ theme_ecuador1 <- function() {
       plot.title = element_text(color = "black", face = "bold"),
       plot.subtitle = element_text(face = "italic"),
       plot.caption = element_text(size = 7),
+      legend.position = "bottom",
       axis.text.x = element_text(family = "Roboto Mono", size = 10),
       axis.text.y = element_text(family = "Roboto Mono", size = 10),
       strip.text = element_text(color = "white", face = "bold"),
