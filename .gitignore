@@ -5,6 +5,7 @@ data/*
 .RData
 .Ruserdata
 .Rproj.user/
-analysis/*.html
-analysis/*.pdf
-analysis/*.tex
+docs/*.pdf
+docs/*.tex
+docs/index_cache/
+docs/index_files/
