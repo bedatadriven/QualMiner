@@ -44,8 +44,8 @@ form.table <- tibble::as_tibble(form.table)
 
 # Introduction
 
-This document explores qualitative indicators from an *ActivityInfo* database
-that is monitoring Ecuador.
+```{r child = 'analysis/introduction.Rmd', eval=TRUE}
+```
 
 # Data preparation
 
