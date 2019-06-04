@@ -19,7 +19,6 @@ output:
 <script src="assets/script.js"></script>
 
 ```{r setup, include=FALSE}
-knitr::clean_cache()
 ## Header file
 source(file.path("..", "R", "global-header.R"))
 ## Analysis related calls
@@ -102,7 +101,7 @@ p <- partners %>%
   ungroup() %>% 
   mutate(prop = round(n/sum(n), 3)) %>% 
   mutate(freq = paste0(round(100 * n/sum(n), 0), "%"))
-p %>% knitr::kable()
+p %>% gt()
 ```
 
 The table above shows partner count per each record:
@@ -124,7 +123,7 @@ psb <- partners %>%
   ungroup() %>% 
   mutate(prop = round(n/sum(n), 3)) %>% 
   mutate(freq = paste0(round(100 * n/sum(n), 0), "%"))
-psb %>% knitr::kable()
+psb %>% gt()
 ```
 
 The table above shows sub-partner count per each record.
@@ -309,8 +308,6 @@ ggplot(locations,
   theme(legend.position = "none") +
   scale_fill_manual(values = tree.colors)
 ```
-
-`r knitr::knit_exit()`
 
 # Analysis
 
@@ -513,13 +510,12 @@ We see in the plot below that the response word counts per form and colored if a
 response has a description field or not. Having a description field or not is
 calculated as that a description field has a minimum one word.
 
-The responses with the longest word
-counts are the ones with description. Nevertheless, it is not so easy to see a
-clear trend that there's a correlation between response word count and
-description fields. Interestingly, the form *F15*, which is *Protección_VBG*, has
-no description fields at all.
+The responses with the longest word counts are the ones with description.
+Nevertheless, it is not so easy to see a clear trend that there's a correlation
+between response word count and description fields. Interestingly, the questions
+in the form *F15*, which is *Protección_VBG*, has no description fields at all.
 
-```{r, plot1}
+```{r, plot1, fig.height=7, fig.width=7}
 description.field.wc.mean <- mean(description.field.wc$.responseWordCount)
 description.field.wc %>% 
   ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
@@ -534,8 +530,12 @@ description.field.wc %>%
   labs(
     title = "Word count of responses & description field",
     subtitle = sprintf("Response word count mean: %i", round(description.field.wc.mean))
-  )
-  theme_ecuador1()
+  ) +
+  xlab("Word count of responses") +
+  ylab(NULL) +
+  theme_ecuador1() +
+  scale_color_discrete(name = "Has a description field")+
+  guides(colour = guide_legend(title.position = "top"))
 ```
 
 We look below the description word count and compare with the
