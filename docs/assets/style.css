@@ -20,3 +20,9 @@ p.caption {
   margin-left: 10%;
   text-align: justify;
 }
+
+body {
+  font-family: Helvetica;
+  font-size: 12pt;
+}
+
