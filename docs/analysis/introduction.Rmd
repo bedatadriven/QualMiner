@@ -11,8 +11,10 @@ ICT <- tibble(
   `Multi-line text` = c(6309, 57128, 116184, 168599, 915948),
   `% of total data collected` = c("3.54%", "2.06%", "2.33%", "2.35%", "3.92%")
 )
+
 ## replace NAs with 0
 ICT[is.na(ICT)] <- 0
+
 ICT %>%
   gt() %>%
   fmt_number(
@@ -23,6 +25,10 @@ ICT %>%
   tab_header(
     title = md("Indicator count totals"),
     subtitle = sprintf("%s to %s", ICT$Date[1], ICT$Date[length(ICT$Date)])
+  ) %>% 
+  cols_align(
+    align = "center",
+    columns = names(ICT)
   )
 ```
 

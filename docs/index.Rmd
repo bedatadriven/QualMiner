@@ -1,6 +1,6 @@
 ---
 title: "QualMiner: Exploring qualitative indicators via text mining methods"
-author: "Metin Yazici <i>(BeDataDriven B.V.)</i>, Alexander Bertram <i>(BeDataDriven B.V.)</i>"
+author: "Metin Yazici <i>(BeDataDriven B.V.)</i>, Alexander Bertram <i>(BeDataDriven B.V.)</i>, Lucy Brinks <i>(BeDataDriven B.V.)</i>"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -60,7 +60,7 @@ is a multi-line text field in *ActivityInfo*. Select these columns and
 analyze them by comparing and contrasting with other fields types associated with
 the textual field types.
 
-```{r, include=FALSE}
+```{r internal, include=FALSE}
 ## unique record ids
 unique(form.table$recordId)
 
@@ -84,6 +84,8 @@ direct_indirect.fields <- sapply(seq_along(code.nms$names), function(i) "direct_
 all(direct_indirect.fields)
 ```
 
+### Partners
+
 ```{r}
 partners <- form.table %>% 
   group_by(recordId) %>% 
@@ -92,83 +94,103 @@ partners <- form.table %>%
   select(recordId, partnerName, response, canton, province) %>% 
   rename(subPartnerName = response) %>% 
   mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
-```
-
-```{r}
 p <- partners %>% 
   group_by(partnerName) %>% 
-  count(partnerName, sort=TRUE) %>% 
+  count(partnerName, name = "freq", sort = TRUE) %>% 
   ungroup() %>% 
-  mutate(prop = round(n/sum(n), 3)) %>% 
-  mutate(freq = paste0(round(100 * n/sum(n), 0), "%"))
-p %>% gt()
+  mutate(prop = round(freq/sum(freq), 3)) %>% 
+  mutate(percent = paste0(round(100 * freq/sum(freq), 0), "%"))
 ```
 
-The table above shows partner count per each record:
+The table below shows partner count per each record:
 
-+ **`r p[1,"partnerName",drop=T]`** has most of the records with
-a frequency of *`r p[1,"freq",drop=T]`*.
++ *`r p[1,"percent",drop=T]`* of the records are from
+**`r p[1,"partnerName",drop=T]`**.
 
-+ Second, **`r p[2,"partnerName",drop=T]`** comes with a frequency of 
-*`r p[2,"freq",drop=T]`*. 
-The frequency difference between the partners **`r p[1,"partnerName",drop=T]`** and
++ Second, **`r p[2,"partnerName",drop=T]`** comes with a percentage of 
+*`r p[2,"percent",drop=T]`*. 
+
+The difference between percentages of the partners **`r p[1,"partnerName",drop=T]`** and
 **`r p[2,"partnerName",drop=T]`** is 
 *`r paste0(floor(convolve((p[1,"prop",drop=T]-p[2,"prop",drop=T]), 100)), '%')`*.
 
 ```{r}
-psb <- partners %>% 
-  group_by(subPartnerName) %>% 
-  count(subPartnerName, sort=TRUE) %>% 
-  drop_na() %>% 
-  ungroup() %>% 
-  mutate(prop = round(n/sum(n), 3)) %>% 
-  mutate(freq = paste0(round(100 * n/sum(n), 0), "%"))
-psb %>% gt()
+p %>%
+  select(-percent) %>% 
+  gt() %>% 
+  tab_options(
+    table.width = pct(100)
+  )
 ```
 
-The table above shows sub-partner count per each record.
+<br>
 
-+ The sub-partner reporting the most is **`r psb[1,"subPartnerName",drop=T]`**, 
-which is by *`r psb[1,"freq",drop=T]`*.
+```{r}
+psb <- partners %>% 
+  group_by(subPartnerName) %>% 
+  count(subPartnerName, name = "freq", sort = TRUE) %>% 
+  drop_na() %>% 
+  ungroup() %>% 
+  mutate(prop = round(freq/sum(freq), 3)) %>% 
+  mutate(percent = paste0(round(100 * freq/sum(freq), 0), "%"))
+```
 
-+ The rest of the sub-partners have small numbers in the responses, however,
-they might be reporting much with their partners. We will see this in the next
-plot.
+The table below shows sub-partner count per each record.
+
++ The sub-partner **`r psb[1,"subPartnerName",drop=T]`** has 
+*`r psb[1,"percent",drop=T]`* of the total reports among the all sub-partners.
+
++ The remaining sub-partners have infinitesimal numbers in their responses.
+
+```{r}
+psb %>% 
+  select(-percent) %>% 
+  gt() %>% 
+    tab_options(
+    table.width = pct(100)
+  )
+```
+
+<br>
 
 ```{r ppsb-for-text-template, echo=FALSE}
 PartnerSubProp <- partners %>% 
   group_by(partnerName, subPartnerName) %>% 
-  count(partnerName, subPartnerName, sort=TRUE) %>% 
-  summarize(n = sum(n)) %>% 
-  mutate(prop = round(n/sum(n), 3)) %>% 
-  mutate(freq = paste0(floor(100 * n/sum(n)), "%"))
+  count(partnerName, subPartnerName, name = "freq", sort = TRUE) %>% 
+  summarize(freq = sum(freq)) %>% 
+  mutate(prop = round(freq/sum(freq), 3)) %>% 
+  mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
 acnur.hias.part <- PartnerSubProp %>% filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
 ```
 
 The plots placed in the tabs below show the proportion of records entered by
-sub-partners and partners.
+partners and sub-partners.
 
-+ *`r acnur.hias.part[,"n",drop=T]`* out of 
-*`r sum(PartnerSubProp %>% filter(partnerName %in% "ACNUR") %>% pull(n))`* 
++ *`r acnur.hias.part[,"freq",drop=T]`* out of 
+*`r sum(PartnerSubProp %>% filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
 total responses of **ACNUR** is actually coming from **HIAS**.
 
 + **UNICEF** has more diversed partners in terms of reporting.
-*`r PartnerSubProp%>%filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS") %>% pull(freq)`*
+*`r PartnerSubProp%>%filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(percent)`*
 of responses of **UNICEF** comes from **HIAS**.
-*`r PartnerSubProp%>%filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF") %>% pull(freq)`*
+*`r PartnerSubProp%>%filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(percent)`*
 of reporting comes from the **UNICEF** itself.
 
-+ The most diversed partner is **PMA**. There are 
-*`r nrow(PartnerSubProp %>% filter(partnerName %in% "PMA"))`* partners reporting. 
-**HIAS** reports
-*`r PartnerSubProp %>% filter(partnerName %in% "PMA", subPartnerName %in% "HIAS") %>% pull("freq")`* of the records.
++ Under **PMA**, there are *`r nrow(PartnerSubProp%>%filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubProp%>%filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
 
-Those are the total numbers of reporting, not specific to the narratives. In the next section, we count the number of reportings done in the narrative sections.
+Those are the total numbers of reporting in all database, the numbers are not
+specific to the narratives (multi-line text fields). In the next section, we
+count the number of reportings done only in the narrative sections.
+
+<hr>
 
 ```{r child = 'analysis/tabset-partner.Rmd', eval=TRUE}
 ```
 
 ## Narrative data
+
+We should focus on a subset of the reports. Narrative data is multi-line text
+fields allowing users to enter long texts.
 
 ```{r data-source-preparation}
 col.names <- c(
@@ -192,18 +214,20 @@ narratives <- form.table %>%
   select(col.names)
 ```
 
-### The number of partners and sub-partners recording narrative data
+### The number of partners and sub-partners reporting narrative data
 
 ```{r}
 narratives_part_count <- narratives %>% 
   group_by(partnerName, subPartnerName) %>% 
-  count(partnerName, subPartnerName, sort=TRUE) %>% 
-  summarize(n = sum(n)) %>% 
-  mutate(prop = round(n/sum(n), 3)) %>% 
-  mutate(freq = paste0(floor(100 * n/sum(n)), "%"))
+  count(partnerName, subPartnerName, name = "freq", sort=TRUE) %>% 
+  summarize(freq = sum(freq)) %>% 
+  mutate(prop = round(freq/sum(freq), 3)) %>% 
+  mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
 ```
 
-Not all partners (and sub-partners) enter narrative records.
+As we have seen previously, Not all partners (and sub-partners) enter narrative
+records. For instance, the partner **PMA** has lots of sub-partners reporting
+for the different data types but there are no narratives there.
 
 ```{r, warning=FALSE, fig.width=8, fig.height=8}
 ## grouped facet wraps. Source: https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
@@ -216,7 +240,7 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
     facet_wrap(~ partnerName, scales = "fixed") +
     geom_label(
       aes(
-        label = freq,
+        label = percent,
         group = reorder(subPartnerName,-prop),
         vjust = 0.65
       ),
@@ -234,7 +258,7 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
     ) +
     scale_fill_brewer(palette = "Set2")
 })
-# "cowplot" is really civilized version of 'gridExtra'
+## "cowplot" is really civilized version of 'gridExtra'
 do.call(cowplot::plot_grid, plot_partners_list)
 ```
 
@@ -245,45 +269,31 @@ do.call(cowplot::plot_grid, plot_partners_list)
 ```{r}
 locations <- 
   narratives %>% 
-  count(province, canton) %>%
+  count(province, canton, name = "freq") %>%
   group_by(province, canton) %>% 
-  summarize(n = sum(n)) %>%
-  mutate(canton.prop = round(n/sum(n), 3)) %>% 
-  mutate(canton.freq = paste0(floor(100 * n/sum(n)), "%")) %>% 
+  summarize(freq = sum(freq)) %>%
+  mutate(canton.prop = round(freq/sum(freq), 3)) %>% 
+  mutate(canton.percent = paste0(floor(100 * freq/sum(freq)), "%")) %>% 
   ungroup() %>% 
-  mutate(province.prop = round(n/sum(n), 3)) %>% 
-  mutate(province.freq = paste0(floor(100 * n/sum(n)), "%")) %>% 
-  arrange(desc(n))
+  mutate(province.prop = round(freq/sum(freq), 3)) %>% 
+  mutate(province.percent = paste0(floor(100 * freq/sum(freq)), "%")) %>% 
+  arrange(desc(freq))
 ```
 
-The table is alphabetically ordered.
 ```{r canton-locations-tbl}
-locations.tbl <- locations %>%
-  arrange(province, desc(n))
-rl <- rle(locations.tbl$province)$lengths
-res <- c()
-for (r in rl) {
-  if (r == 1) {
-    res <- c(res, TRUE)
-  } else {
-    res <- c(res, c(TRUE, rep(FALSE, r-1)))
-  }
-}
-locations.tbl <- cbind(locations.tbl, res)
-for (i in seq_along(locations.tbl$res)) {
-  if (!locations.tbl$res[i]) {
-    locations.tbl$province[i] <- ""
-  }
-}
-locations.tbl %>%
-  as_tibble() %>%
-  select(province, canton, n, province.prop, province.freq) %>%
+# TODO make group names bold
+locations %>%
+  select(province, canton, freq, canton.prop, province.prop) %>%
+  group_by(province) %>% 
+  arrange(desc(freq)) %>%
   gt() %>% 
-  tab_options(
-    row.striping.include_table_body = FALSE,
-    row.striping.include_stub = TRUE
+  tab_header(
+    title = "Canton and provinces",
+    subtitle = "Reports in narratives"
   )
 ```
+
+<br>
 
 Treemap plot showing canton and province reporting frequencies.
 
@@ -299,7 +309,7 @@ ggplot(locations,
          fill = province,
          #label = sprintf("%s (%s)", canton, canton.freq),
          label = canton,
-         subgroup = sprintf("%s\n(%s)", province, province.freq)
+         subgroup = sprintf("%s\n(%s)", province, province.percent)
        )) +
   geom_treemap()+
   geom_treemap_subgroup_border(color="gray25")+
@@ -345,8 +355,11 @@ narratives <- narratives %>%
     )
   )
 
-recode_tbl <- narratives %>% select(labelFormsRecode, labelForms) %>% distinct()
-knitr::kable(cbind("i" = seq(nrow(recode_tbl)), recode_tbl))
+recode_tbl <- narratives %>%
+  select(labelFormsRecode, labelForms) %>% 
+  distinct()
+recode_tbl %>% 
+  gt()
 ```
 
 ## Response quality
@@ -399,7 +412,7 @@ achieve a unique name for each question.
 to form level. In this file, we did both, therefore the analysis shown as below:
 
 Count of responses per topic/question:
-```{r count-response}
+```{r count-response, fig.width=8, fig.height=8}
 narratives.wc <- narratives %>%
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
@@ -423,6 +436,7 @@ question has two responses, therefore they're short. Therefore, jittered points
 are added to give a glance about the number of observations in the same plot.
 
 ```{r plot-topic-response-wc, fig.cap="Figure: Box plot form topics and response word counts based on the raw data"}
+# TODO facet by labelFolder
 narratives.wc %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
   ggplot(aes(labelFormsRecode, value, fill = variable)) +

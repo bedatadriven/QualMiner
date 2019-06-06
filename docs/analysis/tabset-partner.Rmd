@@ -12,7 +12,7 @@ legend <- list()
 for (p in seq_along(partner.names)) {
   PartnerSubProp_sub[[p]] <- PartnerSubProp %>% filter(partnerName == partner.names[p]) %>% arrange(desc(prop))
   percents[[p]] <- paste(sapply(seq_along(PartnerSubProp_sub[[p]]$subPartnerName), function(i) {
-    sprintf("%s: %s", PartnerSubProp_sub[[p]]$subPartnerName[i], PartnerSubProp_sub[[p]]$freq[i])
+    sprintf("%s: %s", PartnerSubProp_sub[[p]]$subPartnerName[i], PartnerSubProp_sub[[p]]$percent[i])
   }), collapse = ", ")
   legend[[p]] <- if (length(PartnerSubProp_sub[[p]][["subPartnerName"]]) > 1) {
     "legend.position = \"right\"" 
