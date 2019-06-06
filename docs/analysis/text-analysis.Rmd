@@ -15,7 +15,8 @@ of analysis.
 tokens <- compact %>% 
   as_tibble() %>% 
   unnest_tokens(word, response)
-kable_truncate(head(tokens), names(tokens)[seq(9)], trunc.level = 5)
+head(tokens) %>% 
+  gt()
 ```
 
 Perform stemming, which you bring nouns/verbs back to infinitive forms, and

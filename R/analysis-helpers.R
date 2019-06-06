@@ -28,31 +28,6 @@ theme_ecuador1 <- function() {
 ### RMARKDOWN HELPERS ----
 ### ----------------------------------------------------------------- ###
 
-#' A wrapper to knitr::kable that truncates the data frame/tibble columns
-#'
-#' It's better to truncate values e.g. when a data.frame have a column
-#' containing long text.
-#'
-#' @param tbl a data frame
-#' @param which column name(s) whose content to be truncated
-#' @importFrom knitr kable
-kable_truncate <- function(tbl, which, trunc.level = 50) {
-  if(!all(which %in% names(tbl))) {
-    stop("column name(s) not found in the table")
-  }
-  for (i in seq_along(which)) {
-    col <- which[i]
-    tbl[[col]] <- sapply(tbl[[col]], function(el) {
-      if (nchar(el) > trunc.level) {
-        paste0(trimws(strtrim(el, as.integer(trunc.level))), "...")
-      } else {
-        el
-      }
-    })
-  }
-  knitr::kable(tbl)
-}
-
 #' Create RMarkdown tabset programmatically
 #'
 #' @param main main title where a tabbed section starts.

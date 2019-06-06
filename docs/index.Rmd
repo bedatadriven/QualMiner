@@ -424,11 +424,10 @@ narratives.wc <- narratives %>%
     description, labelFormsRecode
   ) %>% 
   ungroup()
-kable_truncate(
-  head(narratives.wc),
-  c("labelForms", "question", "response", "description"),
-  trunc.level = 10
-)
+head(narratives.wc) %>% 
+  mutate(response = strtrim(response, 15)) %>% 
+  mutate(description = strtrim(description, 15)) %>% 
+  gt()
 ```
 
 It's also a good practice to see the number of questions. For example, one
