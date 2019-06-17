@@ -10,7 +10,7 @@ PartnerSubProp_sub <- list()
 percents <- list()
 legend <- list()
 for (p in seq_along(partner.names)) {
-  PartnerSubProp_sub[[p]] <- PartnerSubProp %>% filter(partnerName == partner.names[p]) %>% arrange(desc(prop))
+  PartnerSubProp_sub[[p]] <- PartnerSubProp %>% dplyr::filter(partnerName == partner.names[p]) %>% arrange(desc(prop))
   percents[[p]] <- paste(sapply(seq_along(PartnerSubProp_sub[[p]]$subPartnerName), function(i) {
     sprintf("%s: %s", PartnerSubProp_sub[[p]]$subPartnerName[i], PartnerSubProp_sub[[p]]$percent[i])
   }), collapse = ", ")

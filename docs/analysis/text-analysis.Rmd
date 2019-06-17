@@ -84,7 +84,7 @@ body <- glue::glue(
   '
 top.n <- 10L
 tokens_sw %>%
-  filter(labelFormsRecode == "{label.form.code}") %>%
+  dplyr::filter(labelFormsRecode == "{label.form.code}") %>%
   count(word) %>%
   arrange(desc(n)) %>% 
   slice(seq_len(top.n)) %>% 
