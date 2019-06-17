@@ -59,6 +59,23 @@ theme_ecuador1 <- function(border = FALSE) {
 }
 
 ### ----------------------------------------------------------------- ###
+### GT HELPERS ----
+### ----------------------------------------------------------------- ###
+
+gt_condensed_style <- function(data) {
+  gt::tab_style(
+    data,
+    style = gt::cells_styles(
+      text_size = gt::px(14)
+    ),
+    locations = gt::cells_data()
+  ) %>%
+    gt::tab_options(
+      table.width = gt::pct(100)
+    )
+}
+
+### ----------------------------------------------------------------- ###
 ### RMARKDOWN HELPERS ----
 ### ----------------------------------------------------------------- ###
 
