@@ -128,7 +128,7 @@ get_query_element <- function(formId, field.code.names) {
 
     ## also add those names which should be apparent at all times:
     fix.names <- c("Month", "@id")
-    ## NOTE: some names contain Spanish ó (U+00F3) don't know why...
+    ## a note: some names contain Spanish ó (U+00F3) don't know why...
     relative.names <- list(
       partnerName = "Partner.label",
       cantonName = "Cant[o|ó]n.name",
