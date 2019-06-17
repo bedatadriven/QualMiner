@@ -645,6 +645,7 @@ description.field.wc.mean <- mean(description.field.wc$.responseWordCount)
 description.field.wc %>% 
   ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
   geom_point() +
+  geom_point(shape = 21, color = "black") +
   geom_vline(xintercept = description.field.wc.mean, color = "orange", size = 0.6, linetype="dashed") +
   geom_text(
     aes(x = 65, label = "mean", y = 11),
@@ -666,6 +667,40 @@ description.field.wc %>%
 We look below the description word count and compare with the
 response word count (and remove the categorical field displaying if the question
 of response has a description field).
+
+```{r}
+description.field.wc.bg <- description.field.wc %>% select(labelFormsRecode, .responseWordCount)
+ppd.colors <- c("#00BFC4", "#F8766D")
+ppd <- description.field.wc %>% 
+  ## made 'has description' column factor to modify facets.
+  mutate(.hasDescription = factor(description.field.wc$.hasDescription, labels = c("TRUE", "FALSE"))) %>% 
+  ggplot(aes(x = .responseWordCount, y = labelFormsRecode, colour = .hasDescription)) +
+  geom_point(data = description.field.wc.bg,
+             colour = "grey",
+             alpha = 0.2) +
+  geom_point() +
+  geom_point(shape = 21, color = "black") +
+  facet_wrap( ~ .hasDescription) +
+  scale_colour_manual(values = ppd.colors) +
+  theme_ecuador1(border = TRUE) +
+  guides(colour = FALSE) +
+  labs(
+    title = "Word count of responses & description field",
+    subtitle = "TODO"
+  ) +
+  xlab(NULL) +
+  ylab(NULL)
+## Solution taken from: https://github.com/tidyverse/ggplot2/issues/2096#issuecomment-292971159
+g <- ggplot_gtable(ggplot_build(ppd))
+stripr <- grep('strip-t', g$layout$name)
+k <- 1
+for (i in stripr) {
+  j <- which(grepl('rect', g$grobs[[i]]$grobs[[1]]$childrenOrder))
+  g$grobs[[i]]$grobs[[1]]$children[[j]]$gp$fill <- ppd.colors[k]
+  k <- k+1
+}
+grid::grid.draw(g)
+```
 
 `TODO ANOVA`
 
