@@ -19,6 +19,9 @@ output:
 <script src="assets/script.js"></script>
 
 ```{r setup, include=FALSE}
+## `conflicted` strategy to avoid namespace clashes.
+## See https://github.com/r-lib/conflicted
+library(conflicted)
 ## Header file
 source(file.path("..", "R", "global-header.R"))
 ## Analysis related calls
@@ -43,7 +46,7 @@ form.table <- tibble::as_tibble(form.table)
 
 # Introduction
 
-```{r child = 'analysis/introduction.Rmd', eval=TRUE}
+```{r child = 'analysis/introduction.Rmd', eval=FALSE}
 ```
 
 # Data preparation
@@ -60,7 +63,7 @@ is a multi-line text field in *ActivityInfo*. Select these columns and
 analyze them by comparing and contrasting with other fields types associated with
 the textual field types.
 
-```{r internal, include=FALSE}
+```{r INTERNAL, include=FALSE}
 ## unique record ids
 unique(form.table$recordId)
 
@@ -89,7 +92,7 @@ all(direct_indirect.fields)
 ```{r}
 partners <- form.table %>% 
   group_by(recordId) %>% 
-  filter(code == "Socio") %>% 
+  dplyr::filter(code == "Socio") %>% 
   mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE
   select(recordId, partnerName, response, canton, province) %>% 
   rename(subPartnerName = response) %>% 
@@ -98,17 +101,21 @@ p <- partners %>%
   group_by(partnerName) %>% 
   count(partnerName, name = "freq", sort = TRUE) %>% 
   ungroup() %>% 
-  mutate(prop = round(freq/sum(freq), 3)) %>% 
-  mutate(percent = paste0(round(100 * freq/sum(freq), 0), "%"))
+  mutate(prop = round(freq/sum(freq), 3))
 ```
 
 The table below shows partner count per each record:
 
-+ *`r p[1,"percent",drop=T]`* of the records are from
-**`r p[1,"partnerName",drop=T]`**.
++ **`r p[1,"partnerName",drop=T]`** has `r xfun::n2w(p[1,"freq",drop=T])`
+records, 
+which is *`r scales::percent(p[1,"prop",drop=T])`*
+of the total records.
 
-+ Second, **`r p[2,"partnerName",drop=T]`** comes with a percentage of 
-*`r p[2,"percent",drop=T]`*. 
++ Second, 
+**`r p[2,"partnerName",drop=T]`** has `r xfun::n2w(p[2,"freq",drop=T])`
+records, 
+which is *`r scales::percent(p[2,"prop",drop=T])`*
+of the total records.
 
 The difference between percentages of the partners **`r p[1,"partnerName",drop=T]`** and
 **`r p[2,"partnerName",drop=T]`** is 
@@ -116,11 +123,8 @@ The difference between percentages of the partners **`r p[1,"partnerName",drop=T
 
 ```{r}
 p %>%
-  select(-percent) %>% 
   gt() %>% 
-  tab_options(
-    table.width = pct(100)
-  )
+  gt_condensed_style()
 ```
 
 <br>
@@ -131,24 +135,23 @@ psb <- partners %>%
   count(subPartnerName, name = "freq", sort = TRUE) %>% 
   drop_na() %>% 
   ungroup() %>% 
-  mutate(prop = round(freq/sum(freq), 3)) %>% 
-  mutate(percent = paste0(round(100 * freq/sum(freq), 0), "%"))
+  mutate(prop = round(freq/sum(freq), 3))
 ```
 
 The table below shows sub-partner count per each record.
 
-+ The sub-partner **`r psb[1,"subPartnerName",drop=T]`** has 
-*`r psb[1,"percent",drop=T]`* of the total reports among the all sub-partners.
++ The sub-partner **`r psb[1,"subPartnerName",drop=T]`** 
+has `r xfun::n2w(psb[1,"freq",drop=T])`
+records 
+that is *`r scales::percent(p[1,"prop",drop=T])`* percent
+of  the total records among the all sub-partners.
 
 + The remaining sub-partners have infinitesimal numbers in their responses.
 
 ```{r}
 psb %>% 
-  select(-percent) %>% 
   gt() %>% 
-    tab_options(
-    table.width = pct(100)
-  )
+  gt_condensed_style()
 ```
 
 <br>
@@ -160,23 +163,23 @@ PartnerSubProp <- partners %>%
   summarize(freq = sum(freq)) %>% 
   mutate(prop = round(freq/sum(freq), 3)) %>% 
   mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
-acnur.hias.part <- PartnerSubProp %>% filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
+acnur.hias.part <- PartnerSubProp %>% dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
 ```
 
 The plots placed in the tabs below show the proportion of records entered by
 partners and sub-partners.
 
 + *`r acnur.hias.part[,"freq",drop=T]`* out of 
-*`r sum(PartnerSubProp %>% filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
+*`r sum(PartnerSubProp %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
 total responses of **ACNUR** is actually coming from **HIAS**.
 
 + **UNICEF** has more diversed partners in terms of reporting.
-*`r PartnerSubProp%>%filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(percent)`*
+*`r PartnerSubProp%>%dplyr::filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(percent)`*
 of responses of **UNICEF** comes from **HIAS**.
-*`r PartnerSubProp%>%filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(percent)`*
+*`r PartnerSubProp%>%dplyr::filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(percent)`*
 of reporting comes from the **UNICEF** itself.
 
-+ Under **PMA**, there are *`r nrow(PartnerSubProp%>%filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubProp%>%filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
++ Under **PMA**, there are *`r nrow(PartnerSubProp%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubProp%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
 
 Those are the total numbers of reporting in all database, the numbers are not
 specific to the narratives (multi-line text fields). In the next section, we
@@ -206,7 +209,7 @@ col.names <- c(
   "canton"
 )
 narratives <- form.table %>%
-  filter(!is.na(response) & type == "NARRATIVE") %>%
+  dplyr::filter(!is.na(response) & type == "NARRATIVE") %>%
   inner_join(
     select(partners, recordId, partnerName, subPartnerName),
     by = c("partnerName", "recordId")
@@ -249,7 +252,7 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
     ) +
     xlab(NULL) +
     ylab(NULL) +
-    theme_ecuador1() +
+    theme_ecuador1(border = TRUE) +
     theme(
       axis.text.x = element_blank(),
       axis.ticks.x = element_blank(),
@@ -281,7 +284,16 @@ locations <-
 ```
 
 ```{r canton-locations-tbl}
-# TODO make group names bold
+## TODO simplify group names styling with e.g. unique(locations$province)
+## However, this is the 'hacky' script for the moment:
+## 
+## glue::glue('
+##   tab_style(
+##     locations = cells_group(groups = "{x}"),
+##     style = cells_styles(text_weight = "bold")
+##   ) %>% 
+## ', x = unique(locations$province))
+## 
 locations %>%
   select(province, canton, freq, canton.prop, province.prop) %>%
   group_by(province) %>% 
@@ -289,10 +301,72 @@ locations %>%
   gt() %>% 
   tab_header(
     title = "Canton and provinces",
-    subtitle = "Reports in narratives"
+    subtitle = "The number of reports in the multi-text (narrative) fields"
+  ) %>% 
+  gt_condensed_style() %>% 
+  tab_style(
+    locations = cells_group(groups = "PICHINCHA"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "CARCHI"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "SUCUMBIOS"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "IMBABURA"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "GUAYAS"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "EL ORO"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "ESMERALDAS"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "SANTO DOMINGO DE LOS TSACHILAS"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "AZUAY"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "COTOPAXI"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "LOS RIOS"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "CHIMBORAZO"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "MANABI"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "TUNGURAHUA"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "BOLIVAR"),
+    style = cells_styles(text_weight = "bold")
   )
 ```
 
+<br>
 <br>
 
 Treemap plot showing canton and province reporting frequencies.
@@ -302,7 +376,6 @@ tree.colors <-c(
   RColorBrewer::brewer.pal(name = "Dark2", n = 8),
   RColorBrewer::brewer.pal(name = "Set2", n = 8)
 )
-
 ggplot(locations,
        aes(
          area = province.prop,
@@ -358,8 +431,10 @@ narratives <- narratives %>%
 recode_tbl <- narratives %>%
   select(labelFormsRecode, labelForms) %>% 
   distinct()
+
 recode_tbl %>% 
-  gt()
+  gt() %>% 
+  gt_condensed_style()
 ```
 
 ## Response quality
@@ -424,17 +499,19 @@ narratives.wc <- narratives %>%
     description, labelFormsRecode
   ) %>% 
   ungroup()
+
 head(narratives.wc) %>% 
   mutate(response = strtrim(response, 15)) %>% 
   mutate(description = strtrim(description, 15)) %>% 
-  gt()
+  gt() %>% 
+  gt_condensed_style()
 ```
 
 It's also a good practice to see the number of questions. For example, one
 question has two responses, therefore they're short. Therefore, jittered points
 are added to give a glance about the number of observations in the same plot.
 
-```{r plot-topic-response-wc, fig.cap="Figure: Box plot form topics and response word counts based on the raw data"}
+```{r plot-topic-response-wc}
 # TODO facet by labelFolder
 narratives.wc %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
@@ -451,10 +528,12 @@ narratives.wc %>%
   theme(legend.position = "bottom")
 ```
 
-In the plot above, the outliers are shown in orange color. Outliers are the
-points placed outside the whiskers, which is the long line, of the boxplot[^1].
+In the plot above, the box plot of form topics and response word counts based on
+the raw data, the outliers are shown in orange color. Outliers are the points
+placed outside the whiskers, which is the long line, of the boxplot.
 
 The response word count distribution per form topic categorized by partner name:
+
 ```{r plot-partner-response-wc, fig.width=10, fig.height=20}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
@@ -468,10 +547,11 @@ narratives.wc %>%
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
-  theme_ecuador1()
+  theme_ecuador1(border = TRUE)
 ```
 
 The response word count distribution per form topic categorized by canton name:
+
 ```{r plot-canton-response-wc, fig.width=10, fig.height=20}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
@@ -487,9 +567,41 @@ narratives.wc %>%
   ) +
   xlab(NULL) +
   ylab(NULL) +
-  theme_ecuador1() +
+  theme_ecuador1(border = TRUE) +
   theme(panel.spacing = unit(0, "lines"))
 ```
+
+<br>
+
+```{r, fig.width=7, fig.height=7}
+lf <- narratives.wc %>% 
+  group_by(labelFormsRecode) %>% 
+  select(labelFormsRecode, .responseWordCount, .questionWordCount)
+lf$labelFormsRecode <- as.factor(lf$labelFormsRecode)
+
+## Make all data; gray background
+lf_bg <- lf[, -1]
+
+lf.xlab <- expression(paste("Word counts in ", italic("response"), " field"))
+lf.ylab <- expression(paste("Word counts in ", italic("question"), " field"))
+ggplot(lf, aes(x = .responseWordCount, y = .questionWordCount, color = labelFormsRecode)) +
+  geom_point(data = lf_bg,
+             colour = "grey",
+             alpha = 0.2) + # 
+  geom_point(size = 3L) + # actual points
+  geom_point(shape = 21, color = "black", stroke = 0.2, size = 3L) + # for point borders
+  facet_wrap( ~ labelFormsRecode) +
+  theme_ecuador1(border = TRUE) +
+  guides(color = FALSE) +
+  labs(
+    title = "Response and Question word counts per form topic",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  xlab(lf.xlab) +
+  ylab(lf.ylab)
+```
+
+<br>
 
 *A caveat:* Reducing multiple values down to a single value should be avoided in
 the early stages of the analysis because reducing hides a lot e.g. a bar chart
@@ -557,9 +669,9 @@ of response has a description field).
 
 `TODO ANOVA`
 
-### General trends {.tabset}
+### Trends 
 
-#### Median word count per partner
+#### Median word count of responses per partner
 
 ```{r}
 narratives.wc %>% 
@@ -567,15 +679,18 @@ narratives.wc %>%
   summarise(median = median(.responseWordCount)) %>% 
   ungroup() %>% 
   ggplot(aes(reorder(partnerName, -median), median)) +
-  geom_bar(stat = "identity", width = 0.5, fill = "tomato2") + 
+  geom_bar(stat = "identity", width = 0.5, fill = "tomato2", color = "black") + 
   labs(title = "Median word count of responses per partner",
        subtitle = sprintf("The total median rate %s", round(median(narratives.wc$.responseWordCount), 2))) +
-  xlab("Partners") +
-  ylab("Median value") +
-  theme(axis.text.x = element_text(angle=65, vjust=0.6))
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  xlab(NULL) +
+  ylab(NULL)
 ```
 
-#### Median word count of responses
+#### Median word count of responses per sub partners
+`TODO`
+
+#### Median word count of responses per partner over months
 
 ```{r, fig.width=10, fig.height=10}
 narratives.med.wc <- narratives %>% 
@@ -594,17 +709,22 @@ narratives.med.wc.ts <-
 ggplot(narratives.med.wc.ts, aes(Month, median, color = partnerName)) +
   geom_line() +
   geom_point() +
+  geom_point(shape = 21, color = "black") +
   labs(title = "Median word count of responses per partner over months",
        subtitle = sprintf("The average median rate %s", round(mean(narratives.med.wc$median), 2))) +
   xlab("Month") +
   ylab("Median word count") +
   scale_x_date(labels = date_format("%Y-%m")) +
   scale_color_brewer(palette = "Paired") +
-  facet_wrap(~partnerName, scales = "free", ncol=2) +
+  facet_wrap(~partnerName, scales = "free_x", ncol=2) +
   theme_ecuador1() +
   theme(legend.position = "bottom") +
-  theme(legend.title = element_blank())
+  theme(legend.title = element_blank()) +
+  xlab(NULL)
 ```
+
+#### Median word count of responses per sub partners over months
+`TODO`
 
 ### Correlation
 
@@ -636,7 +756,7 @@ p2 <- description.field.wc %>%
   geom_smooth(aes(colour = "linear"), method = "lm") +
   theme_ecuador1() +
   theme(legend.position = "none")
-gridExtra::grid.arrange(p1, p2, ncol = 2)
+do.call(cowplot::plot_grid, list(p1, p2))
 ```
 
 The gray area around the lines shows the confidence band at the 0.95 level.
