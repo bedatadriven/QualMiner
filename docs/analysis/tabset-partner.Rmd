@@ -1,9 +1,6 @@
 
 ```{r tabset, results='asis'}
-fill.colors <-c(
-  RColorBrewer::brewer.pal(name = "Set1", n = 8),
-  RColorBrewer::brewer.pal(name = "Accent", n = 8)
-)
+fill.colors <- color_set_16()
 partner.names <- unique(PartnerSubProp$partnerName)
 bodies <- list()
 PartnerSubProp_sub <- list()

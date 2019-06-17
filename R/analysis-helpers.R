@@ -3,6 +3,14 @@
 ### GGPLOT THEMES ----
 ### ----------------------------------------------------------------- ###
 
+#' Sixteen distinct colors
+color_set_16 <- function() {
+  c(
+    RColorBrewer::brewer.pal(name = "Set1", n = 8),
+    RColorBrewer::brewer.pal(name = "Accent", n = 8)
+  )
+}
+
 #' Theme color codes constructor
 #'
 #' Get HEX color codes by entering the color name. Modify the list in the
