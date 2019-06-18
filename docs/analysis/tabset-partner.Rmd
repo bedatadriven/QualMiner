@@ -1,23 +1,23 @@
 
 ```{r tabset, results='asis'}
 fill.colors <- color_set_16()
-partner.names <- unique(PartnerSubProp$partnerName)
+partner.names <- unique(PartnerSubPropFreq$partnerName)
 bodies <- list()
-PartnerSubProp_sub <- list()
+PartnerSubPropFreq_sub <- list()
 percents <- list()
 legend <- list()
 for (p in seq_along(partner.names)) {
-  PartnerSubProp_sub[[p]] <- PartnerSubProp %>% dplyr::filter(partnerName == partner.names[p]) %>% arrange(desc(prop))
-  percents[[p]] <- paste(sapply(seq_along(PartnerSubProp_sub[[p]]$subPartnerName), function(i) {
-    sprintf("%s: %s", PartnerSubProp_sub[[p]]$subPartnerName[i], PartnerSubProp_sub[[p]]$percent[i])
+  PartnerSubPropFreq_sub[[p]] <- PartnerSubPropFreq %>% dplyr::filter(partnerName == partner.names[p]) %>% arrange(desc(prop))
+  percents[[p]] <- paste(sapply(seq_along(PartnerSubPropFreq_sub[[p]]$subPartnerName), function(i) {
+    sprintf("%s: %s", PartnerSubPropFreq_sub[[p]]$subPartnerName[i], PartnerSubPropFreq_sub[[p]]$percent[i])
   }), collapse = ", ")
-  legend[[p]] <- if (length(PartnerSubProp_sub[[p]][["subPartnerName"]]) > 1) {
+  legend[[p]] <- if (length(PartnerSubPropFreq_sub[[p]][["subPartnerName"]]) > 1) {
     "legend.position = \"right\"" 
   }  else {
     "legend.position = \"none\""
   }
   bodies[[p]] <- glue::glue('
-  PartnerSubProp_sub[[{p}]] %>% 
+  PartnerSubPropFreq_sub[[{p}]] %>% 
     ggplot(aes(x=partnerName, y=prop, fill=reorder(subPartnerName, -prop))) +
     geom_bar(position="dodge", stat="identity", color="black") +
     labs(

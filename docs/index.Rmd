@@ -45,7 +45,7 @@ form.table <- tibble::as_tibble(form.table)
 
 # Introduction
 
-```{r child = 'analysis/introduction.Rmd', eval=FALSE}
+```{r child = 'analysis/introduction.Rmd', eval=TRUE}
 ```
 
 # Data preparation
@@ -87,7 +87,7 @@ all(direct_indirect.fields)
 
 ### Partners
 
-```{r}
+```{r, include=FALSE}
 partners <- form.table %>% 
   group_by(recordId) %>% 
   dplyr::filter(code == "Socio") %>% 
@@ -95,8 +95,7 @@ partners <- form.table %>%
   select(recordId, partnerName, response, canton, province) %>% 
   rename(subPartnerName = response) %>% 
   mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
-p <-
-  partners %>%
+p <- partners %>%
   group_by(partnerName) %>%
   count(partnerName, name = "freq", sort = TRUE) %>%
   ungroup() %>%
@@ -129,29 +128,33 @@ p %>%
 ```
 
 ```{r, include=FALSE}
-PartnerSubProp <- partners %>% 
+PartnerSubPropFreq <- partners %>% 
   group_by(partnerName, subPartnerName) %>% 
   count(partnerName, subPartnerName, name = "freq", sort = TRUE) %>% 
   summarize(freq = sum(freq)) %>% 
   mutate(prop = round(freq/sum(freq), 3)) %>% 
   mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
-acnur.hias.part <- PartnerSubProp %>% dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
+```
+
+```{r, include=FALSE}
+acnur.hias.part <- PartnerSubPropFreq %>% 
+  dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
 ```
 
 The table below shows the proportion of records entered by
 partners and sub-partners.
 
 + *`r acnur.hias.part[,"freq",drop=T]`* out of 
-*`r sum(PartnerSubProp %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
+*`r sum(PartnerSubPropFreq %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
 total responses of **ACNUR** is actually coming from **HIAS**.
 
 + **UNICEF** has more diversed partners in terms of reporting.
-*`r PartnerSubProp%>%dplyr::filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(percent)`*
+*`r PartnerSubPropFreq%>%dplyr::filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(percent)`*
 of responses of **UNICEF** comes from **HIAS**.
-*`r PartnerSubProp%>%dplyr::filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(percent)`*
+*`r PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(percent)`*
 of reporting comes from the **UNICEF** itself.
 
-+ Under **PMA**, there are *`r nrow(PartnerSubProp%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubProp%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
++ Under **PMA**, there are *`r nrow(PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
 
 Those are the total numbers of reporting in all database, the numbers are not
 specific to the narratives (multi-line text fields). In the next section, we
@@ -166,9 +169,9 @@ count the number of reportings done only in the narrative sections.
 ##    locations = cells_group(groups = "{x}"),
 ##    style = cells_styles(text_weight = "bold")
 ##  ) %>% 
-## ', x = unique(unique(PartnerSubProp$partnerName)))
+## ', x = unique(unique(PartnerSubPropFreq$partnerName)))
 ## 
-PartnerSubProp %>% 
+PartnerSubPropFreq %>% 
   group_by(subPartnerName) %>% 
   arrange(desc(freq)) %>% 
   group_by(partnerName) %>% 
@@ -257,51 +260,71 @@ saying that narrative data is multi-line text fields allowing users to enter
 long texts.
 
 ```{r data-source-preparation}
-col.names <- c(
-  "labelFolder",
-  "labelForms",
-  "Month",
-  "question",
-  "response",
-  "description",
-  "partnerName",
-  "subPartnerName",
-  "province",
-  "canton"
-)
 narratives <- form.table %>%
   dplyr::filter(!is.na(response) & type == "NARRATIVE") %>%
   inner_join(
     select(partners, recordId, partnerName, subPartnerName),
     by = c("partnerName", "recordId")
   ) %>%
-  select(col.names)
+  select(
+    "labelFolder",
+    "labelForms",
+    "Month",
+    "question",
+    "response",
+    "description",
+    "partnerName",
+    "subPartnerName",
+    "province",
+    "canton"
+  )
 ```
 
 ### The number of partners and sub-partners reporting narrative data
 
 ```{r}
-narratives_part_count <- narratives %>% 
+narratives.part.count <- narratives %>% 
   group_by(partnerName, subPartnerName) %>% 
   count(partnerName, subPartnerName, name = "freq", sort=TRUE) %>% 
   summarize(freq = sum(freq)) %>% 
   mutate(prop = round(freq/sum(freq), 3)) %>% 
   mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
+
+## partners having multiple sub-partners
+narratives.part.count.with.subPartners <- narratives.part.count %>% 
+  dplyr::filter(prop != 1) %>% 
+  ungroup()
+
+## partners do not have any sub-partners reporting via them.
+narratives.part.count.without.subPartners <- narratives.part.count %>% 
+  dplyr::filter(prop == 1) %>% 
+  ungroup()
 ```
 
 As we have seen previously, Not all partners (and sub-partners) enter narrative
 records. For instance, the partner **PMA** has lots of sub-partners reporting
 for the different data types but there are no narratives there.
 
-```{r, warning=FALSE, fig.width=8, fig.height=8}
-## grouped facet wraps. Source: https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
-plot_partners_splitted <- split(narratives_part_count, f = narratives_part_count$partnerName)
-plot_partners_splitted_front <- plot_partners_splitted[c(c("ACNUR", "UNICEF"), setdiff(names(plot_partners_splitted), c("ACNUR", "UNICEF")))] 
+```{r, warning=FALSE, fig.width=7, fig.height=5}
+## grouped facet wraps. Source:
+## https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
+
+plot_partners_splitted <- split(
+  x = narratives.part.count.with.subPartners, 
+  f = narratives.part.count.with.subPartners$partnerName
+)
+
+## bring ACNUR and UNICEF plots to the front:
+plot_partners_splitted_front <- plot_partners_splitted[c(
+  c("ACNUR", "UNICEF"),
+  setdiff(names(plot_partners_splitted), c("ACNUR", "UNICEF"))
+)]
+
 plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i) {
   ggplot(plot_partners_splitted_front[[i]], aes(x = partnerName, y = prop)) +
     geom_bar(aes(fill = reorder(subPartnerName,-prop)), position = "dodge", stat =
                "identity", color = "black") +
-    facet_wrap(~ partnerName, scales = "fixed") +
+    facet_wrap(~ partnerName, scales = "free") +
     geom_label(
       aes(
         label = percent,
@@ -311,6 +334,7 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
       position = position_dodge(width = 1),
       label.size = 0.35
     ) +
+    ylim(0, 1) + 
     xlab(NULL) +
     ylab(NULL) +
     theme_ecuador1(border = TRUE) +
@@ -322,17 +346,27 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
     ) +
     scale_fill_brewer(palette = "Set2")
 })
+
 ## "cowplot" is civilized version of 'gridExtra'.
 do.call(cowplot::plot_grid, plot_partners_list)
 ```
+
+In terms of narrative data,
+
+TODO
+The partners X and Y is like that.
+The rest of the main partners, namely ...
+do not have any subpartners reporting by them.
+
++ The partners do not have any sub-partners reporting via them: 
+*`r paste(narratives.part.count.without.subPartners$partnerName, collapse = ", ")`*
 
 ***
 
 ### The number cantons and provinces recording narrative data
 
-```{r}
-locations <- 
-  narratives %>% 
+```{r, include = FALSE}
+locations <- narratives %>% 
   count(province, canton, name = "freq") %>%
   group_by(province, canton) %>% 
   summarize(freq = sum(freq)) %>%
@@ -432,7 +466,7 @@ locations %>%
 
 Treemap plot showing canton and province reporting frequencies.
 
-```{r}
+```{r treemap, fig.width=9, fig.height=6}
 tree.colors <-c(
   RColorBrewer::brewer.pal(name = "Dark2", n = 8),
   RColorBrewer::brewer.pal(name = "Set2", n = 8)
@@ -674,7 +708,7 @@ others, because:
 
 2. The questions they answered require short answers.
 
-### The "Description" field
+### The Description field
 
 Some questions have the description field giving extra details about the
 questions.
@@ -735,7 +769,7 @@ ppd <- ggplot(data = desc.resp.wc.plot,
   labs(
     title = "Word count of responses depending upon the presence of description field",
     subtitle = sprintf(
-      "Response word count mean with description (%.2f%%) without description (%.2f%%)",
+      "Average response word count of questions with a description (%.2f) without any description (%.2f) field",
       dplyr::filter(desc.resp.wc.plot.single.stat, .hasDescription == TRUE)[["Mean.rwc"]],
       dplyr::filter(desc.resp.wc.plot.single.stat, .hasDescription == FALSE)[["Mean.rwc"]]
     )
@@ -778,8 +812,10 @@ narratives.wc %>%
   ungroup() %>% 
   ggplot(aes(reorder(partnerName, -median), median)) +
   geom_bar(stat = "identity", width = 0.5, fill = "tomato2", color = "black") + 
-  labs(title = "Median word count of responses per partner",
-       subtitle = sprintf("The total median rate %s", round(median(narratives.wc$.responseWordCount), 2))) +
+  labs(
+    title = "Median word count of responses per partner",
+    subtitle = sprintf("The total median rate %.2f", median(narratives.wc$.responseWordCount))
+  ) +
   theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
   xlab(NULL) +
   ylab(NULL)
@@ -790,34 +826,85 @@ narratives.wc %>%
 
 #### Median word count of responses per partner over months
 
-```{r, fig.width=10, fig.height=10}
+```{r, include=FALSE}
+narratives.med.wc_colors <- color_set_16()
+
 narratives.med.wc <- narratives %>% 
   mutate(.responseWordCount = word_count(response)) %>%
-  mutate(Month = as.Date(paste0(Month, "-01"), format = "%Y-%m-%d")) %>%
+  mutate(Month = as.Date(paste0(Month, "-01"), format = "%Y-%m-%d"))
+```
+
+```{r partner-over-time, include=FALSE}
+narratives.med.wc_byPartner <- narratives.med.wc %>% 
   group_by(partnerName, Month) %>%
   summarize(median = median(.responseWordCount)) %>% 
   ungroup()
 
-narratives.med.wc.ts <-
-  narratives.med.wc %>%
+narratives.med.wc_byPartner_ts <-
+  narratives.med.wc_byPartner %>%
   mutate(Month = yearmonth(Month)) %>% 
   as_tsibble(index = "Month", key = "partnerName") %>% 
   fill_gaps(median = 0, .full = TRUE)
+```
 
-narratives.med.wc.ts.colors <- color_set_16()
-ggplot(narratives.med.wc.ts, aes(Month, median, color = partnerName)) +
+```{r, fig.width=10, fig.height=10}
+narratives.med.wc_byPartner_ts %>%
+  ggplot(aes(Month, median, color = partnerName)) +
   geom_line() +
   geom_point() +
   geom_point(shape = 21, color = "black") +
-  labs(title = "Median word count of responses per partner over months",
-       subtitle = sprintf("The average median rate %s", round(mean(narratives.med.wc$median), 2))) +
+  labs(
+    title = "Median word count of responses per partner over months",
+    subtitle = ""
+  ) +
   xlab("Month") +
   ylab("Median word count") +
   scale_x_date(labels = date_format("%Y-%m")) +
-  scale_colour_manual(values = narratives.med.wc.ts.colors) +
+  scale_colour_manual(values = narratives.med.wc_colors) +
   facet_wrap( ~ partnerName, scales = "free_x", ncol = 2) +
-  theme_ecuador1() +
+  theme_ecuador1(border = TRUE) +
+  guides(colour = FALSE) +
+  ## y lim is a bit more than max median value:
+  ylim(0, max(narratives.med.wc_byPartner_ts$median) + 50L) +
   xlab(NULL)
+```
+
+```{r partner-subPartner-over-time, include=FALSE}
+narratives.med.wc_byPartnerSubPartner <- narratives.med.wc %>% 
+  group_by(partnerName, subPartnerName, Month) %>%
+  summarize(median = median(.responseWordCount)) %>% 
+  ungroup()
+
+narratives.med.wc_byPartnerSubPartner_ts <-
+  narratives.med.wc_byPartnerSubPartner %>%
+  mutate(Month = yearmonth(Month)) %>% 
+  as_tsibble(index = "Month", key = c("partnerName", "subPartnerName")) %>% 
+  fill_gaps(median = 0, .full = TRUE)
+```
+
+```{r, eval=FALSE}
+# TODO fix warnings
+.med.wc.specific <- narratives.med.wc_byPartnerSubPartner_ts %>% 
+  dplyr::filter(partnerName == c("ACNUR", "UNICEF"))
+
+.med.wc.specific.splitted <- split(
+  x = .med.wc.specific,
+  f = .med.wc.specific$partnerName
+)
+
+narratives.med.wc.specific.partners <- 
+  lapply(seq_along(.med.wc.specific.splitted), function(i) {
+      ggplot(.med.wc.specific.splitted[[i]], aes(Month, median, color = subPartnerName)) +
+      facet_wrap( ~ partnerName, scales = "free") +
+      geom_line() +
+      geom_point() +
+      geom_point(shape = 21, color = "black") +
+      xlab("Month") +
+      ylab("Median word count") +
+      scale_x_date(labels = scales::date_format("%Y-%m")) +
+      theme_ecuador1(border = TRUE)
+  })
+do.call(cowplot::plot_grid, narratives.med.wc.specific.partners)
 ```
 
 #### Median word count of responses per sub partners over months
@@ -869,7 +956,7 @@ uncertainty in the estimate is wide.
 
 In that section, we take text as data.
 
-```{r child = 'analysis/text-analysis.Rmd', eval=FALSE}
+```{r child = 'analysis/text-analysis.Rmd', eval=TRUE}
 ```
 
 # References

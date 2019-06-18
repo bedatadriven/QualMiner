@@ -1,3 +1,4 @@
+
 ### Textual data preparation
 
 Describe how to prepare textual data and what common steps are usually performed.
@@ -12,7 +13,7 @@ group of words (such as *bigram*), or even a sentence that depends on the level
 of analysis.
 
 ```{r}
-tokens <- compact %>% 
+tokens <- narratives %>% 
   as_tibble() %>% 
   unnest_tokens(word, response)
 head(tokens) %>% 
@@ -79,7 +80,7 @@ tokens_sw %>%
 ```
 
 ```{r, echo=FALSE, results='asis'}
-recode.names <- unique(compact$labelFormsRecode)
+recode.names <- unique(narratives$labelFormsRecode)
 body <- glue::glue(
   '
 top.n <- 10L
@@ -131,3 +132,4 @@ tokens_sw %>%
     title.colors = "#5c5c5c"
   )
 ```
+
