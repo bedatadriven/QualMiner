@@ -61,7 +61,8 @@ theme_ecuador1 <- function(border = FALSE) {
         fill = theme_color_codes("UNHCR blue"),
         size = 1.1,
         linetype = "solid"
-      )
+      ),
+      panel.spacing = unit(1.5, "lines")
     ) +
     border.theme
 }
