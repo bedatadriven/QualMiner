@@ -1,6 +1,5 @@
 ---
 title: "QualMiner: Exploring qualitative indicators via text mining methods"
-author: "Metin Yazici <i>(BeDataDriven B.V.)</i>, Alexander Bertram <i>(BeDataDriven B.V.)</i>, Lucy Brinks <i>(BeDataDriven B.V.)</i>"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -52,8 +51,7 @@ form.table <- tibble::as_tibble(form.table)
 # Data preparation
 
 The data has been extracted from *ActivityInfo* and pre-processed to make it
-ready for the analysis. Check the calls in the `R/` directory of the project
-repository to see how the process went on.
+ready for the analysis. Source the `R/etl.R` file to download the raw data.
 
 ### Data import & preparation
 
@@ -97,27 +95,30 @@ partners <- form.table %>%
   select(recordId, partnerName, response, canton, province) %>% 
   rename(subPartnerName = response) %>% 
   mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
-p <- partners %>% 
-  group_by(partnerName) %>% 
-  count(partnerName, name = "freq", sort = TRUE) %>% 
-  ungroup() %>% 
-  mutate(prop = round(freq/sum(freq), 3))
+p <-
+  partners %>%
+  group_by(partnerName) %>%
+  count(partnerName, name = "freq", sort = TRUE) %>%
+  ungroup() %>%
+  mutate(prop = round(freq / sum(freq), 3))
 ```
+
+<br>
 
 The table below shows partner count per each record:
 
 + **`r p[1,"partnerName",drop=T]`** has `r xfun::n2w(p[1,"freq",drop=T])`
 records, 
-which is *`r scales::percent(p[1,"prop",drop=T])`*
+which is `r scales::percent(p[1,"prop",drop=T])`
 of the total records.
 
 + Second, 
 **`r p[2,"partnerName",drop=T]`** has `r xfun::n2w(p[2,"freq",drop=T])`
 records, 
-which is *`r scales::percent(p[2,"prop",drop=T])`*
+which is `r scales::percent(p[2,"prop",drop=T])`
 of the total records.
 
-The difference between percentages of the partners **`r p[1,"partnerName",drop=T]`** and
++ The most difference between percentages of the partners **`r p[1,"partnerName",drop=T]`** and
 **`r p[2,"partnerName",drop=T]`** is 
 *`r paste0(floor(convolve((p[1,"prop",drop=T]-p[2,"prop",drop=T]), 100)), '%')`*.
 
@@ -127,36 +128,7 @@ p %>%
   gt_condensed_style()
 ```
 
-<br>
-
-```{r}
-psb <- partners %>% 
-  group_by(subPartnerName) %>% 
-  count(subPartnerName, name = "freq", sort = TRUE) %>% 
-  drop_na() %>% 
-  ungroup() %>% 
-  mutate(prop = round(freq/sum(freq), 3))
-```
-
-The table below shows sub-partner count per each record.
-
-+ The sub-partner **`r psb[1,"subPartnerName",drop=T]`** 
-has `r xfun::n2w(psb[1,"freq",drop=T])`
-records 
-that is *`r scales::percent(p[1,"prop",drop=T])`* percent
-of  the total records among the all sub-partners.
-
-+ The remaining sub-partners have infinitesimal numbers in their responses.
-
-```{r}
-psb %>% 
-  gt() %>% 
-  gt_condensed_style()
-```
-
-<br>
-
-```{r ppsb-for-text-template, echo=FALSE}
+```{r, include=FALSE}
 PartnerSubProp <- partners %>% 
   group_by(partnerName, subPartnerName) %>% 
   count(partnerName, subPartnerName, name = "freq", sort = TRUE) %>% 
@@ -166,7 +138,7 @@ PartnerSubProp <- partners %>%
 acnur.hias.part <- PartnerSubProp %>% dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
 ```
 
-The plots placed in the tabs below show the proportion of records entered by
+The table below shows the proportion of records entered by
 partners and sub-partners.
 
 + *`r acnur.hias.part[,"freq",drop=T]`* out of 
@@ -185,6 +157,93 @@ Those are the total numbers of reporting in all database, the numbers are not
 specific to the narratives (multi-line text fields). In the next section, we
 count the number of reportings done only in the narrative sections.
 
+<br>
+
+```{r, echo=FALSE}
+## TODO
+## glue::glue('
+##  tab_style(
+##    locations = cells_group(groups = "{x}"),
+##    style = cells_styles(text_weight = "bold")
+##  ) %>% 
+## ', x = unique(unique(PartnerSubProp$partnerName)))
+## 
+PartnerSubProp %>% 
+  group_by(subPartnerName) %>% 
+  arrange(desc(freq)) %>% 
+  group_by(partnerName) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+   tab_style(
+   locations = cells_group(groups = "ACNUR"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "ADRA"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "CARE"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "Dialogo Diverso"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "JRS Ecuador"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "Mision Scalabriniana"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "NRC"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "OIM"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "OPS/OMS"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "Plan Internacional"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "PMA"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "PNUD"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "RET"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "UNESCO"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "UNFPA"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "UNICEF"),
+   style = cells_styles(text_weight = "bold")
+ ) %>% 
+ tab_style(
+   locations = cells_group(groups = "World Vision"),
+   style = cells_styles(text_weight = "bold")
+ )
+```
+
 <hr>
 
 ```{r child = 'analysis/tabset-partner.Rmd', eval=TRUE}
@@ -192,8 +251,10 @@ count the number of reportings done only in the narrative sections.
 
 ## Narrative data
 
-We should focus on a subset of the reports. Narrative data is multi-line text
-fields allowing users to enter long texts.
+In this section, we focus on a subset of the reports, which do particularly have
+the multi-text fields, called "Narrative data" in ActivityInfo terms. Plain
+saying that narrative data is multi-line text fields allowing users to enter
+long texts.
 
 ```{r data-source-preparation}
 col.names <- c(
@@ -261,7 +322,7 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
     ) +
     scale_fill_brewer(palette = "Set2")
 })
-## "cowplot" is really civilized version of 'gridExtra'
+## "cowplot" is civilized version of 'gridExtra'.
 do.call(cowplot::plot_grid, plot_partners_list)
 ```
 
@@ -407,6 +468,7 @@ narratives <- narratives %>%
   mutate(
     labelFormsRecode = recode(
       labelForms,
+      "Agua, saneamiento e higiene" = "Agua",
       "Alojamiento Temporal" = "Alojamiento",
       "Necesidades básicas/Otro" = "Necesidades",
       "Manejo de la información y entrega directa de la información a la población" = "Población",
@@ -487,7 +549,7 @@ achieve a unique name for each question.
 to form level. In this file, we did both, therefore the analysis shown as below:
 
 Count of responses per topic/question:
-```{r count-response, fig.width=8, fig.height=8}
+```{r count-response}
 narratives.wc <- narratives %>%
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
@@ -511,7 +573,7 @@ It's also a good practice to see the number of questions. For example, one
 question has two responses, therefore they're short. Therefore, jittered points
 are added to give a glance about the number of observations in the same plot.
 
-```{r plot-topic-response-wc}
+```{r plot-topic-response-wc, fig.width=8, fig.height=8}
 # TODO facet by labelFolder
 narratives.wc %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
@@ -635,72 +697,73 @@ We see in the plot below that the response word counts per form and colored if a
 response has a description field or not. Having a description field or not is
 calculated as that a description field has a minimum one word.
 
-The responses with the longest word counts are the ones with description.
-Nevertheless, it is not so easy to see a clear trend that there's a correlation
-between response word count and description fields. Interestingly, the questions
-in the form *F15*, which is *Protección_VBG*, has no description fields at all.
-
-```{r, plot1, fig.height=7, fig.width=7}
-description.field.wc.mean <- mean(description.field.wc$.responseWordCount)
-description.field.wc %>% 
-  ggplot(aes(.responseWordCount, labelFormsRecode, color = .hasDescription)) +
-  geom_point() +
-  geom_point(shape = 21, color = "black") +
-  geom_vline(xintercept = description.field.wc.mean, color = "orange", size = 0.6, linetype="dashed") +
-  geom_text(
-    aes(x = 65, label = "mean", y = 11),
-    colour = "orange",
-    angle = 90,
-    size = 4
-  ) +
-  labs(
-    title = "Word count of responses & description field",
-    subtitle = sprintf("Response word count mean: %i", round(description.field.wc.mean))
-  ) +
-  xlab("Word count of responses") +
-  ylab(NULL) +
-  theme_ecuador1() +
-  scale_color_discrete(name = "Has a description field")+
-  guides(colour = guide_legend(title.position = "top"))
-```
-
-We look below the description word count and compare with the
-response word count (and remove the categorical field displaying if the question
-of response has a description field).
-
-```{r}
-description.field.wc.bg <- description.field.wc %>% select(labelFormsRecode, .responseWordCount)
-ppd.colors <- c("#00BFC4", "#F8766D")
-ppd <- description.field.wc %>% 
+```{r, fig.width=10, fig.height=7}
+desc.resp.wc.plot <- description.field.wc %>% 
   ## made 'has description' column factor to modify facets.
-  mutate(.hasDescription = factor(description.field.wc$.hasDescription, labels = c("TRUE", "FALSE"))) %>% 
-  ggplot(aes(x = .responseWordCount, y = labelFormsRecode, colour = .hasDescription)) +
-  geom_point(data = description.field.wc.bg,
+  mutate(.hasDescription = factor(
+    description.field.wc$.hasDescription, 
+    levels = c(TRUE, FALSE),
+    labels = c("TRUE", "FALSE"))
+  )
+
+desc.resp.wc.plot.bg <- desc.resp.wc.plot %>%
+  select(labelFormsRecode, .responseWordCount)
+
+desc.resp.wc.plot.single.stat <- desc.resp.wc.plot %>%
+  group_by(.hasDescription) %>%
+  summarise(Mean.rwc = mean(.responseWordCount)) %>% 
+  arrange(.hasDescription)
+
+desc.resp.wc.plot.colors <- c("#00BFC4", "#F8766D")
+
+ppd <- ggplot(data = desc.resp.wc.plot,
+              aes(x = .responseWordCount, y = labelFormsRecode, colour = .hasDescription)) +
+  geom_point(data = desc.resp.wc.plot.bg,
              colour = "grey",
              alpha = 0.2) +
-  geom_point() +
-  geom_point(shape = 21, color = "black") +
+  geom_point(size = 3L) +
+  geom_point(shape = 21, color = "black", stroke = 0.2, size = 3L) +
+  geom_vline(
+    data = desc.resp.wc.plot.single.stat,
+    mapping = aes(xintercept = Mean.rwc, color = .hasDescription),
+    linetype = "dashed"
+  ) +
   facet_wrap( ~ .hasDescription) +
-  scale_colour_manual(values = ppd.colors) +
+  scale_colour_manual(values = desc.resp.wc.plot.colors) +
   theme_ecuador1(border = TRUE) +
   guides(colour = FALSE) +
   labs(
-    title = "Word count of responses & description field",
-    subtitle = "TODO"
+    title = "Word count of responses depending upon the presence of description field",
+    subtitle = sprintf(
+      "Response word count mean with description (%.2f%%) without description (%.2f%%)",
+      dplyr::filter(desc.resp.wc.plot.single.stat, .hasDescription == TRUE)[["Mean.rwc"]],
+      dplyr::filter(desc.resp.wc.plot.single.stat, .hasDescription == FALSE)[["Mean.rwc"]]
+    )
   ) +
-  xlab(NULL) +
+  xlab("Word count of responses") +
   ylab(NULL)
-## Solution taken from: https://github.com/tidyverse/ggplot2/issues/2096#issuecomment-292971159
+
+## The solution to separately color facet headings is taken from here:
+## https://github.com/tidyverse/ggplot2/issues/2096#issuecomment-292971159
 g <- ggplot_gtable(ggplot_build(ppd))
 stripr <- grep('strip-t', g$layout$name)
 k <- 1
 for (i in stripr) {
   j <- which(grepl('rect', g$grobs[[i]]$grobs[[1]]$childrenOrder))
-  g$grobs[[i]]$grobs[[1]]$children[[j]]$gp$fill <- ppd.colors[k]
+  g$grobs[[i]]$grobs[[1]]$children[[j]]$gp$fill <- desc.resp.wc.plot.colors[k]
   k <- k+1
 }
 grid::grid.draw(g)
 ```
+
+<br>
+
+The responses with the longest word counts are the ones with description.
+Nevertheless, it is not so easy to see a clear trend that there's a correlation
+between response word count and description fields. Interestingly, the form
+topic *Protección_VBG* has no description fields at all in its form topics.
+
+### Analysis of Variance
 
 `TODO ANOVA`
 
@@ -741,6 +804,7 @@ narratives.med.wc.ts <-
   as_tsibble(index = "Month", key = "partnerName") %>% 
   fill_gaps(median = 0, .full = TRUE)
 
+narratives.med.wc.ts.colors <- color_set_16()
 ggplot(narratives.med.wc.ts, aes(Month, median, color = partnerName)) +
   geom_line() +
   geom_point() +
@@ -750,11 +814,9 @@ ggplot(narratives.med.wc.ts, aes(Month, median, color = partnerName)) +
   xlab("Month") +
   ylab("Median word count") +
   scale_x_date(labels = date_format("%Y-%m")) +
-  scale_color_brewer(palette = "Paired") +
-  facet_wrap(~partnerName, scales = "free_x", ncol=2) +
+  scale_colour_manual(values = narratives.med.wc.ts.colors) +
+  facet_wrap( ~ partnerName, scales = "free_x", ncol = 2) +
   theme_ecuador1() +
-  theme(legend.position = "bottom") +
-  theme(legend.title = element_blank()) +
   xlab(NULL)
 ```
 
