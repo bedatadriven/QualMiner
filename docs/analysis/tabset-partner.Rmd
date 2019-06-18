@@ -42,7 +42,7 @@ for (p in seq_along(partner.names)) {
   )
 }
 create_tabset(
-  main = "### Which partners and sub-partners are reporting?", 
+  main = "### Which partners and sub-partners are reporting in all fields?", 
   tabs = partner.names, 
   body = bodies
 )
