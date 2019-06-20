@@ -45,7 +45,7 @@ form.table <- tibble::as_tibble(form.table)
 
 # Introduction
 
-```{r child = 'analysis/introduction.Rmd', eval=TRUE}
+```{r child = 'analysis/introduction.Rmd', eval=FALSE}
 ```
 
 # Data preparation
@@ -87,6 +87,12 @@ all(direct_indirect.fields)
 
 ### Partners
 
+They are two types of partners in the database:
+
++ Reporting partners: Higher level of partners reporting directly in ActivityInfo.
+
++ Implementing partners: Partners reporting through a reporting partner.
+
 ```{r, include=FALSE}
 partners <- form.table %>% 
   group_by(recordId) %>% 
@@ -95,34 +101,42 @@ partners <- form.table %>%
   select(recordId, partnerName, response, canton, province) %>% 
   rename(subPartnerName = response) %>% 
   mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
-p <- partners %>%
+ppartners <- partners %>%
   group_by(partnerName) %>%
   count(partnerName, name = "freq", sort = TRUE) %>%
   ungroup() %>%
   mutate(prop = round(freq / sum(freq), 3))
 ```
 
-<br>
+The table below shows the count of reporting partner per each record:
 
-The table below shows partner count per each record:
-
-+ **`r p[1,"partnerName",drop=T]`** has `r xfun::n2w(p[1,"freq",drop=T])`
++ **`r ppartners[1,"partnerName",drop=T]`** has `r xfun::n2w(ppartners[1,"freq",drop=T])`
 records, 
-which is `r scales::percent(p[1,"prop",drop=T])`
+which is `r scales::percent(ppartners[1,"prop",drop=T])`
 of the total records.
 
 + Second, 
-**`r p[2,"partnerName",drop=T]`** has `r xfun::n2w(p[2,"freq",drop=T])`
+**`r ppartners[2,"partnerName",drop=T]`** has `r xfun::n2w(ppartners[2,"freq",drop=T])`
 records, 
-which is `r scales::percent(p[2,"prop",drop=T])`
+which is `r scales::percent(ppartners[2,"prop",drop=T])`
 of the total records.
 
-+ The most difference between percentages of the partners **`r p[1,"partnerName",drop=T]`** and
-**`r p[2,"partnerName",drop=T]`** is 
-*`r paste0(floor(convolve((p[1,"prop",drop=T]-p[2,"prop",drop=T]), 100)), '%')`*.
++ The most difference between percentages of the partners 
+**`r ppartners[1,"partnerName",drop=T]`**
+and
+**`r ppartners[2,"partnerName",drop=T]`**
+is
+*`r paste0(floor(convolve((ppartners[1,"prop",drop=T]-ppartners[2,"prop",drop=T]), 100)), '%')`*.
+
+<br>
 
 ```{r}
-p %>%
+ppartners %>%
+  rename(
+    `Reporting partner` = partnerName,
+    `Frequency` = freq,
+    `Relative frequency` = prop
+  ) %>% 
   gt() %>% 
   gt_condensed_style()
 ```
@@ -175,76 +189,82 @@ PartnerSubPropFreq %>%
   group_by(subPartnerName) %>% 
   arrange(desc(freq)) %>% 
   group_by(partnerName) %>% 
+  rename(
+    `Reporting partner` = partnerName,
+    `Implementing partner` = subPartnerName,
+    `Frequency` = freq,
+    `Relative frequency` = prop
+  ) %>% 
   gt() %>% 
   gt_condensed_style() %>% 
-   tab_style(
-   locations = cells_group(groups = "ACNUR"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "ADRA"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "CARE"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "Dialogo Diverso"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "JRS Ecuador"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "Mision Scalabriniana"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "NRC"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "OIM"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "OPS/OMS"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "Plan Internacional"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "PMA"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "PNUD"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "RET"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "UNESCO"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "UNFPA"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "UNICEF"),
-   style = cells_styles(text_weight = "bold")
- ) %>% 
- tab_style(
-   locations = cells_group(groups = "World Vision"),
-   style = cells_styles(text_weight = "bold")
- )
+  tab_style(
+    locations = cells_group(groups = "ACNUR"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "ADRA"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "CARE"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "Dialogo Diverso"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "JRS Ecuador"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "Mision Scalabriniana"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "NRC"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "OIM"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "OPS/OMS"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "Plan Internacional"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "PMA"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "PNUD"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "RET"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "UNESCO"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "UNFPA"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "UNICEF"),
+    style = cells_styles(text_weight = "bold")
+  ) %>% 
+  tab_style(
+    locations = cells_group(groups = "World Vision"),
+    style = cells_styles(text_weight = "bold")
+  )
 ```
 
 <hr>
@@ -280,7 +300,7 @@ narratives <- form.table %>%
   )
 ```
 
-### The number of partners and sub-partners reporting narrative data
+### The number of Reporting Partners and Implementing Partners recording multi-line narrative textual data
 
 ```{r}
 narratives.part.count <- narratives %>% 
@@ -301,9 +321,11 @@ narratives.part.count.without.subPartners <- narratives.part.count %>%
   ungroup()
 ```
 
-As we have seen previously, Not all partners (and sub-partners) enter narrative
-records. For instance, the partner **PMA** has lots of sub-partners reporting
-for the different data types but there are no narratives there.
+As we have seen previously, Not all Reporting Partners (and Implementing
+Partners) record multi-line narrative textual data. 
+For instance, the partner
+**PMA** has lots of Implementing Partners reporting for the different data types but
+there are no narratives from them.
 
 ```{r, warning=FALSE, fig.width=7, fig.height=5}
 ## grouped facet wraps. Source:
@@ -351,15 +373,15 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
 do.call(cowplot::plot_grid, plot_partners_list)
 ```
 
+`TODO`
 In terms of narrative data,
 
-TODO
 The partners X and Y is like that.
 The rest of the main partners, namely ...
 do not have any subpartners reporting by them.
 
 + The partners do not have any sub-partners reporting via them: 
-*`r paste(narratives.part.count.without.subPartners$partnerName, collapse = ", ")`*
+*`r paste(narratives.part.count.without.subPartners$partnerName, collapse = ", ")`*.
 
 ***
 
