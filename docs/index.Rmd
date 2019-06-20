@@ -496,8 +496,6 @@ too long and disarray the plots. The *re coded table* below provides a  look up
 for form labels and their abbreviations:
 
 ```{r recode-table}
-## only recode some long label forms, shorter names can stay as it is (e.g.
-## `Salud`)
 narratives <- narratives %>% 
   mutate(
     labelFormsRecode = recode(
@@ -530,7 +528,13 @@ recode_tbl <- narratives %>%
 
 recode_tbl %>% 
   gt() %>% 
-  gt_condensed_style()
+  gt_condensed_style() %>% 
+  tab_footnote(
+    footnote = md("*Recoding only some long label forms, shorter names can stay as such (e.g. 'Salud')*"),
+    locations = cells_column_labels(
+      columns = vars(labelFormsRecode)
+    )
+  )
 ```
 
 ## Response quality
