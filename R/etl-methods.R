@@ -11,6 +11,13 @@ database_resources <- function(databaseId) {
       stringsAsFactors = FALSE
     )
   }))
+  res <- data.frame(
+    databaseName = database$label,
+    databaseId = database$databaseId,
+    activities,
+    stringsAsFactors = FALSE
+  )
+  res
 }
 
 #' Flatten form schema as a table
