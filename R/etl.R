@@ -25,15 +25,38 @@ all.form.tbl <- do.call(rbind, lapply(form.ids, function(x) {
 ## merge folder and form information with (sub-)form table:
 wide.db.resources <- wide_format_db_resources(db.resources)
 all <- merge(all.form.tbl, wide.db.resources, by.x = "id", by.y = "idSubForms")
-
-## bring some colnames to the left:
-cols <- c("idFolder", "labelFolder", "idForms", "labelForms", "labelSubForms")
-all <- all[, c(cols, setdiff(names(all), cols)) ]
+## merge databaseName:
+all <- merge(all, unique(db.resources[c("databaseName", "databaseId")]), by.x = "databaseId", by.y = "databaseId")
 
 ## rename canton names based on this
 ## https://en.wikipedia.org/wiki/Provinces_of_Ecuador
-colnames(all)[colnames(all) == "cantonName"] <- "canton"
-colnames(all)[colnames(all) == "cantonParentName"] <- "province"
+## Rename, order and drop some columns:
+cols <- list(
+  databaseId = "databaseId",
+  databaseName = "databaseName",
+  folderId = "idFolder",
+  folderName = "labelFolder",
+  formId = "idForms",
+  formName = "labelForms",
+  subFormId = "id",
+  subFormName = "labelSubForms",
+  Month = "Month",
+  code = "code",
+  question = "question",
+  response = "response",
+  required = "required",
+  type = "type",
+  partnerName = "partnerName",
+  canton = "cantonName",
+  province = "cantonParentName",
+  description = "description"
+)
+
+for (i in seq_along(cols)) {
+  colnames(all)[colnames(all) == cols[[i]]] <- names(cols)[i]
+}
+
+all <- all[names(cols)]
 
 ## Writing data to disk
 ## Use JSON format bcs CSV isn't very suitable for storing textual data (e.g.
