@@ -36,7 +36,7 @@
 ## [*] missing from the R package.
 
 get_database_tree <- function(databaseId) {
-  activityinfo::getResource(paste("database", database.id, sep = "/"))
+  activityinfo::getResource(paste("database", databaseId, sep = "/"))
 }
 
 #' Pull schema of form or sub-form
