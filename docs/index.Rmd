@@ -196,7 +196,7 @@ pspf.tbl %>%
 
 <hr>
 
-```{r child = 'analysis/tabset-partner.Rmd', eval=TRUE}
+```{r child = 'analysis/tabset-partner.Rmd', eval=F}
 ```
 
 ## Narrative data
@@ -378,10 +378,22 @@ ggplot(locations,
          label = canton,
          subgroup = sprintf("%s\n(%s)", province, province.percent)
        )) +
-  geom_treemap()+
-  geom_treemap_subgroup_border(color="gray25")+
-  geom_treemap_text(colour = "black", place = "centre", alpha = 0.45, reflow = TRUE, min.size = 0)+
-  geom_treemap_subgroup_text(grow = TRUE, colour="white", alpha = 0.85, place = "topleft", fontface = "italic")+
+  geom_treemap() +
+  geom_treemap_subgroup_border(color = "gray25") +
+  geom_treemap_text(
+    colour = "black",
+    place = "centre",
+    alpha = 0.45,
+    reflow = TRUE,
+    min.size = 0
+  ) +
+  geom_treemap_subgroup_text(
+    grow = TRUE,
+    colour = "white",
+    alpha = 0.85,
+    place = "topleft",
+    fontface = "italic"
+  ) +
   theme(legend.position = "none") +
   scale_fill_manual(values = tree.colors)
 ```
@@ -397,41 +409,43 @@ for form labels and their abbreviations:
 ```{r recode-table}
 narratives <- narratives %>% 
   mutate(
-    labelFormsRecode = recode(
-      labelForms,
+    formNameRecode = recode(
+      formName,
       "Agua, saneamiento e higiene" = "Agua",
       "Alojamiento Temporal" = "Alojamiento",
       "Necesidades básicas/Otro" = "Necesidades",
-      "Manejo de la información y entrega directa de la información a la población" = "Población",
+      "Manejo de la información y entrega directa de la información a la población" = "Poblacion",
       "Manejo de la información para socios y análisis de las necesidades" = "Socios",
       "Protección_VBG" = "VBG",
-      "Trata_y_tráfico" = "Tráfico",
-      "Acceso_a_educación" = "Educación",
-      "Acceso a vivienda y hábitat dignos en comunidades receptoras" = "Hábitat",
-      "Medios de vida y formación técnico-profesional" = "Técnico",
-      "Cohesión_social" = "SocialCohesión",
+      "Trata_y_tráfico" = "Trafico",
+      "Acceso_a_educación" = "Educacion",
+      "Acceso a vivienda y hábitat dignos en comunidades receptoras" = "Habitat",
+      "Medios de vida y formación técnico-profesional" = "Tecnico",
+      "Cohesión_social" = "SocialCohesion",
       "Apoyo Educacional a Comunidades Receptoras" = "Educacional",
       "Asistencia técnica para VBG-SSR" = "VBG_SSR",
       "Asistencia técnica para protección/gestión de fronteras" = "Fronteras",
       "Asistencia técnica para gestion de la informacion y coordinacion" = "Coordinacion",
       "Asistencia técnica para el sector laboral" = "SectorLaboral",
-      "Asistencia técnica para protección" = "Protección",
-      "Asistencia técnica para protección de la infancia" = "ProtecciónInfancia",
+      "Asistencia técnica para protección" = "Proteccion",
+      "Asistencia técnica para protección de la infancia" = "ProteccionInfancia",
       "Protección_LGBTI" = "LGBTI"
     )
   )
 
 recode_tbl <- narratives %>%
-  select(labelFormsRecode, labelForms) %>% 
+  select(folderName, formName, formNameRecode) %>% 
+  arrange(folderName) %>% 
   distinct()
 
 recode_tbl %>% 
+  group_by(folderName) %>% 
   gt() %>% 
   gt_condensed_style() %>% 
   tab_footnote(
     footnote = md("*Recoding only some long label forms, shorter names can stay as such (e.g. 'Salud')*"),
     locations = cells_column_labels(
-      columns = vars(labelFormsRecode)
+      columns = vars(formNameRecode)
     )
   )
 ```
@@ -490,12 +504,12 @@ Count of responses per topic/question:
 narratives.wc <- narratives %>%
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
-  group_by(labelForms) %>%
+  group_by(formName) %>%
   select(
-    labelForms, question, response, 
+    formName, question, response, 
     .responseWordCount, .questionWordCount, 
     partnerName, canton,
-    description, labelFormsRecode
+    description, formNameRecode
   ) %>% 
   ungroup()
 
@@ -514,7 +528,7 @@ are added to give a glance about the number of observations in the same plot.
 # TODO facet by labelFolder
 narratives.wc %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
-  ggplot(aes(labelFormsRecode, value, fill = variable)) +
+  ggplot(aes(formNameRecode, value, fill = variable)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   coord_flip() +
   geom_jitter(alpha = 0.35) +
@@ -536,7 +550,7 @@ The response word count distribution per form topic categorized by partner name:
 ```{r plot-partner-response-wc, fig.width=10, fig.height=20}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
-  ggplot(aes(labelFormsRecode, value)) +
+  ggplot(aes(formNameRecode, value)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   coord_flip() +
   geom_jitter(alpha = 0.35) +
@@ -554,7 +568,7 @@ The response word count distribution per form topic categorized by canton name:
 ```{r plot-canton-response-wc, fig.width=10, fig.height=20}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
-  ggplot(aes(labelFormsRecode, value)) +
+  ggplot(aes(formNameRecode, value)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   geom_jitter(alpha = 0.35) +
   coord_flip() +
@@ -574,22 +588,22 @@ narratives.wc %>%
 
 ```{r, fig.width=7, fig.height=7}
 lf <- narratives.wc %>% 
-  group_by(labelFormsRecode) %>% 
-  select(labelFormsRecode, .responseWordCount, .questionWordCount)
-lf$labelFormsRecode <- as.factor(lf$labelFormsRecode)
+  group_by(formNameRecode) %>% 
+  select(formNameRecode, .responseWordCount, .questionWordCount)
+lf$formNameRecode <- as.factor(lf$formNameRecode)
 
 ## Make all data; gray background
 lf_bg <- lf[, -1]
 
 lf.xlab <- expression(paste("Word counts in ", italic("response"), " field"))
 lf.ylab <- expression(paste("Word counts in ", italic("question"), " field"))
-ggplot(lf, aes(x = .responseWordCount, y = .questionWordCount, color = labelFormsRecode)) +
+ggplot(lf, aes(x = .responseWordCount, y = .questionWordCount, color = formNameRecode)) +
   geom_point(data = lf_bg,
              colour = "grey",
              alpha = 0.2) + # 
   geom_point(size = 3L) + # actual points
   geom_point(shape = 21, color = "black", stroke = 0.2, size = 3L) + # for point borders
-  facet_wrap( ~ labelFormsRecode) +
+  facet_wrap( ~ formNameRecode) +
   theme_ecuador1(border = TRUE) +
   guides(color = FALSE) +
   labs(
@@ -625,7 +639,7 @@ Looking at the table containing form name, question, description and so on:
 description.field.wc <- narratives.wc %>% 
   mutate(.hasDescription = ifelse(is.na(description), FALSE, TRUE)) %>% 
   mutate(.descriptionWordCount = word_count(description)) %>%
-  select(labelForms, labelFormsRecode, 
+  select(formName, formNameRecode, 
          .responseWordCount, .questionWordCount, .descriptionWordCount, 
          .hasDescription)
 ```
@@ -644,7 +658,7 @@ desc.resp.wc.plot <- description.field.wc %>%
   )
 
 desc.resp.wc.plot.bg <- desc.resp.wc.plot %>%
-  select(labelFormsRecode, .responseWordCount)
+  select(formNameRecode, .responseWordCount)
 
 desc.resp.wc.plot.single.stat <- desc.resp.wc.plot %>%
   group_by(.hasDescription) %>%
@@ -654,7 +668,7 @@ desc.resp.wc.plot.single.stat <- desc.resp.wc.plot %>%
 desc.resp.wc.plot.colors <- c("#00BFC4", "#F8766D")
 
 ppd <- ggplot(data = desc.resp.wc.plot,
-              aes(x = .responseWordCount, y = labelFormsRecode, colour = .hasDescription)) +
+              aes(x = .responseWordCount, y = formNameRecode, colour = .hasDescription)) +
   geom_point(data = desc.resp.wc.plot.bg,
              colour = "grey",
              alpha = 0.2) +
