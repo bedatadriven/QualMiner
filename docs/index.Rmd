@@ -208,7 +208,7 @@ the multi-text fields, called "Narrative data" in ActivityInfo terms. Plain
 saying that narrative data is multi-line text fields allowing users to enter
 long texts.
 
-```{r data-source-preparation}
+```{r NARRATIVES}
 narratives <- form.table %>%
   dplyr::filter(!is.na(response) & type == "NARRATIVE") %>%
   inner_join(
