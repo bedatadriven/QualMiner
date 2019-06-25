@@ -115,7 +115,7 @@ and
 is
 *`r paste0(floor(convolve((ppartners[1,"prop",drop=T]-ppartners[2,"prop",drop=T]), 100)), '%')`*.
 
-<br>
+<hr>
 
 ```{r}
 ppartners %>%
@@ -142,6 +142,8 @@ acnur.hias.part <- PartnerSubPropFreq %>%
   dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
 ```
 
+<hr>
+
 The table below shows the proportion of records entered by
 partners and sub-partners.
 
@@ -161,7 +163,7 @@ Those are the total numbers of reporting in all database, the numbers are not
 specific to the narratives (multi-line text fields). In the next section, we
 count the number of reportings done only in the narrative sections.
 
-<br>
+<hr>
 
 ```{r, echo=FALSE}
 ## Used parse & eval because of this issue: 
@@ -292,22 +294,27 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
       legend.title = element_blank(),
       legend.position = "bottom"
     ) +
-    scale_fill_brewer(palette = "Set2")
+    scale_fill_brewer(palette = eval(quote(brewer_diverging_color_names()[i])))
 })
 
 ## "cowplot" is civilized version of 'gridExtra'.
 do.call(cowplot::plot_grid, plot_partners_list)
 ```
 
-`TODO`
-In terms of narrative data,
++ *`r subset(narratives.part.count.with.subPartners, partnerName == "ACNUR" & subPartnerName == "HIAS", "percent", drop = T)`*
+of the narrative records are
+entered by the implementing partner **HIAS** reported via **ACNUR**.
+Only
+*`r subset(narratives.part.count.with.subPartners, partnerName == "ACNUR" & subPartnerName == "ACNUR", "percent", drop = T)`*
+of the narrative records are entered by **ACNUR** itself.
 
-The partners X and Y is like that.
-The rest of the main partners, namely ...
-do not have any subpartners reporting by them.
++ Also **HIAS** enters *`r subset(narratives.part.count.with.subPartners, partnerName == "UNICEF" & subPartnerName == "HIAS", "percent", drop = T)`* of the narrative records via **UNICEF**.
 
-+ The partners do not have any sub-partners reporting via them: 
-*`r paste(narratives.part.count.without.subPartners$partnerName, collapse = ", ")`*.
++ The rest of the reporting partners do not have implementing partners, they do
+the all implementation themselves:
+*`r paste(unique(narratives.part.count.without.subPartners$partnerName), collapse = ", ")`*.
+
+`r knitr::knit_exit()`
 
 ***
 
@@ -505,12 +512,6 @@ narratives.wc <- narratives %>%
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
   group_by(formName) %>%
-  select(
-    formName, question, response, 
-    .responseWordCount, .questionWordCount, 
-    partnerName, canton,
-    description, formNameRecode
-  ) %>% 
   ungroup()
 
 head(narratives.wc) %>% 
@@ -525,20 +526,19 @@ question has two responses, therefore they're short. Therefore, jittered points
 are added to give a glance about the number of observations in the same plot.
 
 ```{r plot-topic-response-wc, fig.width=8, fig.height=8}
-# TODO facet by labelFolder
 narratives.wc %>%
   gather(variable, value, .responseWordCount, .questionWordCount) %>%
   ggplot(aes(formNameRecode, value, fill = variable)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
   coord_flip() +
   geom_jitter(alpha = 0.35) +
+  # facet_wrap( ~ folderName, scales = "free_y") +
   labs(
     title = "Response and Question word counts per form topic",
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
-  theme_ecuador1() +
-  theme(legend.position = "bottom")
+  theme_ecuador1() 
 ```
 
 In the plot above, the box plot of form topics and response word counts based on
