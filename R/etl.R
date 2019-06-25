@@ -25,6 +25,7 @@ all.form.tbl <- do.call(rbind, lapply(form.ids, function(x) {
 ## merge folder and form information with (sub-)form table:
 wide.db.resources <- wide_format_db_resources(db.resources)
 all <- merge(all.form.tbl, wide.db.resources, by.x = "id", by.y = "idSubForms")
+
 ## merge databaseName:
 all <- merge(all, unique(db.resources[c("databaseName", "databaseId")]), by.x = "databaseId", by.y = "databaseId")
 
@@ -40,6 +41,7 @@ cols <- list(
   formName = "labelForms",
   subFormId = "id",
   subFormName = "labelSubForms",
+  recordId = "recordId",
   Month = "Month",
   code = "code",
   question = "question",
@@ -51,11 +53,9 @@ cols <- list(
   province = "cantonParentName",
   description = "description"
 )
-
 for (i in seq_along(cols)) {
   colnames(all)[colnames(all) == cols[[i]]] <- names(cols)[i]
 }
-
 all <- all[names(cols)]
 
 ## Writing data to disk
