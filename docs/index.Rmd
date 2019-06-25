@@ -164,15 +164,18 @@ count the number of reportings done only in the narrative sections.
 <br>
 
 ```{r, echo=FALSE}
-## TODO
-## glue::glue('
-##  tab_style(
-##    locations = cells_group(groups = "{x}"),
-##    style = cells_styles(text_weight = "bold")
-##  ) %>% 
-## ', x = unique(unique(PartnerSubPropFreq$partnerName)))
-## 
-PartnerSubPropFreq %>% 
+## Used parse & eval because of this issue: 
+## https://github.com/rstudio/gt/issues/308
+pspf.bold_groups <- glue::glue_collapse(glue::glue('
+  tab_style(
+    locations = cells_group(groups = "{x}"),
+    style = cells_styles(text_weight = "bold")
+  )
+  ',
+  x = unique(PartnerSubPropFreq$partnerName)
+  ),
+  sep = " %>%\n")
+pspf.tbl <- PartnerSubPropFreq %>% 
   group_by(subPartnerName) %>% 
   arrange(desc(freq)) %>% 
   group_by(partnerName) %>% 
@@ -182,76 +185,13 @@ PartnerSubPropFreq %>%
     `Frequency` = freq,
     `Relative frequency` = prop
   ) %>% 
+  select(-percent)
+eval(parse(text=glue::glue('
+pspf.tbl %>%
   gt() %>% 
   gt_condensed_style() %>% 
-  tab_style(
-    locations = cells_group(groups = "ACNUR"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "ADRA"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "CARE"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "Dialogo Diverso"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "JRS Ecuador"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "Mision Scalabriniana"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "NRC"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "OIM"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "OPS/OMS"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "Plan Internacional"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "PMA"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "PNUD"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "RET"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "UNESCO"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "UNFPA"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "UNICEF"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "World Vision"),
-    style = cells_styles(text_weight = "bold")
-  )
+  {bolds}
+', bolds = pspf.bold_groups)))
 ```
 
 <hr>
@@ -274,8 +214,8 @@ narratives <- form.table %>%
     by = c("partnerName", "recordId")
   ) %>%
   select(
-    "labelFolder",
-    "labelForms",
+    "folderName",
+    "formName",
     "Month",
     "question",
     "response",
@@ -308,11 +248,10 @@ narratives.part.count.without.subPartners <- narratives.part.count %>%
   ungroup()
 ```
 
-As we have seen previously, Not all Reporting Partners (and Implementing
-Partners) record multi-line narrative textual data. 
-For instance, the partner
-**PMA** has lots of Implementing Partners reporting for the different data types but
-there are no narratives from them.
+As we have seen previously, Not all Reporting and Implementing Partners record
+multi-line narrative textual data. For instance, the partner **PMA** has lots of
+Implementing Partners reporting for the different data types (as seen in above)
+but there are no narratives from them.
 
 ```{r, warning=FALSE, fig.width=7, fig.height=5}
 ## grouped facet wraps. Source:
@@ -388,86 +327,37 @@ locations <- narratives %>%
 ```
 
 ```{r canton-locations-tbl}
-## TODO simplify group names styling with e.g. unique(locations$province)
-## However, this is the 'hacky' script for the moment:
-## 
-## glue::glue('
-##   tab_style(
-##     locations = cells_group(groups = "{x}"),
-##     style = cells_styles(text_weight = "bold")
-##   ) %>% 
-## ', x = unique(locations$province))
-## 
-locations %>%
+## Used parse & eval because of this issue: 
+## https://github.com/rstudio/gt/issues/308
+lcts.bold_groups <- glue::glue_collapse(glue::glue('
+  tab_style(
+    locations = cells_group(groups = "{x}"),
+    style = cells_styles(text_weight = "bold")
+  )
+  ', 
+  x = unique(locations$province)
+),
+sep = " %>%\n")
+lcts.tbl <- locations %>%
   select(province, canton, freq, canton.prop, province.prop) %>%
   group_by(province) %>% 
-  arrange(desc(freq)) %>%
+  arrange(desc(freq)) %>% 
+  rename(
+    `Canton` = canton,
+    `Frequency` = freq,
+    `Relative frequency (canton)` = canton.prop,
+    `Relative frequency (province)` = province.prop
+  )
+eval(parse(text=glue::glue('
+lcts.tbl %>% 
   gt() %>% 
   tab_header(
     title = "Canton and provinces",
     subtitle = "The number of reports in the multi-text (narrative) fields"
   ) %>% 
   gt_condensed_style() %>% 
-  tab_style(
-    locations = cells_group(groups = "PICHINCHA"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "CARCHI"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "SUCUMBIOS"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "IMBABURA"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "GUAYAS"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "EL ORO"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "ESMERALDAS"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "SANTO DOMINGO DE LOS TSACHILAS"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "AZUAY"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "COTOPAXI"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "LOS RIOS"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "CHIMBORAZO"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "MANABI"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "TUNGURAHUA"),
-    style = cells_styles(text_weight = "bold")
-  ) %>% 
-  tab_style(
-    locations = cells_group(groups = "BOLIVAR"),
-    style = cells_styles(text_weight = "bold")
-  )
+  {bolds}
+', bolds = lcts.bold_groups)))
 ```
 
 <br>
