@@ -72,6 +72,8 @@ gt_condensed_style <- function(data) {
     locations = gt::cells_data()
   ) %>%
     gt::tab_options(
+      heading.title.font.size = gt::px(14),
+      row.padding = gt::px(6),
       table.width = gt::pct(100)
     )
 }
