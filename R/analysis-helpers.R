@@ -3,14 +3,6 @@
 ### GGPLOT THEMES ----
 ### ----------------------------------------------------------------- ###
 
-#' Sixteen distinct colors
-color_set_16 <- function() {
-  c(
-    RColorBrewer::brewer.pal(name = "Set1", n = 8),
-    RColorBrewer::brewer.pal(name = "Accent", n = 8)
-  )
-}
-
 #' Theme color codes constructor
 #'
 #' Get HEX color codes by entering the color name. Modify the list in the
@@ -122,5 +114,73 @@ create_tabset <- function(main, tabs, body) {
     cat("\n")
   }
   cat("\n")
+}
+
+### ----------------------------------------------------------------- ###
+### RCOLORBREWER HELPERS ----
+### ----------------------------------------------------------------- ###
+
+#' Sixteen distinct colors
+color_set_16 <- function() {
+  c(
+    RColorBrewer::brewer.pal(name = "Set1", n = 8),
+    RColorBrewer::brewer.pal(name = "Accent", n = 8)
+  )
+}
+
+#' Quoted from RColorBrewer documentation page:
+#'
+#' << There are 3 types of palettes, sequential, diverging, and qualitative.
+#'
+#' 1. Sequential palettes are suited to ordered data that progress from low to
+#' high. Lightness steps dominate the look of these schemes, with light colors
+#' for low data values to dark colors for high data values.
+#'
+#' 2. Diverging palettes put equal emphasis on mid-range critical values and
+#' extremes at both ends of the data range. The critical class or break in the
+#' middle of the legend is emphasized with light colors and low and high
+#' extremes are emphasized with dark colors that have contrasting hues.
+#'
+#' 3. Qualitative palettes do not imply magnitude differences between legend
+#' classes, and hues are used to create the primary #' visual differences
+#' between classes. Qualitative schemes are best suited to representing nominal
+#' or categorical data. >>
+#' @references \code{link[RColorBrewer]{RColorBrewer}}
+#' @name BrewerColorTypes
+NULL
+
+#' @rdname BrewerColorTypes
+brewer_sequential_color_names <- function() {
+  c("Blues",
+    "BuGn",
+    "BuPu",
+    "GnBu",
+    "Greens",
+    "Greys",
+    "Oranges",
+    "OrRd",
+    "PuBu",
+    "PuBuGn",
+    "PuRd",
+    "Purples",
+    "RdPu",
+    "Reds",
+    "YlGn",
+    "YlGnBu",
+    "YlOrBr",
+    "YlOrRd")
+}
+
+#' @rdname BrewerColorTypes
+brewer_diverging_color_names <- function() {
+  c("BrBG",
+    "PiYG",
+    "PRGn",
+    "PuOr",
+    "RdBu",
+    "RdGy",
+    "RdYlBu",
+    "RdYlGn",
+    "Spectral")
 }
 
