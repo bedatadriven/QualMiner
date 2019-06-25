@@ -314,11 +314,9 @@ of the narrative records are entered by **ACNUR** itself.
 the all implementation themselves:
 *`r paste(unique(narratives.part.count.without.subPartners$partnerName), collapse = ", ")`*.
 
-`r knitr::knit_exit()`
-
 ***
 
-### The number cantons and provinces recording narrative data
+### The number of cantons and provinces recording narrative data
 
 ```{r, include = FALSE}
 locations <- narratives %>% 
@@ -407,11 +405,11 @@ ggplot(locations,
 
 # Analysis
 
-## Label forms recode table
+## Recode form label names
 
 First of all, we shorten the names and therefore re code form topics because they appear to be
-too long and disarray the plots. The *re coded table* below provides a  look up
-for form labels and their abbreviations:
+too long and disarray the plots. The *re coded table* below provides a lookup table
+for the form labels.
 
 ```{r recode-table}
 narratives <- narratives %>% 
