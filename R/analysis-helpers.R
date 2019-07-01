@@ -13,7 +13,8 @@
 theme_color_codes <- function(x = NULL) {
   colors <- list(
     `UNHCR blue` = "#0072bc",
-    `Almost black` = "#242934"
+    `Almost black` = "#242934",
+    Taffy = "#F987C5"
   )
   if (is.null(x))
     return(colors)

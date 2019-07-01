@@ -11,21 +11,23 @@ output:
     highlight: pygments
     toc: true
     toc_float:
-      collapsed: false
+      collapsed: true
       smooth_scroll: true
 ---
 
 <script src="assets/script.js"></script>
 
 ```{r setup, include=FALSE}
-## `conflicted` strategy to avoid namespace clashes.
-## See https://github.com/r-lib/conflicted
-library(conflicted)
+##### ----- SOURCES ----- #####
 ## Header file
 source(file.path("..", "R", "global-header.R"))
 ## Analysis related calls
 source(file.path("..", "R", "analysis-methods.R"))
 source(file.path("..", "R", "analysis-helpers.R"))
+##### ----- PACKAGES ----- #####
+## `conflicted` strategy to avoid namespace clashes.
+## See https://github.com/r-lib/conflicted
+library(conflicted)
 ## Libraries
 library(tidyverse)
 library(tidytext)
@@ -33,6 +35,7 @@ library(tsibble)
 library(scales)
 library(treemapify)
 library(gt)
+##### ----- OTHERS ----- #####
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
@@ -429,7 +432,7 @@ recode_tbl %>%
 
 In that section, we take text as data.
 
-```{r child = 'analysis/text-analysis.Rmd', eval=F}
+```{r child = 'analysis/text-analysis.Rmd', eval=T}
 ```
 
 # References

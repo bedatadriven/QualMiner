@@ -64,48 +64,64 @@ It's also possible to add more custom words e.g. *ACNUR*, if some organization
 names are not desired, or *violencia*, if some words are overused and brings no
 further explanation, in the results.
 
-The original tokens had *`r nrow(tokens)`* rows but after stop words, it
-decreased to *`r nrow(tokens_sw)`* and that
-the change in between is *`r round(nrow(tokens_sw)*100/nrow(tokens))`*%.
+The original tokens for the response originally have *`r nrow(response.tokens)`*
+rows. However, after merging stop words, the number of rows have decreased to
+*`r nrow(response.tokens_sw)`* and that the change in between is
+*`r round(convolve(nrow(response.tokens_sw), 100)/nrow(response.tokens))`*%.
 
 ### The most common words
 
-The most common words in all *responses*:
-
 ```{r}
-response.tokens_sw %>% 
-  count(word, sort = TRUE) %>% 
-  top_n(20, n) %>% 
-  mutate(word = reorder(word, n)) %>% 
-  ggplot(aes(word, n)) +
-  geom_col(color = "black", fill = theme_color_codes("UNHCR blue")) +
-  coord_flip() +
-  theme_ecuador1()
+plot_most_common_words <- function(data, fill.color, which = c("responses", "questions")) {
+  data %>%
+    count(word, sort = TRUE) %>% 
+    top_n(20, n) %>% 
+    mutate(word = reorder(word, n)) %>% 
+    ggplot(aes(word, n)) +
+    geom_col(color = "black", fill = {{ fill.color }}) +
+    coord_flip() +
+    theme_ecuador1() +
+    labs(
+      title = paste0("What are the most frequent words in all ", which, "?")
+    ) +
+    xlab(NULL) +
+    ylab("Number of words")
+}
 ```
 
-```{r, echo=FALSE, results='asis'}
-recode.names <- unique(narratives$formNameRecode)
-body <- glue::glue(
-  '
-top.n <- 10L
+```{r}
+plot_most_common_words(response.tokens_sw, theme_color_codes("UNHCR blue"), "responses")
+```
+
+```{r}
+plot_most_common_words(question.tokens_sw, theme_color_codes("Taffy"), "questions")
+```
+
+```{r, fig.width=10, fig.height=10}
+## Reordering words separated into facets. Source:
+## https://juliasilge.com/blog/reorder-within/
 response.tokens_sw %>%
-  dplyr::filter(formNameRecode == "{label.form.code}") %>%
-  count(word) %>%
+  select(formNameRecode, word) %>% 
+  group_by(formNameRecode) %>% 
+  count(word) %>% 
   arrange(desc(n)) %>% 
-  slice(seq_len(top.n)) %>% 
-  ggplot(aes(word, n)) +
-  geom_col() +
+  slice(seq(10)) %>% 
+  ungroup() %>% 
+  mutate(formNameRecode = forcats::as_factor(formNameRecode),
+         word = tidytext::reorder_within(word, n, formNameRecode)) %>% 
+  ggplot(aes(word, n, fill = formNameRecode)) +
+  geom_col(color = "black", show.legend = FALSE) +
+  facet_wrap(~formNameRecode, scales = "free", ncol = 4) +
+  coord_flip() +
+  tidytext::scale_x_reordered() + 
+  theme_ecuador1() +
   labs(
-    title = "{label.form.code}",
-    subtitle = sprintf("Top %d words", top.n),
+    title = "What are the most frequent words from responses in the form topics?",
+    subtitle = "A relative frequency",
     caption = "*Please refer to recode table for label forms"
   ) +
-  coord_flip() +
-  theme_ecuador1()
-',
-  label.form.code = recode.names
-)
-create_tabset(main = "### The most common words per topic", tabs = recode.names, body = body)
+  xlab(NULL) +
+  ylab(NULL)
 ```
 
 ### Sentiment analysis
@@ -124,9 +140,9 @@ First, we find a sentiment lexicon for the Spanish language
 sentiments <- get_es_sentiments()
 ```
 
-A wordcloud showing positive and negative words:
+A wordcloud showing positive and negative words in the responses:
 ```{r}
-tokens_sw %>%
+response.tokens_sw %>%
   inner_join(sentiments, by = "word") %>%
   count(word, sentiment, sort = TRUE) %>%
   reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
