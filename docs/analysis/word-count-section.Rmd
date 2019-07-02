@@ -64,23 +64,72 @@ head(narratives.wc) %>%
 ```
 
 It's also a good practice to see the number of questions. For example, one
-question has two responses, therefore they're short. Therefore, jittered points
-are added to give a glance about the number of observations in the same plot.
+question has two responses, therefore they're short. 
+
+<hr>
 
 ```{r plot-topic-response-wc, fig.width=8, fig.height=8}
 narratives.wc %>%
-  gather(variable, value, .responseWordCount, .questionWordCount) %>%
+  gather(variable, value, .responseWordCount) %>%
   ggplot(aes(formNameRecode, value, fill = variable)) +
-  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 23, outlier.alpha = 1) +
   coord_flip() +
-  geom_jitter(alpha = 0.35) +
-  # facet_wrap( ~ folderName, scales = "free_y") +
+  geom_jitter(shape = 16, alpha = 0.35) +
   labs(
-    title = "Response and Question word counts per form topic",
+    title = "Response and word counts per form topic",
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
+  xlab(NULL) +
+  ylab(NULL) +
+  guides(fill = FALSE) +
   theme_ecuador1() 
+```
+
+Box plots are used to visualize the *measure of spread* showing the variability
+and dispersion of the data.
+
+In the boxplot above, we see a number of things:
+
+1) each individual black point in a group represents a "response" in the
+records, and it position indicates the value of word count;
+
+2) left and right borders of the central rectangle (colored red) presents the
+first and third quartile values of IQR respectively;
+
+3) the line in the middle of the rectangle indicates the *median* value;
+
+4) the end of the lines streched from both right and left sides of the central
+rectangle point the maximum and minimum values;
+
+5) the orange colored points show the *outliers*.
+
+Some insights from this plot can be:
+`TODO`
+
+The standard deviation is a single number statistics to show the *measure
+of spread* in data.
+
+```{r sd-form-topic-table}
+rwc.sd <- narratives.wc %>% 
+  group_by(formNameRecode) %>% 
+  summarize(SD = sd(.responseWordCount))
+
+rwc.sd %>% 
+  gt() %>%
+  fmt_number(
+    columns = vars(SD),
+    decimals = 2,
+    use_seps = T
+  ) %>%
+  fmt_missing(
+    columns = vars(SD),
+    missing_text = md("*NA*")
+  ) %>%
+  tab_header(
+    title = "of response word counts per form topic",
+    subtitle = md("Measure the spread with *standard deviation*")
+  )
 ```
 
 In the plot above, the box plot of form topics and response word counts based on
@@ -373,15 +422,29 @@ do.call(cowplot::plot_grid, narratives.med.wc.specific.partners)
 
 `TODO`
 
-### The regression line
+### The regression lines
 
 We can look at multiple continuous variables in our data.
 
-- word count of response field: the dependent variable.
+- word count of response field: `response.wc`
 
-- word count of question field: an independent variable.
+- word count of question field: `question.wc`
 
-- word count of description field: an independent variable.
+- word count of description field: `description.wc`
+
+Given this data, the model formula showing dependent and independent variables
+can be as follows:
+
+$ response.wc \sim question.wc $
+
+$ response.wc \sim question.wc + description.wc $
+
+In that sense the *word count of response* field is the dependent variable and
+*word count of question* and *word count of description* fields are the
+independent variables in the regression.
+
+Thus, we expect to have more word count in question and description fields to
+have a positive effect on the word count of response field.
 
 Scatter plots help understand the characteristics of those variables.
 However, we miss a general understanding that is the *trend line*.
@@ -393,16 +456,18 @@ p1 <- description.field.wc %>%
   geom_smooth(aes(colour = "linear"), method = "lm") +
   theme_ecuador1() +
   theme(legend.position = "none")
+
 p2 <- description.field.wc %>% 
   ggplot(aes(x = .responseWordCount, y = .descriptionWordCount)) +
   geom_jitter(alpha = 0.35) +
   geom_smooth(aes(colour = "linear"), method = "lm") +
   theme_ecuador1() +
   theme(legend.position = "none")
+
 do.call(cowplot::plot_grid, list(p1, p2))
 ```
 
-The gray area around the lines shows the confidence band at the 0.95 level.
+The gray area around the lines shows the confidence band at the *0.95* level.
 Although there's a straight slope in the linear regression line, we cannot
 say that the trend line is robust because the confidence band representing the
 uncertainty in the estimate is wide.
@@ -410,4 +475,6 @@ uncertainty in the estimate is wide.
 ### Logistic regression
 
 `TODO`
+In fact, it is called the *binomial logistic regression*.
+When one of the independent variables is dichotomous (having two categories), `...`
 
