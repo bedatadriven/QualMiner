@@ -86,6 +86,7 @@ gt_condensed_style <- function(data) {
 #' Create RMarkdown tabset programmatically
 #'
 #' @param main main title where a tabbed section starts.
+#' @param description a descriptive text, paragraph etc.
 #' @param tabs tabset names
 #' @param body the function body run on each tabset body.
 #' @details
@@ -93,7 +94,7 @@ gt_condensed_style <- function(data) {
 #' and \code{results='asis'} option.
 #' @references
 #' \url{https://bookdown.org/yihui/rmarkdown/html-document.html#tabbed-sections}
-create_tabset <- function(main, tabs, body) {
+create_tabset <- function(main, description, tabs, body) {
   .has_hash <- function(text) {
     if (length(grep("^#+", text)) > 0) TRUE else FALSE
   }
@@ -108,6 +109,7 @@ create_tabset <- function(main, tabs, body) {
   hash.length <- .length_hash(main)
   tab.titles <- sprintf("%s %s", .make_hash(hash.length + 1L), tabs)
   cat(main, "{.tabset}", "\n\n")
+  cat(description, "\n\n")
   for (i in seq_along(tabs)) {
     cat(tab.titles[i])
     cat("\n\n")
