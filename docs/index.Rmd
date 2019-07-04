@@ -28,6 +28,7 @@ source(file.path("..", "R", "analysis-helpers.R"))
 ## `conflicted` strategy to avoid namespace clashes.
 ## See https://github.com/r-lib/conflicted
 library(conflicted)
+conflict_prefer("filter", "dplyr")
 ## Libraries
 library(tidyverse)
 library(tidytext)
@@ -168,7 +169,7 @@ count the number of reportings done only in the narrative sections.
 
 <hr>
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE}
 ## Used parse & eval because of this issue: 
 ## https://github.com/rstudio/gt/issues/308
 pspf.bold_groups <- glue::glue_collapse(glue::glue('
@@ -207,13 +208,13 @@ pspf.tbl %>%
 ## Narrative data
 
 In this section, we focus on a subset of the reports, which do particularly have
-the multi-text fields, called "Narrative data" in ActivityInfo terms. Plain
+the multi-text fields, called "Narrative data" in *ActivityInfo* terms. Plain
 saying that narrative data is multi-line text fields allowing users to enter
 long texts.
 
 ```{r NARRATIVES}
 narratives <- form.table %>%
-  dplyr::filter(!is.na(response) & type == "NARRATIVE") %>%
+  dplyr::filter(type == "NARRATIVE") %>%
   inner_join(
     select(partners, recordId, partnerName, subPartnerName),
     by = c("partnerName", "recordId")
@@ -231,6 +232,100 @@ narratives <- form.table %>%
     "canton"
   )
 ```
+
+Note that we also keep the narratives that are empty (which are displayed as
+`NA`, *Not Available*).
+
+## Recode form label names
+
+Before we begin, we shorten the form topic names by *recoding* them because they
+appear to be long and disarray the plots. The *recode table* below presents a
+lookup table for the form labels.
+
+```{r narratives-formNameRecode, include=FALSE}
+narratives <- narratives %>% 
+  mutate(
+    formNameRecode = recode(
+      formName,
+      "Salud" = "Salud",
+      "Seguridad_alimentaria"	= "AlimentSegur",
+      "Agua, saneamiento e higiene" = "Agua",
+      "Alojamiento Temporal" = "Alojamiento",
+      "Necesidades básicas/Otro" = "Necesidades",
+      "Manejo de la información y entrega directa de la información a la población" = "Poblacion",
+      "Manejo de la información para socios y análisis de las necesidades" = "Socios",
+      "Protección_VBG" = "VBG",
+      "Trata_y_tráfico" = "Trafico",
+      "Acceso_a_educación" = "Educacion",
+      "Acceso a vivienda y hábitat dignos en comunidades receptoras" = "Habitat",
+      "Medios de vida y formación técnico-profesional" = "Tecnico",
+      "Cohesión_social" = "SocialCohesion",
+      "Apoyo Educacional a Comunidades Receptoras" = "Educacional",
+      "Asistencia técnica para VBG-SSR" = "VBG_SSR",
+      "Asistencia técnica para protección/gestión de fronteras" = "Fronteras",
+      "Asistencia técnica para gestion de la informacion y coordinacion" = "Coordinacion",
+      "Asistencia técnica para el sector laboral" = "SectorLaboral",
+      "Asistencia técnica para protección" = "Proteccion",
+      "Asistencia técnica para protección de la infancia" = "ProteccionInfancia",
+      "Protección_LGBTI" = "LGBTI"
+    )
+  )
+```
+
+```{r recode-table}
+recode_tbl <- narratives %>%
+  select(folderName, formName, formNameRecode) %>% 
+  arrange(folderName) %>% 
+  distinct()
+
+recode_tbl %>% 
+  group_by(folderName) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  tab_footnote(
+    footnote = md("*Some short form names (e.g. 'Salud') stay as such, no need to make them even shorter*"),
+    locations = cells_column_labels(
+      columns = vars(formNameRecode)
+    )
+  )
+```
+
+### The number of narrative records in form topics
+
+```{r}
+inner_join({
+  narratives %>% 
+    group_by(formNameRecode) %>% 
+    summarise(filled = sum(!is.na(response)),
+              missing = sum(is.na(response)))
+},{
+  narratives %>% 
+    group_by(formNameRecode) %>% 
+    summarise(total = length(response))
+}, by = "formNameRecode") %>%
+  group_by(formNameRecode) %>% 
+  mutate(`Response rate` = round(filled/missing, 3)) %>% 
+  arrange(desc(filled)) %>% 
+  ungroup() %>% 
+  gt() %>% 
+  gt_condensed_style() %>%
+  tab_spanner(
+    label = "Response",
+    columns = vars(filled, missing, total)
+  ) %>% 
+  tab_footnote(
+    footnote = md("*Divide the number of `filled` responses in the number of `missing` responses*"),
+    locations = cells_column_labels(
+      columns = vars(`Response rate`)
+    )
+  )
+```
+
+The table shows the narrative fields with count of *'full*' and '*empty*' fields.
+
+Please note that the following form topics are not included in the table above
+because they do not contain any narrative fields:
+`r paste("*",setdiff(unique(form.table$formName), unique(narratives$formName)), "*", sep = "", collapse = ", ")`
 
 ### The number of Reporting Partners and Implementing Partners recording multi-line narrative textual data
 
@@ -374,56 +469,6 @@ lcts.tbl %>%
 ```
 
 # Analysis
-
-## Recode form label names
-
-First of all, we shorten the names and therefore re code form topics because they appear to be
-too long and disarray the plots. The *re coded table* below provides a lookup table
-for the form labels.
-
-```{r recode-table}
-narratives <- narratives %>% 
-  mutate(
-    formNameRecode = recode(
-      formName,
-      "Agua, saneamiento e higiene" = "Agua",
-      "Alojamiento Temporal" = "Alojamiento",
-      "Necesidades básicas/Otro" = "Necesidades",
-      "Manejo de la información y entrega directa de la información a la población" = "Poblacion",
-      "Manejo de la información para socios y análisis de las necesidades" = "Socios",
-      "Protección_VBG" = "VBG",
-      "Trata_y_tráfico" = "Trafico",
-      "Acceso_a_educación" = "Educacion",
-      "Acceso a vivienda y hábitat dignos en comunidades receptoras" = "Habitat",
-      "Medios de vida y formación técnico-profesional" = "Tecnico",
-      "Cohesión_social" = "SocialCohesion",
-      "Apoyo Educacional a Comunidades Receptoras" = "Educacional",
-      "Asistencia técnica para VBG-SSR" = "VBG_SSR",
-      "Asistencia técnica para protección/gestión de fronteras" = "Fronteras",
-      "Asistencia técnica para gestion de la informacion y coordinacion" = "Coordinacion",
-      "Asistencia técnica para el sector laboral" = "SectorLaboral",
-      "Asistencia técnica para protección" = "Proteccion",
-      "Asistencia técnica para protección de la infancia" = "ProteccionInfancia",
-      "Protección_LGBTI" = "LGBTI"
-    )
-  )
-
-recode_tbl <- narratives %>%
-  select(folderName, formName, formNameRecode) %>% 
-  arrange(folderName) %>% 
-  distinct()
-
-recode_tbl %>% 
-  group_by(folderName) %>% 
-  gt() %>% 
-  gt_condensed_style() %>% 
-  tab_footnote(
-    footnote = md("*Recoding only some long label forms, shorter names can stay as such (e.g. 'Salud')*"),
-    locations = cells_column_labels(
-      columns = vars(formNameRecode)
-    )
-  )
-```
 
 ```{r child = 'analysis/word-count-section.Rmd', eval=F}
 ```

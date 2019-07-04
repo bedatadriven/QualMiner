@@ -117,7 +117,7 @@ response.tokens_sw %>%
   theme_ecuador1() +
   labs(
     title = "What are the most frequent words from responses in the form topics?",
-    subtitle = "A relative frequency",
+    subtitle = "The relative frequency",
     caption = "*Please refer to recode table for label forms"
   ) +
   xlab(NULL) +
