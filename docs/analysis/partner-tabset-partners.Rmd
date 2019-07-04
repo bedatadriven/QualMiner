@@ -1,5 +1,5 @@
 
-```{r tabset, results='asis'}
+```{r tabset, results='asis', fig.width=7}
 fill.colors <- color_set_16()
 partner.names <- unique(PartnerSubPropFreq$partnerName)
 bodies <- list()
@@ -42,7 +42,8 @@ for (p in seq_along(partner.names)) {
   )
 }
 create_tabset(
-  main = "### Which Reporting Partners and Implementing Partners are reporting (in all fields)?", 
+  main = "### Reporting and implementing partners", 
+  description = "Which reporting and implementing partners do report (in all fields)?",
   tabs = partner.names, 
   body = bodies
 )
