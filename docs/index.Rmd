@@ -10,6 +10,7 @@ output:
     css: assets/style.css
     highlight: pygments
     toc: true
+    toc_depth: 2
     toc_float:
       collapsed: true
       smooth_scroll: true
@@ -19,6 +20,7 @@ output:
 
 <!----------------------->
 <!-- global data stuff -->
+<!----------------------->
 
 ```{r setup, include=FALSE}
 ##### ----- SOURCES ----- #####
@@ -50,9 +52,55 @@ form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
 form.table <- tibble::as_tibble(form.table)
 ```
 
+```{r RECODING, include=FALSE}
+recode_tbl <- form.table %>% 
+  mutate(
+    formNameRecode = recode(
+      formName,
+      "Salud" = "Salud",
+      "Seguridad_alimentaria"	= "AlimentSegur",
+      "Agua, saneamiento e higiene" = "Agua",
+      "Alojamiento Temporal" = "Alojamiento",
+      "Transporte humanitario" = "Transport",
+      "Necesidades básicas/Otro" = "Necesidades",
+      "Manejo de la información y entrega directa de la información a la población" = "Poblacion",
+      "Manejo de la información para socios y análisis de las necesidades" = "Socios",
+      "Protección general" = "General",
+      "Protección_Infancia" = "Infancia",
+      "Protección_VBG" = "VBG",
+      "Trata_y_tráfico" = "Trafico",
+      "Protection_Otro" = "Otro",
+      "Acceso_a_educación" = "Educacion",
+      "Acceso a vivienda y hábitat dignos en comunidades receptoras" = "Habitat",
+      "Medios de vida y formación técnico-profesional" = "Tecnico",
+      "Cohesión_social" = "SocialCohesion",
+      "Apoyo Educacional a Comunidades Receptoras" = "Educacional",
+      "Asistencia técnica para VBG-SSR" = "VBG_SSR",
+      "Asistencia técnica para protección/gestión de fronteras" = "Fronteras",
+      "Asistencia técnica para gestion de la informacion y coordinacion" = "Coordinacion",
+      "Asistencia técnica para el sector laboral" = "SectorLaboral",
+      "Asistencia técnica para protección" = "Proteccion",
+      "Asistencia técnica para protección de la infancia" = "ProteccionInfancia",
+      "Asistencia técnica para Salud" = "AsistenciaSalud",
+      "Protección_LGBTI" = "LGBTI"
+    )
+  ) %>% 
+ select(folderName, formName, formNameRecode) %>% 
+  arrange(folderName) %>% 
+  distinct()
+
+## merge 'recode_tbl' to 'form.table'
+form.table <- form.table %>% 
+  inner_join({
+    recode_tbl %>% 
+      select(-folderName)
+  }, by = "formName")
+```
+
 ```{r FOR-INTERNAL-CHECKS, include=FALSE}
 ## unique record ids
 unique(form.table$recordId)
+anyDuplicated(unique(form.table$recordId))
 
 ## record ids and unique fields
 form.table %>% 
@@ -94,6 +142,7 @@ narratives <- form.table %>%
   select(
     "folderName",
     "formName",
+    "formNameRecode",
     "Month",
     "question",
     "response",
@@ -107,6 +156,7 @@ narratives <- form.table %>%
 
 <!----------------------->
 <!-- global data stuff -->
+<!----------------------->
 
 # 1. Introduction
 

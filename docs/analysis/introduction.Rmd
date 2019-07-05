@@ -128,7 +128,7 @@ The cells are represented as `NA` when fields not exists or not applicable.
 
 Please see 
 [*ActivityInfo documentation*](http://help.activityinfo.org/m/quick_start_database_design/c/240396)
-for more information to see how the information is structured.
+for more information about how the information is structured.
 
 <hr>
 
