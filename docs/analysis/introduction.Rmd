@@ -78,8 +78,13 @@ close look at `etl.R` and `etl-methods.R` files). If you want to download the
 raw data, you must have an access for it, that can be done by sourcing the
 `etl.R` file.
 
-Here is a glimpse of the raw data below and basic explanations of the columns:
-```{r, paged.print = FALSE}
+Click at the button below to glimpse at the raw data and simple explanations of
+the columns:
+
+<button class="btn btn-primary" data-toggle="collapse" data-target="#dataPeak">Details</button>
+<div id="dataPeak" class="collapse">  
+
+```{r, paged.print=FALSE}
 peak.ft <- as.data.frame(head(form.table, 4))
 peak.ft <- rbind(peak.ft, "...")
 peak.ft
@@ -129,6 +134,8 @@ The cells are represented as `NA` when fields not exists or not applicable.
 Please see 
 [*ActivityInfo documentation*](http://help.activityinfo.org/m/quick_start_database_design/c/240396)
 for more information about how the information is structured.
+
+</div>
 
 <hr>
 
