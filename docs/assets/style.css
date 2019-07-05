@@ -1,6 +1,22 @@
 
 h1.title {
   font-weight: 400;
+  font-size: 42px;
+}
+
+h1 {
+  font-size: 34px;
+  font-weight: 400;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 400;
+}
+
+h3 {
+  font-size: 26px;
+  font-weight: 400;
 }
 
 .list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
