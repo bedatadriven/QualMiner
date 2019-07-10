@@ -1,13 +1,12 @@
 
 ## Response quality
 
-Response quality means how much response the questions receive. The idea is to
-find relations that affect the response quality to understand if they work or
-not under some conditions.
+*Response quality* is a term that means how much response the questions receive. The idea is to
+find cases that affect the response quality to understand if they work or
+not under some conditions. In the end, the results may reveal some handful
+insights about the quality of textual responses in the narrative fields.
 
-*Research questions:*
-
-+ What is the quality of textual responses in the narrative fields?
+Some questions to research *response quality* by measuring *word count*:
 
 + Is there any relationship between the word counts of response, question and
 description fields?
@@ -53,6 +52,7 @@ Count of responses per topic/question:
 narratives.wc <- narratives %>%
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
+  mutate(.descriptionWordCount = word_count(description)) %>%
   group_by(formName) %>%
   ungroup()
 
@@ -229,7 +229,6 @@ Looking at the table containing form name, question, description and so on:
 ```{r, table1}
 description.field.wc <- narratives.wc %>% 
   mutate(.hasDescription = ifelse(is.na(description), FALSE, TRUE)) %>% 
-  mutate(.descriptionWordCount = word_count(description)) %>%
   select(formName, formNameRecode, 
          .responseWordCount, .questionWordCount, .descriptionWordCount, 
          .hasDescription)
@@ -478,3 +477,10 @@ uncertainty in the estimate is wide.
 In fact, it is called the *binomial logistic regression*.
 When one of the independent variables is dichotomous (having two categories), `...`
 
+### Hypothesis testing
+
+We do the hypothesis testing based on the assumptions we have.
+
+$ H_0 $ : More word count in questions results in more word count in responses.
+
+`TODO`
