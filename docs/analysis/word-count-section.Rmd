@@ -419,6 +419,36 @@ do.call(cowplot::plot_grid, narratives.med.wc.specific.partners)
 
 ### Correlation
 
+The correlation between the word count of different fields in the
+*ActivityInfo*:
+
+```{r}
+## Source:
+## http://www.sthda.com/english/wiki/ggplot2-quick-correlation-matrix-heatmap-r-software-and-data-visualization
+
+## Subset the numerical columns:
+cordata <- narratives.wc %>% 
+  select(.responseWordCount, .questionWordCount, .descriptionWordCount) %>% 
+  filter(.responseWordCount > 1)
+
+## Compute the correlation matrix:
+cormat <- round(cor(cordata), 2)
+```
+
+```{r, cor-table}
+mmy::std_rownames(as.data.frame(cormat)) %>%
+  gt() %>% 
+  #gt_condensed_style() %>% 
+  cols_label(
+    .rowname = ""
+  )
+```
+
++ `r paste0(round(100*table(narratives.wc$.responseWordCount)[[1]]/length(narratives.wc$.responseWordCount),2),"%")`
+of the words in the response field have only `1` words. And those words were
+just not important (as they are 
+`r narratives.wc %>% filter(.responseWordCount == 1 & !is.na(response)) %>% select(response) %>% distinct() %>% pull()`).
+
 `TODO`
 
 ### The regression lines
