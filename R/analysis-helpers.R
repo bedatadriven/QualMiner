@@ -23,7 +23,7 @@ theme_color_codes <- function(x = NULL) {
 }
 
 #' \code{\link{extrafont}} package is required for custom fonts.
-theme_ecuador1 <- function(border = FALSE) {
+theme_ecuador1 <- function(border = FALSE, panel_spacing = 1.5) {
 
   suppressPackageStartupMessages(require("extrafont", quietly = TRUE))
 
@@ -55,7 +55,7 @@ theme_ecuador1 <- function(border = FALSE) {
         size = 1.1,
         linetype = "solid"
       ),
-      panel.spacing = unit(1.5, "lines")
+      panel.spacing = unit(panel_spacing, "lines")
     ) +
     border.theme
 }
