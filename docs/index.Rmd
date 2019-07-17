@@ -3,8 +3,6 @@ title: "QualMiner: Exploring qualitative indicators via text mining methods"
 date: "`r Sys.Date()`"
 output:
   html_document:
-    mathjax: local
-    self_contained: false
     includes:
       in_header: assets/header.html
       after_body: assets/footer.html
@@ -102,7 +100,7 @@ form.table <- form.table %>%
 ```{r FOR-INTERNAL-CHECKS, include=FALSE}
 ## unique record ids
 unique(form.table$recordId)
-anyDuplicated(unique(form.table$recordId))
+anyDuplicated(form.table$recordId)
 
 ## record ids and unique fields
 form.table %>% 
@@ -126,7 +124,6 @@ all(direct_indirect.fields)
 
 ```{r, PARTNERS}
 partners <- form.table %>% 
-  group_by(recordId) %>% 
   dplyr::filter(code == "Socio") %>% 
   mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE
   select(recordId, partnerName, response, canton, province) %>% 
