@@ -33,7 +33,6 @@ source(file.path("..", "R", "analysis-helpers.R"))
 ## `conflicted` strategy to avoid namespace clashes.
 ## See https://github.com/r-lib/conflicted
 library(conflicted)
-conflict_prefer("filter", "dplyr")
 ## Libraries
 library(tidyverse)
 library(tidytext)

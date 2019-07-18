@@ -22,10 +22,7 @@ theme_color_codes <- function(x = NULL) {
   colors[[x]]
 }
 
-#' \code{\link{extrafont}} package is required for custom fonts.
 theme_ecuador1 <- function(border = FALSE, panel_spacing = 1.5) {
-
-  suppressPackageStartupMessages(require("extrafont", quietly = TRUE))
 
   border.theme <- if (!border) {
     ggplot2::theme(
@@ -46,8 +43,8 @@ theme_ecuador1 <- function(border = FALSE, panel_spacing = 1.5) {
       plot.subtitle = element_text(face = "italic"),
       plot.caption = element_text(size = 7),
       legend.position = "bottom",
-      axis.text.x = element_text(family = "Roboto Mono", size = 10),
-      axis.text.y = element_text(family = "Roboto Mono", size = 10),
+      axis.text.x = element_text(size = 10),
+      axis.text.y = element_text(size = 10),
       strip.text = element_text(color = "white", face = "bold"),
       strip.background = element_rect(
         color = theme_color_codes("Almost black"),
