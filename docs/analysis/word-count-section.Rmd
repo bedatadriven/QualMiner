@@ -47,9 +47,11 @@ achieve a unique name for each question.
 + Another thing to resolve this would be doing analysis to move the analysis up
 to form level. In this file, we did both, therefore the analysis shown as below:
 
-Count of responses per topic/question:
+Count of responses per topic/question (note that missing entries `NA`s are
+removed):
 ```{r count-response}
 narratives.wc <- narratives %>%
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(.questionWordCount = word_count(question)) %>%
   mutate(.descriptionWordCount = word_count(description)) %>%
@@ -127,10 +129,12 @@ rwc.sd %>%
     missing_text = md("*NA*")
   ) %>%
   tab_header(
-    title = "of response word counts per form topic",
+    title = "Deviation of response word counts per form topic",
     subtitle = md("Measure the spread with *standard deviation*")
   )
 ```
+
+<br>
 
 In the plot above, the box plot of form topics and response word counts based on
 the raw data, the outliers are shown in orange color. Outliers are the points
@@ -186,8 +190,8 @@ lf$formNameRecode <- as.factor(lf$formNameRecode)
 ## Make all data; gray background
 lf_bg <- lf[, -1]
 
-lf.xlab <- expression(paste("Word counts in ", italic("response"), " field"))
-lf.ylab <- expression(paste("Word counts in ", italic("question"), " field"))
+lf.xlab <- expression(paste("Word counts in '", italic("response"), "' field"))
+lf.ylab <- expression(paste("Word counts in '", italic("question"), "' field"))
 ggplot(lf, aes(x = .responseWordCount, y = .questionWordCount, color = formNameRecode)) +
   geom_point(data = lf_bg,
              colour = "grey",
@@ -328,8 +332,41 @@ narratives.wc %>%
   ylab(NULL)
 ```
 
-#### Median word count of responses per sub partners
-`TODO`
+#### Median word count of responses per specific reporting partners
+
+```{r}
+narratives.wc.median.specific.partners <- narratives.wc %>% 
+  group_by(partnerName, subPartnerName) %>% 
+  summarise(median = median(.responseWordCount)) %>% 
+  dplyr::filter(partnerName %in% c("ACNUR", "UNICEF") | subPartnerName %in% "HIAS")
+
+narratives.wc.median.specific.partners_splitted <- split(
+  x = narratives.wc.median.specific.partners, 
+  f = narratives.wc.median.specific.partners$partnerName
+)
+
+narratives.wc.median.specific.partners_splitted_list <- 
+  lapply(seq_along(narratives.wc.median.specific.partners_splitted), function(i) {
+    ggplot(narratives.wc.median.specific.partners_splitted[[i]], aes(x = partnerName, y = median)) +
+      geom_bar(aes(fill = reorder(subPartnerName,-median)), position = "dodge", stat =
+                 "identity", color = "black") +
+      facet_wrap(~ partnerName, scales = "free") +
+      #ylim(0, 1) + 
+      xlab(NULL) +
+      ylab(NULL) +
+      theme_ecuador1(border = TRUE) +
+      theme(
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        legend.title = element_blank(),
+        legend.position = "bottom"
+      ) +
+      scale_fill_brewer(palette = eval(quote(brewer_diverging_color_names()[i])))
+  })
+
+## "cowplot" is civilized version of 'gridExtra'.
+do.call(cowplot::plot_grid, narratives.wc.median.specific.partners_splitted_list)
+```
 
 #### Median word count of responses per partner over months
 
@@ -337,6 +374,7 @@ narratives.wc %>%
 narratives.med.wc_colors <- color_set_16()
 
 narratives.med.wc <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% 
   mutate(.responseWordCount = word_count(response)) %>%
   mutate(Month = as.Date(paste0(Month, "-01"), format = "%Y-%m-%d"))
 ```
@@ -389,10 +427,11 @@ narratives.med.wc_byPartnerSubPartner_ts <-
   fill_gaps(median = 0, .full = TRUE)
 ```
 
-```{r, eval=FALSE}
-# TODO fix warnings
+#### Median word count of responses per specific reporting partners over months
+
+```{r, specific-reporting-partners-over-months}
 .med.wc.specific <- narratives.med.wc_byPartnerSubPartner_ts %>% 
-  dplyr::filter(partnerName == c("ACNUR", "UNICEF"))
+  dplyr::filter(partnerName %in% c("ACNUR", "UNICEF") | subPartnerName %in% "HIAS")
 
 .med.wc.specific.splitted <- split(
   x = .med.wc.specific,
@@ -409,13 +448,11 @@ narratives.med.wc.specific.partners <-
       xlab("Month") +
       ylab("Median word count") +
       scale_x_date(labels = scales::date_format("%Y-%m")) +
-      theme_ecuador1(border = TRUE)
+      theme_ecuador1(border = TRUE) +
+      theme(legend.title = element_blank())
   })
 do.call(cowplot::plot_grid, narratives.med.wc.specific.partners)
 ```
-
-#### Median word count of responses per sub partners over months
-`TODO`
 
 ### Correlation
 
@@ -429,7 +466,7 @@ The correlation between the word count of different fields in the
 ## Subset the numerical columns:
 cordata <- narratives.wc %>% 
   select(.responseWordCount, .questionWordCount, .descriptionWordCount) %>% 
-  filter(.responseWordCount > 1)
+  dplyr::filter(.responseWordCount > 1)
 
 ## Compute the correlation matrix:
 cormat <- round(cor(cordata), 2)
@@ -447,7 +484,7 @@ mmy::std_rownames(as.data.frame(cormat)) %>%
 + `r paste0(round(100*table(narratives.wc$.responseWordCount)[[1]]/length(narratives.wc$.responseWordCount),2),"%")`
 of the words in the response field have only `1` words. And those words were
 just not important (as they are 
-`r narratives.wc %>% filter(.responseWordCount == 1 & !is.na(response)) %>% select(response) %>% distinct() %>% pull()`).
+`r narratives.wc %>% dplyr::filter(.responseWordCount == 1 & !is.na(response)) %>% select(response) %>% distinct() %>% pull()`).
 
 `TODO`
 

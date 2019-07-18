@@ -147,7 +147,7 @@ As per canton, province, partner etc.
 ```{r, include=FALSE}
 direct_indirect_fields <- 
   form.table %>% 
-  filter(code == "direct_indirect") %>% 
+  dplyr::filter(code == "direct_indirect") %>% 
   select(
     folderName, formName, formNameRecode, recordId,
     Month, question, response, type, 
@@ -286,11 +286,15 @@ because they do not contain any narrative fields:
 
 ### Partners entering narrative data
 
+Here, we look at the partners entering narrative data. The number of missing
+records (namely `NA`s) are excluded.
+
 The number of 'Reporting Partners' and 'Implementing Partners' reporting narrative
 (multi-line text) data:
 
 ```{r}
 narratives.part.count <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
   group_by(partnerName, subPartnerName) %>% 
   count(partnerName, subPartnerName, name = "freq", sort=TRUE) %>% 
   summarize(freq = sum(freq)) %>% 
@@ -311,7 +315,7 @@ narratives.part.count.without.subPartners <- narratives.part.count %>%
 As we have seen previously, Not all Reporting and Implementing Partners record
 multi-line narrative textual data. For instance, the partner **PMA** has lots of
 Implementing Partners reporting for the different data types (as seen in above)
-but there are no narratives from them. `TODO fix NA`
+but there are no narratives from them.
 
 ```{r, warning=FALSE, fig.width=7, fig.height=8}
 ## grouped facet wraps. Source:
@@ -368,8 +372,8 @@ of the narrative records are entered by **ACNUR** itself.
 
 + Also **HIAS** enters *`r subset(narratives.part.count.with.subPartners, partnerName == "UNICEF" & subPartnerName == "HIAS", "percent", drop = T)`* of the narrative records via **UNICEF**.
 
-+ The rest of the reporting partners do not have implementing partners, they do
-the all implementation themselves:
++ The rest of the "reporting partners" do not have any "implementing partners",
+as it seems that they do the implementation:
 *`r paste(unique(narratives.part.count.without.subPartners$partnerName), collapse = ", ")`*.
 
 ### The number of cantons and provinces entering narrative data
