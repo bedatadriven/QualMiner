@@ -62,3 +62,33 @@ get_es_sentiments <- function() {
   sent
 }
 
+#' @import hunspell
+#' @references
+#' Adapted from:
+#' \url{https://cran.r-project.org/web/packages/corpus/vignettes/stemmer.html}
+#' See also:
+#' \url{https://github.com/juliasilge/tidytext/issues/17}
+stem_hunspell <- function(term) {
+  if (!"es_ES" %in% hunspell::list_dictionaries()) {
+    stop(
+      paste(
+        "\nPlease install `es_ES` dictionary first.",
+        "If you are on Debian, try: `sudo apt-get install hunspell-es`",
+        "You can also see here for more info:",
+        "https://cran.r-project.org/web/packages/hunspell/vignettes/intro.html#hunspell_dictionaries",
+        sep = "\n"
+      )
+    )
+  }
+  # look up the term in the dictionary
+  stems <- hunspell::hunspell_stem(term, dict = hunspell::dictionary('es_ES'))
+  stems <- stems[[1L]]
+
+  if (length(stems) == 0) { # if there are no stems, use the original term
+    stem <- term
+  } else { # if there are multiple stems, use the last one
+    stem <- stems[[length(stems)]]
+  }
+  stem
+}
+
