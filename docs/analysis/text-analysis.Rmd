@@ -13,15 +13,18 @@ group of words (such as *bigram*), or even a sentence that depends on the level
 of analysis.
 
 ```{r}
-response.tokens <- narratives %>% 
-  unnest_tokens(word, response)
+response.tokens_orig <- narratives %>%
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
+  unnest_tokens(word, response, to_lower = TRUE)
 
-question.tokens <- narratives %>% 
-  unnest_tokens(word, question)
+question.tokens_orig <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
+  unnest_tokens(word, question, to_lower = TRUE)
 ```
 
 Perform stemming, which you bring nouns/verbs back to infinitive forms, might be
 the next step after tokenization, which only separates words in essence.
+`TODO stemming`
 
 **2. Strip punctuation**
 
@@ -54,20 +57,24 @@ that only returns the tokens not listed in the stopwords.
 ```{r}
 es_stopwords <- get_es_stopwords()
 
-response.tokens_sw <- response.tokens %>% 
+response.tokens <- response.tokens_orig %>% 
   anti_join(es_stopwords, by = "word")
-question.tokens_sw <- question.tokens %>% 
-  anti_join(es_stopwords, by = "word")
+
+act_codes <- data.frame(word = unique(question.tokens_orig$word[grep("act\\_\\d+.*", question.tokens_orig$word)]), stringsAsFactors = FALSE)
+
+question.tokens <- question.tokens_orig %>% 
+  anti_join(es_stopwords, by = "word") %>% 
+  anti_join(act_codes, by = "word")
 ```
 
 It's also possible to add more custom words e.g. *ACNUR*, if some organization
 names are not desired, or *violencia*, if some words are overused and brings no
 further explanation, in the results.
 
-The original tokens for the response originally have *`r nrow(response.tokens)`*
+The original tokens for the response originally have *`r nrow(response.tokens_orig)`*
 rows. However, after merging stop words, the number of rows have decreased to
-*`r nrow(response.tokens_sw)`* and that the change in between is
-*`r round(convolve(nrow(response.tokens_sw), 100)/nrow(response.tokens))`*%.
+*`r nrow(response.tokens)`* and that the change in between is
+*`r round(convolve(nrow(response.tokens), 100)/nrow(response.tokens_orig))`*%.
 
 ### The most common words
 
@@ -90,17 +97,17 @@ plot_most_common_words <- function(data, fill.color, which = c("responses", "que
 ```
 
 ```{r}
-plot_most_common_words(response.tokens_sw, theme_color_codes("UNHCR blue"), "responses")
+plot_most_common_words(response.tokens, theme_color_codes("UNHCR blue"), "responses")
 ```
 
 ```{r}
-plot_most_common_words(question.tokens_sw, theme_color_codes("Taffy"), "questions")
+plot_most_common_words(question.tokens, theme_color_codes("Taffy"), "questions")
 ```
 
 ```{r, fig.width=10, fig.height=10}
 ## Reordering words separated into facets. Source:
 ## https://juliasilge.com/blog/reorder-within/
-response.tokens_sw %>%
+response.tokens %>%
   select(formNameRecode, word) %>% 
   group_by(formNameRecode) %>% 
   count(word) %>% 
