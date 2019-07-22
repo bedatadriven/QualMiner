@@ -110,7 +110,7 @@ count the number of reportings done only in the narrative sections.
 pspf.bold_groups <- glue::glue_collapse(glue::glue('
   tab_style(
     locations = cells_group(groups = "{x}"),
-    style = cells_styles(text_weight = "bold")
+    style = cell_text(weight = "bold")
   )
   ',
   x = unique(PartnerSubPropFreq$partnerName)
@@ -282,7 +282,7 @@ for (i in seq(nrow(ss.n.a.r.t))) {
 
 Please note that the following form topics are not included in the table above
 because they do not contain any narrative fields:
-`r paste("*",setdiff(unique(form.table$formName), unique(narratives$formName)), "*", sep = "", collapse = ", ")`
+`r mmy::list_en_end(paste0("*",setdiff(unique(form.table$formName), unique(narratives$formName)),"*"),add.quotes=T)`
 
 ### Partners entering narrative data
 
@@ -374,7 +374,7 @@ of the narrative records are entered by **ACNUR** itself.
 
 + The rest of the "reporting partners" do not have any "implementing partners",
 as it seems that they do the implementation:
-*`r paste(unique(narratives.part.count.without.subPartners$partnerName), collapse = ", ")`*.
+`r mmy::list_en_end(paste0("*",unique(narratives.part.count.without.subPartners$partnerName),"*"),add.quotes=T)`.
 
 ### The number of cantons and provinces entering narrative data
 
@@ -397,7 +397,7 @@ locations <- narratives %>%
 lcts.bold_groups <- glue::glue_collapse(glue::glue('
   tab_style(
     locations = cells_group(groups = "{x}"),
-    style = cells_styles(text_weight = "bold")
+    style = gt::cell_text(weight = "bold")
   )
   ', 
   x = unique(locations$province)

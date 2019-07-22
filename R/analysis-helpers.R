@@ -64,8 +64,8 @@ theme_ecuador1 <- function(border = FALSE, panel_spacing = 1.5) {
 gt_condensed_style <- function(data) {
   gt::tab_style(
     data,
-    style = gt::cells_styles(
-      text_size = gt::px(14)
+    style = gt::cell_text(
+      size = gt::px(14)
     ),
     locations = gt::cells_data()
   ) %>%
@@ -184,5 +184,62 @@ brewer_diverging_color_names <- function() {
     "RdYlBu",
     "RdYlGn",
     "Spectral")
+}
+
+### ----------------------------------------------------------------- ###
+### PACKAGE HELPERS ----
+### ----------------------------------------------------------------- ###
+
+#' Check all required packages to render this RMarkdown document
+#' @noRd
+check_required_packages <- function() {
+  ## define packages here:
+  packages <- list(
+    cran = c(
+      "devtools",
+      "knitr",
+      "jsonlite",
+      "tidyverse",
+      "conflicted",
+      "tidytext",
+      "tsibble",
+      "scales",
+      "treemapify",
+      "hunspell",
+      "corpus",
+      "wordcloud",
+      "cowplot"
+    ),
+    github = list(
+      "sass" = "rstudio/sass",
+      "gt" = "rstudio/gt",
+      "mmy" = "strboul/mmy"
+    )
+  )
+  which.cran <- packages$cran %in% installed.packages()
+  cran.msg <- if (!all(which.cran)) {
+    sprintf("  install.packages(c(%s))",
+            paste("'", packages$cran[!which.cran], "'", sep = "", collapse = ", "))
+  } else {
+    NULL
+  }
+  which.github <- names(packages$github) %in% installed.packages()
+  github.msg <- if(!all(which.github)) {
+    sprintf("  devtools::install_github(c(%s))",
+            paste("'", as.character(packages$github)[!which.github], "'", sep = "", collapse = ", "))
+  } else {
+    NULL
+  }
+  if (!(all(which.cran) && all(which.github))) {
+    stop(
+      paste(
+        "Not all packages found in the system.",
+        "  Please run the script(s) below to install the required packages and then you can proceed:\n",
+        cran.msg,
+        github.msg,
+        sep = "\n"
+      )
+    )
+  }
 }
 
