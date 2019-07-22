@@ -449,9 +449,14 @@ narratives.med.wc.specific.partners <-
       ylab("Median word count") +
       scale_x_date(labels = scales::date_format("%Y-%m")) +
       theme_ecuador1(border = TRUE) +
-      theme(legend.title = element_blank())
+      theme(legend.title = element_blank()) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1.1))
   })
-do.call(cowplot::plot_grid, narratives.med.wc.specific.partners)
+## An hacky way to add some space between cowplots:
+## https://github.com/wilkelab/cowplot/issues/11#issuecomment-235643412
+narratives.med.wc.specific.partners[[3]] <- narratives.med.wc.specific.partners[[2]]
+narratives.med.wc.specific.partners[[2]] <- list(NULL)
+do.call(function(...) cowplot::plot_grid(..., nrow = 1, rel_widths = c(1, 0.1, 1)), narratives.med.wc.specific.partners)
 ```
 
 ### Correlation
