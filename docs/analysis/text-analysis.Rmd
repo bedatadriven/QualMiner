@@ -181,37 +181,113 @@ response.tokens %>%
   ylab(NULL)
 ```
 
-## 4.x. Sentiment analysis
+## 4.3. The key themes (by using term-frequency and tf-idf)
 
-Sentiment analysis (also called as opinion mining) is a technique to understand
-the emotional meanings of text given by a dictionary describing the
-positive/negative words that already done by humans.
-
-The responses seem to be written with a formal tone of voice; therefore, the
-responses may not show any sentiment at all.
-
-First, we find a sentiment lexicon for the Spanish language 
-(source [here](https://sites.google.com/site/datascienceslab/projects/multilingualsentiment)).
-
-```{r}
-sentiments <- get_es_sentiments()
+```{r, bind_tf_idf}
+tf_idf_by_form <- response.tokens %>% 
+  group_by(formNameRecode) %>% 
+  count(word_stem) %>% 
+  tidytext::bind_tf_idf(word_stem, formNameRecode, n)
 ```
 
-A wordcloud showing positive and negative words in the responses:
-```{r, warning=FALSE}
-response.tokens %>%
-  inner_join(sentiments, by = c("word_stem" = "word")) %>%
-  count(word, sentiment, sort = TRUE) %>%
-  reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
-  wordcloud::comparison.cloud(
-    colors = c("#FF6961", "#228FCF"),
-    max.words = 100,
-    title.colors = "#5c5c5c"
-  )
+We can look at the key themes in each topic by measuring the
+term-frequency and tf-idf, short for term frequency–inverse document frequency.
+
+```{r, fig.width=7, fig.height=7}
+TOP.N <- 15
+response.tokens %>% 
+  group_by(Month) %>% 
+  count(word_stem) %>% 
+  arrange(desc(n)) %>% 
+  slice(seq(TOP.N)) %>% 
+  ungroup() %>% 
+  mutate(Month = forcats::as_factor(Month),
+         Word = tidytext::reorder_within(word_stem, n, Month)) %>% 
+  ggplot(aes(Word, n, fill = Month)) +
+  geom_col(stat = "identity") +
+  coord_flip() +
+  facet_wrap(~Month, scales = "free") +
+  tidytext::scale_x_reordered() + 
+  theme_ecuador1(border = TRUE) +
+  theme(legend.position = "none") +
+  labs(
+    title = paste("The top", TOP.N, "most common words in responses per month"),
+    subtitle = "Measured by using 'term frequency'"
+  ) +
+  xlab(NULL) +
+  ylab(NULL)
 ```
 
-## 4.3. The key themes of each response (by using term-frequency and tf-idf)
-`TODO`
+Well, some words appear at the top at
+almost all periods such as `personar`, `mujer`, `hombre`, `formación`,
+`atención` and so on. 
+
+```{r, fig.width=12, fig.height=10}
+TOP.N <- 10
+tf_idf_by_form %>% 
+  arrange(desc(n)) %>% 
+  slice(seq(TOP.N)) %>% 
+  ungroup() %>% 
+  mutate(formNameRecode = forcats::as_factor(formNameRecode),
+         Word = tidytext::reorder_within(word_stem, tf_idf, formNameRecode)) %>% 
+  ggplot(aes(Word, tf_idf, fill = formNameRecode)) +
+  geom_col(stat = "identity") +
+  coord_flip() +
+  facet_wrap(~formNameRecode, scales = "free", ncol = 4) +
+  tidytext::scale_x_reordered() + 
+  theme_ecuador1(border = TRUE) +
+  theme(legend.position = "none") +
+  labs(
+    title = paste("The top", TOP.N, "most common words in responses per month"),
+    subtitle = "Measured by using 'tf-idf'"
+  ) +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+
+We can closely look at some words to see how the term-frequency changes over
+time.
+For example, we can focus on **VBG**, short for
+*`r recode_tbl[recode_tbl$formNameRecode == "VBG","formName",drop=TRUE]`*
+placed in the folder
+*`r recode_tbl[recode_tbl$formNameRecode == "VBG","folderName",drop=TRUE]`*.
+
+```{r, fig.width=6, fig.height=10}
+SELECTED.FORM <- "VBG"
+tf_first_per_month <- response.tokens %>% 
+  group_by(formNameRecode, Month) %>% 
+  count(word_stem) %>%
+  dplyr::filter(formNameRecode == SELECTED.FORM) %>% 
+  tidytext::bind_tf_idf(word_stem, Month, n) %>% 
+  dplyr::filter(!word_stem %in% c("vbg", "unfpa", "hias")) %>% ## filter out some words that can be redundant
+  ungroup() %>% 
+  select(Month, word_stem, tf) %>% 
+  arrange(desc(tf)) %>%
+  group_by(Month) %>% 
+  slice(seq(3)) %>% 
+  ungroup()
+
+tf_first_per_month_ts <-
+  tf_first_per_month %>%
+  mutate(Month = yearmonth(Month)) %>% 
+  as_tsibble(index = "Month", key = "word_stem") %>% 
+  fill_gaps(tf = 0, .full = TRUE)
+
+tf_first_per_month_ts %>% 
+  ggplot(aes(Month, tf, col = word_stem, group = word_stem)) +
+  geom_point() +
+  geom_line() +
+  facet_grid(rows = vars(word_stem), scales = "free_y") +
+  scale_x_date(labels = scales::date_format("%Y-%m")) +
+  labs(
+    title = paste0("Word frequency over time in '", SELECTED.FORM, "' form")
+  )+
+  theme_ecuador1(border=TRUE, panel_spacing = 0.25) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1.1)) +
+  theme(legend.position = "none")
+```
+
 
 ## 4.4. The relationship between words (n-grams)
 
@@ -284,3 +360,32 @@ response.tokens.bigrams.tf_idf %>%
 
 `TODO`
 
+
+## 4.x. Sentiment analysis
+
+Sentiment analysis (also called as opinion mining) is a technique to understand
+the emotional meanings of text given by a dictionary describing the
+positive/negative words that already done by humans.
+
+The responses seem to be written with a formal tone of voice; therefore, the
+responses may not show any sentiment at all.
+
+First, we find a sentiment lexicon for the Spanish language 
+(source [here](https://sites.google.com/site/datascienceslab/projects/multilingualsentiment)).
+
+```{r}
+sentiments <- get_es_sentiments()
+```
+
+A wordcloud showing positive and negative words in the responses:
+```{r, warning=FALSE}
+response.tokens %>%
+  inner_join(sentiments, by = c("word_stem" = "word")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  wordcloud::comparison.cloud(
+    colors = c("#FF6961", "#228FCF"),
+    max.words = 100,
+    title.colors = "#5c5c5c"
+  )
+```
