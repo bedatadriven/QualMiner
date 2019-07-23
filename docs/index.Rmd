@@ -171,9 +171,12 @@ narratives <- form.table %>%
 ```{r child = 'analysis/descriptive-statistics.Rmd', eval=T}
 ```
 
-# 3. Analysis
+# 3. Response quality
 
-```{r child = 'analysis/word-count-section.Rmd', eval=T}
+```{r child = 'analysis/response-quality-word-count.Rmd', eval=T}
+```
+
+```{r child = 'analysis/response-quality-sentence-length.Rmd', eval=F}
 ```
 
 # 4. Text mining & analysis
