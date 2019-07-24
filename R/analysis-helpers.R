@@ -213,7 +213,8 @@ check_required_packages <- function() {
     github = list(
       "sass" = "rstudio/sass",
       "gt" = "rstudio/gt",
-      "mmy" = "strboul/mmy"
+      "mmy" = "strboul/mmy",
+      "inspectdf" = "alastairrushworth/inspectdf"
     )
   )
   which.cran <- packages$cran %in% installed.packages()

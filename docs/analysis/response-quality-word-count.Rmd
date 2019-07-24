@@ -314,6 +314,13 @@ topic *Protección_VBG* has no description fields at all in its form topics.
 
 ### Trends 
 
+Distribution of word counts:
+
+```{r}
+inspect_num(narratives.wc, breaks = 10) %>%
+  show_plot()
+```
+
 #### Median word count of responses per partner
 
 ```{r}
@@ -490,6 +497,12 @@ mmy::std_rownames(as.data.frame(cormat)) %>%
 of the words in the response field have only `1` words. And those words were
 just not important (as they are 
 `r narratives.wc %>% dplyr::filter(.responseWordCount == 1 & !is.na(response)) %>% select(response) %>% distinct() %>% pull()`).
+
+
+```{r}
+inspect_cor(narratives.wc) %>% 
+  show_plot()
+```
 
 `TODO`
 

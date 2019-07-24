@@ -43,6 +43,7 @@ library(tsibble)
 library(scales)
 library(treemapify)
 library(gt)
+library(inspectdf)
 ##### ----- OTHERS ----- #####
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
@@ -165,6 +166,11 @@ narratives <- form.table %>%
 
 ```{r child = 'analysis/introduction.Rmd', eval=T}
 ```
+
+```{r child = 'analysis/data-nature.Rmd', eval=T}
+```
+
+<hr>
 
 # 2. Descriptive statistics
 
