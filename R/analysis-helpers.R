@@ -242,5 +242,6 @@ check_required_packages <- function() {
       )
     )
   }
+  invisible(packages$cran)
 }
 
