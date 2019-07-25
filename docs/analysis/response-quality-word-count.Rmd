@@ -321,6 +321,33 @@ inspect_num(narratives.wc, breaks = 10) %>%
   show_plot()
 ```
 
+<hr>
+
+#### Median word count of responses per form name
+
+```{r}
+x1<-narratives.wc %>% 
+  dplyr::filter(formNameRecode != "Salud") %>% 
+  group_by(formNameRecode) %>% 
+  summarise(median = median(.responseWordCount)) %>% 
+  ungroup()
+
+x1 %>%   
+  ggplot(aes(reorder(formNameRecode, -median), median)) +
+  geom_bar(stat = "identity", width = 0.5, fill = "tomato2", color = "black") + 
+  labs(
+    title = "Median word count of responses per form name",
+    subtitle = sprintf("The total median rate %.2f", median(x1$.responseWordCount))
+  ) +
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+Here above we remove `Salud` form because it has only 
+`r nrow(narratives.wc[narratives.wc$formNameRecode=="Salud",])` 
+records and skews the data.
+
 #### Median word count of responses per partner
 
 ```{r}
