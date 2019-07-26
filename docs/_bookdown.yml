@@ -24,6 +24,12 @@ rmd_files: [
   "response-word-counts-by-form.Rmd",
 
   "PART-text-mining.Rmd",
+  "textual-data-preparation.Rmd",
+  "most-common-words.Rmd",
+  "key-themes.Rmd",
+  "ngrams.Rmd",
+  "term-frequency-matrix.Rmd",
+  "sentiment-analysis.Rmd",
 
   "references.Rmd"
 ]

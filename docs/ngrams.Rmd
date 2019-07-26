@@ -1,0 +1,66 @@
+
+# n-grams {-}
+
+Looking at n-grams is a way to look at the relationship between words.
+
+## Higher order n-grams {-}
+
+We can search the multi-type terms in the responses.
+
+```{r}
+response.tokens.bigrams <- narratives %>%
+  dplyr::filter(!is.na(response)) %>%
+  unnest_tokens(word, response, token = "ngrams", n = 2, to_lower = TRUE) %>% 
+  tidyr::separate(word, c("word1", "word2"), sep = " ") %>% 
+  ## filter stopwords
+  dplyr::filter(
+    !word1 %in% es_stopwords$word,
+    !word2 %in% es_stopwords$word
+  ) %>% 
+  ## stem words
+  mutate(word1_stem = corpus::text_tokens(word1, stemmer = stem_hunspell)) %>% 
+  mutate(word2_stem = corpus::text_tokens(word2, stemmer = stem_hunspell)) %>% 
+  unnest(word1_stem) %>% 
+  unnest(word2_stem) %>% 
+  unite(bigram, word1_stem, word2_stem, sep = " ")
+```
+
+So the end result looks like this:
+```{r}
+rbind(head(response.tokens.bigrams[c("word1", "word2", "bigram")], 5), "...") %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  cols_align(
+    align = "center",
+    columns = c("word1", "word2", "bigram")
+  )
+```
+
+*tf-idf* values can also be calculated for bigrams, and visualized within each
+reporting/implementing partner, province/canton and so forth.
+
+```{r}
+response.tokens.bigrams.tf_idf <- 
+  response.tokens.bigrams %>% 
+  count(formNameRecode, bigram) %>%
+  bind_tf_idf(bigram, formNameRecode, n) %>%
+  arrange(desc(tf_idf))
+```
+
+```{r,fig.height=15, fig.width=10}
+response.tokens.bigrams.tf_idf %>%
+  group_by(formNameRecode) %>%
+  arrange(desc(tf_idf)) %>%
+  slice(seq(12)) %>% 
+  ungroup() %>%
+  mutate(bigram = reorder(bigram, tf_idf)) %>%
+  ggplot(aes(bigram, tf_idf, fill = formNameRecode)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~ formNameRecode, ncol = 2, scales = "free") +
+  theme_ecuador1(border = TRUE) +
+  coord_flip() +
+  labs(title = "tf-idf of bigram within form topics") +
+  xlab(NULL) +
+  ylab(NULL)
+```
+

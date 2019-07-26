@@ -1,0 +1,29 @@
+# Sentiment analysis {-}
+
+Sentiment analysis (also called as opinion mining) is a technique to understand
+the emotional meanings of text given by a dictionary describing the
+positive/negative words that already done by humans.
+
+The responses seem to be written with a formal tone of voice; therefore, the
+responses may not show any sentiment at all.
+
+First, we find a sentiment lexicon for the Spanish language 
+(source [here](https://sites.google.com/site/datascienceslab/projects/multilingualsentiment)).
+
+```{r}
+sentiments <- get_es_sentiments()
+```
+
+A wordcloud showing positive and negative words in the responses:
+```{r, warning=FALSE}
+response.tokens %>%
+  inner_join(sentiments, by = c("word_stem" = "word")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  reshape2::acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  wordcloud::comparison.cloud(
+    colors = c("#FF6961", "#228FCF"),
+    max.words = 100,
+    title.colors = "#5c5c5c"
+  )
+```
+

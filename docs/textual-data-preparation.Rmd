@@ -1,0 +1,121 @@
+
+# Textual data preparation {-}
+
+Describe how to prepare textual data and what common steps are usually performed.
+
+They are usually four steps involved in this process:
+
+**1. Tokenization**
+
+Tokenization means to split a text into tokens considered
+meaningful units of text. A token can either be a word (and often it is) or a
+group of words (such as *bigram*), or even a sentence that depends on the level
+of analysis.
+
+```{r}
+response.tokens_orig <- narratives %>%
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
+  unnest_tokens(word, response, token = "words", to_lower = TRUE)
+
+question.tokens_orig <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
+  unnest_tokens(word, question, token = "words", to_lower = TRUE)
+```
+
+Perform stemming, which you bring words (nouns/verbs) back to base or infinitive
+forms, will be the next step after tokenization, so we can get the essence of
+words.
+
+**2. Strip punctuation**
+
+Punctuation is often not required in text analysis (unless a researcher wants to
+tokenize the text based on a specific classifier *such as sentence tokens*);
+therefore, they create noise.
+
+**3. Convert text into lowercase**
+
+When the text turned into lowercase, for instance, the words *respuesta* and
+*Respuesta* will no longer be taken as different words.
+
+**4. Exclude stopwords & numbers**
+
+Stop words usually mean the most common words in a language that will bring no
+significant results in analysis. They are overly distributed in the text and
+they will not give so meaningful results itself. Stop-words are including
+articles (*el/la*), conjunctions (*y*), pronouns (*yo/tú/etc.*) and so on.
+
+In text mining, this process is usually done
+after the text converted into lowercase so one does not have to provide stop
+words including both lower and sentence case versions.
+
+We have imported a list of Spanish stopwords data (source
+[**here**](https://github.com/stopwords-iso/stopwords-es), and that's the
+alternative for `stopwords_es` list from the
+[corpus](https://cran.r-project.org/package=corpus) package) and perform a
+*filtering join* returning tokens from textual data by excluding the words
+listed in the stopwords. that only returns the tokens not listed in the
+stopwords.
+
+```{r}
+es_stopwords <- get_es_stopwords()
+
+response.tokens_stopw <- response.tokens_orig %>% 
+  anti_join(es_stopwords, by = "word")
+
+act_codes <- data.frame(word = unique(question.tokens_orig$word[grep("act\\_\\d+.*", question.tokens_orig$word)]), stringsAsFactors = FALSE)
+
+question.tokens_stopw <- question.tokens_orig %>% 
+  anti_join(es_stopwords, by = "word") %>% 
+  anti_join(act_codes, by = "word")
+```
+
+The original tokens for the response originally have 
+*`r nrow(response.tokens_orig)`*
+rows. However, after merging stop words, the number of rows have decreased to
+*`r nrow(response.tokens_stopw)`* and that the change in between is
+*`r round(convolve(nrow(response.tokens_stopw), 100)/nrow(response.tokens_orig))`*%.
+
+It's also possible to add more custom words e.g. *ACNUR*, if some organization
+names are not desired, or *violencia*, if some words are overused and brings no
+further explanation, in the results.
+
+**5. Perform stemming**
+
+Stemming is a process that removes the suffixes (and sometimes prefixes) of the
+words and bring them to the base form. We use "Hunspell" stemmer from the
+package [**hunspell**](https://cran.r-project.org/package=hunspell) that
+provides more precise stemming behavior.
+
+From that point onwards, we will use stemmed words instead of the raw tokenized
+words because stemmed words give us better information.
+
+```{r}
+response.tokens_stemmed <- response.tokens_stopw %>% 
+  mutate(word_stem = corpus::text_tokens(word, stemmer = stem_hunspell)) %>% 
+  unnest(word_stem)
+
+question.tokens_stemmed <- question.tokens_stopw %>% 
+  mutate(word_stem = corpus::text_tokens(word, stemmer = stem_hunspell)) %>% 
+  unnest(word_stem)
+```
+
+After stemming, the words look like this:
+```{r}
+rbind(head(response.tokens_stemmed[c("word", "word_stem")], 5), "...") %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  cols_align(
+    align = "center",
+    columns = c("word", "word_stem")
+  )
+```
+
+<br>
+
+<hr>
+
+```{r INTERNAL-prepared-data-for-further-analysis}
+response.tokens <- response.tokens_stemmed
+question.tokens <- question.tokens_stemmed
+```
+

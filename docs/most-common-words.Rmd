@@ -1,0 +1,63 @@
+
+# Most common words {-}
+
+```{r}
+plot_most_common_words <- function(data, variable, fill.color, 
+                                   which = c("responses", "questions")) {
+  data %>%
+    count({{variable}}, sort = TRUE) %>% 
+    top_n(20, n) %>% 
+    mutate(WORDS = reorder({{variable}}, n)) %>% 
+    ggplot(aes(WORDS, n)) +
+    geom_col(color = "black", fill = fill.color) +
+    coord_flip() +
+    theme_ecuador1() +
+    labs(
+      title = paste0("What are the most frequent words in all ", which, "?")
+    ) +
+    xlab(NULL) +
+    ylab("Number of words")
+}
+```
+
+## The most common words in all responses {-}
+
+```{r}
+plot_most_common_words(response.tokens, word_stem, theme_color_codes("UNHCR blue"), "responses")
+```
+
+## The most common words in all questions {-}
+
+```{r}
+plot_most_common_words(question.tokens, word_stem, theme_color_codes("Taffy"), "questions")
+```
+
+## The most common words in all responses per form topic {-}
+
+```{r, fig.width=10, fig.height=10}
+## Reordering words separated into facets. Source:
+## https://juliasilge.com/blog/reorder-within/
+response.tokens %>%
+  select(formNameRecode, word_stem) %>% 
+  group_by(formNameRecode) %>% 
+  count(word_stem) %>% 
+  arrange(desc(n)) %>% 
+  slice(seq(10)) %>% 
+  ungroup() %>% 
+  mutate(formNameRecode = forcats::as_factor(formNameRecode),
+         Word = tidytext::reorder_within(word_stem, n, formNameRecode)) %>% 
+  ggplot(aes(Word, n, fill = formNameRecode)) +
+  geom_col(color = "black", show.legend = FALSE) +
+  facet_wrap(~formNameRecode, scales = "free", ncol = 4) +
+  coord_flip() +
+  tidytext::scale_x_reordered() + 
+  theme_ecuador1() +
+  labs(
+    title = "What are the most frequent words from responses in the form topics?",
+    subtitle = "The relative frequency",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
