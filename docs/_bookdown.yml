@@ -10,6 +10,12 @@ rmd_files: [
   "about-data.Rmd",
 
   "PART-descriptive-statistics.Rmd",
+  "recode-table.Rmd",
+  "partners.Rmd",
+  "direct-indirect-fields.Rmd",
+  "narrative-records-form-topics.Rmd",
+  "partners-enter-narrative-data.Rmd",
+  "narrative-cantons-provinces.Rmd",
 
   "PART-response-quality.Rmd",
   "word-count.Rmd",

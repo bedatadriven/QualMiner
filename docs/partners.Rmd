@@ -1,0 +1,121 @@
+# Partners {-}
+
+They are two types of partners in the database:
+
++ Reporting partners: Higher level of partners reporting directly in ActivityInfo.
+
++ Implementing partners: Partners reporting through a reporting partner.
+
+```{r, include=FALSE}
+ppartners <- partners %>%
+  group_by(partnerName) %>%
+  count(partnerName, name = "freq", sort = TRUE) %>%
+  ungroup() %>%
+  mutate(prop = round(freq / sum(freq), 3))
+```
+
+The table below shows the count of reporting partner per each record:
+
++ **`r ppartners[1,"partnerName",drop=T]`** has `r xfun::n2w(ppartners[1,"freq",drop=T])`
+records, 
+which is `r scales::percent(ppartners[1,"prop",drop=T])`
+of the total records.
+
++ Second, 
+**`r ppartners[2,"partnerName",drop=T]`** has `r xfun::n2w(ppartners[2,"freq",drop=T])`
+records, 
+which is `r scales::percent(ppartners[2,"prop",drop=T])`
+of the total records.
+
++ The most difference between percentages of the partners 
+**`r ppartners[1,"partnerName",drop=T]`**
+and
+**`r ppartners[2,"partnerName",drop=T]`**
+is
+*`r paste0(floor(convolve((ppartners[1,"prop",drop=T]-ppartners[2,"prop",drop=T]), 100)), '%')`*.
+
+<hr>
+
+```{r}
+ppartners %>%
+  rename(
+    `Reporting partner` = partnerName,
+    `Frequency` = freq,
+    `Relative frequency` = prop
+  ) %>% 
+  gt() %>% 
+  gt_condensed_style()
+```
+
+```{r, include=FALSE}
+PartnerSubPropFreq <- partners %>% 
+  group_by(partnerName, subPartnerName) %>% 
+  count(partnerName, subPartnerName, name = "freq", sort = TRUE) %>% 
+  summarize(freq = sum(freq)) %>% 
+  mutate(prop = round(freq/sum(freq), 3)) %>% 
+  mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
+```
+
+```{r, include=FALSE}
+acnur.hias.part <- PartnerSubPropFreq %>% 
+  dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
+```
+
+<hr>
+
+The table below shows the proportion of records entered by
+partners and sub-partners.
+
++ *`r acnur.hias.part[,"freq",drop=T]`* out of 
+*`r sum(PartnerSubPropFreq %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
+total responses of **ACNUR** is actually coming from **HIAS**.
+
++ **UNICEF** has more diversed partners in terms of reporting.
+*`r PartnerSubPropFreq%>%dplyr::filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(percent)`*
+of responses of **UNICEF** comes from **HIAS**.
+*`r PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(percent)`*
+of reporting comes from the **UNICEF** itself.
+
++ Under **PMA**, there are *`r nrow(PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
+
+Those are the total numbers of reporting in all database, the numbers are not
+specific to the narratives (multi-line text fields). In the next section, we
+count the number of reportings done only in the narrative sections.
+
+<hr>
+
+```{r, echo=FALSE, warning=FALSE}
+## Used parse & eval because of this issue: 
+## https://github.com/rstudio/gt/issues/308
+pspf.bold_groups <- glue::glue_collapse(glue::glue('
+  tab_style(
+    locations = cells_group(groups = "{x}"),
+    style = cell_text(weight = "bold")
+  )
+  ',
+  x = unique(PartnerSubPropFreq$partnerName)
+  ),
+  sep = " %>%\n")
+pspf.tbl <- PartnerSubPropFreq %>% 
+  group_by(subPartnerName) %>% 
+  arrange(desc(freq)) %>% 
+  group_by(partnerName) %>% 
+  rename(
+    `Reporting partner` = partnerName,
+    `Implementing partner` = subPartnerName,
+    `Frequency` = freq,
+    `Relative frequency` = prop
+  ) %>% 
+  select(-percent)
+eval(parse(text=glue::glue('
+pspf.tbl %>%
+  gt() %>% 
+  gt_condensed_style() %>% 
+  {bolds}
+', bolds = pspf.bold_groups)))
+```
+
+<hr>
+
+```{r child = 'partner-tabset-partners.Rmd', eval=T}
+```

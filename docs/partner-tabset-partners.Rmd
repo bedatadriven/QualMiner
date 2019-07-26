@@ -1,0 +1,51 @@
+
+```{r tabset, results='asis', fig.width=7}
+fill.colors <- color_set_16()
+partner.names <- unique(PartnerSubPropFreq$partnerName)
+bodies <- list()
+PartnerSubPropFreq_sub <- list()
+percents <- list()
+legend <- list()
+for (p in seq_along(partner.names)) {
+  PartnerSubPropFreq_sub[[p]] <- PartnerSubPropFreq %>% dplyr::filter(partnerName == partner.names[p]) %>% arrange(desc(prop))
+  percents[[p]] <- paste(sapply(seq_along(PartnerSubPropFreq_sub[[p]]$subPartnerName), function(i) {
+    sprintf("%s: %s", PartnerSubPropFreq_sub[[p]]$subPartnerName[i], PartnerSubPropFreq_sub[[p]]$percent[i])
+  }), collapse = ", ")
+  legend[[p]] <- if (length(PartnerSubPropFreq_sub[[p]][["subPartnerName"]]) > 1) {
+    "legend.position = \"right\"" 
+  }  else {
+    "legend.position = \"none\""
+  }
+  bodies[[p]] <- glue::glue('
+  PartnerSubPropFreq_sub[[{p}]] %>% 
+    ggplot(aes(x=partnerName, y=prop, fill=reorder(subPartnerName, -prop))) +
+    geom_bar(position="dodge", stat="identity", color="black") +
+    labs(
+      title = "{partner.name}",
+      subtitle = stringr::str_wrap("{percent}", width = 60)
+    ) +
+    xlab(NULL) +
+    ylab(NULL) +
+    theme_ecuador1() +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      legend.title=element_blank(),
+      {include.legend}
+    ) +
+    scale_fill_manual(values = fill.colors)
+  ',
+  p = p,
+  partner.name = partner.names[p],
+  percent = percents[[p]],
+  include.legend = legend[[p]]
+  )
+}
+create_tabset(
+  main = "### Reporting and implementing partners {-}", 
+  description = "Which reporting and implementing partners do report (in all fields)?",
+  tabs = partner.names, 
+  body = bodies
+)
+```
+

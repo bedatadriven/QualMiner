@@ -1,0 +1,19 @@
+
+# Recode table {-#recode-table}
+
+We shorten the form topic names by *recoding* them because they
+appear to be long and disarray the plots. The *recode table* below presents a
+lookup table for the form labels.
+
+```{r recode-table}
+recode_tbl %>% 
+  group_by(folderName) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  tab_footnote(
+    footnote = md("*Some short form names (e.g. 'Salud') stay as such, no need to make them even shorter*"),
+    locations = cells_column_labels(
+      columns = vars(formNameRecode)
+    )
+  )
+```

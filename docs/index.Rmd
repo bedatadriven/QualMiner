@@ -41,6 +41,108 @@ form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
 form.table <- tibble::as_tibble(form.table)
 ```
 
+```{r RECODING, include=FALSE}
+recode_tbl <- form.table %>% 
+  mutate(
+    formNameRecode = recode(
+      formName,
+      "Salud" = "Salud",
+      "Seguridad_alimentaria"	= "AlimentSegur",
+      "Agua, saneamiento e higiene" = "Agua",
+      "Alojamiento Temporal" = "Alojamiento",
+      "Transporte humanitario" = "Transport",
+      "Necesidades básicas/Otro" = "Necesidades",
+      "Manejo de la información y entrega directa de la información a la población" = "Poblacion",
+      "Manejo de la información para socios y análisis de las necesidades" = "Socios",
+      "Protección general" = "General",
+      "Protección_Infancia" = "Infancia",
+      "Protección_VBG" = "VBG",
+      "Trata_y_tráfico" = "Trafico",
+      "Protection_Otro" = "Otro",
+      "Acceso_a_educación" = "Educacion",
+      "Acceso a vivienda y hábitat dignos en comunidades receptoras" = "Habitat",
+      "Medios de vida y formación técnico-profesional" = "Tecnico",
+      "Cohesión_social" = "SocialCohesion",
+      "Apoyo Educacional a Comunidades Receptoras" = "Educacional",
+      "Asistencia técnica para VBG-SSR" = "VBG_SSR",
+      "Asistencia técnica para protección/gestión de fronteras" = "Fronteras",
+      "Asistencia técnica para gestion de la informacion y coordinacion" = "Coordinacion",
+      "Asistencia técnica para el sector laboral" = "SectorLaboral",
+      "Asistencia técnica para protección" = "Proteccion",
+      "Asistencia técnica para protección de la infancia" = "ProteccionInfancia",
+      "Asistencia técnica para Salud" = "AsistenciaSalud",
+      "Protección_LGBTI" = "LGBTI"
+    )
+  ) %>% 
+ select(folderName, formName, formNameRecode) %>% 
+  arrange(folderName) %>% 
+  distinct()
+
+## merge 'recode_tbl' to 'form.table'
+form.table <- form.table %>% 
+  inner_join({
+    recode_tbl %>% 
+      select(-folderName)
+  }, by = "formName")
+```
+
+```{r FOR-INTERNAL-CHECKS, include=FALSE}
+## unique record ids
+unique(form.table$recordId)
+anyDuplicated(form.table$recordId)
+
+## record ids and unique fields
+form.table %>% 
+  group_by(recordId) %>% 
+  summarize(len = length(recordId)) %>% 
+  arrange(desc(len))
+
+## Code names per record
+code.nms <- form.table %>% group_by(recordId) %>% select(recordId, code) %>% 
+  summarize(names = list(code))
+head(code.nms$names)
+
+## Do all records have "Socio" field?
+socio.fields <- sapply(seq_along(code.nms$names), function(i) "Socio" %in% code.nms$names[[i]])
+all(socio.fields)
+
+## Do all records have "direct_indirect" field?
+direct_indirect.fields <- sapply(seq_along(code.nms$names), function(i) "direct_indirect" %in% code.nms$names[[i]])
+all(direct_indirect.fields)
+```
+
+```{r, PARTNERS}
+partners <- form.table %>% 
+  dplyr::filter(code == "Socio") %>% 
+  mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE
+  select(recordId, partnerName, response, canton, province) %>% 
+  rename(subPartnerName = response) %>% 
+  mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
+```
+
+```{r NARRATIVES}
+narratives <- form.table %>%
+  dplyr::filter(type == "NARRATIVE") %>%
+  inner_join(
+    select(partners, recordId, partnerName, subPartnerName),
+    by = c("partnerName", "recordId")
+  ) %>%
+  select(
+    "folderName",
+    "formName",
+    "formNameRecode",
+    "Month",
+    "question",
+    "response",
+    "description",
+    "partnerName",
+    "subPartnerName",
+    "province",
+    "canton"
+  )
+```
+
 # Introduction {-#introduction}
 
-Bla
+This document explores qualitative indicators from an *ActivityInfo* database
+that is monitoring Ecuador.

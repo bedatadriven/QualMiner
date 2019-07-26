@@ -1,0 +1,91 @@
+# Partners entering narrative data {-}
+
+Here, we look at the partners entering narrative data. The number of missing
+records (namely `NA`s) are excluded.
+
+The number of 'Reporting Partners' and 'Implementing Partners' reporting narrative
+(multi-line text) data:
+
+```{r}
+narratives.part.count <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
+  group_by(partnerName, subPartnerName) %>% 
+  count(partnerName, subPartnerName, name = "freq", sort=TRUE) %>% 
+  summarize(freq = sum(freq)) %>% 
+  mutate(prop = round(freq/sum(freq), 3)) %>% 
+  mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
+
+## partners having multiple sub-partners
+narratives.part.count.with.subPartners <- narratives.part.count %>% 
+  dplyr::filter(prop != 1) %>% 
+  ungroup()
+
+## partners do not have any sub-partners reporting via them.
+narratives.part.count.without.subPartners <- narratives.part.count %>% 
+  dplyr::filter(prop == 1) %>% 
+  ungroup()
+```
+
+As we have seen previously, Not all Reporting and Implementing Partners record
+multi-line narrative textual data. For instance, the partner **PMA** has lots of
+Implementing Partners reporting for the different data types (as seen in above)
+but there are no narratives from them.
+
+```{r, warning=FALSE, fig.width=7, fig.height=8}
+## grouped facet wraps. Source:
+## https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
+
+plot_partners_splitted <- split(
+  x = narratives.part.count.with.subPartners, 
+  f = narratives.part.count.with.subPartners$partnerName
+)
+
+## bring ACNUR and UNICEF plots to the front:
+plot_partners_splitted_front <- plot_partners_splitted[c(
+  c("ACNUR", "UNICEF"),
+  setdiff(names(plot_partners_splitted), c("ACNUR", "UNICEF"))
+)]
+
+plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i) {
+  ggplot(plot_partners_splitted_front[[i]], aes(x = partnerName, y = prop)) +
+    geom_bar(aes(fill = reorder(subPartnerName,-prop)), position = "dodge", stat =
+               "identity", color = "black") +
+    facet_wrap(~ partnerName, scales = "free") +
+    geom_label(
+      aes(
+        label = percent,
+        group = reorder(subPartnerName,-prop),
+        vjust = 0.65
+      ),
+      position = position_dodge(width = 1),
+      label.size = 0.35
+    ) +
+    ylim(0, 1) + 
+    xlab(NULL) +
+    ylab(NULL) +
+    theme_ecuador1(border = TRUE) +
+    theme(
+      axis.text.x = element_blank(),
+      axis.ticks.x = element_blank(),
+      legend.title = element_blank(),
+      legend.position = "bottom"
+    ) +
+    scale_fill_brewer(palette = eval(quote(brewer_diverging_color_names()[i])))
+})
+
+## "cowplot" is civilized version of 'gridExtra'.
+do.call(cowplot::plot_grid, plot_partners_list)
+```
+
++ *`r subset(narratives.part.count.with.subPartners, partnerName == "ACNUR" & subPartnerName == "HIAS", "percent", drop = T)`*
+of the narrative records are
+entered by the implementing partner **HIAS** reported via **ACNUR**.
+Only
+*`r subset(narratives.part.count.with.subPartners, partnerName == "ACNUR" & subPartnerName == "ACNUR", "percent", drop = T)`*
+of the narrative records are entered by **ACNUR** itself.
+
++ Also **HIAS** enters *`r subset(narratives.part.count.with.subPartners, partnerName == "UNICEF" & subPartnerName == "HIAS", "percent", drop = T)`* of the narrative records via **UNICEF**.
+
++ The rest of the "reporting partners" do not have any "implementing partners",
+as it seems that they do the implementation:
+`r mmy::list_en_end(paste0("*",unique(narratives.part.count.without.subPartners$partnerName),"*"),add.quotes=T)`.

@@ -1,0 +1,75 @@
+# Direct and indirect fields {-}
+
+As per canton, province, partner etc.
+
+```{r, include=FALSE}
+direct_indirect_fields <- 
+  form.table %>% 
+  dplyr::filter(code == "direct_indirect") %>% 
+  select(
+    folderName, formName, formNameRecode, recordId,
+    Month, question, response, type, 
+    partnerName, canton, province
+  )
+```
+
+<hr>
+
+```{r}
+direct_indirect_fields %>% 
+  group_by(formNameRecode) %>%
+  summarise(
+    Directa = sum(response == "Directa", na.rm = TRUE),
+    Indirecta = sum(response == "Indirecta", na.rm = TRUE),
+    NAs = sum(is.na(response)),
+    Total = n()
+  ) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  tab_header(
+    title = md("The number of direct and indirect fields per **form topic**"),
+    subtitle = md(paste0("*", unique(direct_indirect_fields$question)[1L], "*"))
+  )
+```
+
+<hr>
+
+```{r}
+direct_indirect_fields %>% 
+  group_by(canton) %>%
+  summarise(
+    Directa = sum(response == "Directa", na.rm = TRUE),
+    Indirecta = sum(response == "Indirecta", na.rm = TRUE),
+    NAs = sum(is.na(response)),
+    Total = n()
+  ) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  tab_header(
+    title = md("The number of direct and indirect fields per **canton**"),
+    subtitle = md(paste0("*", unique(direct_indirect_fields$question)[1L], "*"))
+  )
+```
+
+<hr>
+
+```{r}
+direct_indirect_fields %>% 
+  left_join(select(partners, recordId, partnerName, subPartnerName), by = c("recordId", "partnerName")) %>% 
+  group_by(partnerName, subPartnerName) %>%
+  summarise(
+    Directa = sum(response == "Directa", na.rm = TRUE),
+    Indirecta = sum(response == "Indirecta", na.rm = TRUE),
+    NAs = sum(is.na(response)),
+    Total = n()
+  ) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  tab_header(
+    title = md("The number of direct and indirect fields per **partners**"),
+    subtitle = md(paste0("*", unique(direct_indirect_fields$question)[1L], "*"))
+  )
+```
+
+<hr>
+

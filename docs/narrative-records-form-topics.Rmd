@@ -1,0 +1,61 @@
+# The number of narrative records in form topics {-}
+
+```{r}
+narrative.all.records.tbl <- inner_join({
+  narratives %>% 
+    group_by(formNameRecode) %>% 
+    summarise(filled = sum(!is.na(response)),
+              missing = sum(is.na(response)))
+},{
+  narratives %>% 
+    group_by(formNameRecode) %>% 
+    summarise(total = length(response))
+}, by = "formNameRecode") %>%
+  group_by(formNameRecode) %>% 
+  mutate(`Response rate` = round(filled/missing, 3)) %>% 
+  arrange(desc(filled)) %>% 
+  ungroup()
+
+n.a.r.t <- inner_join(recode_tbl, narrative.all.records.tbl, by = "formNameRecode")
+
+narrative.all.records.tbl %>% 
+  gt() %>% 
+  gt_condensed_style() %>%
+  tab_spanner(
+    label = "Response",
+    columns = vars(filled, missing, total)
+  ) %>% 
+  tab_footnote(
+    footnote = md("*Divide the number of `filled` responses in the number of `missing` responses*"),
+    locations = cells_column_labels(
+      columns = vars(`Response rate`)
+    )
+  )
+```
+
+Note that we also keep the narratives that are empty (which are displayed as
+`NA`, *Not Available*).
+
+<br>
+
+The table shows the narrative fields with count of *'full*' and '*empty*' fields.
+
+```{r, results='asis'}
+ss.n.a.r.t <- n.a.r.t %>% arrange(desc(total)) %>% slice(seq(5))
+for (i in seq(nrow(ss.n.a.r.t))) {
+  ss <- ss.n.a.r.t[i, ]
+  txt <- glue::glue(
+    "The form **{formNameRecode}** (*{formName}*) has *{filled}* and *{missing}* records in a total of *{total}* records.",
+    formNameRecode = ss[["formNameRecode"]],
+    formName = ss[["formName"]],
+    filled = ss[["filled"]],
+    missing = ss[["missing"]],
+    total = ss[["total"]]
+  )
+  cat("+", txt, "\n\n")
+}
+```
+
+Please note that the following form topics are not included in the table above
+because they do not contain any narrative fields:
+`r mmy::list_en_end(paste0("*",setdiff(unique(form.table$formName), unique(narratives$formName)),"*"),add.quotes=T)`

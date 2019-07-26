@@ -1,0 +1,54 @@
+# Cantons and provinces entering narrative data {-}
+ 
+```{r, include = FALSE}
+locations <- narratives %>% 
+  count(province, canton, name = "freq") %>%
+  group_by(province, canton) %>% 
+  summarize(freq = sum(freq)) %>%
+  mutate(canton.prop = round(freq/sum(freq), 3)) %>% 
+  mutate(canton.percent = paste0(floor(100 * freq/sum(freq)), "%")) %>% 
+  ungroup() %>% 
+  mutate(province.prop = round(freq/sum(freq), 3)) %>% 
+  mutate(province.percent = paste0(floor(100 * freq/sum(freq)), "%")) %>% 
+  arrange(desc(freq))
+```
+
+```{r canton-locations-tbl}
+## Used parse & eval because of this issue: 
+## https://github.com/rstudio/gt/issues/308
+lcts.bold_groups <- glue::glue_collapse(glue::glue('
+  tab_style(
+    locations = cells_group(groups = "{x}"),
+    style = gt::cell_text(weight = "bold")
+  )
+  ', 
+  x = unique(locations$province)
+),
+sep = " %>%\n")
+lcts.tbl <- locations %>%
+  select(province, canton, freq, canton.prop, province.prop) %>%
+  group_by(province) %>% 
+  arrange(desc(freq)) %>% 
+  rename(
+    `Canton` = canton,
+    `Frequency` = freq,
+    `Relative frequency (canton)` = canton.prop,
+    `Relative frequency (province)` = province.prop
+  )
+eval(parse(text=glue::glue('
+lcts.tbl %>% 
+  gt() %>% 
+  tab_header(
+    title = "Canton and provinces",
+    subtitle = "The number of reports in the multi-text (narrative) fields"
+  ) %>% 
+  gt_condensed_style() %>% 
+  {bolds}
+', bolds = lcts.bold_groups)))
+```
+
+<br>
+
+```{r child = 'treemap-canton.Rmd', eval=T}
+```
+
