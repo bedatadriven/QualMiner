@@ -208,7 +208,8 @@ check_required_packages <- function() {
       "hunspell",
       "corpus",
       "wordcloud",
-      "cowplot"
+      "cowplot",
+      "bookdown"
     ),
     github = list(
       "sass" = "rstudio/sass",
@@ -243,5 +244,18 @@ check_required_packages <- function() {
     )
   }
   invisible(packages$cran)
+}
+
+render_bookdown <- function() {
+  body <- paste(
+    'wd <- getwd()',
+    'if (basename(wd) != "docs") {',
+    'setwd(file.path(wd, "docs"))',
+    '}',
+    'bookdown::render_book("index.Rmd", "bookdown::gitbook")',
+    sep = "\n"
+  )
+  body <- paste("'", body, "'", sep = "\n")
+  system2("Rscript", c("-e", body))
 }
 
