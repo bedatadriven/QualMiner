@@ -1,0 +1,46 @@
+--- 
+title: "QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+```{r setup, include=FALSE}
+##### ----- SOURCES ----- #####
+## Header file
+source(file.path("..", "R", "global-header.R"))
+## Analysis related calls
+source(file.path("..", "R", "analysis-methods.R"))
+source(file.path("..", "R", "analysis-helpers.R"))
+##### ----- PACKAGES ----- #####
+check_required_packages()
+## `conflicted` strategy to avoid namespace clashes.
+## See https://github.com/r-lib/conflicted
+library(conflicted)
+## Libraries
+library(tidyverse)
+library(tidytext)
+library(tsibble)
+library(scales)
+library(treemapify)
+library(gt)
+library(inspectdf)
+##### ----- OTHERS ----- #####
+## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
+ggplot2::theme_set(ggplot2::theme_bw())
+## knitr options
+knitr::opts_chunk$set(echo = FALSE, paged.print = FALSE)
+## read Data from disk:
+form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
+## (force it to be a tibble):
+form.table <- tibble::as_tibble(form.table)
+```
+
+# Introduction {-#introduction}
+
+Bla

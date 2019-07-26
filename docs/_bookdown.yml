@@ -1,0 +1,21 @@
+book_filename: "qualminer"
+language:
+  ui:
+    chapter_name: "Chapter "
+delete_merged_file: true
+
+rmd_files: [
+  "index.Rmd",
+
+  "about-data.Rmd",
+
+  "PART-descriptive-statistics.Rmd",
+
+  "PART-response-quality.Rmd",
+  "word-count.Rmd",
+  "sentence-length.Rmd",
+
+  "PART-text-mining.Rmd",
+
+  "references.Rmd"
+]

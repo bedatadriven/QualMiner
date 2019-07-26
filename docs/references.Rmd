@@ -1,0 +1,22 @@
+# References {-}
+
++ Silge J, Robinson D (2017). *Text mining with R: A tidy approach*. O'Reilly
+Media, Inc.
+
++ Stevenson, M. (2019, Jan 26). *Text Analysis with tidytext*. Retrieved July 18,
+2019, from <https://markrstevenson.com/blog/wXMUdQCIfHqwTzrnProy>
+
+#### Package references {-}
+
+```{r, results = 'asis'}
+packages <- check_required_packages()
+for (pkg in packages) {
+  cit <- utils::citation(pkg)
+  for (i in seq_along(cit)) {
+    cat("+ ")
+    print(cit[[i]], style = 'text')
+    cat("\n")
+  }
+}
+```
+
