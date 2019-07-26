@@ -1,0 +1,43 @@
+
+# Response word counts by form name {-}
+
+```{r plot-topic-response-wc, fig.width=8, fig.height=8}
+narratives.wc %>%
+  gather(variable, value, .responseWordCount) %>%
+  ggplot(aes(formNameRecode, value, fill = variable)) +
+  geom_boxplot(outlier.colour = "orange", outlier.shape = 23, outlier.alpha = 1) +
+  coord_flip() +
+  geom_jitter(shape = 16, alpha = 0.35) +
+  labs(
+    title = "Response and word counts per form topic",
+    subtitle = "A box plot distribution",
+    caption = "*Please refer to recode table for label forms"
+  ) +
+  xlab(NULL) +
+  ylab(NULL) +
+  guides(fill = FALSE) +
+  theme_ecuador1() 
+```
+
+Box plots are used to visualize the *measure of spread* showing the variability
+and dispersion of the data.
+
+In the boxplot above, we see a number of things:
+
+1) each individual black point in a group represents a "response" in the
+records, and it position indicates the value of word count;
+
+2) left and right borders of the central rectangle (colored red) presents the
+first and third quartile values of IQR respectively;
+
+3) the line in the middle of the rectangle indicates the *median* value;
+
+4) the end of the lines streched from both right and left sides of the central
+rectangle point the maximum and minimum values;
+
+5) the orange colored points show the *outliers*.
+
+Some insights from this plot can be:
+
+`TODO`
+

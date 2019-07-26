@@ -18,8 +18,10 @@ rmd_files: [
   "narrative-cantons-provinces.Rmd",
 
   "PART-response-quality.Rmd",
+  "response-quality.Rmd",
+  "PART-response-quality-word-count.Rmd",
   "word-count.Rmd",
-  "sentence-length.Rmd",
+  "response-word-counts-by-form.Rmd",
 
   "PART-text-mining.Rmd",
 

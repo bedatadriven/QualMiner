@@ -1,0 +1,33 @@
+# Response quality {-}
+
+*Response quality* is a term that means how much response the questions receive. The idea is to
+find cases that affect the response quality to understand if they work or
+not under some conditions. In the end, the results may reveal some handful
+insights about the quality of textual responses in the narrative fields.
+
+Some questions to research *response quality* by measuring *word count* and
+*sentence length*:
+
++ Is there any relationship between the word counts of response, question and
+description fields?
+
++ What is the distribution between response word count and explanatory variables
+such as the question, form topic, canton name, partner name, etc.
+
+*Assumptions:*
+
++ Responses with a *larger word count* have more quality than the responses
+with *smaller word count*.
+
+In other words, we assume that *the more word the better is*. The limitations
+are based on the unequal distribution of the data. The word count of responses
+and questions can be related to other things, such as the questions require
+short answers so then the responses tend to be shorter.
+
+Additionally, we can have a cross-analysis to test these outcomes. It might be a
+good idea to have a small subset of data and ask an expert to test the
+assumptions qualitatively. For instance, we can take the first twenty responses
+with the highest word count and the last twenty responses with the lowest word
+count. We chose the extreme directions because they point out the greatest
+differences which are easier to test assumptions.
+
