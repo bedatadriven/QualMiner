@@ -141,7 +141,7 @@ get_query_element <- function(formId, field.code.names) {
       cantonName = "Cant[o|ó]n.name",
       cantonParentName = "Cant[o|ó]n.parent.name"
     )
-    found.rel.names <- sapply(as.character(relative.names), function(x) {
+    found.rel.names <- sapply(base::as.character(relative.names), function(x) {
       names(qt)[grep(x, names(qt))]
     }, USE.NAMES = FALSE)
     req.names <- c(fix.names, found.rel.names)
@@ -151,7 +151,7 @@ get_query_element <- function(formId, field.code.names) {
     ## rename columns:
     colnames(res)[which(colnames(res) == "X.id")] <- "recordId"
     for (ni in seq_along(relative.names)) {
-      colnames(res)[grep(as.character(found.rel.names)[ni], colnames(res))] <- names(relative.names)[ni]
+      colnames(res)[grep(base::as.character(found.rel.names)[ni], colnames(res))] <- names(relative.names)[ni]
     }
     ## reorder columns:
     first.cols <- c("recordId", "Month")

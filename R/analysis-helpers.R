@@ -228,7 +228,7 @@ check_required_packages <- function() {
   which.github <- names(packages$github) %in% installed.packages()
   github.msg <- if(!all(which.github)) {
     sprintf("  devtools::install_github(c(%s))",
-            paste("'", as.character(packages$github)[!which.github], "'", sep = "", collapse = ", "))
+            paste("'", base::as.character(packages$github)[!which.github], "'", sep = "", collapse = ", "))
   } else {
     NULL
   }
