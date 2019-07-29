@@ -22,19 +22,19 @@ plot_most_common_words <- function(data, variable, fill.color,
 
 ## The most common words in all responses {-}
 
-```{r}
+```{r, fig.align='center'}
 plot_most_common_words(response.tokens, word_stem, theme_color_codes("UNHCR blue"), "responses")
 ```
 
 ## The most common words in all questions {-}
 
-```{r}
+```{r, fig.align='center'}
 plot_most_common_words(question.tokens, word_stem, theme_color_codes("Taffy"), "questions")
 ```
 
 ## The most common words in all responses per form topic {-}
 
-```{r, fig.width=10, fig.height=10}
+```{r, fig.width=10, fig.height=10, fig.align='center'}
 ## Reordering words separated into facets. Source:
 ## https://juliasilge.com/blog/reorder-within/
 response.tokens %>%

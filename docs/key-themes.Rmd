@@ -11,7 +11,7 @@ tf_idf_by_form <- response.tokens %>%
 We can look at the key themes in each topic by measuring the
 term-frequency and tf-idf, short for term frequency–inverse document frequency.
 
-```{r, fig.width=7, fig.height=7}
+```{r, fig.width=7, fig.height=7, fig.align='center'}
 TOP.N <- 15
 response.tokens %>% 
   group_by(Month) %>% 
@@ -40,7 +40,7 @@ Well, some words appear at the top at
 almost all periods such as `personar`, `mujer`, `hombre`, `formación`,
 `atención` and so on. 
 
-```{r, fig.width=12, fig.height=10}
+```{r, fig.width=12, fig.height=10, fig.align='center'}
 TOP.N <- 10
 tf_idf_by_form %>% 
   arrange(desc(n)) %>% 
@@ -71,7 +71,7 @@ For example, we can focus on **VBG**, short for
 placed in the folder
 *`r recode_tbl[recode_tbl$formNameRecode == "VBG","folderName",drop=TRUE]`*.
 
-```{r, fig.width=6, fig.height=10}
+```{r, fig.width=6, fig.height=10, fig.align='center'}
 SELECTED.FORM <- "VBG"
 tf_first_per_month <- response.tokens %>% 
   group_by(formNameRecode, Month) %>% 

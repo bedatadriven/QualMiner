@@ -31,7 +31,7 @@ multi-line narrative textual data. For instance, the partner **PMA** has lots of
 Implementing Partners reporting for the different data types (as seen in above)
 but there are no narratives from them.
 
-```{r, warning=FALSE, fig.width=7, fig.height=8}
+```{r, warning=FALSE, fig.width=7, fig.height=8, fig.align='center'}
 ## grouped facet wraps. Source:
 ## https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
 
@@ -89,3 +89,4 @@ of the narrative records are entered by **ACNUR** itself.
 + The rest of the "reporting partners" do not have any "implementing partners",
 as it seems that they do the implementation:
 `r mmy::list_en_end(paste0("*",unique(narratives.part.count.without.subPartners$partnerName),"*"),add.quotes=T)`.
+

@@ -1,7 +1,7 @@
 
 # Response word counts by form name {-}
 
-```{r plot-topic-response-wc, fig.width=8, fig.height=8}
+```{r plot-topic-response-wc, fig.width=8, fig.height=8, fig.align='center'}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>%
   ggplot(aes(formNameRecode, value, fill = variable)) +

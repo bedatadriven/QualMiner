@@ -34,7 +34,7 @@ ICT %>%
 
 <br>
 
-```{r cumulative-plot}
+```{r cumulative-plot, fig.align='center'}
 ggplot(ICT, aes(reorder(Date, `Multi-line text`), `Multi-line text`)) +
   geom_bar(stat = "identity", fill = "#3fae29") +
   xlab(NULL) +
@@ -46,7 +46,7 @@ ggplot(ICT, aes(reorder(Date, `Multi-line text`), `Multi-line text`)) +
 
 <br>
 
-```{r data-type-plot, warning=FALSE}
+```{r data-type-plot, fig.align='center'}
 ICT.wide <- ICT %>% 
   select(-`% of total data collected`) %>% 
   gather(variable, value, -Date, Quantity, Select, `Single-line text`, `Multi-line text`) %>% 
@@ -134,7 +134,7 @@ library(inspectdf)
 For this analysis, we use the
 [**inspectdf**](https://cran.r-project.org/package=inspectdf) package.
 
-```{r}
+```{r, fig.align='center'}
 inspect_types(form.table) %>%
   show_plot()
 ```
@@ -142,7 +142,7 @@ inspect_types(form.table) %>%
 + Almost all columns are character vector, except the column
 *`r colnames(form.table)[sapply(form.table, class) %in% "logical"]`*.
 
-```{r}
+```{r, fig.align='center'}
 inspect_cat(form.table) %>%
   show_plot()
 ```
@@ -150,15 +150,14 @@ inspect_cat(form.table) %>%
 Above, we look at the categorical features of the data frame. That shows the each
 categorical column, number of unique levels, and the most common levels.
 
-```{r}
-# TODO fix
-# inspect_na(form.table) %>%
-#   show_plot()
+```{r, fig.align='center'}
+inspect_na(form.table) %>%
+  show_plot()
 ```
 
 The prevalance of NAs (missing values) in the colums.
 
-```{r}
+```{r, fig.align='center'}
 inspect_mem(form.table) %>%
   show_plot()
 ```
@@ -175,7 +174,7 @@ Look at below to have a glimpse of the raw data.
 ```{r, paged.print=FALSE}
 peak.ft <- as.data.frame(head(form.table, 4))
 peak.ft <- rbind(peak.ft, "...")
-peak.ft
+tibble::as_tibble(peak.ft)
 ```
 
 <br>

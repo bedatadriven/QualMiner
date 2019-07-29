@@ -70,7 +70,7 @@ placed outside the whiskers, which is the long line, of the boxplot.
 
 The response word count distribution per form topic categorized by partner name:
 
-```{r plot-partner-response-wc, fig.width=10, fig.height=20}
+```{r plot-partner-response-wc, fig.width=10, fig.height=20, fig.align='center'}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
   ggplot(aes(formNameRecode, value)) +
@@ -88,7 +88,7 @@ narratives.wc %>%
 
 The response word count distribution per form topic categorized by canton name:
 
-```{r plot-canton-response-wc, fig.width=10, fig.height=20}
+```{r plot-canton-response-wc, fig.width=10, fig.height=20, fig.align='center'}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>% 
   ggplot(aes(formNameRecode, value)) +
@@ -109,7 +109,7 @@ narratives.wc %>%
 
 <br>
 
-```{r, fig.width=7, fig.height=7}
+```{r, fig.width=7, fig.height=7, fig.align='center'}
 lf <- narratives.wc %>% 
   group_by(formNameRecode) %>% 
   select(formNameRecode, .responseWordCount, .questionWordCount)
@@ -151,7 +151,7 @@ others, because:
 
 ## Distribution of word counts {-}
 
-```{r}
+```{r, fig.align='center'}
 inspect_num(narratives.wc, breaks = 10) %>%
   show_plot()
 ```
@@ -160,7 +160,7 @@ inspect_num(narratives.wc, breaks = 10) %>%
 
 ## Median word count of responses per form name {-}
 
-```{r}
+```{r, fig.align='center'}
 x1<-narratives.wc %>% 
   dplyr::filter(formNameRecode != "Salud") %>% 
   group_by(formNameRecode) %>% 
@@ -185,7 +185,7 @@ records and skews the data.
 
 ## Median word count of responses per partner {-}
 
-```{r}
+```{r, fig.align='center'}
 narratives.wc %>% 
   group_by(partnerName) %>% 
   summarise(median = median(.responseWordCount)) %>% 
@@ -203,7 +203,7 @@ narratives.wc %>%
 
 ## Median word count of responses per specific reporting partners {-}
 
-```{r}
+```{r, fig.align='center'}
 narratives.wc.median.specific.partners <- narratives.wc %>% 
   group_by(partnerName, subPartnerName) %>% 
   summarise(median = median(.responseWordCount)) %>% 
@@ -261,7 +261,7 @@ narratives.med.wc_byPartner_ts <-
   fill_gaps(median = 0, .full = TRUE)
 ```
 
-```{r, fig.width=10, fig.height=10}
+```{r, fig.width=10, fig.height=10, fig.align='center'}
 narratives.med.wc_byPartner_ts %>%
   ggplot(aes(Month, median, color = partnerName)) +
   geom_line() +
@@ -298,7 +298,7 @@ narratives.med.wc_byPartnerSubPartner_ts <-
 
 ## Median word count of responses per specific reporting partners over months {-}
 
-```{r, specific-reporting-partners-over-months}
+```{r, specific-reporting-partners-over-months, fig.align='center'}
 .med.wc.specific <- narratives.med.wc_byPartnerSubPartner_ts %>% 
   dplyr::filter(partnerName %in% c("ACNUR", "UNICEF") | subPartnerName %in% "HIAS")
 
@@ -453,8 +453,7 @@ of the words in the response field have only `1` words. And those words were
 just not important (as they are 
 `r narratives.wc %>% dplyr::filter(.responseWordCount == 1 & !is.na(response)) %>% select(response) %>% distinct() %>% pull()`).
 
-
-```{r}
+```{r, fig.align='center'}
 inspect_cor(narratives.wc) %>% 
   show_plot()
 ```
@@ -488,7 +487,7 @@ have a positive effect on the word count of response field.
 Scatter plots help understand the characteristics of those variables.
 However, we miss a general understanding that is the *trend line*.
 
-```{r, plot-linear-regression}
+```{r plot-linear-regression, fig.align='center'}
 p1 <- description.field.wc %>% 
   ggplot(aes(x = .responseWordCount, y = .questionWordCount)) +
   geom_jitter(alpha = 0.35) +

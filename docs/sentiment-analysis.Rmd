@@ -15,7 +15,7 @@ sentiments <- get_es_sentiments()
 ```
 
 A wordcloud showing positive and negative words in the responses:
-```{r, warning=FALSE}
+```{r, warning=FALSE, fig.align='center'}
 response.tokens %>%
   inner_join(sentiments, by = c("word_stem" = "word")) %>%
   count(word, sentiment, sort = TRUE) %>%

@@ -47,7 +47,7 @@ response.tokens.bigrams.tf_idf <-
   arrange(desc(tf_idf))
 ```
 
-```{r,fig.height=15, fig.width=10}
+```{r,fig.height=15, fig.width=10, fig.align='center'}
 response.tokens.bigrams.tf_idf %>%
   group_by(formNameRecode) %>%
   arrange(desc(tf_idf)) %>%
