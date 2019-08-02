@@ -68,76 +68,18 @@ In the plot above, the box plot of form topics and response word counts based on
 the raw data, the outliers are shown in orange color. Outliers are the points
 placed outside the whiskers, which is the long line, of the boxplot.
 
-The response word count distribution per form topic categorized by partner name:
+## Distribution of word counts {-}
 
-```{r plot-partner-response-wc, fig.width=10, fig.height=20, fig.align='center'}
-narratives.wc %>%
-  gather(variable, value, .responseWordCount) %>% 
-  ggplot(aes(formNameRecode, value)) +
-  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
-  coord_flip() +
-  geom_jitter(alpha = 0.35) +
-  facet_wrap(partnerName ~ ., scales = "free", ncol = 2) +
-  labs(
-    title = "Word count of responses by form topics per partner",
-    subtitle = "A box plot distribution",
-    caption = "*Please refer to recode table for label forms"
-  ) +
-  theme_ecuador1(border = TRUE)
+```{r, fig.align='center'}
+inspect_num(narratives.wc, breaks = 10) %>%
+  show_plot()
 ```
 
-The response word count distribution per form topic categorized by canton name:
+There's a lot of variation in response word count. We need to know what are those responses with a word count of 1. Or better to eliminate the responses which has less than 5 words (an arbitrary number to filter).
 
-```{r plot-canton-response-wc, fig.width=10, fig.height=20, fig.align='center'}
-narratives.wc %>%
-  gather(variable, value, .responseWordCount) %>% 
-  ggplot(aes(formNameRecode, value)) +
-  geom_boxplot(outlier.colour = "orange", outlier.shape = 1, outlier.alpha = 0.35) +
-  geom_jitter(alpha = 0.35) +
-  coord_flip() +
-  facet_wrap(~canton, scales = "free", ncol = 2) +
-  labs(
-    title = "Word count of responses by form topics per canton",
-    subtitle = "A box plot distribution",
-    caption = "*Please refer to recode table for label forms"
-  ) +
-  xlab(NULL) +
-  ylab(NULL) +
-  theme_ecuador1(border = TRUE) +
-  theme(panel.spacing = unit(0, "lines"))
-```
+<hr>
 
-<br>
-
-```{r, fig.width=7, fig.height=7, fig.align='center'}
-lf <- narratives.wc %>% 
-  group_by(formNameRecode) %>% 
-  select(formNameRecode, .responseWordCount, .questionWordCount)
-lf$formNameRecode <- as.factor(lf$formNameRecode)
-
-## Make all data; gray background
-lf_bg <- lf[, -1]
-
-lf.xlab <- expression(paste("Word counts in '", italic("response"), "' field"))
-lf.ylab <- expression(paste("Word counts in '", italic("question"), "' field"))
-ggplot(lf, aes(x = .responseWordCount, y = .questionWordCount, color = formNameRecode)) +
-  geom_point(data = lf_bg,
-             colour = "grey",
-             alpha = 0.2) + # 
-  geom_point(size = 3L) + # actual points
-  geom_point(shape = 21, color = "black", stroke = 0.2, size = 3L) + # for point borders
-  facet_wrap( ~ formNameRecode) +
-  theme_ecuador1(border = TRUE) +
-  guides(color = FALSE) +
-  labs(
-    title = "Response and Question word counts per form topic",
-    caption = "*Please refer to recode table for label forms"
-  ) +
-  xlab(lf.xlab) +
-  ylab(lf.ylab)
-```
-
-<br>
+## Median word count of responses per form name {-}
 
 *A caveat:* Reducing multiple values down to a single value should be avoided in
 the early stages of the analysis because reducing hides a lot e.g. a bar chart
@@ -147,18 +89,6 @@ others, because:
 1. They *actually* write longer than other partners.
 
 2. The questions they answered require short answers.
-
-
-## Distribution of word counts {-}
-
-```{r, fig.align='center'}
-inspect_num(narratives.wc, breaks = 10) %>%
-  show_plot()
-```
-
-<hr>
-
-## Median word count of responses per form name {-}
 
 ```{r, fig.align='center'}
 x1<-narratives.wc %>% 

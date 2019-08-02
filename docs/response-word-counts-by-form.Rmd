@@ -1,15 +1,16 @@
 
-# Response word counts by form name {-}
+# Which sectors do receive high word counts in responses? {-}
 
 ```{r plot-topic-response-wc, fig.width=8, fig.height=8, fig.align='center'}
 narratives.wc %>%
   gather(variable, value, .responseWordCount) %>%
+  mutate(formNameRecode = fct_reorder(formNameRecode, value)) %>% ## reorder by value
   ggplot(aes(formNameRecode, value, fill = variable)) +
   geom_boxplot(outlier.colour = "orange", outlier.shape = 23, outlier.alpha = 1) +
   coord_flip() +
   geom_jitter(shape = 16, alpha = 0.35) +
   labs(
-    title = "Response and word counts per form topic",
+    title = "Response and word counts by sector",
     subtitle = "A box plot distribution",
     caption = "*Please refer to recode table for label forms"
   ) +
@@ -18,6 +19,9 @@ narratives.wc %>%
   guides(fill = FALSE) +
   theme_ecuador1() 
 ```
+
+It's better to know the distributions separated by the major category, which is
+the sector name.
 
 Box plots are used to visualize the *measure of spread* showing the variability
 and dispersion of the data.

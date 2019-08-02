@@ -82,7 +82,7 @@ close look at `etl.R` and `etl-methods.R` files). If you want to download the
 raw data, you must have an access for it, that can be done by sourcing the
 `etl.R` file.
 
-* Some description about the nature of data:
+* Data dictionary shows what the columns mean in the data:
   
   + `databaseId`: the internal ActivityInfo id for databases
     
