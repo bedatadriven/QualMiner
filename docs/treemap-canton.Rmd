@@ -4,7 +4,8 @@ Treemap plot showing canton and province reporting frequencies.
 ```{r treemap, fig.width=9, fig.height=6, fig.align='center'}
 tree.colors <-c(
   RColorBrewer::brewer.pal(name = "Dark2", n = 8),
-  RColorBrewer::brewer.pal(name = "Set2", n = 8)
+  RColorBrewer::brewer.pal(name = "Set2", n = 8),
+  RColorBrewer::brewer.pal(name = "Pastel1", n = 9)
 )
 ggplot(locations,
        aes(
