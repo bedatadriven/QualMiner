@@ -5,8 +5,19 @@ bookdown::gitbook:
       before: |
         <li><a href="./">QualMiner</a></li>
       after: |
-        <li><a href="https://bookdown.org/" target="blank">Generated with bookdown</a></li>
-    edit: https://github.com/bedatadriven/QualMiner/edit/master/%s
+        <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
+          edit : null
+    search: yes
+    fontsettings:
+      theme: white
+      family: sans
+      size: 2
+    sharing:
+      facebook: no
+      twitter: yes
+      google: yes
+      linkedin: yes
+      all: []
     download: ["pdf", "epub"]
 bookdown::pdf_book:
   includes:
