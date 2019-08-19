@@ -146,3 +146,4 @@ narratives <- form.table %>%
 
 This document explores qualitative indicators from an *ActivityInfo* database
 that is monitoring Ecuador.
+

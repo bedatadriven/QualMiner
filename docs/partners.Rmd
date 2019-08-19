@@ -2,9 +2,9 @@
 
 They are two types of partners in the database:
 
-+ Reporting partners: Higher level of partners reporting directly in ActivityInfo.
++ **Reporting partners**: Higher level of partners reporting directly in ActivityInfo.
 
-+ Implementing partners: Partners reporting through a reporting partner.
++ **Implementing partners**: Partners reporting through a reporting partner.
 
 ```{r, include=FALSE}
 ppartners <- partners %>%
@@ -16,15 +16,15 @@ ppartners <- partners %>%
 
 The table below shows the count of reporting partner per each record:
 
-+ **`r ppartners[1,"partnerName",drop=T]`** has `r xfun::n2w(ppartners[1,"freq",drop=T])`
++ **`r ppartners[1,"partnerName",drop=T]`** has *`r xfun::n2w(ppartners[1,"freq",drop=T])`*
 records, 
-which is `r scales::percent(ppartners[1,"prop",drop=T])`
+which is *`r scales::percent(ppartners[1,"prop",drop=T])`*
 of the total records.
 
 + Second, 
-**`r ppartners[2,"partnerName",drop=T]`** has `r xfun::n2w(ppartners[2,"freq",drop=T])`
+**`r ppartners[2,"partnerName",drop=T]`** has *`r xfun::n2w(ppartners[2,"freq",drop=T])`*
 records, 
-which is `r scales::percent(ppartners[2,"prop",drop=T])`
+which is *`r scales::percent(ppartners[2,"prop",drop=T])`*
 of the total records.
 
 + The most difference between percentages of the partners 
@@ -64,7 +64,7 @@ acnur.hias.part <- PartnerSubPropFreq %>%
 <hr>
 
 The table below shows the proportion of records entered by
-partners and sub-partners.
+reporting and implementing partners.
 
 + *`r acnur.hias.part[,"freq",drop=T]`* out of 
 *`r sum(PartnerSubPropFreq %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
@@ -79,7 +79,7 @@ of reporting comes from the **UNICEF** itself.
 + Under **PMA**, there are *`r nrow(PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
 
 Those are the total numbers of reporting in all database, the numbers are not
-specific to the narratives (multi-line text fields). In the next section, we
+specific to the narratives i.e. multi-line text fields. In the following sections, we
 count the number of reportings done only in the narrative sections.
 
 <hr>
@@ -115,7 +115,5 @@ pspf.tbl %>%
 ', bolds = pspf.bold_groups)))
 ```
 
-<hr>
+<br>
 
-```{r child = 'partner-tabset-partners.Rmd', eval=T}
-```
