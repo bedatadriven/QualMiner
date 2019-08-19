@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Recode table | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Recode table | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Recode table | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+
+
+<meta name="date" content="2019-08-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="about-data.html">
+<link rel="next" href="partners.html">
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">QualMiner</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Introduction</a></li>
+<li class="chapter" data-level="" data-path="about-data.html"><a href="about-data.html"><i class="fa fa-check"></i>About data</a><ul>
+<li class="chapter" data-level="" data-path="about-data.html"><a href="about-data.html#data-in-activityinfo-over-time"><i class="fa fa-check"></i>Data in ActivityInfo over time</a></li>
+<li class="chapter" data-level="" data-path="about-data.html"><a href="about-data.html#data-preparation"><i class="fa fa-check"></i>Data preparation</a></li>
+<li class="chapter" data-level="" data-path="about-data.html"><a href="about-data.html#technical-aspects-of-the-data"><i class="fa fa-check"></i>Technical aspects of the data</a></li>
+</ul></li>
+<li class="part"><span><b>I Descriptive statistics</b></span></li>
+<li class="chapter" data-level="" data-path="recode-table.html"><a href="recode-table.html"><i class="fa fa-check"></i>Recode table</a></li>
+<li class="chapter" data-level="" data-path="partners.html"><a href="partners.html"><i class="fa fa-check"></i>Partners</a></li>
+<li class="chapter" data-level="" data-path="direct-and-indirect-fields.html"><a href="direct-and-indirect-fields.html"><i class="fa fa-check"></i>Direct and indirect fields</a></li>
+<li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-form-topics.html"><a href="the-number-of-narrative-records-in-form-topics.html"><i class="fa fa-check"></i>The number of narrative records in form topics</a></li>
+<li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
+<li class="chapter" data-level="" data-path="cantons-and-provinces-entering-narrative-data.html"><a href="cantons-and-provinces-entering-narrative-data.html"><i class="fa fa-check"></i>Cantons and provinces entering narrative data</a></li>
+<li class="part"><span><b>II Response quality</b></span></li>
+<li class="chapter" data-level="" data-path="response-quality.html"><a href="response-quality.html"><i class="fa fa-check"></i>Response quality</a></li>
+<li class="part"><span><b>III Response quality - Word count</b></span></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html"><i class="fa fa-check"></i>Word count</a><ul>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#distribution-of-word-counts"><i class="fa fa-check"></i>Distribution of word counts</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#median-word-count-of-responses-per-form-name"><i class="fa fa-check"></i>Median word count of responses per form name</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#median-word-count-of-responses-per-partner"><i class="fa fa-check"></i>Median word count of responses per partner</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#median-word-count-of-responses-per-specific-reporting-partners"><i class="fa fa-check"></i>Median word count of responses per specific reporting partners</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#median-word-count-of-responses-per-partner-over-months"><i class="fa fa-check"></i>Median word count of responses per partner over months</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#median-word-count-of-responses-per-specific-reporting-partners-over-months"><i class="fa fa-check"></i>Median word count of responses per specific reporting partners over months</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#the-description-field"><i class="fa fa-check"></i>The Description field</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#analysis-of-variance"><i class="fa fa-check"></i>Analysis of Variance</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#correlation"><i class="fa fa-check"></i>Correlation</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#the-regression-lines"><i class="fa fa-check"></i>The regression lines</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#logistic-regression"><i class="fa fa-check"></i>Logistic regression</a></li>
+<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#hypothesis-testing"><i class="fa fa-check"></i>Hypothesis testing</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
+<li class="part"><span><b>IV Text mining</b></span></li>
+<li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
+<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a><ul>
+<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses"><i class="fa fa-check"></i>The most common words in all responses</a></li>
+<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-questions"><i class="fa fa-check"></i>The most common words in all questions</a></li>
+<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses-per-form-topic"><i class="fa fa-check"></i>The most common words in all responses per form topic</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="the-key-themes-by-using-term-frequency-and-tf-idf.html"><a href="the-key-themes-by-using-term-frequency-and-tf-idf.html"><i class="fa fa-check"></i>The key themes (by using term-frequency and tf-idf)</a></li>
+<li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a><ul>
+<li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html#higher-order-n-grams"><i class="fa fa-check"></i>Higher order n-grams</a></li>
+</ul></li>
+<li class="chapter" data-level="" data-path="term-frequency-matrix.html"><a href="term-frequency-matrix.html"><i class="fa fa-check"></i>Term-frequency matrix</a></li>
+<li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://bookdown.org/" target="blank">Generated with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="recode-table" class="section level1 unnumbered">
+<h1>Recode table</h1>
+<p>We shorten the form topic names by <em>recoding</em> them because they
+appear to be long and disarray the plots. The <em>recode table</em> below presents a
+lookup table for the form labels.</p>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#dwtqibiqpv .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+  border-bottom-style: solid;
+  /* table.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table.border.bottom.color */
+}
+
+#dwtqibiqpv .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#dwtqibiqpv .gt_title {
+  color: #000000;
+  font-size: 14px;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#dwtqibiqpv .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 2px;
+  padding-bottom: 2px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#dwtqibiqpv .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#dwtqibiqpv .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#dwtqibiqpv .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#dwtqibiqpv .gt_columns_top_border {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#dwtqibiqpv .gt_columns_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+}
+
+#dwtqibiqpv .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#dwtqibiqpv .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#dwtqibiqpv .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#dwtqibiqpv .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#dwtqibiqpv .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#dwtqibiqpv .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#dwtqibiqpv .gt_row {
+  padding: 6px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#dwtqibiqpv .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#dwtqibiqpv .gt_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 8px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#dwtqibiqpv .gt_grand_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* grand_summary_row.background.color */
+  padding: 8px;
+  /* grand_summary_row.padding */
+  text-transform: inherit;
+  /* grand_summary_row.text_transform */
+}
+
+#dwtqibiqpv .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#dwtqibiqpv .gt_first_grand_summary_row {
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #A8A8A8;
+}
+
+#dwtqibiqpv .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#dwtqibiqpv .gt_footnotes {
+  border-top-style: solid;
+  /* footnotes.border.top.style */
+  border-top-width: 2px;
+  /* footnotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* footnotes.border.top.color */
+}
+
+#dwtqibiqpv .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  margin: 0px;
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#dwtqibiqpv .gt_sourcenotes {
+  border-top-style: solid;
+  /* sourcenotes.border.top.style */
+  border-top-width: 2px;
+  /* sourcenotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* sourcenotes.border.top.color */
+}
+
+#dwtqibiqpv .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#dwtqibiqpv .gt_center {
+  text-align: center;
+}
+
+#dwtqibiqpv .gt_left {
+  text-align: left;
+}
+
+#dwtqibiqpv .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#dwtqibiqpv .gt_font_normal {
+  font-weight: normal;
+}
+
+#dwtqibiqpv .gt_font_bold {
+  font-weight: bold;
+}
+
+#dwtqibiqpv .gt_font_italic {
+  font-style: italic;
+}
+
+#dwtqibiqpv .gt_super {
+  font-size: 65%;
+}
+
+#dwtqibiqpv .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="dwtqibiqpv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <tr>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">formName</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">formNameRecode<sup class="gt_footnote_glyph">1</sup></th>
+  </tr>
+  <body class="gt_table_body">
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_1.1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Seguridad_alimentaria</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">AlimentSegur</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Agua, saneamiento e higiene</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Agua</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Alojamiento Temporal</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Alojamiento</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Transporte humanitario</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Transport</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Necesidades básicas/Otro</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Necesidades</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_1.2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Manejo de la información y entrega directa de la información a la población</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Poblacion</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Manejo de la información para socios y análisis de las necesidades</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Socios</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_2.1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Protección general</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">General</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_2.2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Protección_Infancia</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Infancia</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Protección_VBG</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">VBG</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Trata_y_tráfico</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Trafico</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Protection_Otro</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Otro</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Protección_LGBTI</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">LGBTI</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_3.1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Acceso_a_educación</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Educacion</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Acceso a vivienda y hábitat dignos en comunidades receptoras</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Habitat</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_3.2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Medios de vida y formación técnico-profesional</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Tecnico</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Cohesión_social</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">SocialCohesion</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Apoyo Educacional a Comunidades Receptoras</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Educacional</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_4.1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para VBG-SSR</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">VBG_SSR</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para protección/gestión de fronteras</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Fronteras</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_4.2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para gestion de la informacion y coordinacion</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Coordinacion</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="2" class="gt_group_heading">Objectivo_4.3</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para educación</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para educación</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para el sector laboral</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">SectorLaboral</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para protección</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Proteccion</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para protección de la infancia</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ProteccionInfancia</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para Salud</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">AsistenciaSalud</td>
+    </tr>
+  </body>
+  
+  <tfoot>
+    <tr class="gt_footnotes">
+      <td colspan="2">
+        <p class="gt_footnote">
+          <sup class="gt_footnote_glyph">
+            <em>1</em>
+          </sup>
+           
+          <em>Some short form names (e.g. 'Salud') stay as such, no need to make them even shorter</em>
+          <br />
+        </p>
+      </td>
+    </tr>
+  </tfoot>
+</table></div>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="about-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="partners.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/bedatadriven/QualMiner/edit/master/recode-table.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["qualminer.pdf", "qualminer.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -249,8 +249,8 @@ check_required_packages <- function() {
 render_bookdown <- function() {
   body <- paste(
     'wd <- getwd()',
-    'if (basename(wd) != "docs") {',
-    'setwd(file.path(wd, "docs"))',
+    'if (basename(wd) != "analysis") {',
+    'setwd(file.path(wd, "analysis"))',
     '}',
     'bookdown::render_book("index.Rmd", "bookdown::gitbook")',
     sep = "\n"
