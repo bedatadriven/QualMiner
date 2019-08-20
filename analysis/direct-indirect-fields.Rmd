@@ -1,6 +1,11 @@
+
 # Direct and indirect fields {-}
 
-As per canton, province, partner etc.
+**Direct** and **indirect** fields do exists as a way to avoid double reporting
+- preventing reporting twice.
+
+Partners report activities to indicate whether this activity is implemented with
+the funds of another partner.
 
 ```{r, include=FALSE}
 direct_indirect_fields <- 

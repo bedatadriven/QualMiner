@@ -1,0 +1,62 @@
+
+# Data preparation {-}
+
+This section gives some ideas how the raw data of Ecuador monitoring looks like. 
+
+* The data has been
+extracted from *ActivityInfo* by using the *ActivityInfo API* and pre-processed
+to make it ready for the analysis. 
+
+* The most of data extraction and cleaning are
+done beforehand (please see `R/` folder in the repository especially take a
+close look at `etl.R` and `etl-methods.R` files). If you want to download the
+raw data, you must have an access for it, that can be done by sourcing the
+`etl.R` file.
+
+* Data dictionary shows what the columns mean in the data:
+  
+  + `databaseId`: the internal ActivityInfo id for databases
+    
+  + `databaseName`: the name of databases visible to users
+  
+  + `folderId`: the internal ActivityInfo id for folders
+  
+  + `folderName`: the name of folders visible to users
+  
+  + `formId`: the internal ActivityInfo id for forms
+  
+  + `formName`: the name of forms visible to users
+  
+  + `subFormId`: the internal ActivityInfo id for the sub-forms where the records are kept
+  
+  + `subFormName`: the name of the sub-forms visible to users
+  
+  + `Month`: indicating month when a record is entered
+  
+  + `code`: Schema question code
+  
+  + `question`: Question label indicated by the code
+  
+  + `response`: Response given by users
+  
+  + `required`: A boolean value to check whether the question is required to complete.
+  
+  + `type`: internal type for the code. The available types in the data are 
+  `r unique(form.table$type)`.
+  
+  + `partnerName`: The name of reporting partners. The name of implementing
+  partners can be extracted from the data.
+  
+  + `canton`: The canton name of the record.
+  
+  + `province`: The province name of the record.
+  
+  + `description`: the description field further explaining what the question mean.
+  The cells are represented as `NA` when fields not exists or not applicable.
+
+<br>
+
+Please see the
+[**ActivityInfo documentation**](http://help.activityinfo.org/m/quick_start_database_design/c/240396)
+for more information about how the information is structured.
+

@@ -1,0 +1,87 @@
+
+# Data in ActivityInfo over time {-}
+
+```{r}
+ICT <- tibble(
+  Date = c("Nov 2013", "June 2015", "Sept 2016", "May 2017", "May 2019"),
+  Quantity = c(141442, 1887857, 3380991, 4932977, 12174327),
+  Select = c(30531, 745841, 1296548, 1809419, 7595829),
+  `Single-line text` = c(NA, 85863, 191640, 265196, 2683945),
+  `Multi-line text` = c(6309, 57128, 116184, 168599, 915948),
+  `% of total data collected` = c("3.54%", "2.06%", "2.33%", "2.35%", "3.92%")
+)
+
+## replace NAs with 0
+ICT[is.na(ICT)] <- 0
+
+ICT %>%
+  gt() %>%
+  fmt_number(
+    columns = vars(Quantity, Select, `Single-line text`, `Multi-line text`),
+    decimals = 0,
+    use_seps = T
+  ) %>% 
+  tab_header(
+    title = md("Indicator count totals"),
+    subtitle = sprintf("%s to %s", ICT$Date[1], ICT$Date[length(ICT$Date)])
+  ) %>% 
+  cols_align(
+    align = "center",
+    columns = names(ICT)
+  )
+```
+
+ActivityInfo has different field types for entering data.
+
++ [Quantity field](http://help.activityinfo.org/m/75942/l/852515-quantity-field)
+
+  > Quantity fields allow users to enter a numerical value. 
+
++ [Single selection field](http://help.activityinfo.org/m/75942/l/852519-single-selection-field)
+  
+  > Single selection fields can be used to ask users to select one out two or more options as an answer.
+
++ [Multiple selection field](http://help.activityinfo.org/m/75942/l/852998-multiple-selection-field)
+
+  > Multiple selection fields can be used to allow users to select more than one option as an answer.
+
++ [Multi-Line Text Field](http://help.activityinfo.org/m/75942/l/852517-multi-line-text-field)
+
+  > Multi-line text fields can be used to collect long answers to open-ended questions.
+
+<br>
+
+```{r cumulative-plot, fig.align='center', fig.cap='Total multi-line text entries collected by year (cumulative)'}
+ggplot(ICT, aes(reorder(Date, `Multi-line text`), `Multi-line text`)) +
+  geom_bar(stat = "identity", fill = "#3fae29") +
+  xlab(NULL) +
+  ylab("Number of values") +
+  labs(title = "Total multi-line text entries collected by year (cumulative)") +
+  scale_y_continuous(labels = scales::comma) +
+  theme_ecuador1()
+```
+
+<br>
+
+```{r data-type-plot, fig.align='center', fig.cap='Total collected data by type (cumulative)'}
+ICT.wide <- ICT %>% 
+  select(-`% of total data collected`) %>% 
+  gather(variable, value, -Date, Quantity, Select, `Single-line text`, `Multi-line text`) %>% 
+  mutate(variable = as.factor(variable))
+
+ggplot(ICT.wide, aes(reorder(Date, value), value, fill = variable)) +
+  geom_bar(stat = "identity", position = position_stack(reverse = F)) +
+  xlab(NULL) +
+  ylab("Number of values") +
+  labs(title = "Total collected data by type (cumulative)") +
+  scale_y_continuous(labels = scales::comma) +
+  theme_ecuador1() +
+  theme(legend.title = element_blank()) +
+  scale_fill_brewer(palette = "Set1")
+```
+
+From the perspective of *ActivityInfo*, it shows a clear need for new tools to
+support analysis of qualitative data (or namely 'Multi-line text entries') as
+the absolute volume of qualitative data has increased by a factor of 150, and
+almost doubled as a relative share of all data collected.
+

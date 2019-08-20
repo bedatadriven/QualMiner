@@ -1,0 +1,53 @@
+
+# Technical aspects of the data {-}
+
+```{r, include=FALSE}
+library(inspectdf)
+```
+
+For this analysis, we use the
+[**inspectdf**](https://cran.r-project.org/package=inspectdf) package.
+
+```{r, fig.align='center'}
+inspect_types(form.table) %>%
+  show_plot()
+```
+
++ Almost all columns are character vector, except the column
+*`r colnames(form.table)[sapply(form.table, class) %in% "logical"]`*.
+
+```{r, fig.align='center'}
+inspect_cat(form.table) %>%
+  show_plot()
+```
+
+Above, we look at the categorical features of the data frame. That shows the each
+categorical column, number of unique levels, and the most common levels.
+
+```{r, fig.align='center'}
+inspect_na(form.table) %>%
+  show_plot()
+```
+
+The prevalance of NAs (missing values) in the colums.
+
+```{r, fig.align='center'}
+inspect_mem(form.table) %>%
+  show_plot()
+```
+
+This part may seem too technical, but can be important for the other data
+analyst that would work on this data.
+As seen in the plot, the "response" column has the most size because it holds
+long text fields.
+
+<hr>
+
+Look at below to have a glimpse of the raw data.
+
+```{r, paged.print=FALSE}
+peak.ft <- as.data.frame(head(form.table, 4))
+peak.ft <- rbind(peak.ft, "...")
+tibble::as_tibble(peak.ft)
+```
+

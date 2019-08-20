@@ -8,7 +8,10 @@ output_dir: "../docs"
 rmd_files: [
   "index.Rmd",
 
-  "about-data.Rmd",
+  "PART-about-data.Rmd",
+  "data-in-ai.Rmd",
+  "data-preparation.Rmd",
+  "data-technical-aspects.Rmd",
 
   "PART-descriptive-statistics.Rmd",
   "recode-table.Rmd",
