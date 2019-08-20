@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Technical aspects of the data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Technical aspects of the data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Technical aspects of the data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="data-in-activityinfo-over-time.html">
+<link rel="prev" href="data-preparation.html">
+<link rel="next" href="recode-table.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -130,14 +130,39 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</h1>
-<p class="date"><em>2019-08-20</em></p>
-</div>
-<div id="introduction" class="section level1 unnumbered">
-<h1>Introduction</h1>
-<p>This document explores qualitative indicators from an <em>ActivityInfo</em> database
-that is monitoring Ecuador.</p>
+<div id="technical-aspects-of-the-data" class="section level1 unnumbered">
+<h1>Technical aspects of the data</h1>
+<p>For this analysis, we use the
+<a href="https://cran.r-project.org/package=inspectdf"><strong>inspectdf</strong></a> package.</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<ul>
+<li>Almost all columns are character vector, except the column
+<em>required</em>.</li>
+</ul>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Above, we look at the categorical features of the data frame. That shows the each
+categorical column, number of unique levels, and the most common levels.</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>The prevalance of NAs (missing values) in the colums.</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>This part may seem too technical, but can be important for the other data
+analyst that would work on this data.
+As seen in the plot, the “response” column has the most size because it holds
+long text fields.</p>
+<hr>
+<p>Look at below to have a glimpse of the raw data.</p>
+<pre><code>## # A tibble: 5 x 20
+##   databaseId databaseName folderId folderName formId formName subFormId
+##   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    
+## 1 d00000102… ECUADOR_MON… f000002… Objectivo… a1424… Salud    cjs13y74…
+## 2 d00000102… ECUADOR_MON… f000002… Objectivo… a1424… Salud    cjs13y74…
+## 3 d00000102… ECUADOR_MON… f000002… Objectivo… a1424… Salud    cjs13y74…
+## 4 d00000102… ECUADOR_MON… f000002… Objectivo… a1424… Salud    cjs13y74…
+## 5 ...        ...          ...      ...        ...    ...      ...      
+## # … with 13 more variables: subFormName &lt;chr&gt;, recordId &lt;chr&gt;,
+## #   Month &lt;chr&gt;, code &lt;chr&gt;, question &lt;chr&gt;, required &lt;chr&gt;, type &lt;chr&gt;,
+## #   partnerName &lt;chr&gt;, canton &lt;chr&gt;, province &lt;chr&gt;, response &lt;chr&gt;,
+## #   description &lt;chr&gt;, formNameRecode &lt;chr&gt;</code></pre>
 
 </div>
 
@@ -149,8 +174,8 @@ that is monitoring Ecuador.</p>
           </div>
         </div>
       </div>
-
-<a href="data-in-activityinfo-over-time.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-preparation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="recode-table.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

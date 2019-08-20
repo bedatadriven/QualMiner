@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Data preparation | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Data preparation | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Data preparation | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
-<link rel="next" href="data-in-activityinfo-over-time.html">
+<link rel="prev" href="data-in-activityinfo-over-time.html">
+<link rel="next" href="technical-aspects-of-the-data.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -130,18 +130,47 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</h1>
-<p class="date"><em>2019-08-20</em></p>
-</div>
-<div id="introduction" class="section level1 unnumbered">
-<h1>Introduction</h1>
-<p>This document explores qualitative indicators from an <em>ActivityInfo</em> database
-that is monitoring Ecuador.</p>
-
-</div>
-
-
+<div id="data-preparation" class="section level1 unnumbered">
+<h1>Data preparation</h1>
+<p>This section gives some ideas how the raw data of Ecuador monitoring looks like.</p>
+<ul>
+<li><p>The data has been
+extracted from <em>ActivityInfo</em> by using the <em>ActivityInfo API</em> and pre-processed
+to make it ready for the analysis.</p></li>
+<li><p>The most of data extraction and cleaning are
+done beforehand (please see <code>R/</code> folder in the repository especially take a
+close look at <code>etl.R</code> and <code>etl-methods.R</code> files). If you want to download the
+raw data, you must have an access for it, that can be done by sourcing the
+<code>etl.R</code> file.</p></li>
+<li><p>Data dictionary shows what the columns mean in the data:</p>
+<ul>
+<li><p><code>databaseId</code>: the internal ActivityInfo id for databases</p></li>
+<li><p><code>databaseName</code>: the name of databases visible to users</p></li>
+<li><p><code>folderId</code>: the internal ActivityInfo id for folders</p></li>
+<li><p><code>folderName</code>: the name of folders visible to users</p></li>
+<li><p><code>formId</code>: the internal ActivityInfo id for forms</p></li>
+<li><p><code>formName</code>: the name of forms visible to users</p></li>
+<li><p><code>subFormId</code>: the internal ActivityInfo id for the sub-forms where the records are kept</p></li>
+<li><p><code>subFormName</code>: the name of the sub-forms visible to users</p></li>
+<li><p><code>Month</code>: indicating month when a record is entered</p></li>
+<li><p><code>code</code>: Schema question code</p></li>
+<li><p><code>question</code>: Question label indicated by the code</p></li>
+<li><p><code>response</code>: Response given by users</p></li>
+<li><p><code>required</code>: A boolean value to check whether the question is required to complete.</p></li>
+<li><p><code>type</code>: internal type for the code. The available types in the data are
+quantity, NARRATIVE, enumerated.</p></li>
+<li><p><code>partnerName</code>: The name of reporting partners. The name of implementing
+partners can be extracted from the data.</p></li>
+<li><p><code>canton</code>: The canton name of the record.</p></li>
+<li><p><code>province</code>: The province name of the record.</p></li>
+<li><p><code>description</code>: the description field further explaining what the question mean.
+The cells are represented as <code>NA</code> when fields not exists or not applicable.</p></li>
+</ul></li>
+</ul>
+<p><br></p>
+<p>Please see the
+<a href="http://help.activityinfo.org/m/quick_start_database_design/c/240396"><strong>ActivityInfo documentation</strong></a>
+for more information about how the information is structured.</p>
 
 </div>
             </section>
@@ -149,8 +178,8 @@ that is monitoring Ecuador.</p>
           </div>
         </div>
       </div>
-
-<a href="data-in-activityinfo-over-time.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="data-in-activityinfo-over-time.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="technical-aspects-of-the-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
