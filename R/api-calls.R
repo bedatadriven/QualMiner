@@ -47,3 +47,8 @@ get_form_schema <- function(formId) {
 get_query_table <- function(formId) {
   activityinfo::getResource(paste("form", formId, "query/rows", sep = "/"))
 }
+
+get_record_history <- function(formId, recordId) {
+  activityinfo::getResource(paste("form", formId, "record", recordId, "history", sep = "/"))
+}
+
