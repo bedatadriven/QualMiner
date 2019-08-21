@@ -23,7 +23,7 @@
 
 
 
-<meta name="date" content="2019-08-20" />
+<meta name="date" content="2019-08-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -77,6 +77,7 @@
 <li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-form-topics.html"><a href="the-number-of-narrative-records-in-form-topics.html"><i class="fa fa-check"></i>The number of narrative records in form topics</a></li>
 <li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="cantons-and-provinces-entering-narrative-data.html"><a href="cantons-and-provinces-entering-narrative-data.html"><i class="fa fa-check"></i>Cantons and provinces entering narrative data</a></li>
+<li class="chapter" data-level="" data-path="how-many-individuals-are-entering-data.html"><a href="how-many-individuals-are-entering-data.html"><i class="fa fa-check"></i>How many individuals are entering data?</a></li>
 <li class="part"><span><b>III Response quality</b></span></li>
 <li class="chapter" data-level="" data-path="response-quality.html"><a href="response-quality.html"><i class="fa fa-check"></i>Response quality</a></li>
 <li class="part"><span><b>IV Response quality - Word count</b></span></li>
@@ -132,26 +133,55 @@
             <section class="normal" id="section-">
 <div id="technical-aspects-of-the-data" class="section level1 unnumbered">
 <h1>Technical aspects of the data</h1>
-<p>For this analysis, we use the
-<a href="https://cran.r-project.org/package=inspectdf"><strong>inspectdf</strong></a> package.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<ul>
-<li>Almost all columns are character vector, except the column
-<em>required</em>.</li>
-</ul>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>Above, we look at the categorical features of the data frame. That shows the each
-categorical column, number of unique levels, and the most common levels.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>The prevalance of NAs (missing values) in the colums.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>This part may seem too technical, but can be important for the other data
-analyst that would work on this data.
-As seen in the plot, the “response” column has the most size because it holds
+<p>This part might seem to be too technical for readers who are mainly interested
+in the results. The reason why this page exists is that the information here can
+be essential for the analysts working with the data.</p>
+<p>The <a href="https://cran.r-project.org/package=inspectdf"><em>inspectdf</em></a> package is used
+to generate the visualizations in this page.</p>
+<hr>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-3"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-3-1.png" alt="The column types in the data frame" width="672" />
+<p class="caption">
+Figure 3: The column types in the data frame
+</p>
+</div>
+<p>Almost all columns are character vector, except
+<em>required</em>.</p>
+<hr>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-4"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-4-1.png" alt="Summarising categorical features in the data frame" width="672" />
+<p class="caption">
+Figure 4: Summarising categorical features in the data frame
+</p>
+</div>
+<p>We see that the <em>response</em> field has many unique levels which has a solid color
+in the chart.</p>
+<hr>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-5"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-5-1.png" alt="See the most frequently occurring categorical level in each column." width="672" />
+<p class="caption">
+Figure 5: See the most frequently occurring categorical level in each column.
+</p>
+</div>
+<hr>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-6-1.png" alt="The prevalance of NAs (missing values) in the colums." width="672" />
+<p class="caption">
+Figure 6: The prevalance of NAs (missing values) in the colums.
+</p>
+</div>
+<hr>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-7-1.png" alt="The size of each column in the data frame." width="672" />
+<p class="caption">
+Figure 7: The size of each column in the data frame.
+</p>
+</div>
+<p>As seen in the plot, the <em>response</em> column has the most size because it holds
 long text fields.</p>
 <hr>
 <p>Look at below to have a glimpse of the raw data.</p>
-<pre><code>## # A tibble: 5 x 20
+<pre><code>## # A tibble: 5 x 21
 ##   databaseId databaseName folderId folderName formId formName subFormId
 ##   &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;    
 ## 1 d00000102… ECUADOR_MON… f000002… Objectivo… a1424… Salud    cjs13y74…
@@ -159,10 +189,11 @@ long text fields.</p>
 ## 3 d00000102… ECUADOR_MON… f000002… Objectivo… a1424… Salud    cjs13y74…
 ## 4 d00000102… ECUADOR_MON… f000002… Objectivo… a1424… Salud    cjs13y74…
 ## 5 ...        ...          ...      ...        ...    ...      ...      
-## # … with 13 more variables: subFormName &lt;chr&gt;, recordId &lt;chr&gt;,
+## # … with 14 more variables: subFormName &lt;chr&gt;, recordId &lt;chr&gt;,
 ## #   Month &lt;chr&gt;, code &lt;chr&gt;, question &lt;chr&gt;, required &lt;chr&gt;, type &lt;chr&gt;,
-## #   partnerName &lt;chr&gt;, canton &lt;chr&gt;, province &lt;chr&gt;, response &lt;chr&gt;,
-## #   description &lt;chr&gt;, formNameRecode &lt;chr&gt;</code></pre>
+## #   partnerName &lt;chr&gt;, canton &lt;chr&gt;, province &lt;chr&gt;,
+## #   reportingUsers &lt;list&gt;, response &lt;chr&gt;, description &lt;chr&gt;,
+## #   formNameRecode &lt;chr&gt;</code></pre>
 
 </div>
 
