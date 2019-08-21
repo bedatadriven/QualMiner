@@ -9,6 +9,7 @@ We can search the multi-type terms in the responses.
 
 ```{r}
 response.tokens.bigrams <- narratives %>%
+  select(-reportingUsers) %>% 
   dplyr::filter(!is.na(response)) %>%
   unnest_tokens(word, response, token = "ngrams", n = 2, to_lower = TRUE) %>% 
   tidyr::separate(word, c("word1", "word2"), sep = " ") %>% 

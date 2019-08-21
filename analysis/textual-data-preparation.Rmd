@@ -14,10 +14,12 @@ of analysis.
 
 ```{r}
 response.tokens_orig <- narratives %>%
+  select(-reportingUsers) %>% 
   dplyr::filter(!is.na(response)) %>% ## remove NAs
   unnest_tokens(word, response, token = "words", to_lower = TRUE)
 
 question.tokens_orig <- narratives %>% 
+  select(-reportingUsers) %>% 
   dplyr::filter(!is.na(response)) %>% ## remove NAs
   unnest_tokens(word, question, token = "words", to_lower = TRUE)
 ```

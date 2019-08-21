@@ -1,0 +1,49 @@
+
+# How many individuals are entering data? {-}
+
+*How many individuals are entering narrative data from each of the partners?*
+
+#### Reporting partners
+
+```{r}
+narratives %>% 
+  select(partnerName, reportingUsers) %>% 
+  tidyr::unnest(reportingUsers) %>%
+  group_by(partnerName) %>% 
+  summarize(numberUniqueUsers = length(unique(reportingUsers))) %>% 
+  arrange(desc(numberUniqueUsers)) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  cols_label(
+    partnerName = "Reporting partner",
+    numberUniqueUsers = "Users"
+  ) %>% 
+  tab_header(
+    title = "Users per reporting partner",
+    subtitle = md("The number of *unique users* entering data in ActivityInfo")
+  )
+```
+
+#### Implementing partners
+
+```{r}
+narratives %>% 
+  select(subPartnerName, reportingUsers) %>% 
+  tidyr::unnest(reportingUsers) %>%
+  group_by(subPartnerName) %>% 
+  summarize(numberUniqueUsers = length(unique(reportingUsers))) %>% 
+  arrange(desc(numberUniqueUsers)) %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  cols_label(
+    subPartnerName = "Implementing partner",
+    numberUniqueUsers = "Users"
+  ) %>% 
+  tab_header(
+    title = "Users per implementing partner",
+    subtitle = md("The number of *unique users* entering data in ActivityInfo")
+  )
+```
+
+`TODO` Are there any relationship between word counts per partner and number of people reporting to AI?
+
