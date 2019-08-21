@@ -138,8 +138,13 @@ narratives <- form.table %>%
     "partnerName",
     "subPartnerName",
     "province",
-    "canton"
+    "canton",
+    "reportingUsers"
   )
+```
+
+```{r}
+knitr::include_graphics(file.path("..", "media", "qualminer-logo.png"))
 ```
 
 # Introduction {-#introduction}

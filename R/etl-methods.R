@@ -219,3 +219,37 @@ wide_format_db_resources <- function(x) {
   long <- long[c("idFolder", "labelFolder", "idForms", "labelForms", "idSubForms", "labelSubForms")]
   long
 }
+
+get_unique_users_from_records <- function(subFormIds, table.all) {
+  cat("Pulling record history... (This may take a while)\n")
+  tbl <- do.call(rbind, lapply(seq_along(subFormIds), function(s) {
+    sfId <- subFormIds[s]
+    recordIds <- unique(table.all[table.all$id == sfId, "recordId"])
+    recordIds.len <- length(recordIds)
+    noEmailsInRecords <- do.call(rbind, lapply(seq_along(recordIds), function(i) {
+      recId <- recordIds[i]
+      ## informative progress text sent to console:
+      cat(sprintf("\r%s",
+                  paste(
+                    paste0("[\033[1m", sfId, "\033[0m]"),
+                    "getting record history",
+                    paste0("(", i, "/", recordIds.len, ")")
+                  )))
+      history <- get_record_history(sfId, recId)
+      entries <- history[["entries"]]
+      ## count `userEmail` as 'unique users':
+      emails <- unique(sapply(seq_along(entries), function(e) entries[[e]][["userId"]]))
+      data.frame(
+        id = sfId,
+        recordId = recId,
+        reportingUsers = I(list(emails)),
+        stringsAsFactors = FALSE
+      )
+    }))
+    cat("\n")
+    noEmailsInRecords
+  }))
+  cat("Pulling completed!\n")
+  tbl
+}
+
