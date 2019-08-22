@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Response quality | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Response quality | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="rstudio/bookdown-demo" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Response quality | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="how-many-individuals-are-entering-data.html">
-<link rel="next" href="word-count.html">
+<link rel="prev" href="which-sectors-do-receive-high-word-counts-in-responses.html">
+<link rel="next" href="textual-data-preparation.html">
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -132,35 +132,29 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="response-quality" class="section level1 unnumbered">
-<h1>Response quality</h1>
-<p><em>Response quality</em> is a term that means how much response the questions receive. The idea is to
-find cases that affect the response quality to understand if they work or
-not under some conditions. In the end, the results may reveal some handful
-insights about the quality of textual responses in the narrative fields.</p>
-<p>Some questions to research <em>response quality</em> by measuring <em>word count</em> and
-<em>sentence length</em>:</p>
+<div id="how-much-does-the-average-word-count-differ-between-sectors" class="section level1 unnumbered">
+<h1>How much does the average word count differ between sectors?</h1>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-36"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-36-1.png" alt="Average word count and sample size" width="960" />
+<p class="caption">
+Figure 8: Average word count and sample size
+</p>
+</div>
+<p>Looking at the sample size of each sector is important to see the variation
+between them because some of them just look like that they are based on very
+small observations.</p>
+<p>It’s important of being careful before making to any conclusions on a single
+graph that shows a single statistics of word count on all sectors. Here is a
+plot showing the average of word counts in sectors with their sample size, which
+is the number of narrative records in the group.</p>
+<p>In that consideration, for text mining, it would be better to consider the
+sectors with which the average word count value is greater than and equal to
+<em>100</em>. Therefore, those sectors are:</p>
 <ul>
-<li><p>Is there any relationship between the word counts of response, question and
-description fields?</p></li>
-<li><p>What is the distribution between response word count and explanatory variables
-such as the question, form topic, canton name, partner name, etc.</p></li>
+<li><p><strong>Poblacion</strong> (M = <em>35.11</em>, SD = <em>60.07</em>) with <em>170</em> sample size</p></li>
+<li><p><strong>Tecnico</strong> (M = <em>54.45</em>, SD = <em>48.78</em>) with <em>274</em> sample size</p></li>
+<li><p><strong>VBG</strong> (M = <em>54.07</em>, SD = <em>49.60</em>) with <em>114</em> sample size</p></li>
 </ul>
-<p><em>Assumptions:</em></p>
-<ul>
-<li>Responses with a <em>larger word count</em> have more quality than the responses
-with <em>smaller word count</em>.</li>
-</ul>
-<p>In other words, we assume that <em>the more word the better is</em>. The limitations
-are based on the unequal distribution of the data. The word count of responses
-and questions can be related to other things, such as the questions require
-short answers so then the responses tend to be shorter.</p>
-<p>Additionally, we can have a cross-analysis to test these outcomes. It might be a
-good idea to have a small subset of data and ask an expert to test the
-assumptions qualitatively. For instance, we can take the first twenty responses
-with the highest word count and the last twenty responses with the lowest word
-count. We chose the extreme directions because they point out the greatest
-differences which are easier to test assumptions.</p>
 
 </div>
 
@@ -172,8 +166,8 @@ differences which are easier to test assumptions.</p>
           </div>
         </div>
       </div>
-<a href="how-many-individuals-are-entering-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="word-count.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="which-sectors-do-receive-high-word-counts-in-responses.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="textual-data-preparation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
