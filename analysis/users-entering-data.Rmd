@@ -3,7 +3,7 @@
 
 *How many individuals are entering narrative data from each of the partners?*
 
-#### Reporting partners
+#### Reporting partners {-}
 
 ```{r}
 narratives %>% 
@@ -24,7 +24,7 @@ narratives %>%
   )
 ```
 
-#### Implementing partners
+#### Implementing partners {-}
 
 ```{r}
 narratives %>% 

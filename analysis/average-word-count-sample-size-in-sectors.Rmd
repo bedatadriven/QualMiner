@@ -1,0 +1,66 @@
+
+# How much does the average word count differ between sectors? {-}
+
+```{r}
+narrative_mean_diff <- local({
+  nrform <- narratives.wc %>% 
+    group_by(formNameRecode)
+  median <- nrform %>% 
+    summarise(mean = mean(.responseWordCount))
+  sampleSize <- nrform %>% 
+    tally(name = "sampleSize")
+  sd <- nrform %>% 
+    summarise(SD = sd(.responseWordCount, na.rm=TRUE))
+    
+  median %>% 
+    left_join(sampleSize, by = "formNameRecode") %>% 
+    left_join(sd, by = "formNameRecode")
+})
+```
+
+```{r, fig.width=10,fig.height=8,fig.align='center', fig.cap='Average word count and sample size'}
+narrative_mean_diff %>% 
+  ggplot(aes(sampleSize, mean)) + 
+  geom_point() +
+  ggrepel::geom_text_repel(aes(label = formNameRecode), segment.colour = NA, force = .2) +
+  labs(
+    title = "Compare average word count and sample size between sectors",
+    subtitle= "Scatter plot to compare averages in word counts with sample sizes"
+  ) +
+  xlab("Sample size") +
+  ylab("Average word count") +
+  theme_ecuador1()
+```
+  
+Looking at the sample size of each sector is important to see the variation
+between them because some of them just look like that they are based on very
+small observations.
+ 
+It's important of being careful before making to any conclusions on a single
+graph that shows a single statistics of word count on all sectors. Here is a
+plot showing the average of word counts in sectors with their sample size, which
+is the number of narrative records in the group.
+
+In that consideration, for text mining, it would be better to consider the
+sectors with which the average word count value is greater than and equal to
+*100*. Therefore, those sectors are:
+```{r}
+narrative_mean_diff_text_writer <- function(tbl, limit) {
+  sub <- tbl[tbl$sampleSize >= limit,]
+  txts <- sapply(seq(nrow(sub)), function(i) {
+    row <- sub[i, ]
+    sprintf(
+      "+ **%s** (M = *%.2f*, SD = *%.2f*) with *%i* sample size",
+      row[["formNameRecode"]],
+      row[["mean"]],
+      row[["SD"]],
+      row[["sampleSize"]]
+    )
+  })
+  paste(txts, collapse = "\n\n\n")
+}
+```
+```{r, results='asis'}
+cat(narrative_mean_diff_text_writer(narrative_mean_diff, limit = 100))
+```
+

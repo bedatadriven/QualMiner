@@ -71,6 +71,7 @@ recode_tbl <- form.table %>%
       "Asistencia técnica para protección" = "Proteccion",
       "Asistencia técnica para protección de la infancia" = "ProteccionInfancia",
       "Asistencia técnica para Salud" = "AsistenciaSalud",
+      "Asistencia técnica para educación" = "AsistenciaEducacion",
       "Protección_LGBTI" = "LGBTI"
     )
   ) %>% 
@@ -144,7 +145,7 @@ narratives <- form.table %>%
 ```
 
 ```{r}
-knitr::include_graphics(file.path("..", "media", "qualminer-logo.png"))
+knitr::include_graphics("https://raw.githubusercontent.com/bedatadriven/QualMiner/master/media/qualminer-logo.png")
 ```
 
 # Introduction {-#introduction}

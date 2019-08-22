@@ -27,6 +27,7 @@ rmd_files: [
   "PART-response-quality-word-count.Rmd",
   "word-count.Rmd",
   "response-word-counts-by-form.Rmd",
+  "average-word-count-sample-size-in-sectors.Rmd",
 
   "PART-text-mining.Rmd",
   "textual-data-preparation.Rmd",
