@@ -16,9 +16,9 @@ rmd_files: [
   "PART-descriptive-statistics.Rmd",
   "recode-table.Rmd",
   "partners.Rmd",
+  "partners-enter-narrative-data.Rmd",
   "direct-indirect-fields.Rmd",
   "narrative-records-form-topics.Rmd",
-  "partners-enter-narrative-data.Rmd",
   "narrative-cantons-provinces.Rmd",
   "users-entering-data.Rmd",
 

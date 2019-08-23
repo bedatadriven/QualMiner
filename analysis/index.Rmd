@@ -115,8 +115,8 @@ all(direct_indirect.fields)
 ```{r, PARTNERS}
 partners_raw <- form.table %>% 
   dplyr::filter(code == "Socio") %>% 
-  mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE
-  select(recordId, partnerName, response, canton, province) %>% 
+  mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE as NA
+  select(recordId, partnerName, response) %>% 
   rename(subPartnerName = response) %>% 
   mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
 ```
@@ -134,18 +134,20 @@ stopifnot(identical(length(setdiff(uniq.subpartners, uniq.collided.subpartners))
 partners_raw[partners$subPartnerName != partners_raw$subPartnerName, ]
 ```
 
+```{r, MERGE-PARTNERS-FORM-TABLE}
+form.table <- form.table %>% 
+  left_join(partners, by = c("recordId", "partnerName"))
+```
+
 ```{r NARRATIVES}
 narratives <- form.table %>%
   dplyr::filter(type == "NARRATIVE") %>%
-  inner_join(
-    select(partners, recordId, partnerName, subPartnerName),
-    by = c("partnerName", "recordId")
-  ) %>%
   select(
     "folderName",
     "formName",
     "formNameRecode",
     "Month",
+    "recordId",
     "question",
     "response",
     "description",
@@ -157,12 +159,11 @@ narratives <- form.table %>%
   )
 ```
 
-```{r}
+# Introduction {-#introduction}
+
+```{r, out.width = "50px", fig.align='center'}
 knitr::include_graphics("https://raw.githubusercontent.com/bedatadriven/QualMiner/master/media/qualminer-logo.png")
 ```
 
-# Introduction {-#introduction}
-
 This document explores qualitative indicators from an *ActivityInfo* database
 that is monitoring Ecuador.
-
