@@ -5,33 +5,33 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Direct and indirect fields | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="description" content="Exploring qualitative indicators via text mining methods" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Direct and indirect fields | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta property="og:description" content="Exploring qualitative indicators via text mining methods" />
+  <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Direct and indirect fields | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
 
 
 
-<meta name="date" content="2019-08-22" />
+<meta name="date" content="2019-08-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="partners.html">
-<link rel="next" href="the-number-of-narrative-records-in-form-topics.html">
+<link rel="prev" href="partners-entering-narrative-data.html"/>
+<link rel="next" href="the-number-of-narrative-records-in-form-topics.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -48,6 +48,68 @@
 
 
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -71,11 +133,11 @@
 <li class="chapter" data-level="" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i>Data preparation</a></li>
 <li class="chapter" data-level="" data-path="technical-aspects-of-the-data.html"><a href="technical-aspects-of-the-data.html"><i class="fa fa-check"></i>Technical aspects of the data</a></li>
 <li class="part"><span><b>II Descriptive statistics</b></span></li>
-<li class="chapter" data-level="" data-path="recode-table.html"><a href="recode-table.html"><i class="fa fa-check"></i>Recode table</a></li>
+<li class="chapter" data-level="" data-path="recode-table.html"><a href="recode-table.html"><i class="fa fa-check"></i>Recode table: shorten sector names</a></li>
 <li class="chapter" data-level="" data-path="partners.html"><a href="partners.html"><i class="fa fa-check"></i>Partners</a></li>
+<li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="direct-and-indirect-fields.html"><a href="direct-and-indirect-fields.html"><i class="fa fa-check"></i>Direct and indirect fields</a></li>
 <li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-form-topics.html"><a href="the-number-of-narrative-records-in-form-topics.html"><i class="fa fa-check"></i>The number of narrative records in form topics</a></li>
-<li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="cantons-and-provinces-entering-narrative-data.html"><a href="cantons-and-provinces-entering-narrative-data.html"><i class="fa fa-check"></i>Cantons and provinces entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="how-many-individuals-are-entering-data.html"><a href="how-many-individuals-are-entering-data.html"><i class="fa fa-check"></i>How many individuals are entering data?</a></li>
 <li class="part"><span><b>III Response quality</b></span></li>
@@ -113,7 +175,6 @@
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
-  edit : null
 
 </ul>
 
@@ -143,7 +204,7 @@ the funds of another partner.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hlfnprjscu .gt_table {
+#kqdpaphcxj .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -168,13 +229,13 @@ the funds of another partner.</p>
   /* table.border.bottom.color */
 }
 
-#hlfnprjscu .gt_heading {
+#kqdpaphcxj .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#hlfnprjscu .gt_title {
+#kqdpaphcxj .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -185,7 +246,7 @@ the funds of another partner.</p>
   border-bottom-width: 0;
 }
 
-#hlfnprjscu .gt_subtitle {
+#kqdpaphcxj .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -196,7 +257,7 @@ the funds of another partner.</p>
   border-top-width: 0;
 }
 
-#hlfnprjscu .gt_bottom_border {
+#kqdpaphcxj .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -205,7 +266,7 @@ the funds of another partner.</p>
   /* heading.border.bottom.color */
 }
 
-#hlfnprjscu .gt_column_spanner {
+#kqdpaphcxj .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -213,7 +274,7 @@ the funds of another partner.</p>
   padding-bottom: 4px;
 }
 
-#hlfnprjscu .gt_col_heading {
+#kqdpaphcxj .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -226,23 +287,23 @@ the funds of another partner.</p>
   margin: 10px;
 }
 
-#hlfnprjscu .gt_columns_top_border {
+#kqdpaphcxj .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#hlfnprjscu .gt_columns_bottom_border {
+#kqdpaphcxj .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#hlfnprjscu .gt_sep_right {
+#kqdpaphcxj .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#hlfnprjscu .gt_group_heading {
+#kqdpaphcxj .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -266,7 +327,7 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#hlfnprjscu .gt_empty_group_heading {
+#kqdpaphcxj .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -290,33 +351,33 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#hlfnprjscu .gt_striped {
+#kqdpaphcxj .gt_striped {
   background-color: #f2f2f2;
 }
 
-#hlfnprjscu .gt_from_md > :first-child {
+#kqdpaphcxj .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hlfnprjscu .gt_from_md > :last-child {
+#kqdpaphcxj .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hlfnprjscu .gt_row {
+#kqdpaphcxj .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#hlfnprjscu .gt_stub {
+#kqdpaphcxj .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#hlfnprjscu .gt_summary_row {
+#kqdpaphcxj .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -326,7 +387,7 @@ the funds of another partner.</p>
   /* summary_row.text_transform */
 }
 
-#hlfnprjscu .gt_grand_summary_row {
+#kqdpaphcxj .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -336,19 +397,19 @@ the funds of another partner.</p>
   /* grand_summary_row.text_transform */
 }
 
-#hlfnprjscu .gt_first_summary_row {
+#kqdpaphcxj .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#hlfnprjscu .gt_first_grand_summary_row {
+#kqdpaphcxj .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#hlfnprjscu .gt_table_body {
+#kqdpaphcxj .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -363,7 +424,7 @@ the funds of another partner.</p>
   /* table_body.border.bottom.color */
 }
 
-#hlfnprjscu .gt_footnotes {
+#kqdpaphcxj .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -372,7 +433,7 @@ the funds of another partner.</p>
   /* footnotes.border.top.color */
 }
 
-#hlfnprjscu .gt_footnote {
+#kqdpaphcxj .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -380,7 +441,7 @@ the funds of another partner.</p>
   /* footnote.padding */
 }
 
-#hlfnprjscu .gt_sourcenotes {
+#kqdpaphcxj .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -389,48 +450,48 @@ the funds of another partner.</p>
   /* sourcenotes.border.top.color */
 }
 
-#hlfnprjscu .gt_sourcenote {
+#kqdpaphcxj .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#hlfnprjscu .gt_center {
+#kqdpaphcxj .gt_center {
   text-align: center;
 }
 
-#hlfnprjscu .gt_left {
+#kqdpaphcxj .gt_left {
   text-align: left;
 }
 
-#hlfnprjscu .gt_right {
+#kqdpaphcxj .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hlfnprjscu .gt_font_normal {
+#kqdpaphcxj .gt_font_normal {
   font-weight: normal;
 }
 
-#hlfnprjscu .gt_font_bold {
+#kqdpaphcxj .gt_font_bold {
   font-weight: bold;
 }
 
-#hlfnprjscu .gt_font_italic {
+#kqdpaphcxj .gt_font_italic {
   font-style: italic;
 }
 
-#hlfnprjscu .gt_super {
+#kqdpaphcxj .gt_super {
   font-size: 65%;
 }
 
-#hlfnprjscu .gt_footnote_glyph {
+#kqdpaphcxj .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hlfnprjscu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="kqdpaphcxj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal gt_center" style>The number of direct and indirect fields per <strong>form topic</strong></th>
@@ -617,7 +678,7 @@ the funds of another partner.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hiiywkvhcb .gt_table {
+#tptlagfyvo .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -642,13 +703,13 @@ the funds of another partner.</p>
   /* table.border.bottom.color */
 }
 
-#hiiywkvhcb .gt_heading {
+#tptlagfyvo .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#hiiywkvhcb .gt_title {
+#tptlagfyvo .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -659,7 +720,7 @@ the funds of another partner.</p>
   border-bottom-width: 0;
 }
 
-#hiiywkvhcb .gt_subtitle {
+#tptlagfyvo .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -670,7 +731,7 @@ the funds of another partner.</p>
   border-top-width: 0;
 }
 
-#hiiywkvhcb .gt_bottom_border {
+#tptlagfyvo .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -679,7 +740,7 @@ the funds of another partner.</p>
   /* heading.border.bottom.color */
 }
 
-#hiiywkvhcb .gt_column_spanner {
+#tptlagfyvo .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -687,7 +748,7 @@ the funds of another partner.</p>
   padding-bottom: 4px;
 }
 
-#hiiywkvhcb .gt_col_heading {
+#tptlagfyvo .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -700,23 +761,23 @@ the funds of another partner.</p>
   margin: 10px;
 }
 
-#hiiywkvhcb .gt_columns_top_border {
+#tptlagfyvo .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#hiiywkvhcb .gt_columns_bottom_border {
+#tptlagfyvo .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#hiiywkvhcb .gt_sep_right {
+#tptlagfyvo .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#hiiywkvhcb .gt_group_heading {
+#tptlagfyvo .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -740,7 +801,7 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#hiiywkvhcb .gt_empty_group_heading {
+#tptlagfyvo .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -764,33 +825,33 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#hiiywkvhcb .gt_striped {
+#tptlagfyvo .gt_striped {
   background-color: #f2f2f2;
 }
 
-#hiiywkvhcb .gt_from_md > :first-child {
+#tptlagfyvo .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hiiywkvhcb .gt_from_md > :last-child {
+#tptlagfyvo .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hiiywkvhcb .gt_row {
+#tptlagfyvo .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#hiiywkvhcb .gt_stub {
+#tptlagfyvo .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#hiiywkvhcb .gt_summary_row {
+#tptlagfyvo .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -800,7 +861,7 @@ the funds of another partner.</p>
   /* summary_row.text_transform */
 }
 
-#hiiywkvhcb .gt_grand_summary_row {
+#tptlagfyvo .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -810,19 +871,19 @@ the funds of another partner.</p>
   /* grand_summary_row.text_transform */
 }
 
-#hiiywkvhcb .gt_first_summary_row {
+#tptlagfyvo .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#hiiywkvhcb .gt_first_grand_summary_row {
+#tptlagfyvo .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#hiiywkvhcb .gt_table_body {
+#tptlagfyvo .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -837,7 +898,7 @@ the funds of another partner.</p>
   /* table_body.border.bottom.color */
 }
 
-#hiiywkvhcb .gt_footnotes {
+#tptlagfyvo .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -846,7 +907,7 @@ the funds of another partner.</p>
   /* footnotes.border.top.color */
 }
 
-#hiiywkvhcb .gt_footnote {
+#tptlagfyvo .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -854,7 +915,7 @@ the funds of another partner.</p>
   /* footnote.padding */
 }
 
-#hiiywkvhcb .gt_sourcenotes {
+#tptlagfyvo .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -863,48 +924,48 @@ the funds of another partner.</p>
   /* sourcenotes.border.top.color */
 }
 
-#hiiywkvhcb .gt_sourcenote {
+#tptlagfyvo .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#hiiywkvhcb .gt_center {
+#tptlagfyvo .gt_center {
   text-align: center;
 }
 
-#hiiywkvhcb .gt_left {
+#tptlagfyvo .gt_left {
   text-align: left;
 }
 
-#hiiywkvhcb .gt_right {
+#tptlagfyvo .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hiiywkvhcb .gt_font_normal {
+#tptlagfyvo .gt_font_normal {
   font-weight: normal;
 }
 
-#hiiywkvhcb .gt_font_bold {
+#tptlagfyvo .gt_font_bold {
   font-weight: bold;
 }
 
-#hiiywkvhcb .gt_font_italic {
+#tptlagfyvo .gt_font_italic {
   font-style: italic;
 }
 
-#hiiywkvhcb .gt_super {
+#tptlagfyvo .gt_super {
   font-size: 65%;
 }
 
-#hiiywkvhcb .gt_footnote_glyph {
+#tptlagfyvo .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hiiywkvhcb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="tptlagfyvo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal gt_center" style>The number of direct and indirect fields per <strong>canton</strong></th>
@@ -1119,7 +1180,7 @@ the funds of another partner.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#juijxahfnx .gt_table {
+#mzpgyvjuyu .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1144,13 +1205,13 @@ the funds of another partner.</p>
   /* table.border.bottom.color */
 }
 
-#juijxahfnx .gt_heading {
+#mzpgyvjuyu .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#juijxahfnx .gt_title {
+#mzpgyvjuyu .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -1161,7 +1222,7 @@ the funds of another partner.</p>
   border-bottom-width: 0;
 }
 
-#juijxahfnx .gt_subtitle {
+#mzpgyvjuyu .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1172,7 +1233,7 @@ the funds of another partner.</p>
   border-top-width: 0;
 }
 
-#juijxahfnx .gt_bottom_border {
+#mzpgyvjuyu .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1181,7 +1242,7 @@ the funds of another partner.</p>
   /* heading.border.bottom.color */
 }
 
-#juijxahfnx .gt_column_spanner {
+#mzpgyvjuyu .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1189,7 +1250,7 @@ the funds of another partner.</p>
   padding-bottom: 4px;
 }
 
-#juijxahfnx .gt_col_heading {
+#mzpgyvjuyu .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1202,23 +1263,23 @@ the funds of another partner.</p>
   margin: 10px;
 }
 
-#juijxahfnx .gt_columns_top_border {
+#mzpgyvjuyu .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#juijxahfnx .gt_columns_bottom_border {
+#mzpgyvjuyu .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#juijxahfnx .gt_sep_right {
+#mzpgyvjuyu .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#juijxahfnx .gt_group_heading {
+#mzpgyvjuyu .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1242,7 +1303,7 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#juijxahfnx .gt_empty_group_heading {
+#mzpgyvjuyu .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1266,33 +1327,33 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#juijxahfnx .gt_striped {
+#mzpgyvjuyu .gt_striped {
   background-color: #f2f2f2;
 }
 
-#juijxahfnx .gt_from_md > :first-child {
+#mzpgyvjuyu .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#juijxahfnx .gt_from_md > :last-child {
+#mzpgyvjuyu .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#juijxahfnx .gt_row {
+#mzpgyvjuyu .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#juijxahfnx .gt_stub {
+#mzpgyvjuyu .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#juijxahfnx .gt_summary_row {
+#mzpgyvjuyu .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -1302,7 +1363,7 @@ the funds of another partner.</p>
   /* summary_row.text_transform */
 }
 
-#juijxahfnx .gt_grand_summary_row {
+#mzpgyvjuyu .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -1312,19 +1373,19 @@ the funds of another partner.</p>
   /* grand_summary_row.text_transform */
 }
 
-#juijxahfnx .gt_first_summary_row {
+#mzpgyvjuyu .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#juijxahfnx .gt_first_grand_summary_row {
+#mzpgyvjuyu .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#juijxahfnx .gt_table_body {
+#mzpgyvjuyu .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -1339,7 +1400,7 @@ the funds of another partner.</p>
   /* table_body.border.bottom.color */
 }
 
-#juijxahfnx .gt_footnotes {
+#mzpgyvjuyu .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -1348,7 +1409,7 @@ the funds of another partner.</p>
   /* footnotes.border.top.color */
 }
 
-#juijxahfnx .gt_footnote {
+#mzpgyvjuyu .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -1356,7 +1417,7 @@ the funds of another partner.</p>
   /* footnote.padding */
 }
 
-#juijxahfnx .gt_sourcenotes {
+#mzpgyvjuyu .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -1365,48 +1426,48 @@ the funds of another partner.</p>
   /* sourcenotes.border.top.color */
 }
 
-#juijxahfnx .gt_sourcenote {
+#mzpgyvjuyu .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#juijxahfnx .gt_center {
+#mzpgyvjuyu .gt_center {
   text-align: center;
 }
 
-#juijxahfnx .gt_left {
+#mzpgyvjuyu .gt_left {
   text-align: left;
 }
 
-#juijxahfnx .gt_right {
+#mzpgyvjuyu .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#juijxahfnx .gt_font_normal {
+#mzpgyvjuyu .gt_font_normal {
   font-weight: normal;
 }
 
-#juijxahfnx .gt_font_bold {
+#mzpgyvjuyu .gt_font_bold {
   font-weight: bold;
 }
 
-#juijxahfnx .gt_font_italic {
+#mzpgyvjuyu .gt_font_italic {
   font-style: italic;
 }
 
-#juijxahfnx .gt_super {
+#mzpgyvjuyu .gt_super {
   font-size: 65%;
 }
 
-#juijxahfnx .gt_footnote_glyph {
+#mzpgyvjuyu .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="juijxahfnx" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="mzpgyvjuyu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal gt_center" style>The number of direct and indirect fields per <strong>partners</strong></th>
@@ -1448,276 +1509,21 @@ the funds of another partner.</p>
       <td class="gt_row gt_center" style="font-size: 14px;">2</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Federación de Mujeres de Sucumbios</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Federación de mujeres de Sucumbíos</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Federación de mujeres de Sucumbíos</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">4</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">4</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">FUDELA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">19</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">19</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Fundación Equidad</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">HIAS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">991</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">991</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">JRS Ecuador</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Mision Scalabriniana</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">NRC</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">15</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">15</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">17</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">14</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">31</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">ADRA</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">ADRA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">13</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">15</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">CARE</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">CARE</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">33</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">33</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">29</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">29</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">Cruz Roja</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">22</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">22</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">Dialogo Diverso</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Dialogo Diverso</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">16</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">16</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">OIM</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">JRS Ecuador</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">JRS Ecuador</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">35</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">35</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">Mision Scalabriniana</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Mision Scalabriniana</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">18</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">18</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">NRC</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">ACNUR</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">10</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">10</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NRC</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">168</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">168</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">OIM</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">HIAS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">OIM</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">100</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">100</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">11</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">11</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">OPS/OMS</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">OPS/OMS</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">5</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">Plan Internacional</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Plan Internacional</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">6</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">6</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">PNUD</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">PNUD</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
     </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">RET</td>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">FUDELA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">19</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">19</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">RET</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">21</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">21</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">UNESCO</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNESCO</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">UNFPA</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">RET</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNFPA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">69</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">73</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="5" class="gt_group_heading">UNICEF</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">ADRA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">32</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">32</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Centro de Desarrollo y Autogestión</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Fundación Equidad</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
@@ -1726,47 +1532,295 @@ the funds of another partner.</p>
     <tr>
       <td class="gt_row gt_left" style="font-size: 14px;">HIAS</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">58</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">991</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">58</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">991</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">JRS Ecuador</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Mision Scalabriniana</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
     </tr>
     <tr>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NRC</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">11</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">15</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">11</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">15</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">UNICEF</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">9</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">8</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">18</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">17</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">14</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">31</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">ADRA</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ADRA</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">13</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">15</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">CARE</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">CARE</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">33</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">33</td>
     </tr>
     <tr>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">22</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">29</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">23</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">29</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Cruz Roja</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">22</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">22</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Dialogo Diverso</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Dialogo Diverso</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">16</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">16</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">OIM</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">JRS Ecuador</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">JRS Ecuador</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">35</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">35</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Mision Scalabriniana</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Mision Scalabriniana</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">18</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">18</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">NRC</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ACNUR</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">10</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">10</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">NRC</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">168</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">168</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">OIM</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">HIAS</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">OIM</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">100</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">100</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">11</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">11</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">OPS/OMS</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">OPS/OMS</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">5</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">Plan Internacional</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Plan Internacional</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">6</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">6</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">PNUD</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">PNUD</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">7</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">7</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">RET</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">RET</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">21</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">21</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">UNESCO</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">UNESCO</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">UNFPA</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">RET</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">UNFPA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">69</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">73</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="5" class="gt_group_heading">UNICEF</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ADRA</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">32</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">32</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Centro de Desarrollo y Autogestión</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">HIAS</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">58</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">58</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">NRC</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">11</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">11</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNICEF</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">9</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">8</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">18</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">22</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">23</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="5" class="gt_group_heading">World Vision</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">World Vision</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">World Vision</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">6</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">6</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">6</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">6</td>
     </tr>
   </body>
   
@@ -1780,7 +1834,7 @@ the funds of another partner.</p>
           </div>
         </div>
       </div>
-<a href="partners.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="partners-entering-narrative-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="the-number-of-narrative-records-in-form-topics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
@@ -1795,11 +1849,11 @@ the funds of another partner.</p>
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": false,
-"twitter": true,
-"google": true,
-"linkedin": true,
+"twitter": false,
+"google": false,
+"linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
@@ -1818,9 +1872,10 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["qualminer.pdf", "qualminer.epub"],
+"download": null,
 "toc": {
-"collapse": "subsection"
+"collapse": "section",
+"edit": null
 },
 "search": true
 });

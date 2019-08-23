@@ -5,33 +5,33 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Word count | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
-  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  <meta name="generator" content="bookdown 0.12 and GitBook 2.6.7" />
+  <meta name="description" content="Exploring qualitative indicators via text mining methods" />
+  <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Word count | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
-  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
-  <meta name="github-repo" content="rstudio/bookdown-demo" />
+  <meta property="og:description" content="Exploring qualitative indicators via text mining methods" />
+  <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Word count | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
-  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
 
 
 
-<meta name="date" content="2019-08-22" />
+<meta name="date" content="2019-08-23" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="response-quality.html">
-<link rel="next" href="which-sectors-do-receive-high-word-counts-in-responses.html">
+<link rel="prev" href="response-quality.html"/>
+<link rel="next" href="which-sectors-do-receive-high-word-counts-in-responses.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -48,6 +48,68 @@
 
 
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 <link rel="stylesheet" href="style.css" type="text/css" />
 </head>
@@ -71,11 +133,11 @@
 <li class="chapter" data-level="" data-path="data-preparation.html"><a href="data-preparation.html"><i class="fa fa-check"></i>Data preparation</a></li>
 <li class="chapter" data-level="" data-path="technical-aspects-of-the-data.html"><a href="technical-aspects-of-the-data.html"><i class="fa fa-check"></i>Technical aspects of the data</a></li>
 <li class="part"><span><b>II Descriptive statistics</b></span></li>
-<li class="chapter" data-level="" data-path="recode-table.html"><a href="recode-table.html"><i class="fa fa-check"></i>Recode table</a></li>
+<li class="chapter" data-level="" data-path="recode-table.html"><a href="recode-table.html"><i class="fa fa-check"></i>Recode table: shorten sector names</a></li>
 <li class="chapter" data-level="" data-path="partners.html"><a href="partners.html"><i class="fa fa-check"></i>Partners</a></li>
+<li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="direct-and-indirect-fields.html"><a href="direct-and-indirect-fields.html"><i class="fa fa-check"></i>Direct and indirect fields</a></li>
 <li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-form-topics.html"><a href="the-number-of-narrative-records-in-form-topics.html"><i class="fa fa-check"></i>The number of narrative records in form topics</a></li>
-<li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="cantons-and-provinces-entering-narrative-data.html"><a href="cantons-and-provinces-entering-narrative-data.html"><i class="fa fa-check"></i>Cantons and provinces entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="how-many-individuals-are-entering-data.html"><a href="how-many-individuals-are-entering-data.html"><i class="fa fa-check"></i>How many individuals are entering data?</a></li>
 <li class="part"><span><b>III Response quality</b></span></li>
@@ -113,7 +175,6 @@
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
-  edit : null
 
 </ul>
 
@@ -152,7 +213,7 @@ removed):
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xrsgqsromd .gt_table {
+#fevxyvipfv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -177,13 +238,13 @@ removed):
   /* table.border.bottom.color */
 }
 
-#xrsgqsromd .gt_heading {
+#fevxyvipfv .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#xrsgqsromd .gt_title {
+#fevxyvipfv .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -194,7 +255,7 @@ removed):
   border-bottom-width: 0;
 }
 
-#xrsgqsromd .gt_subtitle {
+#fevxyvipfv .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -205,7 +266,7 @@ removed):
   border-top-width: 0;
 }
 
-#xrsgqsromd .gt_bottom_border {
+#fevxyvipfv .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -214,7 +275,7 @@ removed):
   /* heading.border.bottom.color */
 }
 
-#xrsgqsromd .gt_column_spanner {
+#fevxyvipfv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -222,7 +283,7 @@ removed):
   padding-bottom: 4px;
 }
 
-#xrsgqsromd .gt_col_heading {
+#fevxyvipfv .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -235,23 +296,23 @@ removed):
   margin: 10px;
 }
 
-#xrsgqsromd .gt_columns_top_border {
+#fevxyvipfv .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xrsgqsromd .gt_columns_bottom_border {
+#fevxyvipfv .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#xrsgqsromd .gt_sep_right {
+#fevxyvipfv .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#xrsgqsromd .gt_group_heading {
+#fevxyvipfv .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -275,7 +336,7 @@ removed):
   vertical-align: middle;
 }
 
-#xrsgqsromd .gt_empty_group_heading {
+#fevxyvipfv .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -299,33 +360,33 @@ removed):
   vertical-align: middle;
 }
 
-#xrsgqsromd .gt_striped {
+#fevxyvipfv .gt_striped {
   background-color: #f2f2f2;
 }
 
-#xrsgqsromd .gt_from_md > :first-child {
+#fevxyvipfv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xrsgqsromd .gt_from_md > :last-child {
+#fevxyvipfv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xrsgqsromd .gt_row {
+#fevxyvipfv .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#xrsgqsromd .gt_stub {
+#fevxyvipfv .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#xrsgqsromd .gt_summary_row {
+#fevxyvipfv .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -335,7 +396,7 @@ removed):
   /* summary_row.text_transform */
 }
 
-#xrsgqsromd .gt_grand_summary_row {
+#fevxyvipfv .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -345,19 +406,19 @@ removed):
   /* grand_summary_row.text_transform */
 }
 
-#xrsgqsromd .gt_first_summary_row {
+#fevxyvipfv .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xrsgqsromd .gt_first_grand_summary_row {
+#fevxyvipfv .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#xrsgqsromd .gt_table_body {
+#fevxyvipfv .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -372,7 +433,7 @@ removed):
   /* table_body.border.bottom.color */
 }
 
-#xrsgqsromd .gt_footnotes {
+#fevxyvipfv .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -381,7 +442,7 @@ removed):
   /* footnotes.border.top.color */
 }
 
-#xrsgqsromd .gt_footnote {
+#fevxyvipfv .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -389,7 +450,7 @@ removed):
   /* footnote.padding */
 }
 
-#xrsgqsromd .gt_sourcenotes {
+#fevxyvipfv .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -398,54 +459,55 @@ removed):
   /* sourcenotes.border.top.color */
 }
 
-#xrsgqsromd .gt_sourcenote {
+#fevxyvipfv .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#xrsgqsromd .gt_center {
+#fevxyvipfv .gt_center {
   text-align: center;
 }
 
-#xrsgqsromd .gt_left {
+#fevxyvipfv .gt_left {
   text-align: left;
 }
 
-#xrsgqsromd .gt_right {
+#fevxyvipfv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xrsgqsromd .gt_font_normal {
+#fevxyvipfv .gt_font_normal {
   font-weight: normal;
 }
 
-#xrsgqsromd .gt_font_bold {
+#fevxyvipfv .gt_font_bold {
   font-weight: bold;
 }
 
-#xrsgqsromd .gt_font_italic {
+#fevxyvipfv .gt_font_italic {
   font-style: italic;
 }
 
-#xrsgqsromd .gt_super {
+#fevxyvipfv .gt_super {
   font-size: 65%;
 }
 
-#xrsgqsromd .gt_footnote_glyph {
+#fevxyvipfv .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xrsgqsromd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="fevxyvipfv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">folderName</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">formName</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">formNameRecode</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Month</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">recordId</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">question</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">response</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">description</th>
@@ -464,6 +526,7 @@ removed):
       <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left" style="font-size: 14px;">2019-04</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">jvnuvwqo2</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Cualitativo</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Se complementa </td>
       <td class="gt_row gt_left" style="font-size: 14px;">Descripción de </td>
@@ -481,6 +544,7 @@ removed):
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">2019-04</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">jvnuye0p3</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Cualitativo</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">233 Equipos méd</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Descripción de </td>
@@ -498,6 +562,7 @@ removed):
       <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left" style="font-size: 14px;">2019-02</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">s0462106109-2019-02</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Cualitativo</td>
       <td class="gt_row gt_left" style="font-size: 14px;">1. Entrega de k</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Descripción de </td>
@@ -515,6 +580,7 @@ removed):
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">2019-02</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">s1159017445-2019-02</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Cualitativo</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">1. Entrega de k</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Descripción de </td>
@@ -532,6 +598,7 @@ removed):
       <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left" style="font-size: 14px;">2019-02</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">s1282460545-2019-02</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Cualitativo</td>
       <td class="gt_row gt_left" style="font-size: 14px;">1. Entrega de k</td>
       <td class="gt_row gt_left" style="font-size: 14px;">Descripción de </td>
@@ -549,6 +616,7 @@ removed):
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Salud</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">2019-02</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">s1780949540-2019-02</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Cualitativo</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">1. Entrega de k</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Descripción de </td>
@@ -574,7 +642,7 @@ of spread</em> in data.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#srigwxmmur .gt_table {
+#kfwuazsvem .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -599,13 +667,13 @@ of spread</em> in data.</p>
   /* table.border.bottom.color */
 }
 
-#srigwxmmur .gt_heading {
+#kfwuazsvem .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#srigwxmmur .gt_title {
+#kfwuazsvem .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -616,7 +684,7 @@ of spread</em> in data.</p>
   border-bottom-width: 0;
 }
 
-#srigwxmmur .gt_subtitle {
+#kfwuazsvem .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -627,7 +695,7 @@ of spread</em> in data.</p>
   border-top-width: 0;
 }
 
-#srigwxmmur .gt_bottom_border {
+#kfwuazsvem .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -636,7 +704,7 @@ of spread</em> in data.</p>
   /* heading.border.bottom.color */
 }
 
-#srigwxmmur .gt_column_spanner {
+#kfwuazsvem .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -644,7 +712,7 @@ of spread</em> in data.</p>
   padding-bottom: 4px;
 }
 
-#srigwxmmur .gt_col_heading {
+#kfwuazsvem .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -657,23 +725,23 @@ of spread</em> in data.</p>
   margin: 10px;
 }
 
-#srigwxmmur .gt_columns_top_border {
+#kfwuazsvem .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#srigwxmmur .gt_columns_bottom_border {
+#kfwuazsvem .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#srigwxmmur .gt_sep_right {
+#kfwuazsvem .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#srigwxmmur .gt_group_heading {
+#kfwuazsvem .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -697,7 +765,7 @@ of spread</em> in data.</p>
   vertical-align: middle;
 }
 
-#srigwxmmur .gt_empty_group_heading {
+#kfwuazsvem .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -721,33 +789,33 @@ of spread</em> in data.</p>
   vertical-align: middle;
 }
 
-#srigwxmmur .gt_striped {
+#kfwuazsvem .gt_striped {
   background-color: #f2f2f2;
 }
 
-#srigwxmmur .gt_from_md > :first-child {
+#kfwuazsvem .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#srigwxmmur .gt_from_md > :last-child {
+#kfwuazsvem .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#srigwxmmur .gt_row {
+#kfwuazsvem .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#srigwxmmur .gt_stub {
+#kfwuazsvem .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#srigwxmmur .gt_summary_row {
+#kfwuazsvem .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -757,7 +825,7 @@ of spread</em> in data.</p>
   /* summary_row.text_transform */
 }
 
-#srigwxmmur .gt_grand_summary_row {
+#kfwuazsvem .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -767,19 +835,19 @@ of spread</em> in data.</p>
   /* grand_summary_row.text_transform */
 }
 
-#srigwxmmur .gt_first_summary_row {
+#kfwuazsvem .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#srigwxmmur .gt_first_grand_summary_row {
+#kfwuazsvem .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#srigwxmmur .gt_table_body {
+#kfwuazsvem .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -794,7 +862,7 @@ of spread</em> in data.</p>
   /* table_body.border.bottom.color */
 }
 
-#srigwxmmur .gt_footnotes {
+#kfwuazsvem .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -803,7 +871,7 @@ of spread</em> in data.</p>
   /* footnotes.border.top.color */
 }
 
-#srigwxmmur .gt_footnote {
+#kfwuazsvem .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -811,7 +879,7 @@ of spread</em> in data.</p>
   /* footnote.padding */
 }
 
-#srigwxmmur .gt_sourcenotes {
+#kfwuazsvem .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -820,48 +888,48 @@ of spread</em> in data.</p>
   /* sourcenotes.border.top.color */
 }
 
-#srigwxmmur .gt_sourcenote {
+#kfwuazsvem .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#srigwxmmur .gt_center {
+#kfwuazsvem .gt_center {
   text-align: center;
 }
 
-#srigwxmmur .gt_left {
+#kfwuazsvem .gt_left {
   text-align: left;
 }
 
-#srigwxmmur .gt_right {
+#kfwuazsvem .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#srigwxmmur .gt_font_normal {
+#kfwuazsvem .gt_font_normal {
   font-weight: normal;
 }
 
-#srigwxmmur .gt_font_bold {
+#kfwuazsvem .gt_font_bold {
   font-weight: bold;
 }
 
-#srigwxmmur .gt_font_italic {
+#kfwuazsvem .gt_font_italic {
   font-style: italic;
 }
 
-#srigwxmmur .gt_super {
+#kfwuazsvem .gt_super {
   font-size: 65%;
 }
 
-#srigwxmmur .gt_footnote_glyph {
+#kfwuazsvem .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="srigwxmmur" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="kfwuazsvem" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal gt_center" style>Deviation of response word counts per form topic</th>
@@ -876,84 +944,88 @@ of spread</em> in data.</p>
   </tr>
   <body class="gt_table_body">
     <tr>
-      <td class="gt_row gt_left">Alojamiento</td>
-      <td class="gt_row gt_right">65.81</td>
+      <td class="gt_row gt_left">Agua</td>
+      <td class="gt_row gt_right">28.96</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">AsistenciaEducacion</td>
-      <td class="gt_row gt_right gt_striped"><em>NA</em></td>
+      <td class="gt_row gt_left gt_striped">Alojamiento</td>
+      <td class="gt_row gt_right gt_striped">65.81</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Coordinacion</td>
-      <td class="gt_row gt_right">86.59</td>
+      <td class="gt_row gt_left">AsistenciaEducacion</td>
+      <td class="gt_row gt_right"><em>NA</em></td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Educacion</td>
-      <td class="gt_row gt_right gt_striped">55.07</td>
+      <td class="gt_row gt_left gt_striped">Coordinacion</td>
+      <td class="gt_row gt_right gt_striped">86.59</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Educacional</td>
-      <td class="gt_row gt_right">16.97</td>
+      <td class="gt_row gt_left">Educacion</td>
+      <td class="gt_row gt_right">55.07</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Fronteras</td>
-      <td class="gt_row gt_right gt_striped">42.88</td>
+      <td class="gt_row gt_left gt_striped">Educacional</td>
+      <td class="gt_row gt_right gt_striped">16.97</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Habitat</td>
-      <td class="gt_row gt_right">8.47</td>
+      <td class="gt_row gt_left">Fronteras</td>
+      <td class="gt_row gt_right">42.88</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">LGBTI</td>
-      <td class="gt_row gt_right gt_striped">102.74</td>
+      <td class="gt_row gt_left gt_striped">Habitat</td>
+      <td class="gt_row gt_right gt_striped">8.47</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Necesidades</td>
-      <td class="gt_row gt_right">16.10</td>
+      <td class="gt_row gt_left">LGBTI</td>
+      <td class="gt_row gt_right">102.74</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Poblacion</td>
-      <td class="gt_row gt_right gt_striped">60.07</td>
+      <td class="gt_row gt_left gt_striped">Necesidades</td>
+      <td class="gt_row gt_right gt_striped">16.10</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Proteccion</td>
-      <td class="gt_row gt_right">22.74</td>
+      <td class="gt_row gt_left">Poblacion</td>
+      <td class="gt_row gt_right">60.07</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">ProteccionInfancia</td>
-      <td class="gt_row gt_right gt_striped">16.35</td>
+      <td class="gt_row gt_left gt_striped">Proteccion</td>
+      <td class="gt_row gt_right gt_striped">22.74</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Salud</td>
-      <td class="gt_row gt_right">141.10</td>
+      <td class="gt_row gt_left">ProteccionInfancia</td>
+      <td class="gt_row gt_right">16.35</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">SectorLaboral</td>
-      <td class="gt_row gt_right gt_striped">23.51</td>
+      <td class="gt_row gt_left gt_striped">Salud</td>
+      <td class="gt_row gt_right gt_striped">141.10</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">SocialCohesion</td>
-      <td class="gt_row gt_right">31.17</td>
+      <td class="gt_row gt_left">SectorLaboral</td>
+      <td class="gt_row gt_right">23.51</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Socios</td>
-      <td class="gt_row gt_right gt_striped">241.91</td>
+      <td class="gt_row gt_left gt_striped">SocialCohesion</td>
+      <td class="gt_row gt_right gt_striped">31.17</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Tecnico</td>
-      <td class="gt_row gt_right">48.78</td>
+      <td class="gt_row gt_left">Socios</td>
+      <td class="gt_row gt_right">241.91</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Trafico</td>
-      <td class="gt_row gt_right gt_striped">17.01</td>
+      <td class="gt_row gt_left gt_striped">Tecnico</td>
+      <td class="gt_row gt_right gt_striped">48.78</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">VBG</td>
-      <td class="gt_row gt_right">49.60</td>
+      <td class="gt_row gt_left">Trafico</td>
+      <td class="gt_row gt_right">17.01</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">VBG_SSR</td>
-      <td class="gt_row gt_right gt_striped">34.22</td>
+      <td class="gt_row gt_left gt_striped">VBG</td>
+      <td class="gt_row gt_right gt_striped">49.60</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">VBG_SSR</td>
+      <td class="gt_row gt_right">34.22</td>
     </tr>
   </body>
   
@@ -965,7 +1037,7 @@ the raw data, the outliers are shown in orange color. Outliers are the points
 placed outside the whiskers, which is the long line, of the boxplot.</p>
 <div id="distribution-of-word-counts" class="section level2 unnumbered">
 <h2>Distribution of word counts</h2>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-26-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>There’s a lot of variation in response word count. We need to know what are those responses with a word count of 1. Or better to eliminate the responses which has less than 5 words (an arbitrary number to filter).</p>
 <hr>
 </div>
@@ -979,28 +1051,25 @@ others, because:</p>
 <li><p>They <em>actually</em> write longer than other partners.</p></li>
 <li><p>The questions they answered require short answers.</p></li>
 </ol>
-<pre><code>## Warning: Unknown or uninitialised column: &#39;.responseWordCount&#39;.</code></pre>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Here above we remove <code>Salud</code> form because it has only
 6
 records and skews the data.</p>
 </div>
 <div id="median-word-count-of-responses-per-partner" class="section level2 unnumbered">
 <h2>Median word count of responses per partner</h2>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="median-word-count-of-responses-per-specific-reporting-partners" class="section level2 unnumbered">
 <h2>Median word count of responses per specific reporting partners</h2>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-29-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="median-word-count-of-responses-per-partner-over-months" class="section level2 unnumbered">
 <h2>Median word count of responses per partner over months</h2>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-31-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-39-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 <div id="median-word-count-of-responses-per-specific-reporting-partners-over-months" class="section level2 unnumbered">
 <h2>Median word count of responses per specific reporting partners over months</h2>
-<pre><code>## Warning in as_grob.default(plot): Cannot convert object of class list into
-## a grob.</code></pre>
 <p><img src="qualminer_files/figure-html/specific-reporting-partners-over-months-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="the-description-field" class="section level2 unnumbered">
@@ -1013,7 +1082,7 @@ quality</em> than the questions which do not have it?</p>
 <p>We see in the plot below that the response word counts per form and colored if a
 response has a description field or not. Having a description field or not is
 calculated as that a description field has a minimum one word.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-32-1.png" width="960" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-40-1.png" width="960" /></p>
 <p><br></p>
 <p>The responses with the longest word counts are the ones with description.
 Nevertheless, it is not so easy to see a clear trend that there’s a correlation
@@ -1032,7 +1101,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#asclbhwzzn .gt_table {
+#rkjdkslwpf .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1057,13 +1126,13 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* table.border.bottom.color */
 }
 
-#asclbhwzzn .gt_heading {
+#rkjdkslwpf .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#asclbhwzzn .gt_title {
+#rkjdkslwpf .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -1074,7 +1143,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   border-bottom-width: 0;
 }
 
-#asclbhwzzn .gt_subtitle {
+#rkjdkslwpf .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1085,7 +1154,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   border-top-width: 0;
 }
 
-#asclbhwzzn .gt_bottom_border {
+#rkjdkslwpf .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1094,7 +1163,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* heading.border.bottom.color */
 }
 
-#asclbhwzzn .gt_column_spanner {
+#rkjdkslwpf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1102,7 +1171,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   padding-bottom: 4px;
 }
 
-#asclbhwzzn .gt_col_heading {
+#rkjdkslwpf .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1115,23 +1184,23 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   margin: 10px;
 }
 
-#asclbhwzzn .gt_columns_top_border {
+#rkjdkslwpf .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#asclbhwzzn .gt_columns_bottom_border {
+#rkjdkslwpf .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#asclbhwzzn .gt_sep_right {
+#rkjdkslwpf .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#asclbhwzzn .gt_group_heading {
+#rkjdkslwpf .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1155,7 +1224,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   vertical-align: middle;
 }
 
-#asclbhwzzn .gt_empty_group_heading {
+#rkjdkslwpf .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1179,33 +1248,33 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   vertical-align: middle;
 }
 
-#asclbhwzzn .gt_striped {
+#rkjdkslwpf .gt_striped {
   background-color: #f2f2f2;
 }
 
-#asclbhwzzn .gt_from_md > :first-child {
+#rkjdkslwpf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#asclbhwzzn .gt_from_md > :last-child {
+#rkjdkslwpf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#asclbhwzzn .gt_row {
+#rkjdkslwpf .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#asclbhwzzn .gt_stub {
+#rkjdkslwpf .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#asclbhwzzn .gt_summary_row {
+#rkjdkslwpf .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -1215,7 +1284,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* summary_row.text_transform */
 }
 
-#asclbhwzzn .gt_grand_summary_row {
+#rkjdkslwpf .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -1225,19 +1294,19 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* grand_summary_row.text_transform */
 }
 
-#asclbhwzzn .gt_first_summary_row {
+#rkjdkslwpf .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#asclbhwzzn .gt_first_grand_summary_row {
+#rkjdkslwpf .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#asclbhwzzn .gt_table_body {
+#rkjdkslwpf .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -1252,7 +1321,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* table_body.border.bottom.color */
 }
 
-#asclbhwzzn .gt_footnotes {
+#rkjdkslwpf .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -1261,7 +1330,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* footnotes.border.top.color */
 }
 
-#asclbhwzzn .gt_footnote {
+#rkjdkslwpf .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -1269,7 +1338,7 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* footnote.padding */
 }
 
-#asclbhwzzn .gt_sourcenotes {
+#rkjdkslwpf .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -1278,48 +1347,48 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   /* sourcenotes.border.top.color */
 }
 
-#asclbhwzzn .gt_sourcenote {
+#rkjdkslwpf .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#asclbhwzzn .gt_center {
+#rkjdkslwpf .gt_center {
   text-align: center;
 }
 
-#asclbhwzzn .gt_left {
+#rkjdkslwpf .gt_left {
   text-align: left;
 }
 
-#asclbhwzzn .gt_right {
+#rkjdkslwpf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#asclbhwzzn .gt_font_normal {
+#rkjdkslwpf .gt_font_normal {
   font-weight: normal;
 }
 
-#asclbhwzzn .gt_font_bold {
+#rkjdkslwpf .gt_font_bold {
   font-weight: bold;
 }
 
-#asclbhwzzn .gt_font_italic {
+#rkjdkslwpf .gt_font_italic {
   font-style: italic;
 }
 
-#asclbhwzzn .gt_super {
+#rkjdkslwpf .gt_super {
   font-size: 65%;
 }
 
-#asclbhwzzn .gt_footnote_glyph {
+#rkjdkslwpf .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="asclbhwzzn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="rkjdkslwpf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1"></th>
@@ -1330,33 +1399,33 @@ topic <em>Protección_VBG</em> has no description fields at all in its form topi
   <body class="gt_table_body">
     <tr>
       <td class="gt_row gt_left">.responseWordCount</td>
-      <td class="gt_row gt_right">1.0</td>
-      <td class="gt_row gt_right">-0.1</td>
-      <td class="gt_row gt_right">0.1</td>
+      <td class="gt_row gt_right">1.00</td>
+      <td class="gt_row gt_right">-0.10</td>
+      <td class="gt_row gt_right">0.08</td>
     </tr>
     <tr>
       <td class="gt_row gt_left gt_striped">.questionWordCount</td>
-      <td class="gt_row gt_right gt_striped">-0.1</td>
-      <td class="gt_row gt_right gt_striped">1.0</td>
-      <td class="gt_row gt_right gt_striped">-0.6</td>
+      <td class="gt_row gt_right gt_striped">-0.10</td>
+      <td class="gt_row gt_right gt_striped">1.00</td>
+      <td class="gt_row gt_right gt_striped">-0.57</td>
     </tr>
     <tr>
       <td class="gt_row gt_left">.descriptionWordCount</td>
-      <td class="gt_row gt_right">0.1</td>
-      <td class="gt_row gt_right">-0.6</td>
-      <td class="gt_row gt_right">1.0</td>
+      <td class="gt_row gt_right">0.08</td>
+      <td class="gt_row gt_right">-0.57</td>
+      <td class="gt_row gt_right">1.00</td>
     </tr>
   </body>
   
   
 </table></div>
 <ul>
-<li>1.66%
+<li>1.63%
 of the words in the response field have only <code>1</code> words. And those words were
 just not important (as they are
 ).</li>
 </ul>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-42-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p><code>TODO</code></p>
 </div>
 <div id="the-regression-lines" class="section level2 unnumbered">
@@ -1418,11 +1487,11 @@ When one of the independent variables is dichotomous (having two categories), <c
 gitbook.require(["gitbook"], function(gitbook) {
 gitbook.start({
 "sharing": {
-"github": false,
+"github": true,
 "facebook": false,
-"twitter": true,
-"google": true,
-"linkedin": true,
+"twitter": false,
+"google": false,
+"linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
@@ -1441,9 +1510,10 @@ gitbook.start({
 "link": null,
 "text": null
 },
-"download": ["qualminer.pdf", "qualminer.epub"],
+"download": null,
 "toc": {
-"collapse": "subsection"
+"collapse": "section",
+"edit": null
 },
 "search": true
 });
