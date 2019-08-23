@@ -14,49 +14,58 @@ raw data, you must have an access for it, that can be done by sourcing the
 `etl.R` file.
 
 * Data dictionary shows what the columns mean in the data:
-  
-  + `databaseId`: the internal ActivityInfo id for databases
-    
-  + `databaseName`: the name of databases visible to users
-  
-  + `folderId`: the internal ActivityInfo id for folders
-  
-  + `folderName`: the name of folders visible to users
-  
-  + `formId`: the internal ActivityInfo id for forms
-  
-  + `formName`: the name of forms visible to users
-  
-  + `subFormId`: the internal ActivityInfo id for the sub-forms where the records are kept
-  
-  + `subFormName`: the name of the sub-forms visible to users
-  
-  + `Month`: indicating month when a record is entered
-  
-  + `code`: Schema question code
-  
-  + `question`: Question label indicated by the code
-  
-  + `response`: Response given by users
-  
-  + `required`: A boolean value to check whether the question is required to complete.
-  
-  + `type`: internal type for the code. The available types in the data are 
-  `r unique(form.table$type)`.
-  
-  + `partnerName`: The name of reporting partners. The name of implementing
-  partners can be extracted from the data.
-  
-  + `canton`: The canton name of the record.
-  
-  + `province`: The province name of the record.
-  
-  + `description`: the description field further explaining what the question mean.
-  The cells are represented as `NA` when fields not exists or not applicable.
 
-<br>
+| Column name | Description |
+|:--------|:--------|  
+| `databaseId` | the internal *ActivityInfo* id for databases |
+| `databaseName` | the name of databases visible to users |
+| `folderId` | the internal *ActivityInfo* id for folders |
+| `folderName` | the name of folders visible to users |
+| `formId` | the internal *ActivityInfo* id for forms |
+| `formName` | the name of forms visible to users |
+| `subFormId` | the internal *ActivityInfo* id for the sub-forms where the records are kept |
+| `subFormName` | the name of the sub-forms visible to users |
+| `Month` | month information for each record as `YYYY-MM` format e.g. `2019-05` |
+| `code` | schema code |
+| `question` | question label indicated by the field `code` |
+| `response` | response given by users |
+| `required` | a boolean value to check whether a question is required for saving a record |
+| `type` | internal type for the code. The available types in the data are `r mmy::list_en_end(paste0("*",stringr::str_to_title(unique(form.table$type)),"*"),add.quotes=T)` |
+| `partnerName` | the name of reporting partners. The name of implementing partners can be extracted from the data (from `code` column) |
+| `canton` | the canton name of a record |
+| `province` | the province name of a record |
+| `description` | the description field further explaining what a question can mean |
+| `reportingUsers` | a [list-column](https://stat.ethz.ch/R-manual/R-devel/library/base/html/AsIs.html) containing unique user information reporting to a particular record |
 
-Please see the
+* The cells are represented as `NA` when fields not exists or not applicable.
+
+* Please see the
 [**ActivityInfo documentation**](http://help.activityinfo.org/m/quick_start_database_design/c/240396)
 for more information about how the information is structured.
+
+#### Automatic merging on duplicate entities {-}
+
+The duplicated entities found in the records are cleaned as much as possible
+during the data cleaning process.
+
+For instance, as of *August 2019*, there are two **Implementing partners**[^1]
+with almost the same name are found in the data. They are merged into one
+because they imply the same partner.
+
+This is fixed by using one of the "approximate string matching" algorithms that is readily provided by Open Refine[^2].
+
+```{r, echo=TRUE}
+example_duplicate_partners <- c(
+  "Federación de Mujeres de Sucumbios",
+  "Federación de mujeres de sucumbíos"
+)
+example_collison <- refinr::key_collision_merge(example_duplicate_partners)
+unique(example_collison)
+```
+
+[^1]: See the [*Partners*](#partners) section for more information about
+  what the term means.
+
+[^2]: And the R package called *refinr* successfully ported it to R:
+  https://cran.r-project.org/package=refinr
 

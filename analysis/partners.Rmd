@@ -1,4 +1,4 @@
-# Partners {-}
+# Partners {-#partners}
 
 They are two types of partners in the database:
 

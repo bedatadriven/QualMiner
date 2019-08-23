@@ -209,7 +209,8 @@ check_required_packages <- function() {
       "corpus",
       "wordcloud",
       "cowplot",
-      "bookdown"
+      "bookdown",
+      "refinr"
     ),
     github = list(
       "sass" = "rstudio/sass",

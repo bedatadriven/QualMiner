@@ -113,12 +113,25 @@ all(direct_indirect.fields)
 ```
 
 ```{r, PARTNERS}
-partners <- form.table %>% 
+partners_raw <- form.table %>% 
   dplyr::filter(code == "Socio") %>% 
   mutate(response = if_else(response == "FALSE", NA_character_, response)) %>% # recode FALSE
   select(recordId, partnerName, response, canton, province) %>% 
   rename(subPartnerName = response) %>% 
   mutate(subPartnerName = if_else(is.na(subPartnerName), partnerName, subPartnerName))
+```
+
+```{r}
+## merge duplicate partner names:
+partners <- partners_raw %>% 
+  mutate(subPartnerName = refinr::key_collision_merge(subPartnerName))
+
+## (test):
+uniq.subpartners <- unique(partners_raw$subPartnerName)
+uniq.collided.subpartners <- unique(refinr::key_collision_merge(partners_raw$subPartnerName))
+stopifnot(identical(length(setdiff(uniq.subpartners, uniq.collided.subpartners)), 1L))
+## (test2):
+partners_raw[partners$subPartnerName != partners_raw$subPartnerName, ]
 ```
 
 ```{r NARRATIVES}
