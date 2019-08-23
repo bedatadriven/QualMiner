@@ -2,19 +2,49 @@
 
 They are two types of partners in the database:
 
-+ **Reporting partners**: Higher level of partners reporting directly in ActivityInfo.
++ **Reporting partners**: Higher level of partners reporting directly in *ActivityInfo*.
 
 + **Implementing partners**: Partners reporting through a reporting partner.
 
+<br>
+
 ```{r, include=FALSE}
-ppartners <- partners %>%
-  group_by(partnerName) %>%
-  count(partnerName, name = "freq", sort = TRUE) %>%
-  ungroup() %>%
-  mutate(prop = round(freq / sum(freq), 3))
+ppartners <- local({
+  p <- form.table %>%
+    group_by(recordId, partnerName) %>% 
+    count(partnerName)
+  pc <- p %>% 
+    group_by(partnerName) %>% 
+    count(partnerName, name = "freq", sort = TRUE)
+  perc <- pc %>% 
+    ungroup() %>%
+    mutate(prop = round(freq / sum(freq), 3))
+})
 ```
 
-The table below shows the count of reporting partner per each record:
+```{r}
+ppartners %>%
+  rename(
+    `Reporting partner` = partnerName,
+    `Frequency` = freq,
+    `Relative frequency` = prop
+  ) %>% 
+  gt() %>% 
+  cols_align(
+    align = "left",
+    columns = vars(`Reporting partner`)
+  ) %>% 
+  cols_align(
+    align = "center",
+    columns = vars(`Frequency`, `Relative frequency`)
+  ) %>% 
+  tab_header(
+    title = md("**Reporting partners in all field types**")
+  ) %>%
+  gt_condensed_style()
+```
+
+The table above shows the count of reporting partner per each record:
 
 + **`r ppartners[1,"partnerName",drop=T]`** has *`r xfun::n2w(ppartners[1,"freq",drop=T])`*
 records, 
@@ -27,76 +57,40 @@ records,
 which is *`r scales::percent(ppartners[2,"prop",drop=T])`*
 of the total records.
 
-+ The most difference between percentages of the partners 
-**`r ppartners[1,"partnerName",drop=T]`**
-and
-**`r ppartners[2,"partnerName",drop=T]`**
-is
-*`r paste0(floor(convolve((ppartners[1,"prop",drop=T]-ppartners[2,"prop",drop=T]), 100)), '%')`*.
+<br>
 
-<hr>
-
-```{r}
-ppartners %>%
-  rename(
-    `Reporting partner` = partnerName,
-    `Frequency` = freq,
-    `Relative frequency` = prop
-  ) %>% 
-  gt() %>% 
-  gt_condensed_style()
+```{r, include=FALSE}
+ppartnersAndSub <- local({
+  pSub <- form.table %>%
+    group_by(recordId, partnerName, subPartnerName) %>% 
+    count(partnerName)
+  pcSub <- pSub %>% 
+    group_by(partnerName, subPartnerName) %>% 
+    count(partnerName, subPartnerName, name = "freq", sort = TRUE)
+  percSub <- pcSub %>% 
+    summarise(freq = sum(freq)) %>% 
+    mutate(prop = round(freq / sum(freq), 3))
+})
 ```
 
 ```{r, include=FALSE}
-PartnerSubPropFreq <- partners %>% 
-  group_by(partnerName, subPartnerName) %>% 
-  count(partnerName, subPartnerName, name = "freq", sort = TRUE) %>% 
-  summarize(freq = sum(freq)) %>% 
-  mutate(prop = round(freq/sum(freq), 3)) %>% 
-  mutate(percent = paste0(floor(100 * freq/sum(freq)), "%"))
-```
-
-```{r, include=FALSE}
-acnur.hias.part <- PartnerSubPropFreq %>% 
+ppartnersAndSub.acnur.hias <- ppartnersAndSub %>% 
   dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
 ```
-
-<hr>
-
-The table below shows the proportion of records entered by
-reporting and implementing partners.
-
-+ *`r acnur.hias.part[,"freq",drop=T]`* out of 
-*`r sum(PartnerSubPropFreq %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
-total responses of **ACNUR** is actually coming from **HIAS**.
-
-+ **UNICEF** has more diversed partners in terms of reporting.
-*`r PartnerSubPropFreq%>%dplyr::filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(percent)`*
-of responses of **UNICEF** comes from **HIAS**.
-*`r PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(percent)`*
-of reporting comes from the **UNICEF** itself.
-
-+ Under **PMA**, there are *`r nrow(PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r PartnerSubPropFreq%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull("percent")`* of these records.
-
-Those are the total numbers of reporting in all database, the numbers are not
-specific to the narratives i.e. multi-line text fields. In the following sections, we
-count the number of reportings done only in the narrative sections.
-
-<hr>
 
 ```{r, echo=FALSE, warning=FALSE}
 ## Used parse & eval because of this issue: 
 ## https://github.com/rstudio/gt/issues/308
-pspf.bold_groups <- glue::glue_collapse(glue::glue('
+ppartnersAndSub.bold_groups <- glue::glue_collapse(glue::glue('
   tab_style(
     locations = cells_group(groups = "{x}"),
     style = cell_text(weight = "bold")
   )
   ',
-  x = unique(PartnerSubPropFreq$partnerName)
+  x = unique(ppartnersAndSub$partnerName)
   ),
   sep = " %>%\n")
-pspf.tbl <- PartnerSubPropFreq %>% 
+ppartnersAndSub.tbl <- ppartnersAndSub %>% 
   group_by(subPartnerName) %>% 
   arrange(desc(freq)) %>% 
   group_by(partnerName) %>% 
@@ -105,15 +99,191 @@ pspf.tbl <- PartnerSubPropFreq %>%
     `Implementing partner` = subPartnerName,
     `Frequency` = freq,
     `Relative frequency` = prop
-  ) %>% 
-  select(-percent)
+  )
 eval(parse(text=glue::glue('
-pspf.tbl %>%
+ppartnersAndSub.tbl %>%
   gt() %>% 
+  cols_align(
+    align = "left",
+    columns = vars(`Implementing partner`)
+  ) %>% 
+  cols_align(
+    align = "center",
+    columns = vars(`Frequency`, `Relative frequency`)
+  ) %>% 
+  fmt_missing(
+    columns = vars(`Implementing partner`),
+    missing_text = md("*NA*")
+  ) %>%
+  tab_header(
+    title = md("**Reporting & implementing partners in all field types**")
+  ) %>%
   gt_condensed_style() %>% 
   {bolds}
-', bolds = pspf.bold_groups)))
+', bolds = ppartnersAndSub.bold_groups)))
 ```
 
+The table above shows the proportion of records entered by
+reporting and implementing partners.
+
++ *`r ppartnersAndSub.acnur.hias[,"freq",drop=T]`* out of 
+*`r sum(ppartnersAndSub %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
+total responses 
+(*`r scales::percent(ppartnersAndSub.acnur.hias[["prop"]])`*)
+of **ACNUR** is actually coming from **HIAS**.
+
++ **UNICEF** has more diversed partners in terms of reporting.
+*`r scales::percent(ppartnersAndSub%>%dplyr::filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(prop))`*
+of responses of **UNICEF** comes from **HIAS**.
+*`r scales::percent(ppartnersAndSub%>%dplyr::filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(prop))`*
+of reporting comes from the **UNICEF** itself.
+
++ Under **PMA**, there are *`r nrow(ppartnersAndSub%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r scales::percent(ppartnersAndSub%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull(prop))`* of these records.
+
+#### Partners filling Narrative (multi-line text) fields in records {-}
+
+```{r, include=FALSE}
+ppartners_narratives <- local({
+  p <- narratives %>%
+    group_by(recordId, partnerName) %>% 
+    count(partnerName)
+  pc <- p %>% 
+    group_by(partnerName) %>% 
+    count(partnerName, name = "freq", sort = TRUE)
+  perc <- pc %>% 
+    ungroup() %>%
+    mutate(prop = round(freq / sum(freq), 3))
+})
+```
+
+```{r}
+ppartners_narratives %>%
+  rename(
+    `Reporting partner` = partnerName,
+    `Frequency` = freq,
+    `Relative frequency` = prop
+  ) %>% 
+  gt() %>% 
+  cols_align(
+    align = "left",
+    columns = vars(`Reporting partner`)
+  ) %>% 
+  cols_align(
+    align = "center",
+    columns = vars(`Frequency`, `Relative frequency`)
+  ) %>% 
+  tab_header(
+    title = md("**Reporting partners in *Narrative* field type**")
+  ) %>%
+  gt_condensed_style()
+```
+
+The table above shows the count of reporting partner in *Narrative* field per each record:
+
++ **`r ppartners_narratives[1,"partnerName",drop=T]`** has *`r xfun::n2w(ppartners_narratives[1,"freq",drop=T])`*
+records, 
+which is *`r scales::percent(ppartners_narratives[1,"prop",drop=T])`*
+of the total records.
+
++ Second, 
+**`r ppartners_narratives[2,"partnerName",drop=T]`** has *`r xfun::n2w(ppartners_narratives[2,"freq",drop=T])`*
+records, 
+which is *`r scales::percent(ppartners_narratives[2,"prop",drop=T])`*
+of the total records.
+
 <br>
+
+```{r, include=FALSE}
+ppartnersAndSub_narratives <- local({
+  pSub <- narratives %>%
+    group_by(recordId, partnerName, subPartnerName) %>% 
+    count(partnerName)
+  pcSub <- pSub %>% 
+    group_by(partnerName, subPartnerName) %>% 
+    count(partnerName, subPartnerName, name = "freq", sort = TRUE)
+  percSub <- pcSub %>% 
+    summarise(freq = sum(freq)) %>% 
+    mutate(prop = round(freq / sum(freq), 3))
+})
+```
+
+```{r, include=FALSE}
+ppartnersAndSub_narratives.acnur.hias <- ppartnersAndSub_narratives %>% 
+  dplyr::filter(partnerName %in% "ACNUR", subPartnerName %in% "HIAS")
+```
+
+```{r, echo=FALSE, warning=FALSE}
+## Used parse & eval because of this issue: 
+## https://github.com/rstudio/gt/issues/308
+ppartnersAndSub_narratives.bold_groups <- glue::glue_collapse(glue::glue('
+  tab_style(
+    locations = cells_group(groups = "{x}"),
+    style = cell_text(weight = "bold")
+  )
+  ',
+  x = unique(ppartnersAndSub_narratives$partnerName)
+  ),
+  sep = " %>%\n")
+ppartnersAndSub_narratives.tbl <- ppartnersAndSub_narratives %>% 
+  group_by(subPartnerName) %>% 
+  arrange(desc(freq)) %>% 
+  group_by(partnerName) %>% 
+  rename(
+    `Reporting partner` = partnerName,
+    `Implementing partner` = subPartnerName,
+    `Frequency` = freq,
+    `Relative frequency` = prop
+  )
+eval(parse(text=glue::glue('
+ppartnersAndSub_narratives.tbl %>%
+  gt() %>% 
+  cols_align(
+    align = "left",
+    columns = vars(`Implementing partner`)
+  ) %>% 
+  cols_align(
+    align = "center",
+    columns = vars(`Frequency`, `Relative frequency`)
+  ) %>% 
+  fmt_missing(
+    columns = vars(`Implementing partner`),
+    missing_text = md("*NA*")
+  ) %>%
+  tab_header(
+    title = md("**Reporting & implementing partners in in *Narrative* field type**")
+  ) %>%
+  gt_condensed_style() %>% 
+  {bolds}
+', bolds = ppartnersAndSub_narratives.bold_groups)))
+```
+
+The table above shows the proportion of records in *Narrative* field entered by
+reporting and implementing partners.
+
++ *`r ppartnersAndSub_narratives.acnur.hias[,"freq",drop=T]`* out of 
+*`r sum(ppartnersAndSub_narratives %>% dplyr::filter(partnerName %in% "ACNUR") %>% pull(freq))`* 
+total responses 
+(*`r scales::percent(ppartnersAndSub_narratives.acnur.hias[["prop"]])`*)
+of **ACNUR** is actually coming from **HIAS**.
+
++ **UNICEF** has more diversed partners in terms of reporting.
+*`r scales::percent(ppartnersAndSub_narratives%>%dplyr::filter(partnerName%in% "UNICEF", subPartnerName %in% "HIAS")%>%pull(prop))`*
+of responses of **UNICEF** comes from **HIAS**.
+*`r scales::percent(ppartnersAndSub_narratives%>%dplyr::filter(partnerName %in% "UNICEF", subPartnerName %in% "UNICEF")%>% pull(prop))`*
+of reporting comes from the **UNICEF** itself.
+
++ Under **PMA**, there are *`r nrow(ppartnersAndSub_narratives%>%dplyr::filter(partnerName %in% "PMA"))`* sub-partners. **HIAS** reports *`r scales::percent(ppartnersAndSub_narratives%>%dplyr::filter(partnerName %in% "PMA", subPartnerName %in% "HIAS")%>%pull(prop))`* of these records.
+
+<br> 
+
+```{r, include=FALSE}
+partners_compare_text_func <- function(tbl1, tbl2, partner.name) {
+  narr <- tbl1[tbl1$partnerName==partner.name,"freq",drop=T]
+  all <- tbl2[tbl2$partnerName==partner.name,"freq",drop=T]
+  paste0(round(100*narr/all, 2), "%")
+}
+```
+
++ Additionally, *`r partners_compare_text_func(ppartners_narratives, ppartners, "ACNUR")`* 
+  of the records have *Narrative* fields in **ACNUR**.
 
