@@ -34,7 +34,7 @@ library(inspectdf)
 ## Pre-set the bw theme for ggplot (for plots don't use any custom theme).
 ggplot2::theme_set(ggplot2::theme_bw())
 ## knitr options
-knitr::opts_chunk$set(echo = FALSE, paged.print = FALSE)
+knitr::opts_chunk$set(echo = FALSE, paged.print = FALSE, warning = FALSE)
 ## read Data from disk:
 form.table <- jsonlite::fromJSON(file.path("..", TEXT.DATA.PATH))
 ## (force it to be a tibble):

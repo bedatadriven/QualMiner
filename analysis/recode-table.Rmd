@@ -1,19 +1,49 @@
 
-# Recode table {-#recode-table}
+# Recode table: shorten sector names {-#recode-table}
 
-We shorten the form topic names by *recoding* them because they
-appear to be long and disarray the plots. The *recode table* below presents a
-lookup table for the form labels.
+Since the sector names in the database are quite long, we perform some recoding
+by shortening them into a length of maximum one or two words.
+
+Shortened sector names make tables and plots used in the analysis better because
+they will not be disarrayed due to the unequal lengths of the long names.
+
+The table below is referred as **recode table** across this documentation. 
+It can be consulted here whenever it is needed.
+
+<br>
 
 ```{r recode-table}
+## Used parse & eval because of this issue: 
+## https://github.com/rstudio/gt/issues/308
+recode_tbl.bold_groups <- glue::glue_collapse(glue::glue('
+  tab_style(
+    locations = cells_group(groups = "{x}"),
+    style = gt::cell_text(weight = "bold")
+  )
+  ',
+  x = unique(recode_tbl$folderName)
+),
+sep = " %>%\n")
+eval(parse(text=glue::glue('
 recode_tbl %>% 
   group_by(folderName) %>% 
   gt() %>% 
   gt_condensed_style() %>% 
+  cols_label(
+    formName = "Name of the sector",
+    formNameRecode = "Shortened version"
+  ) %>% 
+  tab_header(
+    title = md("**Recode table**"),
+    subtitle = md("*The lookup table for the sector names*")
+  ) %>%
   tab_footnote(
-    footnote = md("*Some short form names (e.g. 'Salud') stay as such, no need to make them even shorter*"),
+    footnote = md("*Some short form names (e.g. &lsquo;Salud&rsquo;) stay as such, no need to make them even shorter*"),
     locations = cells_column_labels(
       columns = vars(formNameRecode)
     )
-  )
+  ) %>% 
+  {bolds}
+', bolds = recode_tbl.bold_groups)))
 ```
+
