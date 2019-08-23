@@ -1,10 +1,7 @@
 # Partners entering narrative data {-}
 
 Here, we look at the partners entering narrative data. The number of missing
-records (namely `NA`s) are excluded.
-
-The number of 'Reporting Partners' and 'Implementing Partners' reporting narrative
-(multi-line text) data:
+records (technical saying: `NA`s) are excluded.
 
 ```{r}
 narratives.part.count <- narratives %>% 
@@ -31,7 +28,7 @@ multi-line narrative textual data. For instance, the partner **PMA** has lots of
 Implementing Partners reporting for the different data types (as seen in above)
 but there are no narratives from them.
 
-```{r, warning=FALSE, fig.width=7, fig.height=8, fig.align='center'}
+```{r, warning=FALSE, fig.width=7, fig.height=8, fig.align='center', fig.cap='"Reporting" and "Implementing" partners reporting narrative data'}
 ## grouped facet wraps. Source:
 ## https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
 
