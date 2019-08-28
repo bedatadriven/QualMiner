@@ -1,5 +1,7 @@
 
-# Recode table: shorten sector names {-#recode-table}
+# Recode table {-#recode-table}
+
+#### <i>Shorten sector names</i> {-}
 
 Since the sector names in the database are quite long, we perform some recoding
 by shortening them into a length of maximum one or two words.
