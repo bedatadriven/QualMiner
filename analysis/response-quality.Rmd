@@ -1,33 +1,44 @@
+
 # Response quality {-}
 
-*Response quality* is a term that means how much response the questions receive. The idea is to
-find cases that affect the response quality to understand if they work or
-not under some conditions. In the end, the results may reveal some handful
-insights about the quality of textual responses in the narrative fields.
+*Response quality* is a come up term for this project measuring that *how many*
+words the responses receive. The main idea behind it is to:
 
-Some questions to research *response quality* by measuring *word count* and
-*sentence length*:
+1. quantify the text mining process
 
-+ Is there any relationship between the word counts of response, question and
+2. explore responses receiving the poor or inadequate responses (i.e. getting
+fewer words).
+
+Therefore, we research the *response quality* in this text by measuring the
+*word count* in each response. Here are some general questions to look for
+throughout this section of analysis:
+
++ What is the distribution of the word counts of response, question and
 description fields?
 
-+ What is the distribution between response word count and explanatory variables
-such as the question, form topic, canton name, partner name, etc.
++ Is there any relationship between the word count of response, question and
+description fields and explanatory variables such as the question, form topic,
+canton name, partner name, etc.
 
-*Assumptions:*
+We assume that *the responses with a 'larger word count' have more quality than
+the responses with 'smaller word count'*. In other words, our assumption is
+based on that *the more word a response has, the more developed and detailed it
+is*.
 
-+ Responses with a *larger word count* have more quality than the responses
-with *smaller word count*.
-
-In other words, we assume that *the more word the better is*. The limitations
-are based on the unequal distribution of the data. The word count of responses
-and questions can be related to other things, such as the questions require
-short answers so then the responses tend to be shorter.
+Some forseen limitations are are based on the unequal distribution of the data.
+The word count of responses and questions can be related to other things, such
+as the questions require short answers. As a result, the responses tend to be
+shorter; therefore, it might limit the quality of the response analysis.
 
 Additionally, we can have a cross-analysis to test these outcomes. It might be a
 good idea to have a small subset of data and ask an expert to test the
 assumptions qualitatively. For instance, we can take the first twenty responses
 with the highest word count and the last twenty responses with the lowest word
-count. We chose the extreme directions because they point out the greatest
-differences which are easier to test assumptions.
+count. It would be wise to chose the extreme directions because they point out
+the most considerable differences which make things easier when testing
+assumptions.
+
+In the end, detecting the questions having high response quality would help
+choose which responses should be thoroughly analyzed in the text mining section,
+which is the next one.
 
