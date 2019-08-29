@@ -31,6 +31,9 @@ direct_indirect_fields %>%
   ) %>% 
   gt() %>% 
   gt_condensed_style() %>% 
+  cols_label(
+    formNameRecode = "Sector name"
+  ) %>% 
   tab_header(
     title = md("The number of direct and indirect fields per **form topic**"),
     subtitle = md(paste0("*", unique(direct_indirect_fields$question)[1L], "*"))

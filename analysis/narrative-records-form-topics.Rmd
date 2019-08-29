@@ -21,6 +21,9 @@ n.a.r.t <- inner_join(recode_tbl, narrative.all.records.tbl, by = "formNameRecod
 narrative.all.records.tbl %>% 
   gt() %>% 
   gt_condensed_style() %>%
+  cols_label(
+    formNameRecode = "Sector name"
+  ) %>% 
   tab_spanner(
     label = "Response",
     columns = vars(filled, missing, total)

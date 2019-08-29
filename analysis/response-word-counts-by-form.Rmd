@@ -24,7 +24,7 @@ It's better to know the distributions separated by the major category, which is
 the sector name.
 
 Box plots are used to visualize the *measure of spread* showing the variability
-and dispersion of the data.
+and dispersion of the raw data.
 
 In the boxplot above, we see a number of things:
 

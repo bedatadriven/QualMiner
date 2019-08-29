@@ -161,7 +161,7 @@ narratives <- form.table %>%
 
 # Introduction {-#introduction}
 
-```{r, out.width = "300px", fig.align='center'}
+```{r, out.width = "400px", fig.align='center'}
 knitr::include_graphics("https://raw.githubusercontent.com/bedatadriven/QualMiner/master/media/qualminer-logo.png")
 ```
 
