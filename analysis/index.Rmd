@@ -159,6 +159,16 @@ narratives <- form.table %>%
   )
 ```
 
+```{r narratives-wc}
+narratives.wc <- narratives %>%
+  dplyr::filter(!is.na(response)) %>% ## remove NAs
+  mutate(.responseWordCount = word_count(response)) %>%
+  mutate(.questionWordCount = word_count(question)) %>%
+  mutate(.descriptionWordCount = word_count(description)) %>%
+  group_by(formName) %>%
+  ungroup()
+```
+
 # Introduction {-#introduction}
 
 ```{r, out.width = "400px", fig.align='center'}

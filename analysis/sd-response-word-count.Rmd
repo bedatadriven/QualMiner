@@ -1,0 +1,51 @@
+
+# Diversion of response word count per sector {-}
+
+If we look at the standard deviation, is a single number statistics to show the
+*measure of spread* in data, of response word count per sector, we will see that
+some of the sectors have high *variability*.
+
+<br>
+
+```{r sd-form-topic-table}
+rwc.sd <- narratives.wc %>% 
+  group_by(formNameRecode) %>% 
+  summarize(SD = sd(.responseWordCount))
+rwc.sample <- narratives.wc %>% 
+  group_by(formNameRecode) %>% 
+  summarise(sample_size = length(.responseWordCount))
+rwc.sd %>%
+  left_join(rwc.sample, by = "formNameRecode") %>% 
+  arrange(desc(sample_size)) %>% 
+  gt() %>%
+  fmt_number(
+    columns = vars(SD),
+    decimals = 2,
+    use_seps = T
+  ) %>%
+  fmt_missing(
+    columns = vars(SD),
+    missing_text = md("*NA*")
+  ) %>%
+  cols_label(
+    formNameRecode = "Sector name",
+    sample_size = "Sample size",
+  ) %>% 
+  tab_header(
+    title = "SD and Sample size of response word counts per sector name",
+    subtitle = md("Measure the spread with *standard deviation*")
+  )
+```
+
+```{r sd-details-salud}
+sd.details.salud <- narratives.wc %>% 
+  dplyr::filter(formNameRecode == "Salud") %>% 
+  select(.responseWordCount) %>% 
+  pull(.responseWordCount)
+```
+
+The table above clearly shows that some of the sectors are quite different in
+terms of the word count in responses. For instance, the sector **Salud** has
+only *`r length(sd.details.salud)`* records with diverse word counts, 
+which are *`r sd.details.salud`*.
+
