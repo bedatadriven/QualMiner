@@ -24,6 +24,8 @@ rmd_files: [
 
   "PART-response-quality.Rmd",
   "response-quality.Rmd",
+  "median-response-wcs.Rmd",
+  "description-field.Rmd",
   "word-count.Rmd",
   "response-word-counts-by-form.Rmd",
   "sd-response-word-count.Rmd",

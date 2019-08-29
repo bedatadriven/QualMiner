@@ -1,0 +1,193 @@
+# Median word count of responses {-}
+
+Before we begin, a good note to keep in mind is that reducing multiple values
+down to a single value should be avoided in the early stages of the analysis
+because reducing hides a lot e.g. a bar chart showing average the word count per
+partner. Some partners may write longer than others, because:
+
+1. They *actually* write longer than other partners.
+
+2. The questions they answered require short answers.
+
+This is something to be known together with the *qualitative data analysis*.
+
+<br>
+
+#### Median word count of responses per sector name {-}
+
+```{r, fig.align='center'}
+x1<-narratives.wc %>% 
+  dplyr::filter(formNameRecode != "Salud") %>% 
+  group_by(formNameRecode) %>% 
+  summarise(median = median(.responseWordCount)) %>% 
+  ungroup()
+
+x1 %>%   
+  ggplot(aes(reorder(formNameRecode, -median), median)) +
+  geom_bar(stat = "identity", width = 0.5, fill = "tomato2", color = "black") + 
+  labs(
+    title = "Median word count of responses per sector name",
+    subtitle = sprintf("The average median rate %.2f", mean(x1$median))
+  ) +
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+In the plot above, we removed the sector **Salud** sector because it has only 
+*`r xfun::n2w(nrow(narratives.wc[narratives.wc$formNameRecode=="Salud",]))`* 
+records and skews the data.
+
+<br>
+
+#### Median word count of responses per Reporting Partner {-}
+
+```{r, fig.align='center'}
+narratives.wc %>% 
+  group_by(partnerName) %>% 
+  summarise(median = median(.responseWordCount)) %>% 
+  ungroup() %>% 
+  ggplot(aes(reorder(partnerName, -median), median)) +
+  geom_bar(stat = "identity", width = 0.5, fill = "goldenrod", color = "black") + 
+  labs(
+    title = "Median word count of responses per partner",
+    subtitle = sprintf("The average median rate %.2f", mean(narratives.wc$.responseWordCount))
+  ) +
+  theme(axis.text.x = element_text(angle=65, vjust=0.6)) +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+<br>
+
+#### Median word count of responses per specific Reporting Partners {-}
+
+```{r, fig.align='center'}
+narratives.wc.median.specific.partners <- narratives.wc %>% 
+  group_by(partnerName, subPartnerName) %>% 
+  summarise(median = median(.responseWordCount)) %>% 
+  dplyr::filter(partnerName %in% c("ACNUR", "UNICEF") | subPartnerName %in% "HIAS")
+
+narratives.wc.median.specific.partners_splitted <- split(
+  x = narratives.wc.median.specific.partners, 
+  f = narratives.wc.median.specific.partners$partnerName
+)
+
+narratives.wc.median.specific.partners_splitted_list <- 
+  lapply(seq_along(narratives.wc.median.specific.partners_splitted), function(i) {
+    ggplot(narratives.wc.median.specific.partners_splitted[[i]], aes(x = partnerName, y = median)) +
+      geom_bar(aes(fill = reorder(subPartnerName,-median)), position = "dodge", stat =
+                 "identity", color = "black") +
+      facet_wrap(~ partnerName, scales = "free") +
+      #ylim(0, 1) + 
+      xlab(NULL) +
+      ylab(NULL) +
+      theme_ecuador1(border = TRUE) +
+      theme(
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        legend.title = element_blank(),
+        legend.position = "bottom"
+      ) +
+      scale_fill_brewer(palette = eval(quote(brewer_diverging_color_names()[i])))
+  })
+
+## "cowplot" is civilized version of 'gridExtra'.
+do.call(cowplot::plot_grid, narratives.wc.median.specific.partners_splitted_list)
+```
+
+<br>
+
+#### Median word count of responses per Reporting Partner over months {-}
+
+```{r, include=FALSE}
+narratives.med.wc_colors <- color_set_16()
+
+narratives.med.wc <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% 
+  mutate(.responseWordCount = word_count(response)) %>%
+  mutate(Month = as.Date(paste0(Month, "-01"), format = "%Y-%m-%d"))
+```
+
+```{r partner-over-time, include=FALSE}
+narratives.med.wc_byPartner <- narratives.med.wc %>% 
+  group_by(partnerName, Month) %>%
+  summarize(median = median(.responseWordCount)) %>% 
+  ungroup()
+
+narratives.med.wc_byPartner_ts <-
+  narratives.med.wc_byPartner %>%
+  mutate(Month = yearmonth(Month)) %>% 
+  as_tsibble(index = "Month", key = "partnerName") %>% 
+  fill_gaps(median = 0, .full = TRUE)
+```
+
+```{r, fig.width=10, fig.height=10, fig.align='center'}
+narratives.med.wc_byPartner_ts %>%
+  ggplot(aes(Month, median, color = partnerName)) +
+  geom_line() +
+  geom_point() +
+  geom_point(shape = 21, color = "black") +
+  labs(
+    title = "Median word count of responses per partner over months",
+    subtitle = ""
+  ) +
+  xlab("Month") +
+  ylab("Median word count") +
+  scale_x_date(labels = date_format("%Y-%m")) +
+  scale_colour_manual(values = narratives.med.wc_colors) +
+  facet_wrap( ~ partnerName, scales = "free_x", ncol = 2) +
+  theme_ecuador1(border = TRUE) +
+  guides(colour = FALSE) +
+  ## y lim is a bit more than max median value:
+  ylim(0, max(narratives.med.wc_byPartner_ts$median) + 50L) +
+  xlab(NULL)
+```
+
+```{r partner-subPartner-over-time, include=FALSE}
+narratives.med.wc_byPartnerSubPartner <- narratives.med.wc %>% 
+  group_by(partnerName, subPartnerName, Month) %>%
+  summarize(median = median(.responseWordCount)) %>% 
+  ungroup()
+
+narratives.med.wc_byPartnerSubPartner_ts <-
+  narratives.med.wc_byPartnerSubPartner %>%
+  mutate(Month = yearmonth(Month)) %>% 
+  as_tsibble(index = "Month", key = c("partnerName", "subPartnerName")) %>% 
+  fill_gaps(median = 0, .full = TRUE)
+```
+
+<br>
+
+#### Median word count of responses per specific Reporting Partners over months {-}
+
+```{r, specific-reporting-partners-over-months, fig.align='center'}
+.med.wc.specific <- narratives.med.wc_byPartnerSubPartner_ts %>% 
+  dplyr::filter(partnerName %in% c("ACNUR", "UNICEF") | subPartnerName %in% "HIAS")
+
+.med.wc.specific.splitted <- split(
+  x = .med.wc.specific,
+  f = .med.wc.specific$partnerName
+)
+
+narratives.med.wc.specific.partners <- 
+  lapply(seq_along(.med.wc.specific.splitted), function(i) {
+      ggplot(.med.wc.specific.splitted[[i]], aes(Month, median, color = subPartnerName)) +
+      facet_wrap( ~ partnerName, scales = "free") +
+      geom_line() +
+      geom_point() +
+      geom_point(shape = 21, color = "black") +
+      xlab("Month") +
+      ylab("Median word count") +
+      scale_x_date(labels = scales::date_format("%Y-%m")) +
+      theme_ecuador1(border = TRUE) +
+      theme(legend.title = element_blank()) +
+      theme(axis.text.x = element_text(angle = 45, hjust = 1.1))
+  })
+## An hacky way to add some space between cowplots:
+## https://github.com/wilkelab/cowplot/issues/11#issuecomment-235643412
+narratives.med.wc.specific.partners[[3]] <- narratives.med.wc.specific.partners[[2]]
+narratives.med.wc.specific.partners[[2]] <- list(NULL)
+do.call(function(...) cowplot::plot_grid(..., nrow = 1, rel_widths = c(1, 0.1, 1)), narratives.med.wc.specific.partners)
+```
+
