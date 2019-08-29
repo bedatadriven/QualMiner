@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Partners entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Median word count of responses | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Partners entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Median word count of responses | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Partners entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Median word count of responses | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="partners.html"/>
-<link rel="next" href="direct-and-indirect-fields.html"/>
+<link rel="prev" href="response-quality.html"/>
+<link rel="next" href="the-description-field.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,41 +186,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="partners-entering-narrative-data" class="section level1 unnumbered">
-<h1>Partners entering narrative data</h1>
-<p>Here, we look at the partners entering narrative data. The number of missing
-records (technical saying: <code>NA</code>s) are excluded.</p>
-<p>As we have seen previously, Not all Reporting and Implementing Partners record
-multi-line narrative textual data. For instance, the partner <strong>PMA</strong> has lots of
-Implementing Partners reporting for the different data types (as seen in above)
-but there are no narratives from them.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
-<img src="qualminer_files/figure-html/unnamed-chunk-23-1.png" alt="&quot;Reporting&quot; and &quot;Implementing&quot; partners reporting narrative data" width="672" />
-<p class="caption">
-Figure 8: “Reporting” and “Implementing” partners reporting narrative data
-</p>
+<div id="median-word-count-of-responses" class="section level1 unnumbered">
+<h1>Median word count of responses</h1>
+<p>Before we begin, a good note to keep in mind is that reducing multiple values
+down to a single value should be avoided in the early stages of the analysis
+because reducing hides a lot e.g. a bar chart showing average the word count per
+partner. Some partners may write longer than others, because:</p>
+<ol style="list-style-type: decimal">
+<li><p>They <em>actually</em> write longer than other partners.</p></li>
+<li><p>The questions they answered require short answers.</p></li>
+</ol>
+<p>This is something to be known together with the <em>qualitative data analysis</em>.</p>
+<p><br></p>
+<div id="median-word-count-of-responses-per-sector-name" class="section level4 unnumbered">
+<h4>Median word count of responses per sector name</h4>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>In the plot above, we removed the sector <strong>Salud</strong> sector because it has only
+<em>six</em>
+records and skews the data.</p>
+<p><br></p>
 </div>
-<ul>
-<li><p><em>70%</em>
-of the narrative records are
-entered by the implementing partner <strong>HIAS</strong> reported via <strong>ACNUR</strong>.
-Only
-<em>26%</em>
-of the narrative records are entered by <strong>ACNUR</strong> itself.</p></li>
-<li><p>Also <strong>HIAS</strong> enters <em>29%</em> of the narrative records via <strong>UNICEF</strong>.</p></li>
-<li><p>The rest of the “reporting partners” do not have any “implementing partners”,
-as it seems that they do the implementation:
-‘<em>Dialogo Diverso</em>’, ‘<em>JRS Ecuador</em>’, ‘<em>Mision Scalabriniana</em>’, ‘<em>OPS/OMS</em>’, ‘<em>Plan Internacional</em>’, ‘<em>PNUD</em>’, ‘<em>UNESCO</em>’ and ‘<em>UNFPA</em>’.</p></li>
-</ul>
+<div id="median-word-count-of-responses-per-reporting-partner" class="section level4 unnumbered">
+<h4>Median word count of responses per Reporting Partner</h4>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br></p>
+</div>
+<div id="median-word-count-of-responses-per-specific-reporting-partners" class="section level4 unnumbered">
+<h4>Median word count of responses per specific Reporting Partners</h4>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-36-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br></p>
+</div>
+<div id="median-word-count-of-responses-per-reporting-partner-over-months" class="section level4 unnumbered">
+<h4>Median word count of responses per Reporting Partner over months</h4>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-38-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><br></p>
+</div>
+<div id="median-word-count-of-responses-per-specific-reporting-partners-over-months" class="section level4 unnumbered">
+<h4>Median word count of responses per specific Reporting Partners over months</h4>
+<p><img src="qualminer_files/figure-html/specific-reporting-partners-over-months-1.png" width="672" style="display: block; margin: auto;" /></p>
 
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="partners.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="direct-and-indirect-fields.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="response-quality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="the-description-field.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

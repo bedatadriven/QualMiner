@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Partners entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Partners entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Partners entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="partners.html"/>
-<link rel="next" href="direct-and-indirect-fields.html"/>
+<link rel="prev" href="median-word-count-of-responses.html"/>
+<link rel="next" href="word-count.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,32 +186,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="partners-entering-narrative-data" class="section level1 unnumbered">
-<h1>Partners entering narrative data</h1>
-<p>Here, we look at the partners entering narrative data. The number of missing
-records (technical saying: <code>NA</code>s) are excluded.</p>
-<p>As we have seen previously, Not all Reporting and Implementing Partners record
-multi-line narrative textual data. For instance, the partner <strong>PMA</strong> has lots of
-Implementing Partners reporting for the different data types (as seen in above)
-but there are no narratives from them.</p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-23"></span>
-<img src="qualminer_files/figure-html/unnamed-chunk-23-1.png" alt="&quot;Reporting&quot; and &quot;Implementing&quot; partners reporting narrative data" width="672" />
-<p class="caption">
-Figure 8: “Reporting” and “Implementing” partners reporting narrative data
-</p>
-</div>
-<ul>
-<li><p><em>70%</em>
-of the narrative records are
-entered by the implementing partner <strong>HIAS</strong> reported via <strong>ACNUR</strong>.
-Only
-<em>26%</em>
-of the narrative records are entered by <strong>ACNUR</strong> itself.</p></li>
-<li><p>Also <strong>HIAS</strong> enters <em>29%</em> of the narrative records via <strong>UNICEF</strong>.</p></li>
-<li><p>The rest of the “reporting partners” do not have any “implementing partners”,
-as it seems that they do the implementation:
-‘<em>Dialogo Diverso</em>’, ‘<em>JRS Ecuador</em>’, ‘<em>Mision Scalabriniana</em>’, ‘<em>OPS/OMS</em>’, ‘<em>Plan Internacional</em>’, ‘<em>PNUD</em>’, ‘<em>UNESCO</em>’ and ‘<em>UNFPA</em>’.</p></li>
-</ul>
+<div id="the-description-field" class="section level1 unnumbered">
+<h1>The Description field</h1>
+<p>In <em>ActivityInfo</em> forms, the questions can have an additional description field which
+is meant to give extra details about the questions.</p>
+<p>The description field is not mandatory, so it is optional, but it may
+help users filling out the form easily and eliminate potential confusions if
+they are leading the users enough.</p>
+<p>Do some questions with the extra description field have better <em>response
+quality</em> than the questions which do not have it?</p>
+<p>Looking at the table containing sector name, question and description fields and
+so on others:</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-39-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>We see in the plot above that the response word counts per form and colored if a
+response has a description field or not. Having a description field or not is
+calculated as that a description field has a minimum one word.</p>
+<p>The responses with the longest word counts are the ones with description.
+Nevertheless, it is not so easy to see a clear trend that there’s a correlation
+between response word count and description fields. Interestingly, the form
+topic <em>Protección_VBG</em> has no description fields at all in its form topics.</p>
 
 </div>
             </section>
@@ -219,8 +213,8 @@ as it seems that they do the implementation:
           </div>
         </div>
       </div>
-<a href="partners.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="direct-and-indirect-fields.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="median-word-count-of-responses.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="word-count.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
