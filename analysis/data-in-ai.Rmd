@@ -80,7 +80,7 @@ ggplot(ICT.wide, aes(reorder(Date, value), value, fill = variable)) +
   scale_fill_brewer(palette = "Set1")
 ```
 
-From the perspective of *ActivityInfo*, it shows a clear need for new tools to
+> From the perspective of *ActivityInfo*, it shows a clear need for new tools to
 support analysis of qualitative data (or namely 'Multi-line text entries') as
 the absolute volume of qualitative data has increased by a factor of 150, and
 almost doubled as a relative share of all data collected.

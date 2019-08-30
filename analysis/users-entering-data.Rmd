@@ -1,7 +1,24 @@
 
 # How many individuals are entering data? {-}
 
-*How many individuals are entering narrative data from each of the partners?*
+We count the number of people entering data by each partner in *ActivityInfo*.
+This information might help us derive some conclusions about the responses.
+
+> Some responses would probably lead over time to more standardized responses
+and/or maybe less mistakes as they get to know the system/meaningful inputs vs.
+a more piecemeal approach (several persons entering data depending on the month
+and/or no dedicated resources leading to fewer inputs, especially on the
+narrative).
+
+However, it is still not very much known if any organization (*partner*) use a
+kind of "common user account" to enter either all or most of the records.
+
+In the next **Response quality** section, we look if there are any relationship
+between word counts per partner and number of people reporting to
+*ActivityInfo*.
+
+*How many unique individuals are entering narrative data from each of the
+partners?*
 
 #### Reporting partners {-}
 
@@ -44,6 +61,4 @@ narratives %>%
     subtitle = md("The number of *unique users* entering data in ActivityInfo")
   )
 ```
-
-`TODO` Are there any relationship between word counts per partner and number of people reporting to AI?
 
