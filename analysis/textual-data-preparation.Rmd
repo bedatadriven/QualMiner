@@ -51,7 +51,7 @@ words including both lower and sentence case versions.
 We have imported a list of Spanish stopwords data (source
 [**here**](https://github.com/stopwords-iso/stopwords-es), and that's the
 alternative for `stopwords_es` list from the
-[corpus](https://cran.r-project.org/package=corpus) package) and perform a
+**corpus**[^3] package and perform a
 *filtering join* returning tokens from textual data by excluding the words
 listed in the stopwords. that only returns the tokens not listed in the
 stopwords.
@@ -82,9 +82,9 @@ further explanation, in the results.
 **5. Perform stemming**
 
 Stemming is a process that removes the suffixes (and sometimes prefixes) of the
-words and bring them to the base form. We use "Hunspell" stemmer from the
-package [**hunspell**](https://cran.r-project.org/package=hunspell) that
-provides more precise stemming behavior.
+words and bring them to the base form. The "Hunspell" stemmer is used (from the
+package **hunspell**[^4] that provides more precise stemming behavior than the
+other stemmers available in R ecosystem.
 
 From that point onwards, we will use stemmed words instead of the raw tokenized
 words because stemmed words give us better information.
@@ -118,4 +118,11 @@ rbind(head(response.tokens_stemmed[c("word", "word_stem")], 5), "...") %>%
 response.tokens <- response.tokens_stemmed
 question.tokens <- question.tokens_stemmed
 ```
+
+[^3]: Patrick O. Perry (2017). corpus: Text Corpus Analysis. R package version
+0.10.0. https://CRAN.R-project.org/package=corpus
+
+[^4]: Jeroen Ooms (2018). hunspell: High-Performance Stemmer, Tokenizer, and
+Spell Checker. R package version 3.0.
+https://CRAN.R-project.org/package=hunspell
 

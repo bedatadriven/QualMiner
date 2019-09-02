@@ -1,3 +1,4 @@
+
 # The number of narrative records in sectors {-}
 
 ```{r}

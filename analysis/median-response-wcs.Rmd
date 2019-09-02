@@ -93,7 +93,7 @@ narratives.wc.median.specific.partners_splitted_list <-
   })
 
 ## "cowplot" is civilized version of 'gridExtra'.
-do.call(cowplot::plot_grid, narratives.wc.median.specific.partners_splitted_list)
+cowplot::plot_grid(plotlist = narratives.wc.median.specific.partners_splitted_list)
 ```
 
 <br>

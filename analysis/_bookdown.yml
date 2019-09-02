@@ -17,6 +17,7 @@ rmd_files: [
   "recode-table.Rmd",
   "partners.Rmd",
   "partners-enter-narrative-data.Rmd",
+  "partners-enter-narrative-data-per-month.Rmd",
   "direct-indirect-fields.Rmd",
   "narrative-records-form-topics.Rmd",
   "narrative-cantons-provinces.Rmd",

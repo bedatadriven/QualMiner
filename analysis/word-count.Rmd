@@ -97,7 +97,7 @@ p2 <- description.field.wc %>%
   theme_ecuador1() +
   theme(legend.position = "none")
 
-do.call(cowplot::plot_grid, list(p1, p2))
+cowplot::plot_grid(p1, p2)
 ```
 
 The gray area around the lines shows the confidence band at the *0.95* level.

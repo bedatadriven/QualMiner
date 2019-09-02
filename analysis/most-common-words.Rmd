@@ -55,7 +55,7 @@ response.tokens %>%
   labs(
     title = "What are the most frequent words from responses in the form topics?",
     subtitle = "The relative frequency",
-    caption = RECODE.TBL.CAPTION
+    caption = RECODE.TABLE.CAPTION
   ) +
   xlab(NULL) +
   ylab(NULL)

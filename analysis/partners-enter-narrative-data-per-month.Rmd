@@ -1,0 +1,50 @@
+
+# Which partners do enter more records with narrative data per months? {-}
+
+#### <i>A time-series representation with free scales on y-axis</i> {-}
+
+```{r, fig.height=80, fig.width=8, fig.align='center', fig.cap='"Reporting" and "Implementing" partners reporting narrative data per month'}
+## References:
+## - https://stackoverflow.com/a/42367515
+partners_narrative_per_month <- function(partner.name) {
+  partner_per_month <- narratives %>% 
+    dplyr::filter(partnerName == {{partner.name}}) %>% 
+    group_by(subPartnerName, Month) %>% 
+    summarise(n_response = length(response)) %>% 
+    ungroup()
+  partner_per_month_ts <- partner_per_month %>%
+    mutate(Month = tsibble::yearmonth(Month)) %>% 
+    tsibble::as_tsibble(index = "Month", key = "subPartnerName") %>% 
+    tsibble::fill_gaps(n_response = 0, .full = TRUE)
+  partner_per_month_ts$tempvar <- partner.name
+  partner_per_month_ts %>% 
+    ggplot(aes(Month, n_response, color = subPartnerName, group = subPartnerName)) +
+    geom_point() +
+    geom_line() +
+    scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
+    facet_grid(. ~ tempvar) +
+    xlab(NULL) +
+    ylab(NULL) +
+    theme_ecuador1(border=TRUE, panel_spacing = 0.5) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1.1)) +
+    theme(
+      legend.title = element_blank(),
+      legend.position = "bottom"
+    )
+}
+local({
+  prtners <- unique(narratives$partnerName)
+  prtners <- prtners[order(prtners)]
+  prtners.list <- list()
+  for (p in prtners) {
+    prtners.list[[length(prtners.list) + 1L]] <- partners_narrative_per_month(p)
+  }
+  pplot <- cowplot::plot_grid(
+    plotlist = prtners.list, 
+    align = "v", 
+    nrow = length(prtners.list)
+  )
+  pplot
+})
+```
+

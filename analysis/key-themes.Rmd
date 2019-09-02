@@ -97,7 +97,7 @@ tf_first_per_month_ts %>%
   geom_point() +
   geom_line() +
   facet_grid(rows = vars(word_stem), scales = "free_y") +
-  scale_x_date(labels = scales::date_format("%Y-%m")) +
+  scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
   labs(
     title = paste0("Word frequency over time in '", SELECTED.FORM, "' sector")
   )+

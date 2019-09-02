@@ -28,7 +28,7 @@ multi-line narrative textual data. For instance, the partner **PMA** has lots of
 Implementing Partners reporting for the different data types (as seen in above)
 but there are no narratives from them.
 
-```{r, warning=FALSE, fig.width=7, fig.height=8, fig.align='center', fig.cap='"Reporting" and "Implementing" partners reporting narrative data'}
+```{r, warning=FALSE, fig.width=8, fig.height=20, fig.align='center', fig.cap='"Reporting" and "Implementing" partners reporting narrative data'}
 ## grouped facet wraps. Source:
 ## https://stackoverflow.com/questions/14840542/place-a-legend-for-each-facet-wrap-grid-in-ggplot2
 
@@ -71,7 +71,7 @@ plot_partners_list <- lapply(seq_along(plot_partners_splitted_front), function(i
 })
 
 ## "cowplot" is civilized version of 'gridExtra'.
-do.call(cowplot::plot_grid, plot_partners_list)
+cowplot::plot_grid(plotlist = plot_partners_list, nrow = length(plot_partners_list))
 ```
 
 + *`r subset(narratives.part.count.with.subPartners, partnerName == "ACNUR" & subPartnerName == "HIAS", "percent", drop = T)`*
