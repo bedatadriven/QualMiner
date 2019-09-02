@@ -43,3 +43,5 @@ TEXT.DATA.PATH <- file.path("data", "all-form-table.json")
 ## https://github.com/jeroen/curl/issues/156
 httr::set_config(httr::config(http_version = 0))
 
+RECODE.TBL.CAPTION <- "*Please refer to the recode table for the full version of sector names"
+

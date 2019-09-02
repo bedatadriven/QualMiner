@@ -12,7 +12,7 @@ narratives.wc %>%
   labs(
     title = "Response and word counts by sector",
     subtitle = "A box plot distribution",
-    caption = "*Please refer to recode table for label forms"
+    caption = RECODE.TABLE.CAPTION
   ) +
   xlab(NULL) +
   ylab(NULL) +
