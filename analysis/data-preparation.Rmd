@@ -22,7 +22,7 @@ raw data, you must have an access for it, that can be done by sourcing the
 | `folderId` | the internal *ActivityInfo* id for folders |
 | `folderName` | the name of folders visible to users |
 | `formId` | the internal *ActivityInfo* id for forms |
-| `formName` | the name of forms visible to users |
+| `formName` | the name of forms visible to users (they are called as *Sectors* in this database specific) |
 | `subFormId` | the internal *ActivityInfo* id for the sub-forms where the records are kept |
 | `subFormName` | the name of the sub-forms visible to users |
 | `Month` | month information for each record as `YYYY-MM` format e.g. `2019-05` |

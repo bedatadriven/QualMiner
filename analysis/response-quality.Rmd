@@ -17,7 +17,7 @@ throughout this section of analysis:
 description fields?
 
 + Is there any relationship between the word count of response, question and
-description fields and explanatory variables such as the question, form topic,
+description fields and explanatory variables such as the question, sector name,
 canton name, partner name, etc.
 
 We assume that *the responses with a 'larger word count' have more quality than

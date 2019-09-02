@@ -1,9 +1,7 @@
 
 # Textual data preparation {-}
 
-Describe how to prepare textual data and what common steps are usually performed.
-
-They are usually four steps involved in this process:
+There are usually four steps involved in the textual data preparation process:
 
 **1. Tokenization**
 

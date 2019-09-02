@@ -40,7 +40,7 @@ recode_tbl %>%
     subtitle = md("*The lookup table for the sector names*")
   ) %>%
   tab_footnote(
-    footnote = md("*Some short form names (e.g. &lsquo;Salud&rsquo;) stay as such, no need to make them even shorter*"),
+    footnote = md("*Some short sector names (e.g. &lsquo;Salud&rsquo;) stay as such, no need to make them even shorter*"),
     locations = cells_column_labels(
       columns = vars(formNameRecode)
     )

@@ -1,4 +1,4 @@
-# The number of narrative records in form topics {-}
+# The number of narrative records in sectors {-}
 
 ```{r}
 narrative.all.records.tbl <- inner_join({
@@ -59,7 +59,7 @@ for (i in seq(nrow(ss.n.a.r.t))) {
 }
 ```
 
-Please note that the following form topics are not included in the table above
+Please note that the following sectors are not included in the table above
 because they do not contain any narrative fields:
 `r mmy::list_en_end(paste0("*",setdiff(unique(form.table$formName), unique(narratives$formName)),"*"),add.quotes=T)`
 

@@ -35,7 +35,7 @@ direct_indirect_fields %>%
     formNameRecode = "Sector name"
   ) %>% 
   tab_header(
-    title = md("The number of direct and indirect fields per **form topic**"),
+    title = md("The number of direct and indirect fields per **sector name**"),
     subtitle = md(paste0("*", unique(direct_indirect_fields$question)[1L], "*"))
   )
 ```

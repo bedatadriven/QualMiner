@@ -1,8 +1,9 @@
 
 # The Description field {-}
 
-In *ActivityInfo* forms, the questions can have an additional description field which
-is meant to give extra details about the questions.
+In *ActivityInfo* forms which constitutes different sectors, the questions can
+have an additional description field which is meant to give extra details about
+the questions.
 
 The description field is not mandatory, so it is optional, but it may
 help users filling out the form easily and eliminate potential confusions if
@@ -83,12 +84,12 @@ grid::grid.draw(g)
 
 <br>
 
-We see in the plot above that the response word counts per form and colored if a
+We see in the plot above that the response word counts per sector and colored if a
 response has a description field or not. Having a description field or not is
 calculated as that a description field has a minimum one word.
 
 The responses with the longest word counts are the ones with description.
 Nevertheless, it is not so easy to see a clear trend that there's a correlation
-between response word count and description fields. Interestingly, the form
-topic *Protección_VBG* has no description fields at all in its form topics.
+between response word count and description fields. Interestingly, the sector
+*Protección_VBG* has no description fields at all in their sectors.
 

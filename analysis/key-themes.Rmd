@@ -99,7 +99,7 @@ tf_first_per_month_ts %>%
   facet_grid(rows = vars(word_stem), scales = "free_y") +
   scale_x_date(labels = scales::date_format("%Y-%m")) +
   labs(
-    title = paste0("Word frequency over time in '", SELECTED.FORM, "' form")
+    title = paste0("Word frequency over time in '", SELECTED.FORM, "' sector")
   )+
   theme_ecuador1(border=TRUE, panel_spacing = 0.25) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1.1)) +

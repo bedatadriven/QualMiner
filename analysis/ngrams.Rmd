@@ -60,7 +60,7 @@ response.tokens.bigrams.tf_idf %>%
   facet_wrap(~ formNameRecode, ncol = 2, scales = "free") +
   theme_ecuador1(border = TRUE) +
   coord_flip() +
-  labs(title = "tf-idf of bigram within form topics") +
+  labs(title = "tf-idf of bigram within sectors") +
   xlab(NULL) +
   ylab(NULL)
 ```
