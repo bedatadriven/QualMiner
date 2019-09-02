@@ -23,7 +23,6 @@
 
 
 
-<meta name="date" content="2019-08-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,8 +135,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="recode-table.html"><a href="recode-table.html"><i class="fa fa-check"></i>Recode table</a></li>
 <li class="chapter" data-level="" data-path="partners.html"><a href="partners.html"><i class="fa fa-check"></i>Partners</a></li>
 <li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
+<li class="chapter" data-level="" data-path="which-partners-do-enter-more-records-with-narrative-data-per-months.html"><a href="which-partners-do-enter-more-records-with-narrative-data-per-months.html"><i class="fa fa-check"></i>Which partners do enter more records with narrative data per months?</a></li>
 <li class="chapter" data-level="" data-path="direct-and-indirect-fields.html"><a href="direct-and-indirect-fields.html"><i class="fa fa-check"></i>Direct and indirect fields</a></li>
-<li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-form-topics.html"><a href="the-number-of-narrative-records-in-form-topics.html"><i class="fa fa-check"></i>The number of narrative records in form topics</a></li>
+<li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-sectors.html"><a href="the-number-of-narrative-records-in-sectors.html"><i class="fa fa-check"></i>The number of narrative records in sectors</a></li>
 <li class="chapter" data-level="" data-path="cantons-and-provinces-entering-narrative-data.html"><a href="cantons-and-provinces-entering-narrative-data.html"><i class="fa fa-check"></i>Cantons and provinces entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="how-many-individuals-are-entering-data.html"><a href="how-many-individuals-are-entering-data.html"><i class="fa fa-check"></i>How many individuals are entering data?</a></li>
 <li class="part"><span><b>III Response quality</b></span></li>
@@ -157,7 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a><ul>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses"><i class="fa fa-check"></i>The most common words in all responses</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-questions"><i class="fa fa-check"></i>The most common words in all questions</a></li>
-<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses-per-form-topic"><i class="fa fa-check"></i>The most common words in all responses per form topic</a></li>
+<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses-per-sector-name"><i class="fa fa-check"></i>The most common words in all responses per sector name</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="the-key-themes-by-using-term-frequency-and-tf-idf.html"><a href="the-key-themes-by-using-term-frequency-and-tf-idf.html"><i class="fa fa-check"></i>The key themes (by using term-frequency and tf-idf)</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a><ul>
@@ -192,7 +192,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cqhvlmlyuu .gt_table {
+#ezmcgnqjyp .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -217,13 +217,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table.border.bottom.color */
 }
 
-#cqhvlmlyuu .gt_heading {
+#ezmcgnqjyp .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#cqhvlmlyuu .gt_title {
+#ezmcgnqjyp .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -234,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#cqhvlmlyuu .gt_subtitle {
+#ezmcgnqjyp .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -245,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#cqhvlmlyuu .gt_bottom_border {
+#ezmcgnqjyp .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -254,7 +254,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* heading.border.bottom.color */
 }
 
-#cqhvlmlyuu .gt_column_spanner {
+#ezmcgnqjyp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -262,7 +262,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-bottom: 4px;
 }
 
-#cqhvlmlyuu .gt_col_heading {
+#ezmcgnqjyp .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -275,23 +275,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin: 10px;
 }
 
-#cqhvlmlyuu .gt_columns_top_border {
+#ezmcgnqjyp .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#cqhvlmlyuu .gt_columns_bottom_border {
+#ezmcgnqjyp .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#cqhvlmlyuu .gt_sep_right {
+#ezmcgnqjyp .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#cqhvlmlyuu .gt_group_heading {
+#ezmcgnqjyp .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -315,7 +315,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#cqhvlmlyuu .gt_empty_group_heading {
+#ezmcgnqjyp .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -339,33 +339,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#cqhvlmlyuu .gt_striped {
+#ezmcgnqjyp .gt_striped {
   background-color: #f2f2f2;
 }
 
-#cqhvlmlyuu .gt_from_md > :first-child {
+#ezmcgnqjyp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cqhvlmlyuu .gt_from_md > :last-child {
+#ezmcgnqjyp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cqhvlmlyuu .gt_row {
+#ezmcgnqjyp .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#cqhvlmlyuu .gt_stub {
+#ezmcgnqjyp .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#cqhvlmlyuu .gt_summary_row {
+#ezmcgnqjyp .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -375,7 +375,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* summary_row.text_transform */
 }
 
-#cqhvlmlyuu .gt_grand_summary_row {
+#ezmcgnqjyp .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -385,19 +385,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* grand_summary_row.text_transform */
 }
 
-#cqhvlmlyuu .gt_first_summary_row {
+#ezmcgnqjyp .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#cqhvlmlyuu .gt_first_grand_summary_row {
+#ezmcgnqjyp .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#cqhvlmlyuu .gt_table_body {
+#ezmcgnqjyp .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -412,7 +412,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table_body.border.bottom.color */
 }
 
-#cqhvlmlyuu .gt_footnotes {
+#ezmcgnqjyp .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -421,7 +421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnotes.border.top.color */
 }
 
-#cqhvlmlyuu .gt_footnote {
+#ezmcgnqjyp .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -429,7 +429,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnote.padding */
 }
 
-#cqhvlmlyuu .gt_sourcenotes {
+#ezmcgnqjyp .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -438,48 +438,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* sourcenotes.border.top.color */
 }
 
-#cqhvlmlyuu .gt_sourcenote {
+#ezmcgnqjyp .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#cqhvlmlyuu .gt_center {
+#ezmcgnqjyp .gt_center {
   text-align: center;
 }
 
-#cqhvlmlyuu .gt_left {
+#ezmcgnqjyp .gt_left {
   text-align: left;
 }
 
-#cqhvlmlyuu .gt_right {
+#ezmcgnqjyp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cqhvlmlyuu .gt_font_normal {
+#ezmcgnqjyp .gt_font_normal {
   font-weight: normal;
 }
 
-#cqhvlmlyuu .gt_font_bold {
+#ezmcgnqjyp .gt_font_bold {
   font-weight: bold;
 }
 
-#cqhvlmlyuu .gt_font_italic {
+#ezmcgnqjyp .gt_font_italic {
   font-style: italic;
 }
 
-#cqhvlmlyuu .gt_super {
+#ezmcgnqjyp .gt_super {
   font-size: 65%;
 }
 
-#cqhvlmlyuu .gt_footnote_glyph {
+#ezmcgnqjyp .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cqhvlmlyuu" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ezmcgnqjyp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="6" class="gt_heading gt_title gt_font_normal gt_center" style>Indicator count totals</th>
@@ -574,10 +574,12 @@ Figure 1: Total multi-line text entries collected by year (cumulative)
 Figure 2: Total collected data by type (cumulative)
 </p>
 </div>
+<blockquote>
 <p>From the perspective of <em>ActivityInfo</em>, it shows a clear need for new tools to
 support analysis of qualitative data (or namely ‘Multi-line text entries’) as
 the absolute volume of qualitative data has increased by a factor of 150, and
 almost doubled as a relative share of all data collected.</p>
+</blockquote>
 
 </div>
             </section>

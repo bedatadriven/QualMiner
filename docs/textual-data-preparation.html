@@ -23,7 +23,6 @@
 
 
 
-<meta name="date" content="2019-08-29" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -136,8 +135,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="recode-table.html"><a href="recode-table.html"><i class="fa fa-check"></i>Recode table</a></li>
 <li class="chapter" data-level="" data-path="partners.html"><a href="partners.html"><i class="fa fa-check"></i>Partners</a></li>
 <li class="chapter" data-level="" data-path="partners-entering-narrative-data.html"><a href="partners-entering-narrative-data.html"><i class="fa fa-check"></i>Partners entering narrative data</a></li>
+<li class="chapter" data-level="" data-path="which-partners-do-enter-more-records-with-narrative-data-per-months.html"><a href="which-partners-do-enter-more-records-with-narrative-data-per-months.html"><i class="fa fa-check"></i>Which partners do enter more records with narrative data per months?</a></li>
 <li class="chapter" data-level="" data-path="direct-and-indirect-fields.html"><a href="direct-and-indirect-fields.html"><i class="fa fa-check"></i>Direct and indirect fields</a></li>
-<li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-form-topics.html"><a href="the-number-of-narrative-records-in-form-topics.html"><i class="fa fa-check"></i>The number of narrative records in form topics</a></li>
+<li class="chapter" data-level="" data-path="the-number-of-narrative-records-in-sectors.html"><a href="the-number-of-narrative-records-in-sectors.html"><i class="fa fa-check"></i>The number of narrative records in sectors</a></li>
 <li class="chapter" data-level="" data-path="cantons-and-provinces-entering-narrative-data.html"><a href="cantons-and-provinces-entering-narrative-data.html"><i class="fa fa-check"></i>Cantons and provinces entering narrative data</a></li>
 <li class="chapter" data-level="" data-path="how-many-individuals-are-entering-data.html"><a href="how-many-individuals-are-entering-data.html"><i class="fa fa-check"></i>How many individuals are entering data?</a></li>
 <li class="part"><span><b>III Response quality</b></span></li>
@@ -157,7 +157,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a><ul>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses"><i class="fa fa-check"></i>The most common words in all responses</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-questions"><i class="fa fa-check"></i>The most common words in all questions</a></li>
-<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses-per-form-topic"><i class="fa fa-check"></i>The most common words in all responses per form topic</a></li>
+<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses-per-sector-name"><i class="fa fa-check"></i>The most common words in all responses per sector name</a></li>
 </ul></li>
 <li class="chapter" data-level="" data-path="the-key-themes-by-using-term-frequency-and-tf-idf.html"><a href="the-key-themes-by-using-term-frequency-and-tf-idf.html"><i class="fa fa-check"></i>The key themes (by using term-frequency and tf-idf)</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a><ul>
@@ -188,8 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="textual-data-preparation" class="section level1 unnumbered">
 <h1>Textual data preparation</h1>
-<p>Describe how to prepare textual data and what common steps are usually performed.</p>
-<p>They are usually four steps involved in this process:</p>
+<p>There are usually four steps involved in the textual data preparation process:</p>
 <p><strong>1. Tokenization</strong></p>
 <p>Tokenization means to split a text into tokens considered
 meaningful units of text. A token can either be a word (and often it is) or a
@@ -216,7 +215,7 @@ words including both lower and sentence case versions.</p>
 <p>We have imported a list of Spanish stopwords data (source
 <a href="https://github.com/stopwords-iso/stopwords-es"><strong>here</strong></a>, and that’s the
 alternative for <code>stopwords_es</code> list from the
-<a href="https://cran.r-project.org/package=corpus">corpus</a> package) and perform a
+<strong>corpus</strong><a href="#fn3" class="footnote-ref" id="fnref3"><sup>3</sup></a> package and perform a
 <em>filtering join</em> returning tokens from textual data by excluding the words
 listed in the stopwords. that only returns the tokens not listed in the
 stopwords.</p>
@@ -230,9 +229,9 @@ names are not desired, or <em>violencia</em>, if some words are overused and bri
 further explanation, in the results.</p>
 <p><strong>5. Perform stemming</strong></p>
 <p>Stemming is a process that removes the suffixes (and sometimes prefixes) of the
-words and bring them to the base form. We use “Hunspell” stemmer from the
-package <a href="https://cran.r-project.org/package=hunspell"><strong>hunspell</strong></a> that
-provides more precise stemming behavior.</p>
+words and bring them to the base form. The “Hunspell” stemmer is used (from the
+package <strong>hunspell</strong><a href="#fn4" class="footnote-ref" id="fnref4"><sup>4</sup></a> that provides more precise stemming behavior than the
+other stemmers available in R ecosystem.</p>
 <p>From that point onwards, we will use stemmed words instead of the raw tokenized
 words because stemmed words give us better information.</p>
 <p>After stemming, the words look like this:
@@ -240,7 +239,7 @@ words because stemmed words give us better information.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pxjjocgbwj .gt_table {
+#dihvhkmyov .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -265,13 +264,13 @@ words because stemmed words give us better information.</p>
   /* table.border.bottom.color */
 }
 
-#pxjjocgbwj .gt_heading {
+#dihvhkmyov .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#pxjjocgbwj .gt_title {
+#dihvhkmyov .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -282,7 +281,7 @@ words because stemmed words give us better information.</p>
   border-bottom-width: 0;
 }
 
-#pxjjocgbwj .gt_subtitle {
+#dihvhkmyov .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -293,7 +292,7 @@ words because stemmed words give us better information.</p>
   border-top-width: 0;
 }
 
-#pxjjocgbwj .gt_bottom_border {
+#dihvhkmyov .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -302,7 +301,7 @@ words because stemmed words give us better information.</p>
   /* heading.border.bottom.color */
 }
 
-#pxjjocgbwj .gt_column_spanner {
+#dihvhkmyov .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -310,7 +309,7 @@ words because stemmed words give us better information.</p>
   padding-bottom: 4px;
 }
 
-#pxjjocgbwj .gt_col_heading {
+#dihvhkmyov .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -323,23 +322,23 @@ words because stemmed words give us better information.</p>
   margin: 10px;
 }
 
-#pxjjocgbwj .gt_columns_top_border {
+#dihvhkmyov .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#pxjjocgbwj .gt_columns_bottom_border {
+#dihvhkmyov .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#pxjjocgbwj .gt_sep_right {
+#dihvhkmyov .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#pxjjocgbwj .gt_group_heading {
+#dihvhkmyov .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -363,7 +362,7 @@ words because stemmed words give us better information.</p>
   vertical-align: middle;
 }
 
-#pxjjocgbwj .gt_empty_group_heading {
+#dihvhkmyov .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -387,33 +386,33 @@ words because stemmed words give us better information.</p>
   vertical-align: middle;
 }
 
-#pxjjocgbwj .gt_striped {
+#dihvhkmyov .gt_striped {
   background-color: #f2f2f2;
 }
 
-#pxjjocgbwj .gt_from_md > :first-child {
+#dihvhkmyov .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pxjjocgbwj .gt_from_md > :last-child {
+#dihvhkmyov .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pxjjocgbwj .gt_row {
+#dihvhkmyov .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#pxjjocgbwj .gt_stub {
+#dihvhkmyov .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#pxjjocgbwj .gt_summary_row {
+#dihvhkmyov .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -423,7 +422,7 @@ words because stemmed words give us better information.</p>
   /* summary_row.text_transform */
 }
 
-#pxjjocgbwj .gt_grand_summary_row {
+#dihvhkmyov .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -433,19 +432,19 @@ words because stemmed words give us better information.</p>
   /* grand_summary_row.text_transform */
 }
 
-#pxjjocgbwj .gt_first_summary_row {
+#dihvhkmyov .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#pxjjocgbwj .gt_first_grand_summary_row {
+#dihvhkmyov .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#pxjjocgbwj .gt_table_body {
+#dihvhkmyov .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -460,7 +459,7 @@ words because stemmed words give us better information.</p>
   /* table_body.border.bottom.color */
 }
 
-#pxjjocgbwj .gt_footnotes {
+#dihvhkmyov .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -469,7 +468,7 @@ words because stemmed words give us better information.</p>
   /* footnotes.border.top.color */
 }
 
-#pxjjocgbwj .gt_footnote {
+#dihvhkmyov .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -477,7 +476,7 @@ words because stemmed words give us better information.</p>
   /* footnote.padding */
 }
 
-#pxjjocgbwj .gt_sourcenotes {
+#dihvhkmyov .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -486,48 +485,48 @@ words because stemmed words give us better information.</p>
   /* sourcenotes.border.top.color */
 }
 
-#pxjjocgbwj .gt_sourcenote {
+#dihvhkmyov .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#pxjjocgbwj .gt_center {
+#dihvhkmyov .gt_center {
   text-align: center;
 }
 
-#pxjjocgbwj .gt_left {
+#dihvhkmyov .gt_left {
   text-align: left;
 }
 
-#pxjjocgbwj .gt_right {
+#dihvhkmyov .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pxjjocgbwj .gt_font_normal {
+#dihvhkmyov .gt_font_normal {
   font-weight: normal;
 }
 
-#pxjjocgbwj .gt_font_bold {
+#dihvhkmyov .gt_font_bold {
   font-weight: bold;
 }
 
-#pxjjocgbwj .gt_font_italic {
+#dihvhkmyov .gt_font_italic {
   font-style: italic;
 }
 
-#pxjjocgbwj .gt_super {
+#dihvhkmyov .gt_super {
   font-size: 65%;
 }
 
-#pxjjocgbwj .gt_footnote_glyph {
+#dihvhkmyov .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pxjjocgbwj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="dihvhkmyov" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">word</th>
@@ -565,6 +564,16 @@ words because stemmed words give us better information.</p>
 <p><br></p>
 <hr>
 
+</div>
+<div class="footnotes">
+<hr />
+<ol start="3">
+<li id="fn3"><p>Patrick O. Perry (2017). corpus: Text Corpus Analysis. R package version
+0.10.0. <a href="https://CRAN.R-project.org/package=corpus" class="uri">https://CRAN.R-project.org/package=corpus</a><a href="textual-data-preparation.html#fnref3" class="footnote-back">↩</a></p></li>
+<li id="fn4"><p>Jeroen Ooms (2018). hunspell: High-Performance Stemmer, Tokenizer, and
+Spell Checker. R package version 3.0.
+<a href="https://CRAN.R-project.org/package=hunspell" class="uri">https://CRAN.R-project.org/package=hunspell</a><a href="textual-data-preparation.html#fnref4" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
