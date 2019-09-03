@@ -37,7 +37,7 @@ rmd_files: [
   "most-common-words.Rmd",
   "key-themes.Rmd",
   "ngrams.Rmd",
-  "term-frequency-matrix.Rmd",
+  "most-used-bigrams.Rmd",
   "sentiment-analysis.Rmd",
 
   "references.Rmd"
