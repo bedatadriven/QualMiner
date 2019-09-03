@@ -161,7 +161,7 @@ narratives.med.wc_byPartnerSubPartner_ts <-
 
 #### Median word count of responses per specific Reporting Partners over months {-}
 
-```{r, specific-reporting-partners-over-months, fig.align='center'}
+```{r, specific-reporting-partners-over-months, fig.height=14, fig.width=8, fig.align='center'}
 .med.wc.specific <- narratives.med.wc_byPartnerSubPartner_ts %>% 
   dplyr::filter(partnerName %in% c("ACNUR", "UNICEF") | subPartnerName %in% "HIAS")
 
@@ -177,17 +177,14 @@ narratives.med.wc.specific.partners <-
       geom_line() +
       geom_point() +
       geom_point(shape = 21, color = "black") +
-      xlab("Month") +
+      xlab(NULL) +
       ylab("Median word count") +
-      scale_x_date(labels = scales::date_format("%Y-%m")) +
+      scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
       theme_ecuador1(border = TRUE) +
       theme(legend.title = element_blank()) +
       theme(axis.text.x = element_text(angle = 45, hjust = 1.1))
   })
-## An hacky way to add some space between cowplots:
-## https://github.com/wilkelab/cowplot/issues/11#issuecomment-235643412
-narratives.med.wc.specific.partners[[3]] <- narratives.med.wc.specific.partners[[2]]
-narratives.med.wc.specific.partners[[2]] <- list(NULL)
-do.call(function(...) cowplot::plot_grid(..., nrow = 1, rel_widths = c(1, 0.1, 1)), narratives.med.wc.specific.partners)
+cowplot::plot_grid(plotlist = narratives.med.wc.specific.partners, 
+                   nrow = length(narratives.med.wc.specific.partners))
 ```
 

@@ -1,5 +1,5 @@
 
-# How much does the average word count differ between sectors? {-}
+# How much does the average word count differ between sectors? {-#average-word-count-per-sector}
 
 ```{r}
 narrative_mean_diff <- local({

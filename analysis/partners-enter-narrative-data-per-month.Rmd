@@ -3,7 +3,7 @@
 
 #### <i>A time-series representation with free scales on y-axis</i> {-}
 
-```{r, fig.height=80, fig.width=8, fig.align='center', fig.cap='"Reporting" and "Implementing" partners reporting narrative data per month'}
+```{r, fig.height=80, fig.width=8, fig.align='center', fig.cap='Reporting and Implementing partners entering data with narrative field per month'}
 ## References:
 ## - https://stackoverflow.com/a/42367515
 partners_narrative_per_month <- function(partner.name, min.month, max.month) {

@@ -191,3 +191,4 @@ The QualMiner project explores the qualitative data used for Venezuelan refugee 
   document.getElementById("modified").innerHTML = dx;
 </script>
 
+

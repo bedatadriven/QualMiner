@@ -1,0 +1,135 @@
+
+# Most used bigrams {-}
+
+```{r, include = FALSE}
+n.most.bigram <- 40L
+```
+
+```{r}
+most.used.bigrams <- response.tokens.bigrams %>% 
+  count(bigram) %>% 
+  arrange(desc(n)) %>% 
+  slice(seq(n.most.bigram))
+```
+
+```{r}
+create_most_bigram_matrix <- function(group.column) {
+  exist <- response.tokens.bigrams %>% 
+    group_by({{group.column}}) %>% 
+    dplyr::filter(bigram %in% most.used.bigrams$bigram) %>% 
+    count(bigram) %>% 
+    rename(group = {{group.column}}) %>% 
+    select(group, bigram, n) %>% 
+    ungroup()
+  
+  exist.groups <- unique(exist$group)
+  
+  dummy <- do.call(rbind, lapply(exist.groups, function(g) {
+    bgrams <- exist[exist$group == g, "bigram", drop = TRUE]
+    diff.bigrams <- setdiff(most.used.bigrams$bigram, bgrams)
+    tibble::tibble(group = g, bigram = diff.bigrams, n = 0)
+  }))
+  
+  ret <- rbind(exist, dummy)
+  ret
+}
+```
+
+```{r, include=FALSE}
+bigram.chosen.formNames <- c("Tecnico", "Poblacion", "VBG")
+```
+
+Top *`r n.most.bigram`* bigrams are selected by cumulative use. The sectors *`r mmy::list_en_end(bigram.chosen.formNames)`* are chosen for the
+visualization below of the most used bigrams because these sectors are the ones
+with higher word counts (see [**this section**](#average-word-count-per-sector) for the
+reason).
+
+<br>
+
+```{r, fig.height=8, fig.width=8, fig.align="center", fig.cap="Most common bigrams in different sectors"}
+create_most_bigram_matrix(group.column = formNameRecode) %>% 
+  dplyr::filter(group %in% bigram.chosen.formNames) %>% 
+  ggplot(aes(group, bigram)) + 
+  geom_tile(aes(fill = n), colour = "white") + 
+  scale_fill_gradient(low = "white", high = "steelblue") +
+  theme_light() +
+  labs(
+    title = "**What are the most used bigrams from responses in sectors?**",
+    subtitle = paste0("The sectors in *", paste(bigram.chosen.formNames, collapse = ", "), "*"),
+    caption = RECODE.TABLE.CAPTION
+  ) +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme(
+    plot.title = ggtext::element_markdown(lineheight = 1.1),
+    plot.subtitle = ggtext::element_markdown(lineheight = 1.1)
+  )
+```
+
+<br>
+
+Below some more extra visualizations with location data. Unfortunately, the
+bigram matrix plot did not bring interesting results when used with the partners
+data so they are not included here.
+
+<br>
+
+```{r, fig.align="center"}
+create_most_bigram_matrix(group.column = province) %>% 
+  ggplot(aes(group, bigram)) + 
+  geom_tile(aes(fill = n), colour = "white") + 
+  scale_fill_gradient(low = "white", high = "orange") +
+  theme_light() +
+  theme(axis.text.x = element_text(
+    angle = 330,
+    vjust = 0.8,
+    hjust = 0.2,
+    color = "grey50"
+  )) +
+  labs(
+    title = "What are the most used bigrams from responses in provinces?"
+  ) +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+<br>
+
+```{r, fig.align="center"}
+create_most_bigram_matrix(group.column = canton) %>% 
+  ggplot(aes(group, bigram)) + 
+  geom_tile(aes(fill = n), colour = "white") + 
+  scale_fill_gradient(low = "white", high = "red") +
+  theme_light() +
+  theme(axis.text.x = element_text(angle=330, vjust = 0.8, hjust = 0.2, color = "grey50")) +
+  labs(
+    title = "What are the most used bigrams from responses in cantons?"
+  ) +
+  xlab(NULL) +
+  ylab(NULL)
+```
+
+<br>
+
+Lastly, the table below shows the most used bigrams in all narrative responses
+that is without any aggregation by any group such as sector name, location and
+so on.
+
+```{r}
+most.used.bigrams %>% 
+  gt() %>% 
+  gt_condensed_style() %>% 
+  cols_align(
+    align = "left",
+    columns = vars(bigram)
+  ) %>% 
+  cols_align(
+    align = "center",
+    columns = vars(n)
+  ) %>% 
+  tab_header(
+    title = md("**Most used bigrams in all responses**"),
+    subtitle = "The number of bigrams in the multi-text (narrative) fields"
+  )
+```
+

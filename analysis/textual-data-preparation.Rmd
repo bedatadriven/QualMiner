@@ -110,10 +110,6 @@ rbind(head(response.tokens_stemmed[c("word", "word_stem")], 5), "...") %>%
   )
 ```
 
-<br>
-
-<hr>
-
 ```{r INTERNAL-prepared-data-for-further-analysis}
 response.tokens <- response.tokens_stemmed
 question.tokens <- question.tokens_stemmed
