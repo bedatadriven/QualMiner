@@ -216,7 +216,8 @@ check_required_packages <- function() {
       "sass" = "rstudio/sass",
       "gt" = "rstudio/gt",
       "mmy" = "strboul/mmy",
-      "inspectdf" = "alastairrushworth/inspectdf"
+      "inspectdf" = "alastairrushworth/inspectdf",
+      "ggtext" = "clauswilke/ggtext"
     )
   )
   which.cran <- packages$cran %in% installed.packages()
