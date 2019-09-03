@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Sentiment analysis | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Sentiment analysis | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Sentiment analysis | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="most-used-bigrams.html"/>
-<link rel="next" href="references.html"/>
+<link rel="prev" href="diversion-of-response-word-count-per-sector.html"/>
+<link rel="next" href="textual-data-preparation.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,17 +186,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sentiment-analysis" class="section level1 unnumbered">
-<h1>Sentiment analysis</h1>
-<p>Sentiment analysis (also called as opinion mining) is a technique to understand
-the emotional meanings of text given by a dictionary describing the
-positive/negative words that already done by humans.</p>
-<p>The responses seem to be written with a formal tone of voice; therefore, the
-responses may not show any sentiment at all.</p>
-<p>First, we find a sentiment lexicon for the Spanish language
-(source <a href="https://sites.google.com/site/datascienceslab/projects/multilingualsentiment">here</a>).</p>
-<p>A wordcloud showing positive and negative words in the responses:
-<img src="qualminer_files/figure-html/unnamed-chunk-72-1.png" width="672" style="display: block; margin: auto;" /></p>
+<div id="average-word-count-per-sector" class="section level1 unnumbered">
+<h1>How much does the average word count differ between sectors?</h1>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-45"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-45-1.png" alt="Average word count and sample size" width="960" />
+<p class="caption">
+Figure 10: Average word count and sample size
+</p>
+</div>
+<p>Looking at the sample size of each sector is important to see the variation
+between them because some of them just look like that they are based on very
+small observations.</p>
+<p>It’s important of being careful before making to any conclusions on a single
+graph that shows a single statistics of word count on all sectors. Here is a
+plot showing the average of word counts in sectors with their sample size, which
+is the number of narrative records in the group.</p>
+<p>In that consideration, for text mining, it would be better to consider the
+sectors with which the average word count value is greater than and equal to
+<em>100</em>. Therefore, those sectors are:</p>
+<ul>
+<li><p><strong>Poblacion</strong> (M = <em>35.11</em>, SD = <em>60.07</em>) with <em>170</em> sample size</p></li>
+<li><p><strong>Tecnico</strong> (M = <em>54.45</em>, SD = <em>48.78</em>) with <em>274</em> sample size</p></li>
+<li><p><strong>VBG</strong> (M = <em>54.07</em>, SD = <em>49.60</em>) with <em>114</em> sample size</p></li>
+</ul>
+
+</div>
+
+
 
 </div>
             </section>
@@ -204,8 +220,8 @@ responses may not show any sentiment at all.</p>
           </div>
         </div>
       </div>
-<a href="most-used-bigrams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="references.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="diversion-of-response-word-count-per-sector.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="textual-data-preparation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

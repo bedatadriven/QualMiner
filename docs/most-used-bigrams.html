@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Recode table | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Most used bigrams | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Recode table | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Most used bigrams | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Recode table | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Most used bigrams | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="technical-aspects-of-the-data.html"/>
-<link rel="next" href="partners.html"/>
+<link rel="prev" href="n-grams.html"/>
+<link rel="next" href="sentiment-analysis.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -186,22 +186,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="recode-table" class="section level1 unnumbered">
-<h1>Recode table</h1>
-<div id="shorten-sector-names" class="section level4 unnumbered">
-<h4><i>Shorten sector names</i></h4>
-<p>Since the sector names in the database are quite long, we perform some recoding
-by shortening them into a length of maximum one or two words.</p>
-<p>Shortened sector names make tables and plots used in the analysis better because
-they will not be disarrayed due to the unequal lengths of the long names.</p>
-<p>The table below is referred as <strong>recode table</strong> across this documentation.
-It can be consulted here whenever it is needed.</p>
+<div id="most-used-bigrams" class="section level1 unnumbered">
+<h1>Most used bigrams</h1>
+<p>Top <em>40</em> bigrams are selected by cumulative use. The sectors <em>Tecnico, Poblacion and VBG</em> are chosen for the
+visualization below of the most used bigrams because these sectors are the ones
+with higher word counts (see <a href="average-word-count-per-sector.html#average-word-count-per-sector"><strong>this section</strong></a> for the
+reason).</p>
 <p><br></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-67"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-67-1.png" alt="Most common bigrams in different sectors" width="768" />
+<p class="caption">
+Figure 11: Most common bigrams in different sectors
+</p>
+</div>
+<p><br></p>
+<p>Below some more extra visualizations with location data. Unfortunately, the
+bigram matrix plot did not bring interesting results when used with the partners
+data so they are not included here.</p>
+<p><br></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-68-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-69-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><br></p>
+<p>Lastly, the table below shows the most used bigrams in all narrative responses
+that is without any aggregation by any group such as sector name, location and
+so on.</p>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#ticusecwrw .gt_table {
+#cswgpvxlwi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -226,13 +240,13 @@ It can be consulted here whenever it is needed.</p>
   /* table.border.bottom.color */
 }
 
-#ticusecwrw .gt_heading {
+#cswgpvxlwi .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#ticusecwrw .gt_title {
+#cswgpvxlwi .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -243,7 +257,7 @@ It can be consulted here whenever it is needed.</p>
   border-bottom-width: 0;
 }
 
-#ticusecwrw .gt_subtitle {
+#cswgpvxlwi .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -254,7 +268,7 @@ It can be consulted here whenever it is needed.</p>
   border-top-width: 0;
 }
 
-#ticusecwrw .gt_bottom_border {
+#cswgpvxlwi .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -263,7 +277,7 @@ It can be consulted here whenever it is needed.</p>
   /* heading.border.bottom.color */
 }
 
-#ticusecwrw .gt_column_spanner {
+#cswgpvxlwi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -271,7 +285,7 @@ It can be consulted here whenever it is needed.</p>
   padding-bottom: 4px;
 }
 
-#ticusecwrw .gt_col_heading {
+#cswgpvxlwi .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -284,23 +298,23 @@ It can be consulted here whenever it is needed.</p>
   margin: 10px;
 }
 
-#ticusecwrw .gt_columns_top_border {
+#cswgpvxlwi .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#ticusecwrw .gt_columns_bottom_border {
+#cswgpvxlwi .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#ticusecwrw .gt_sep_right {
+#cswgpvxlwi .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#ticusecwrw .gt_group_heading {
+#cswgpvxlwi .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -324,7 +338,7 @@ It can be consulted here whenever it is needed.</p>
   vertical-align: middle;
 }
 
-#ticusecwrw .gt_empty_group_heading {
+#cswgpvxlwi .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -348,33 +362,33 @@ It can be consulted here whenever it is needed.</p>
   vertical-align: middle;
 }
 
-#ticusecwrw .gt_striped {
+#cswgpvxlwi .gt_striped {
   background-color: #f2f2f2;
 }
 
-#ticusecwrw .gt_from_md > :first-child {
+#cswgpvxlwi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ticusecwrw .gt_from_md > :last-child {
+#cswgpvxlwi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ticusecwrw .gt_row {
+#cswgpvxlwi .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#ticusecwrw .gt_stub {
+#cswgpvxlwi .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#ticusecwrw .gt_summary_row {
+#cswgpvxlwi .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -384,7 +398,7 @@ It can be consulted here whenever it is needed.</p>
   /* summary_row.text_transform */
 }
 
-#ticusecwrw .gt_grand_summary_row {
+#cswgpvxlwi .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -394,19 +408,19 @@ It can be consulted here whenever it is needed.</p>
   /* grand_summary_row.text_transform */
 }
 
-#ticusecwrw .gt_first_summary_row {
+#cswgpvxlwi .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#ticusecwrw .gt_first_grand_summary_row {
+#cswgpvxlwi .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#ticusecwrw .gt_table_body {
+#cswgpvxlwi .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -421,7 +435,7 @@ It can be consulted here whenever it is needed.</p>
   /* table_body.border.bottom.color */
 }
 
-#ticusecwrw .gt_footnotes {
+#cswgpvxlwi .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -430,7 +444,7 @@ It can be consulted here whenever it is needed.</p>
   /* footnotes.border.top.color */
 }
 
-#ticusecwrw .gt_footnote {
+#cswgpvxlwi .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -438,7 +452,7 @@ It can be consulted here whenever it is needed.</p>
   /* footnote.padding */
 }
 
-#ticusecwrw .gt_sourcenotes {
+#cswgpvxlwi .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -447,223 +461,234 @@ It can be consulted here whenever it is needed.</p>
   /* sourcenotes.border.top.color */
 }
 
-#ticusecwrw .gt_sourcenote {
+#cswgpvxlwi .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#ticusecwrw .gt_center {
+#cswgpvxlwi .gt_center {
   text-align: center;
 }
 
-#ticusecwrw .gt_left {
+#cswgpvxlwi .gt_left {
   text-align: left;
 }
 
-#ticusecwrw .gt_right {
+#cswgpvxlwi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ticusecwrw .gt_font_normal {
+#cswgpvxlwi .gt_font_normal {
   font-weight: normal;
 }
 
-#ticusecwrw .gt_font_bold {
+#cswgpvxlwi .gt_font_bold {
   font-weight: bold;
 }
 
-#ticusecwrw .gt_font_italic {
+#cswgpvxlwi .gt_font_italic {
   font-style: italic;
 }
 
-#ticusecwrw .gt_super {
+#cswgpvxlwi .gt_super {
   font-size: 65%;
 }
 
-#ticusecwrw .gt_footnote_glyph {
+#cswgpvxlwi .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="ticusecwrw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="cswgpvxlwi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
-      <th colspan="2" class="gt_heading gt_title gt_font_normal gt_center" style><strong>Recode table</strong></th>
+      <th colspan="2" class="gt_heading gt_title gt_font_normal gt_center" style><strong>Most used bigrams in all responses</strong></th>
     </tr>
     <tr>
-      <th colspan="2" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" style><em>The lookup table for the sector names</em></th>
+      <th colspan="2" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" style>The number of bigrams in the multi-text (narrative) fields</th>
     </tr>
   </thead>
   <tr>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Name of the sector</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Shortened version<sup class="gt_footnote_glyph">1</sup></th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">bigram</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">n</th>
   </tr>
   <body class="gt_table_body">
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_1.1</td>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">movilidad humano</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">234</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Salud</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">nacionalidad venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">101</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Seguridad_alimentaria</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">AlimentSegur</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">mujer atender</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">79</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Agua, saneamiento e higiene</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Agua</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">mujer venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">71</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Alojamiento Temporal</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Alojamiento</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">población venezolano</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">70</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Transporte humanitario</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Transport</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">migración rsd</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">60</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Necesidades básicas/Otro</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Necesidades</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_1.2</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">recibir formación</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">60</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Manejo de la información y entrega directa de la información a la población</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Poblacion</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">personar recibir</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">52</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Manejo de la información para socios y análisis de las necesidades</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Socios</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_2.1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">venezolano atender</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">51</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Protección general</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">General</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_2.2</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">personar venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">44</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Protección_Infancia</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Infancia</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">servicio básico</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">36</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Protección_VBG</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">VBG</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">hombre atender</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">33</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Trata_y_tráfico</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Trafico</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">lago agrio</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">30</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Protection_Otro</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Otro</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">inclusión económico</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">28</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Protección_LGBTI</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">LGBTI</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_3.1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">mujer participar</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">28</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Acceso_a_educación</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Educacion</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">mujer víctima</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">28</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Acceso a vivienda y hábitat dignos en comunidades receptoras</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Habitat</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_3.2</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">realizar acercamiento</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">28</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Medios de vida y formación técnico-profesional</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Tecnico</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">presa privar</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">27</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Cohesión_social</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">SocialCohesion</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">hias participar</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">26</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Apoyo Educacional a Comunidades Receptoras</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Educacional</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_4.1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">sesión formativo</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">23</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para VBG-SSR</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">VBG_SSR</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">población refugiar</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">21</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para protección/gestión de fronteras</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Fronteras</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_4.2</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">san miguel</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">21</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para gestion de la informacion y coordinacion</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Coordinacion</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="2" class="gt_group_heading" style="font-weight: bold;">Objectivo_4.3</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">cruz rojo</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">20</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para educación</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">AsistenciaEducacion</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">protección nacional</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">20</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para el sector laboral</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">SectorLaboral</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">redar social</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">20</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para protección</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">Proteccion</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">defensoría público</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">19</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Asistencia técnica para protección de la infancia</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ProteccionInfancia</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">familia venezolano</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">19</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Asistencia técnica para Salud</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">AsistenciaSalud</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">recibir asesoría</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">19</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">recién llegar</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">19</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">derecho humano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">18</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">sistema educativo</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">18</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">capital semilla</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">17</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">nación unir</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">17</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">salud incluir</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">16</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">vinculación laboral</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">16</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">violencia basar</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">16</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">capacitación gratuito</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">15</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">formación orientación</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">15</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">grupo focal</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">15</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">rojo ecuatoriano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">15</td>
     </tr>
   </body>
   
-  <tfoot>
-    <tr class="gt_footnotes">
-      <td colspan="2">
-        <p class="gt_footnote">
-          <sup class="gt_footnote_glyph">
-            <em>1</em>
-          </sup>
-           
-          <em>Some short sector names (e.g. ‘Salud’) stay as such, no need to make them even shorter</em>
-          <br />
-        </p>
-      </td>
-    </tr>
-  </tfoot>
+  
 </table></div>
 
-</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="technical-aspects-of-the-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="partners.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="n-grams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sentiment-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
