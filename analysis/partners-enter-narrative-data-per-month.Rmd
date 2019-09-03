@@ -6,16 +6,28 @@
 ```{r, fig.height=80, fig.width=8, fig.align='center', fig.cap='"Reporting" and "Implementing" partners reporting narrative data per month'}
 ## References:
 ## - https://stackoverflow.com/a/42367515
-partners_narrative_per_month <- function(partner.name) {
+partners_narrative_per_month <- function(partner.name, min.month, max.month) {
+  stopifnot(is.character(partner.name) && is.character(min.month) && is.character(max.month))
   partner_per_month <- narratives %>% 
     dplyr::filter(partnerName == {{partner.name}}) %>% 
     group_by(subPartnerName, Month) %>% 
     summarise(n_response = length(response)) %>% 
     ungroup()
-  partner_per_month_ts <- partner_per_month %>%
+
+  times <- substr(as.character(seq(from = as.Date(paste(min.month, "01", sep = "-")), 
+               to = as.Date(paste(max.month, "01", sep = "-")), 
+               by = "month")), 1L, 7L)
+  ## remove existing times:
+  times_uniq <- setdiff(times, partner_per_month$Month)
+  gaps <- tibble::tibble(subPartnerName = partner.name, 
+                         Month = times_uniq, 
+                         n_response = 0)
+  partner_per_month_streched <- rbind(partner_per_month, gaps)
+  partner_per_month_ts <- partner_per_month_streched %>%
     mutate(Month = tsibble::yearmonth(Month)) %>% 
     tsibble::as_tsibble(index = "Month", key = "subPartnerName") %>% 
     tsibble::fill_gaps(n_response = 0, .full = TRUE)
+  
   partner_per_month_ts$tempvar <- partner.name
   partner_per_month_ts %>% 
     ggplot(aes(Month, n_response, color = subPartnerName, group = subPartnerName)) +
@@ -32,12 +44,15 @@ partners_narrative_per_month <- function(partner.name) {
       legend.position = "bottom"
     )
 }
+
 local({
+  min.month <- min(narratives$Month)
+  max.month <- max(narratives$Month)
   prtners <- unique(narratives$partnerName)
   prtners <- prtners[order(prtners)]
   prtners.list <- list()
   for (p in prtners) {
-    prtners.list[[length(prtners.list) + 1L]] <- partners_narrative_per_month(p)
+    prtners.list[[length(prtners.list) + 1L]] <- partners_narrative_per_month(p, min.month, max.month)
   }
   pplot <- cowplot::plot_grid(
     plotlist = prtners.list, 
