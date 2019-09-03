@@ -20,19 +20,13 @@ plot_most_common_words <- function(data, variable, fill.color,
 }
 ```
 
-## The most common words in all responses {-}
-
 ```{r, fig.align='center'}
 plot_most_common_words(response.tokens, word_stem, theme_color_codes("UNHCR blue"), "responses")
 ```
 
-## The most common words in all questions {-}
-
 ```{r, fig.align='center'}
 plot_most_common_words(question.tokens, word_stem, theme_color_codes("Taffy"), "questions")
 ```
-
-## The most common words in all responses per sector name {-}
 
 ```{r, fig.width=10, fig.height=10, fig.align='center'}
 ## Reordering words separated into facets. Source:
@@ -53,7 +47,7 @@ response.tokens %>%
   tidytext::scale_x_reordered() + 
   theme_ecuador1() +
   labs(
-    title = "What are the most frequent words from responses in the form topics?",
+    title = "What are the most frequent words from responses in the sectors?",
     subtitle = "The relative frequency",
     caption = RECODE.TABLE.CAPTION
   ) +
