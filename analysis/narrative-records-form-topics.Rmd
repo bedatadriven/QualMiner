@@ -1,6 +1,18 @@
 
 # The number of narrative records in sectors {-}
 
+Since a robust design leads to better planning and monitoring
+system, it is vital to detect and understand which information is not filled by
+users.
+
+If some sectors do not receive enough multi-line text data, it could be a very
+well indicator to make educated guesses about some things do not go well in the
+sectors when comes to enter long texts.
+
+Surely, it is always better to find out the reason 'why'; however, in some cases,
+removing the narrative fields from the sectors, which do not receive enough
+multi-text data, might also be a meaningful move.
+
 ```{r}
 narrative.all.records.tbl <- inner_join({
   narratives %>% 
@@ -37,10 +49,10 @@ narrative.all.records.tbl %>%
   )
 ```
 
+<br>
+
 Note that we also keep the narratives that are empty (which are displayed as
 `NA`, *Not Available*).
-
-<br>
 
 The table shows the narrative fields with count of *'full*' and '*empty*' fields.
 
@@ -49,18 +61,45 @@ ss.n.a.r.t <- n.a.r.t %>% arrange(desc(total)) %>% slice(seq(5))
 for (i in seq(nrow(ss.n.a.r.t))) {
   ss <- ss.n.a.r.t[i, ]
   txt <- glue::glue(
-    "The form **{formNameRecode}** (*{formName}*) has *{filled}* and *{missing}* records in a total of *{total}* records.",
+    "**{formNameRecode}** (*{formName}*) has *{filled}* and *{missing}* records in a total of *{total}* records with a response rate of *{responseRate}*.",
     formNameRecode = ss[["formNameRecode"]],
     formName = ss[["formName"]],
     filled = ss[["filled"]],
     missing = ss[["missing"]],
-    total = ss[["total"]]
+    total = ss[["total"]],
+    responseRate = ss[["Response rate"]]
+  )
+  cat("+", txt, "\n\n")
+}
+```
+
+```{r, include=FALSE}
+response.rate.threshold <- 0.1
+
+```
+
+On the other hand, the following sectors have response rate less than *`r
+response.rate.threshold`* so they have very low response rate compared to all
+sectors in the database.
+
+```{r}
+small.n.a.r.t. <- n.a.r.t[n.a.r.t$`Response rate` < response.rate.threshold, ]
+for (i in seq(nrow(small.n.a.r.t.))) {
+  ss <- small.n.a.r.t.[i, ]
+  txt <- glue::glue(
+    "**{formNameRecode}** (*{formName}*) has *{filled}* and *{missing}* records in a total of *{total}* records with a response rate of *{responseRate}*.",
+    formNameRecode = ss[["formNameRecode"]],
+    formName = ss[["formName"]],
+    filled = ss[["filled"]],
+    missing = ss[["missing"]],
+    total = ss[["total"]],
+    responseRate = ss[["Response rate"]]
   )
   cat("+", txt, "\n\n")
 }
 ```
 
 Please note that the following sectors are not included in the table above
-because they do not contain any narrative fields:
+because they do not contain any narrative fields in their designed forms:
 `r mmy::list_en_end(paste0("*",setdiff(unique(form.table$formName), unique(narratives$formName)),"*"),add.quotes=T)`
 
