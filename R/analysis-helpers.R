@@ -210,7 +210,10 @@ check_required_packages <- function() {
       "wordcloud",
       "cowplot",
       "bookdown",
-      "refinr"
+      "refinr",
+      "udpipe",
+      "gghighlight",
+      "ggforce"
     ),
     github = list(
       "sass" = "rstudio/sass",
