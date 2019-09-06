@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>How many individuals are entering data? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Part of speech tagging | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="How many individuals are entering data? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Part of speech tagging | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="How many individuals are entering data? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Part of speech tagging | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="cantons-and-provinces-entering-narrative-data.html"/>
-<link rel="next" href="response-quality.html"/>
+<link rel="prev" href="most-used-bigrams.html"/>
+<link rel="next" href="numbers-and-dates-in-the-text.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -179,31 +179,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="how-many-individuals-are-entering-data" class="section level1 unnumbered">
-<h1>How many individuals are entering data?</h1>
-<p>We count the number of people entering data by each partner in <em>ActivityInfo</em>.
-This information might help us derive some conclusions about the responses.</p>
+<div id="part-of-speech-tagging" class="section level1 unnumbered">
+<h1>Part of speech tagging</h1>
+<p>We use the <em>UDpipe</em> library with the corresponding <em>udpipe</em> R package for PoS
+(part-of-speech tagging) and dependency parsing. <em>UDpipe</em> library is using
+<em>Universal Dependencies</em><a href="#fn5" class="footnote-ref" id="fnref5"><sup>5</sup></a>.</p>
 <blockquote>
-<p>Some responses would probably lead over time to more standardized responses
-and/or maybe less mistakes as they get to know the system/meaningful inputs
-vs. a more piecemeal approach (several persons entering data depending on the month
-and/or no dedicated resources leading to fewer inputs, especially on the
-narrative).</p>
+<p>Universal Dependencies (UD) is a framework for consistent annotation of
+grammar (parts of speech, morphological features, and syntactic dependencies)
+across different human languages.</p>
 </blockquote>
-<p>However, it is still not very much known if any organization (<em>partner</em>) use a
-kind of “common user account” to enter either all or most of the records.</p>
-<p>In the next <strong>Response quality</strong> section, we look if there are any relationship
-between word counts per partner and number of people reporting to
-<em>ActivityInfo</em>.</p>
-<p><em>How many unique individuals are entering narrative data from each of the
-partners?</em></p>
-<div id="reporting-partners" class="section level4 unnumbered">
-<h4>Reporting partners</h4>
+<p><em>UDpipe package</em> also offers tokenization and lemmatization; however, they are not
+the essential processes for this part because they are done in previous pages
+(see the <a href="textual-data-preparation.html#textual-data-preparation"><strong>section</strong></a>).</p>
+<p><em>UDpipe</em> returns an output in a format called <strong>CoNLL-U</strong><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. The output format
+is quite extensive and detailed, and we do not use all the features
+existing in the output, mainly the <code>upos</code> column is critical for us.</p>
+<p>We annotate the response tokens after the stopwords are applied. A glance how the data looks like:</p>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#fclzzvjtxd .gt_table {
+#xsklnjdwvq .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -228,13 +225,13 @@ partners?</em></p>
   /* table.border.bottom.color */
 }
 
-#fclzzvjtxd .gt_heading {
+#xsklnjdwvq .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#fclzzvjtxd .gt_title {
+#xsklnjdwvq .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -245,7 +242,7 @@ partners?</em></p>
   border-bottom-width: 0;
 }
 
-#fclzzvjtxd .gt_subtitle {
+#xsklnjdwvq .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -256,7 +253,7 @@ partners?</em></p>
   border-top-width: 0;
 }
 
-#fclzzvjtxd .gt_bottom_border {
+#xsklnjdwvq .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -265,7 +262,7 @@ partners?</em></p>
   /* heading.border.bottom.color */
 }
 
-#fclzzvjtxd .gt_column_spanner {
+#xsklnjdwvq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -273,7 +270,7 @@ partners?</em></p>
   padding-bottom: 4px;
 }
 
-#fclzzvjtxd .gt_col_heading {
+#xsklnjdwvq .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -286,23 +283,23 @@ partners?</em></p>
   margin: 10px;
 }
 
-#fclzzvjtxd .gt_columns_top_border {
+#xsklnjdwvq .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#fclzzvjtxd .gt_columns_bottom_border {
+#xsklnjdwvq .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#fclzzvjtxd .gt_sep_right {
+#xsklnjdwvq .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#fclzzvjtxd .gt_group_heading {
+#xsklnjdwvq .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -326,7 +323,7 @@ partners?</em></p>
   vertical-align: middle;
 }
 
-#fclzzvjtxd .gt_empty_group_heading {
+#xsklnjdwvq .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -350,33 +347,33 @@ partners?</em></p>
   vertical-align: middle;
 }
 
-#fclzzvjtxd .gt_striped {
+#xsklnjdwvq .gt_striped {
   background-color: #f2f2f2;
 }
 
-#fclzzvjtxd .gt_from_md > :first-child {
+#xsklnjdwvq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#fclzzvjtxd .gt_from_md > :last-child {
+#xsklnjdwvq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#fclzzvjtxd .gt_row {
+#xsklnjdwvq .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#fclzzvjtxd .gt_stub {
+#xsklnjdwvq .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#fclzzvjtxd .gt_summary_row {
+#xsklnjdwvq .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -386,7 +383,7 @@ partners?</em></p>
   /* summary_row.text_transform */
 }
 
-#fclzzvjtxd .gt_grand_summary_row {
+#xsklnjdwvq .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -396,19 +393,19 @@ partners?</em></p>
   /* grand_summary_row.text_transform */
 }
 
-#fclzzvjtxd .gt_first_summary_row {
+#xsklnjdwvq .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#fclzzvjtxd .gt_first_grand_summary_row {
+#xsklnjdwvq .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#fclzzvjtxd .gt_table_body {
+#xsklnjdwvq .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -423,7 +420,7 @@ partners?</em></p>
   /* table_body.border.bottom.color */
 }
 
-#fclzzvjtxd .gt_footnotes {
+#xsklnjdwvq .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -432,7 +429,7 @@ partners?</em></p>
   /* footnotes.border.top.color */
 }
 
-#fclzzvjtxd .gt_footnote {
+#xsklnjdwvq .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -440,7 +437,7 @@ partners?</em></p>
   /* footnote.padding */
 }
 
-#fclzzvjtxd .gt_sourcenotes {
+#xsklnjdwvq .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -449,141 +446,119 @@ partners?</em></p>
   /* sourcenotes.border.top.color */
 }
 
-#fclzzvjtxd .gt_sourcenote {
+#xsklnjdwvq .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#fclzzvjtxd .gt_center {
+#xsklnjdwvq .gt_center {
   text-align: center;
 }
 
-#fclzzvjtxd .gt_left {
+#xsklnjdwvq .gt_left {
   text-align: left;
 }
 
-#fclzzvjtxd .gt_right {
+#xsklnjdwvq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#fclzzvjtxd .gt_font_normal {
+#xsklnjdwvq .gt_font_normal {
   font-weight: normal;
 }
 
-#fclzzvjtxd .gt_font_bold {
+#xsklnjdwvq .gt_font_bold {
   font-weight: bold;
 }
 
-#fclzzvjtxd .gt_font_italic {
+#xsklnjdwvq .gt_font_italic {
   font-style: italic;
 }
 
-#fclzzvjtxd .gt_super {
+#xsklnjdwvq .gt_super {
   font-size: 65%;
 }
 
-#fclzzvjtxd .gt_footnote_glyph {
+#xsklnjdwvq .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="fclzzvjtxd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
-  <thead>
-    <tr>
-      <th colspan="2" class="gt_heading gt_title gt_font_normal gt_center" style>Users per reporting partner</th>
-    </tr>
-    <tr>
-      <th colspan="2" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" style>The number of <em>unique users</em> entering data in ActivityInfo</th>
-    </tr>
-  </thead>
+<div id="xsklnjdwvq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
   <tr>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Reporting partner</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">Users</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">token</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">lemma</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">upos</th>
   </tr>
   <body class="gt_table_body">
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">ACNUR</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">13</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">complementa</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">complementar</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">VERB</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNICEF</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">entrega</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">entregar</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NOUN</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">CARE</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">6</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">realizada</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">realizar</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">VERB</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Plan Internacional</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">meses</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">mes</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NOUN</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Cruz Roja</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">anteriores</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">anterior</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">ADJ</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">JRS Ecuador</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">NRC</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">OIM</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">OPS/OMS</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">PMA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Dialogo Diverso</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Mision Scalabriniana</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">PNUD</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">RET</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">UNESCO</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNFPA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">World Vision</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
     </tr>
   </body>
   
   
 </table></div>
-</div>
-<div id="implementing-partners" class="section level4 unnumbered">
-<h4>Implementing partners</h4>
+<p>Here is the description of the columns below. Please go to the specified links
+in the table for more detailed answers.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Column name</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><code>token</code></td>
+<td align="left">word which can be analyzed as a single item</td>
+</tr>
+<tr class="even">
+<td align="left"><code>lemma</code></td>
+<td align="left">non-<em>inflected</em><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> form of word</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>upos</code></td>
+<td align="left">universal part-of-speech tag. see <a href="https://universaldependencies.org/u/pos/index.html"><strong>here</strong></a></td>
+</tr>
+</tbody>
+</table>
+<p>Unique part-of-speech tags in the responses (see <a href="https://universaldependencies.org/u/pos/index.html"><strong>here</strong></a> for details):
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#htaortfeuc .gt_table {
+#jutffyrqra .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -608,13 +583,13 @@ partners?</em></p>
   /* table.border.bottom.color */
 }
 
-#htaortfeuc .gt_heading {
+#jutffyrqra .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#htaortfeuc .gt_title {
+#jutffyrqra .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -625,7 +600,7 @@ partners?</em></p>
   border-bottom-width: 0;
 }
 
-#htaortfeuc .gt_subtitle {
+#jutffyrqra .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -636,7 +611,7 @@ partners?</em></p>
   border-top-width: 0;
 }
 
-#htaortfeuc .gt_bottom_border {
+#jutffyrqra .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -645,7 +620,7 @@ partners?</em></p>
   /* heading.border.bottom.color */
 }
 
-#htaortfeuc .gt_column_spanner {
+#jutffyrqra .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -653,7 +628,7 @@ partners?</em></p>
   padding-bottom: 4px;
 }
 
-#htaortfeuc .gt_col_heading {
+#jutffyrqra .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -666,23 +641,23 @@ partners?</em></p>
   margin: 10px;
 }
 
-#htaortfeuc .gt_columns_top_border {
+#jutffyrqra .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#htaortfeuc .gt_columns_bottom_border {
+#jutffyrqra .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#htaortfeuc .gt_sep_right {
+#jutffyrqra .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#htaortfeuc .gt_group_heading {
+#jutffyrqra .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -706,7 +681,7 @@ partners?</em></p>
   vertical-align: middle;
 }
 
-#htaortfeuc .gt_empty_group_heading {
+#jutffyrqra .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -730,33 +705,33 @@ partners?</em></p>
   vertical-align: middle;
 }
 
-#htaortfeuc .gt_striped {
+#jutffyrqra .gt_striped {
   background-color: #f2f2f2;
 }
 
-#htaortfeuc .gt_from_md > :first-child {
+#jutffyrqra .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#htaortfeuc .gt_from_md > :last-child {
+#jutffyrqra .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#htaortfeuc .gt_row {
+#jutffyrqra .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#htaortfeuc .gt_stub {
+#jutffyrqra .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#htaortfeuc .gt_summary_row {
+#jutffyrqra .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -766,7 +741,7 @@ partners?</em></p>
   /* summary_row.text_transform */
 }
 
-#htaortfeuc .gt_grand_summary_row {
+#jutffyrqra .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -776,19 +751,19 @@ partners?</em></p>
   /* grand_summary_row.text_transform */
 }
 
-#htaortfeuc .gt_first_summary_row {
+#jutffyrqra .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#htaortfeuc .gt_first_grand_summary_row {
+#jutffyrqra .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#htaortfeuc .gt_table_body {
+#jutffyrqra .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -803,7 +778,7 @@ partners?</em></p>
   /* table_body.border.bottom.color */
 }
 
-#htaortfeuc .gt_footnotes {
+#jutffyrqra .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -812,7 +787,7 @@ partners?</em></p>
   /* footnotes.border.top.color */
 }
 
-#htaortfeuc .gt_footnote {
+#jutffyrqra .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -820,7 +795,7 @@ partners?</em></p>
   /* footnote.padding */
 }
 
-#htaortfeuc .gt_sourcenotes {
+#jutffyrqra .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -829,227 +804,140 @@ partners?</em></p>
   /* sourcenotes.border.top.color */
 }
 
-#htaortfeuc .gt_sourcenote {
+#jutffyrqra .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#htaortfeuc .gt_center {
+#jutffyrqra .gt_center {
   text-align: center;
 }
 
-#htaortfeuc .gt_left {
+#jutffyrqra .gt_left {
   text-align: left;
 }
 
-#htaortfeuc .gt_right {
+#jutffyrqra .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#htaortfeuc .gt_font_normal {
+#jutffyrqra .gt_font_normal {
   font-weight: normal;
 }
 
-#htaortfeuc .gt_font_bold {
+#jutffyrqra .gt_font_bold {
   font-weight: bold;
 }
 
-#htaortfeuc .gt_font_italic {
+#jutffyrqra .gt_font_italic {
   font-style: italic;
 }
 
-#htaortfeuc .gt_super {
+#jutffyrqra .gt_super {
   font-size: 65%;
 }
 
-#htaortfeuc .gt_footnote_glyph {
+#jutffyrqra .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="htaortfeuc" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
-  <thead>
-    <tr>
-      <th colspan="2" class="gt_heading gt_title gt_font_normal gt_center" style>Users per implementing partner</th>
-    </tr>
-    <tr>
-      <th colspan="2" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" style>The number of <em>unique users</em> entering data in ActivityInfo</th>
-    </tr>
-  </thead>
+<div id="jutffyrqra" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
   <tr>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Implementing partner</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">Users</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V1</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V2</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V3</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V4</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V5</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V6</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V7</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V8</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V9</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V10</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V11</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V12</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V13</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V14</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V15</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V16</th>
   </tr>
   <body class="gt_table_body">
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">18</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ACNUR</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">13</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">HIAS</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">11</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">CARE</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">6</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">UNICEF</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">6</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ADRA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">JRS Ecuador</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">4</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NRC</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Plan Internacional</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">World Vision</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Cruz Roja</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Federación de mujeres de Sucumbíos</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Fundación Tarabita</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Hermanas Salesias</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Hogar de Cristo</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Mision Scalabriniana</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Monasterio de Santa Clara</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">OIM</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Pastoral Social Cáritas Tulcán</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Patronato</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">RET</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">SJR</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Alas de Colibri</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">CAI Matilde</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Casa Matilde</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Centro de Desarrollo y Autogestión</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Dialogo Diverso</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">FUDELA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Fundación de Mujeres de Sucumbios</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Fundación Equidad</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Fundación Pan de Vida</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">OPS/OMS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Parroquia Eclesiástica San Francisco</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">PMA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">PNUD</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNESCO</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">UNFPA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">VERB</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">NOUN</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">ADJ</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">NUM</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">PRON</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">AUX</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">PART</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">ADV</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">SYM</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">ADP</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">PROPN</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">DET</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">X</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">CCONJ</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">SCONJ</td>
     </tr>
   </body>
   
   
-</table></div>
+</table></div></p>
+<div id="most-common-words-by-word-classes" class="section level4 unnumbered">
+<h4>Most common words by word classes</h4>
+<p>The term <em>Word classes</em> here refers nouns, verbs, adjectives, and adverbs.</p>
+<p>All the plots generated below use free scale on the <em>x-axis</em>.</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-78-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="automated-keywords-extraction" class="section level4 unnumbered">
+<h4>Automated Keywords Extraction</h4>
+<p><em>RAKE</em>, short for Rapid Automatic Keyword Extraction, is a popular unsupervised
+method to extract keywords in texts. We will use it to find the word
+frequencies with respect to the occurence of words with other words in the text.</p>
+<p>This is a computationally expensive operation. Therefore, we are going to use
+the three sectors we chose previously (go back to <a href="average-word-count-per-sector.html#average-word-count-per-sector"><strong>this
+section</strong></a>).</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-80-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="top-phrases-formed-by-noun-and-verb-in-the-responses" class="section level4 unnumbered">
+<h4>Top phrases formed by noun and verb in the responses</h4>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><em>Universal Dependencies</em> also provides a visualization tool for the <em>CoNLL-U format</em>, see
+<a href="https://universaldependencies.org/conllu_viewer.html">CoNLL-U file viewer</a>.</p>
+<p>For example, an example sentence from the response taken from the
+<strong>Protección_VBG</strong> is visualized via the file viewer tool as below.</p>
+<p><strong>Sentence</strong></p>
+<p><em>UNFPA ha implementado un espacio seguro para la atención de mujeres en movilidad humana y gestión de casos en Sucumbíos-Puente San Miguel.</em></p>
+<p><strong>Visualization</strong></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-83"></span>
+<img src="../media/conllu-tree-vbg-example.png" alt="A dependency tree visualization from a response in *Protección_VBG*. Created with CoNNL-U file viewer." width="500px" />
+<p class="caption">
+Figure 14: A dependency tree visualization from a response in <em>Protección_VBG</em>. Created with CoNNL-U file viewer.
+</p>
+</div>
 
 </div>
 </div>
-
-
-
+<div class="footnotes">
+<hr />
+<ol start="5">
+<li id="fn5"><p>Universal Dependencies <a href="https://universaldependencies.org/" class="uri">https://universaldependencies.org/</a><a href="part-of-speech-tagging.html#fnref5" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>Described at <a href="http://universaldependencies.org/format.html" class="uri">http://universaldependencies.org/format.html</a> Accessed 2019-09-05.<a href="part-of-speech-tagging.html#fnref6" class="footnote-back">↩</a></p></li>
+<li id="fn7"><p><em>“In morphology, inflection (or inflexion) is a process of word formation, in which a word is modified to express different grammatical categories such as tense, case, voice, aspect, person, number, gender, mood, animacy, and definiteness.”</em> <a href="https://en.wikipedia.org/wiki/Inflection" class="uri">https://en.wikipedia.org/wiki/Inflection</a>&quot; (Accessed 2019-09-05.)<a href="part-of-speech-tagging.html#fnref7" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="cantons-and-provinces-entering-narrative-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="response-quality.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="most-used-bigrams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="numbers-and-dates-in-the-text.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Cantons and provinces entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Variance of response word count per sector | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Cantons and provinces entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Variance of response word count per sector | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Cantons and provinces entering narrative data | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Variance of response word count per sector | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="the-number-of-narrative-records-in-sectors.html"/>
-<link rel="next" href="how-many-individuals-are-entering-data.html"/>
+<link rel="prev" href="response-quality.html"/>
+<link rel="next" href="average-word-count-per-sector.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -179,13 +179,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="cantons-and-provinces-entering-narrative-data" class="section level1 unnumbered">
-<h1>Cantons and provinces entering narrative data</h1>
+<div id="variance-of-response-word-count-per-sector" class="section level1 unnumbered">
+<h1>Variance of response word count per sector</h1>
+<p>If we look at the <em>standard deviation</em>, which is a statistics to show the
+<em>measure of spread</em> in data, of word count of responses in each sector, we can clearly see that
+some of the sectors have high <em>variability</em>.</p>
+<p>That’s important metric to consider which sectors do have responses that are
+worth to conduct analyses.</p>
+<p><br></p>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#hbkgdbqydz .gt_table {
+#eatstmaerr .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -194,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-size: 16px;
   background-color: #FFFFFF;
   /* table.background.color */
-  width: 100%;
+  width: auto;
   /* table.width */
   border-top-style: solid;
   /* table.border.top.style */
@@ -210,15 +216,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table.border.bottom.color */
 }
 
-#hbkgdbqydz .gt_heading {
+#eatstmaerr .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#hbkgdbqydz .gt_title {
+#eatstmaerr .gt_title {
   color: #000000;
-  font-size: 14px;
+  font-size: 125%;
   /* heading.title.font.size */
   padding-top: 4px;
   /* heading.top.padding */
@@ -227,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#hbkgdbqydz .gt_subtitle {
+#eatstmaerr .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -238,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#hbkgdbqydz .gt_bottom_border {
+#eatstmaerr .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -247,7 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* heading.border.bottom.color */
 }
 
-#hbkgdbqydz .gt_column_spanner {
+#eatstmaerr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -255,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-bottom: 4px;
 }
 
-#hbkgdbqydz .gt_col_heading {
+#eatstmaerr .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -268,23 +274,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin: 10px;
 }
 
-#hbkgdbqydz .gt_columns_top_border {
+#eatstmaerr .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#hbkgdbqydz .gt_columns_bottom_border {
+#eatstmaerr .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#hbkgdbqydz .gt_sep_right {
+#eatstmaerr .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#hbkgdbqydz .gt_group_heading {
+#eatstmaerr .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -308,7 +314,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#hbkgdbqydz .gt_empty_group_heading {
+#eatstmaerr .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -332,33 +338,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#hbkgdbqydz .gt_striped {
+#eatstmaerr .gt_striped {
   background-color: #f2f2f2;
 }
 
-#hbkgdbqydz .gt_from_md > :first-child {
+#eatstmaerr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#hbkgdbqydz .gt_from_md > :last-child {
+#eatstmaerr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#hbkgdbqydz .gt_row {
-  padding: 6px;
+#eatstmaerr .gt_row {
+  padding: 8px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#hbkgdbqydz .gt_stub {
+#eatstmaerr .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#hbkgdbqydz .gt_summary_row {
+#eatstmaerr .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -368,7 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* summary_row.text_transform */
 }
 
-#hbkgdbqydz .gt_grand_summary_row {
+#eatstmaerr .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -378,19 +384,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* grand_summary_row.text_transform */
 }
 
-#hbkgdbqydz .gt_first_summary_row {
+#eatstmaerr .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#hbkgdbqydz .gt_first_grand_summary_row {
+#eatstmaerr .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#hbkgdbqydz .gt_table_body {
+#eatstmaerr .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -405,7 +411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table_body.border.bottom.color */
 }
 
-#hbkgdbqydz .gt_footnotes {
+#eatstmaerr .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -414,7 +420,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnotes.border.top.color */
 }
 
-#hbkgdbqydz .gt_footnote {
+#eatstmaerr .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -422,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnote.padding */
 }
 
-#hbkgdbqydz .gt_sourcenotes {
+#eatstmaerr .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -431,265 +437,184 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* sourcenotes.border.top.color */
 }
 
-#hbkgdbqydz .gt_sourcenote {
+#eatstmaerr .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#hbkgdbqydz .gt_center {
+#eatstmaerr .gt_center {
   text-align: center;
 }
 
-#hbkgdbqydz .gt_left {
+#eatstmaerr .gt_left {
   text-align: left;
 }
 
-#hbkgdbqydz .gt_right {
+#eatstmaerr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#hbkgdbqydz .gt_font_normal {
+#eatstmaerr .gt_font_normal {
   font-weight: normal;
 }
 
-#hbkgdbqydz .gt_font_bold {
+#eatstmaerr .gt_font_bold {
   font-weight: bold;
 }
 
-#hbkgdbqydz .gt_font_italic {
+#eatstmaerr .gt_font_italic {
   font-style: italic;
 }
 
-#hbkgdbqydz .gt_super {
+#eatstmaerr .gt_super {
   font-size: 65%;
 }
 
-#hbkgdbqydz .gt_footnote_glyph {
+#eatstmaerr .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="hbkgdbqydz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="eatstmaerr" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
-      <th colspan="4" class="gt_heading gt_title gt_font_normal gt_center" style>Canton and provinces</th>
+      <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center" style>SD and Sample size of response word counts per sector name</th>
     </tr>
     <tr>
-      <th colspan="4" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" style>The number of reports in the multi-text (narrative) fields</th>
+      <th colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" style>Measure the spread with <em>standard deviation</em></th>
     </tr>
   </thead>
   <tr>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Canton</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">Frequency</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">Relative frequency (canton)</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">Relative frequency (province)</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Sector name</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">SD</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">Sample size</th>
   </tr>
   <body class="gt_table_body">
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">PICHINCHA</td>
+    <tr>
+      <td class="gt_row gt_left">Tecnico</td>
+      <td class="gt_row gt_right">48.78</td>
+      <td class="gt_row gt_center">274</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">QUITO</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1163</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.178</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">CARCHI</td>
+      <td class="gt_row gt_left gt_striped">Poblacion</td>
+      <td class="gt_row gt_right gt_striped">60.07</td>
+      <td class="gt_row gt_center gt_striped">170</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">TULCAN</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1009</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.154</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">SUCUMBIOS</td>
+      <td class="gt_row gt_left">VBG</td>
+      <td class="gt_row gt_right">49.60</td>
+      <td class="gt_row gt_center">114</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">LAGO AGRIO</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">915</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.982</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.140</td>
+      <td class="gt_row gt_left gt_striped">Coordinacion</td>
+      <td class="gt_row gt_right gt_striped">86.59</td>
+      <td class="gt_row gt_center gt_striped">67</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">SUCUMBIOS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">17</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.018</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.003</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">IMBABURA</td>
+      <td class="gt_row gt_left">Educacion</td>
+      <td class="gt_row gt_right">55.07</td>
+      <td class="gt_row gt_center">63</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">IBARRA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">700</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.107</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">GUAYAS</td>
+      <td class="gt_row gt_left gt_striped">SocialCohesion</td>
+      <td class="gt_row gt_right gt_striped">31.17</td>
+      <td class="gt_row gt_center gt_striped">63</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">GUAYAQUIL</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">583</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.985</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.089</td>
+      <td class="gt_row gt_left">SectorLaboral</td>
+      <td class="gt_row gt_right">23.51</td>
+      <td class="gt_row gt_center">48</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">DURAN</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">9</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.015</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.001</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">ESMERALDAS</td>
+      <td class="gt_row gt_left gt_striped">Proteccion</td>
+      <td class="gt_row gt_right gt_striped">22.74</td>
+      <td class="gt_row gt_center gt_striped">44</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ESMERALDAS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">427</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.604</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.065</td>
+      <td class="gt_row gt_left">Socios</td>
+      <td class="gt_row gt_right">241.91</td>
+      <td class="gt_row gt_center">39</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">SAN LORENZO</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">272</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.385</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.042</td>
+      <td class="gt_row gt_left gt_striped">Habitat</td>
+      <td class="gt_row gt_right gt_striped">8.47</td>
+      <td class="gt_row gt_center gt_striped">35</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ELOY ALFARO</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">8</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.011</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.001</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">SANTO DOMINGO DE LOS TSACHILAS</td>
+      <td class="gt_row gt_left">Fronteras</td>
+      <td class="gt_row gt_right">42.88</td>
+      <td class="gt_row gt_center">30</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">SANTO DOMINGO</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">414</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.063</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">EL ORO</td>
+      <td class="gt_row gt_left gt_striped">Agua</td>
+      <td class="gt_row gt_right gt_striped">28.96</td>
+      <td class="gt_row gt_center gt_striped">23</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">HUAQUILLAS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">413</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.836</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.063</td>
+      <td class="gt_row gt_left">Necesidades</td>
+      <td class="gt_row gt_right">16.10</td>
+      <td class="gt_row gt_center">21</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">MACHALA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">81</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.164</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.012</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">AZUAY</td>
+      <td class="gt_row gt_left gt_striped">Alojamiento</td>
+      <td class="gt_row gt_right gt_striped">65.81</td>
+      <td class="gt_row gt_center gt_striped">14</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">CUENCA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">390</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.060</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">MANABI</td>
+      <td class="gt_row gt_left">LGBTI</td>
+      <td class="gt_row gt_right">102.74</td>
+      <td class="gt_row gt_center">11</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">MANTA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">58</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.921</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.009</td>
+      <td class="gt_row gt_left gt_striped">VBG_SSR</td>
+      <td class="gt_row gt_right gt_striped">34.22</td>
+      <td class="gt_row gt_center gt_striped">11</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">PORTOVIEJO</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">5</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.079</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.001</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">TUNGURAHUA</td>
+      <td class="gt_row gt_left">Salud</td>
+      <td class="gt_row gt_right">141.10</td>
+      <td class="gt_row gt_center">6</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">BAÑOS DE AGUA SANTA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">19</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.543</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.003</td>
+      <td class="gt_row gt_left gt_striped">ProteccionInfancia</td>
+      <td class="gt_row gt_right gt_striped">16.35</td>
+      <td class="gt_row gt_center gt_striped">5</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">AMBATO</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">16</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.457</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.002</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">BOLIVAR</td>
+      <td class="gt_row gt_left">Trafico</td>
+      <td class="gt_row gt_right">17.01</td>
+      <td class="gt_row gt_center">5</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">SAN MIGUEL</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">14</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.002</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">COTOPAXI</td>
+      <td class="gt_row gt_left gt_striped">Educacional</td>
+      <td class="gt_row gt_right gt_striped">16.97</td>
+      <td class="gt_row gt_center gt_striped">2</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">LATACUNGA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">11</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.002</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">LOS RIOS</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">QUEVEDO</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">10</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.002</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">CHIMBORAZO</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">RIOBAMBA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.001</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">LOJA</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">LOJA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right" style="font-size: 14px;">0.000</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="4" class="gt_group_heading" style="font-weight: bold;">SANTA ELENA</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">LA LIBERTAD</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">1.000</td>
-      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">0.000</td>
+      <td class="gt_row gt_left">AsistenciaEducacion</td>
+      <td class="gt_row gt_right"><em>NA</em></td>
+      <td class="gt_row gt_center">1</td>
     </tr>
   </body>
   
   
 </table></div>
-<p><br></p>
-<p>Treemap plot showing canton and province reporting frequencies.</p>
-<p><img src="qualminer_files/figure-html/treemap-1.png" width="864" style="display: block; margin: auto;" /></p>
+<p>The table above clearly shows that some of the sectors are quite different in
+terms of the word count in responses.</p>
+<pre><code>## + **Tecnico** has *274* sample size with a standard deviation of *48.78* 
+## 
+## + **Poblacion** has *170* sample size with a standard deviation of *60.07* 
+## 
+## + **VBG** has *114* sample size with a standard deviation of *49.6*</code></pre>
+<p>On the other hand, some sectors have very low sample size and high deviation.</p>
+<ul>
+<li><strong>Salud</strong> has
+only <em>6</em> records with diverse word counts,
+which are <em>13, 46, 302, 302, 302, 302</em>.</li>
+</ul>
 
 </div>
             </section>
@@ -697,8 +622,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="the-number-of-narrative-records-in-sectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="how-many-individuals-are-entering-data.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="response-quality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="average-word-count-per-sector.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
