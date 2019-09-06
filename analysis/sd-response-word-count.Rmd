@@ -1,9 +1,12 @@
 
-# Diversion of response word count per sector {-}
+# Variance of response word count per sector {-}
 
-If we look at the standard deviation, is a single number statistics to show the
-*measure of spread* in data, of response word count per sector, we will see that
+If we look at the *standard deviation*, which is a statistics to show the
+*measure of spread* in data, of word count of responses in each sector, we can clearly see that
 some of the sectors have high *variability*.
+
+That's important metric to consider which sectors do have responses that are
+worth to conduct analyses.
 
 <br>
 
@@ -14,9 +17,10 @@ rwc.sd <- narratives.wc %>%
 rwc.sample <- narratives.wc %>% 
   group_by(formNameRecode) %>% 
   summarise(sample_size = length(.responseWordCount))
-rwc.sd %>%
+rwc.sd.sample.join <- rwc.sd %>%
   left_join(rwc.sample, by = "formNameRecode") %>% 
-  arrange(desc(sample_size)) %>% 
+  arrange(desc(sample_size))
+rwc.sd.sample.join %>% 
   gt() %>%
   fmt_number(
     columns = vars(SD),
@@ -37,6 +41,25 @@ rwc.sd %>%
   )
 ```
 
+The table above clearly shows that some of the sectors are quite different in
+terms of the word count in responses. 
+
+```{r}
+top.high.sample.size <- rwc.sd.sample.join %>% arrange(desc(sample_size)) %>% slice(seq(3))
+for (i in seq(nrow(top.high.sample.size))) {
+  top <- top.high.sample.size[i, ]
+  txt <- glue::glue(
+    "**{formNameRecode}** has *{sample_size}* sample size with a standard deviation of *{SD}*",
+    formNameRecode = top[["formNameRecode"]],
+    sample_size = top[["sample_size"]],
+    SD = signif(top[["SD"]], 4)
+  )
+   cat("+", txt, "\n\n")
+}
+```
+
+On the other hand, some sectors have very low sample size and high deviation.
+
 ```{r sd-details-salud}
 sd.details.salud <- narratives.wc %>% 
   dplyr::filter(formNameRecode == "Salud") %>% 
@@ -44,8 +67,7 @@ sd.details.salud <- narratives.wc %>%
   pull(.responseWordCount)
 ```
 
-The table above clearly shows that some of the sectors are quite different in
-terms of the word count in responses. For instance, the sector **Salud** has
++ **Salud** has
 only *`r length(sd.details.salud)`* records with diverse word counts, 
 which are *`r sd.details.salud`*.
 
