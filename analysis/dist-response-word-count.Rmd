@@ -1,0 +1,33 @@
+
+# Distribution of word counts in response fields {-}
+
+We will focus on word count of response field because the data we are interested
+in lies there.
+
+There's a lot of variation in response word count. The response word count has a
+distribution with a tail is on the left side meaning that most of the values are
+accumulated on the left. So this distribution has a negative skew.
+
+```{r, fig.align='center', fig.width=8, fig.height=7, fig.cap='Distribution of word count of responses. A zoom to response word counts between 0 and 100.'}
+narratives.wc %>% 
+  ggplot(aes(.responseWordCount)) +
+  geom_histogram(bins = 100, fill = "steelblue", color = "black", size = 0.1) +
+  xlab("Number of words") +
+  ggforce::facet_zoom(x = .responseWordCount <= 100)
+```
+
+If we look at the distribution of word count of responses by *specific sectors*
+which have relatively higher sample size:
+
+```{r, fig.align='center', fig.width=8, fig.height=5, fig.cap='Distribution of word count of responses in "VBG", "Poblacion" and "Tecnico" sectors'}
+narratives.wc %>% 
+  dplyr::filter(formNameRecode %in% c("VBG", "Poblacion", "Tecnico")) %>% 
+  ggplot(aes(.responseWordCount)) +
+  geom_histogram(bins = 50, fill = "steelblue", color = "black", size = 0.1) +
+  facet_wrap(~formNameRecode) +
+  xlab(NULL) +
+  ylab(NULL) +
+  theme_ecuador1(border = TRUE)
+```
+
+`TODO`
