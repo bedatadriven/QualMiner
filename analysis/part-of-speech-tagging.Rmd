@@ -1,42 +1,40 @@
 # Part of speech tagging {-}
 
-We use the UDPipe library with the corresponding udpipe R package for PoS
-(part-of-speech tagging) and dependency parsing. UDPipe library is using
-Universal Dependencies[^6].
+```{r}
+udpipe_spanish_path <- file.path("data-raw", "spanish-gsd-ud-2.4-190531.udpipe")
+udmodel_spanish <- udpipe::udpipe_load_model(file.path("..", udpipe_spanish_path))
+```
+
+We use the *UDpipe* library with the corresponding *udpipe* R package for PoS
+(part-of-speech tagging) and dependency parsing. *UDpipe* library is using
+*Universal Dependencies*[^6].
 
 > Universal Dependencies (UD) is a framework for consistent annotation of
 grammar (parts of speech, morphological features, and syntactic dependencies)
 across different human languages.
 
-UDPipe package also offers tokenization and lemmatization; however, they are not
+*UDpipe package* also offers tokenization and lemmatization; however, they are not
 the essential processes for this part because they are done in previous pages
 (see the [**section**](#textual-data-preparation)).
 
-```{r}
-udpipe_example_from_vbg <- "UNFPA ha implementado un espacio seguro para la atención de mujeres en movilidad humana y gestión de casos en Sucumbíos-Puente San Miguel."
-udpipe_example_from_vbg_annotated <- udpipe::udpipe_annotate(udmodel_spanish, x = udpipe_example_from_vbg)
-invisible(udpipe_example_from_vbg_annotated$conllu)
-```
-
-Universal Dependencies also provides a visualization tool for the CoNLL-U format, 
-[CoNLL-U file viewer](https://universaldependencies.org/conllu_viewer.html).
-
-For example, an example sentence from the response taken from the **Protección_VBG** is visualized
-via the file viewer tool as below.
-
-Sentence:
-
-> `r udpipe_example_from_vbg`
-
-Visualization:
-
-```{r}
-knitr::include_graphics(file.path("..", "media", "conllu-tree-vbg-example.png"))
-```
-
-UDPipe returns an output in a format called **CoNLL-U**[^7]. The output format
+*UDpipe* returns an output in a format called **CoNLL-U**[^7]. The output format
 is quite extensive and detailed, and we do not use all the features
 existing in the output, mainly the `upos` column is critical for us.
+
+We annotate the response tokens after the stopwords are applied. A glance how the data looks like:
+
+```{r, eval=TRUE, cache=TRUE}
+annotated <- udpipe::udpipe_annotate(udmodel_spanish, x = response.tokens_stopw$word)
+annotated <- tibble::as_tibble(annotated) %>% 
+  select(token, lemma, upos)
+```
+
+```{r}
+rbind(head(annotated, 5), "...") %>% 
+  gt() %>% 
+  gt_condensed_style()
+```
+
 
 Here is the description of the columns below. Please go to the specified links
 in the table for more detailed answers.
@@ -47,47 +45,124 @@ in the table for more detailed answers.
 | `lemma` | non-*inflected*[^8] form of word |
 | `upos` | universal part-of-speech tag. see [**here**](https://universaldependencies.org/u/pos/index.html) |
 
-```{r, eval=TRUE, cache=TRUE}
-uniq.response.tokens_stopw <- unique(response.tokens_stopw$word)
-udpipe_spanish_path <- file.path("data-raw", "spanish-gsd-ud-2.4-190531.udpipe")
-udmodel_spanish <- udpipe::udpipe_load_model(file.path("..", udpipe_spanish_path))
-annotated <- udpipe::udpipe_annotate(udmodel_spanish, x = uniq.response.tokens_stopw)
-annotated <- tibble::as_tibble(annotated) %>% 
-  select(token, lemma, upos)
-```
-
-```{r}
-head(annotated)
-```
-
-Unique part-of-speech tags in the responses:
+Unique part-of-speech tags in the responses (see [**here**](https://universaldependencies.org/u/pos/index.html) for details):
 ```{r}
 tibble::as_tibble(as.data.frame(t(unique(annotated$upos)))) %>% 
   gt() %>% 
   gt_condensed_style()
 ```
 
+#### Most common words by word classes {-}
+
+The term *Word classes* here refers nouns, verbs, adjectives, and adverbs.
+
 ```{r}
-pos_most_common_plot <- function(upos.type) {
-  
+pos_most_common_plot <- function(upos.type, N, plt.title, fill) {
+  annotated %>%
+    dplyr::filter(upos == upos.type) %>% 
+    count(token, sort = TRUE) %>% 
+    arrange(desc(n)) %>% 
+    slice(seq(N)) %>%
+    mutate(TOKEN = reorder(token, n)) %>% 
+    ggplot(aes(TOKEN, n)) +
+    geom_col(color = "black", fill = fill) +
+    coord_flip() +
+    theme_ecuador1() +
+    labs(
+      title = paste0("What are the most common  *", plt.title, "*  in all responses?")
+    ) +
+    xlab(NULL) +
+    ylab(NULL) +
+    theme(
+      plot.title = ggtext::element_markdown(lineheight = 1.1)
+    )
 }
-pos_most_common_plot("NOUN")
 ```
 
-#### Most common word classes
+All the plots generated below use free scale on the *x-axis*.
 
-"Word classes" are here nouns, verbs, adjectives, and adverbs.
+```{r, fig.width=8, fig.height=16, fig.align='center', fig.caption='Most common words by word class'}
+pos_types <- list(
+  "NOUN" = "nouns",
+  "VERB" = "verbs",
+  "ADJ" = "adjectives",
+  "ADV" = "adverbs"
+)
+POS_PLOT_LIST <- list()
+for (t in seq_along(pos_types)) {
+  type <- pos_types[t]
+  POS_PLOT_LIST[[length(POS_PLOT_LIST) + 1L]] <- pos_most_common_plot(names(type), 20, type[[1L]], color_set_16()[t+7])
+}
+cowplot::plot_grid(plotlist = POS_PLOT_LIST, nrow = length(POS_PLOT_LIST))
+```
 
-#### Most common noun phrases in the responses
+#### Automated Keywords Extraction {-}
 
-`TODO`
+*RAKE*, short for Rapid Automatic Keyword Extraction, is a popular unsupervised
+method to extract keywords in texts. We will use it to find the word
+frequencies with respect to the occurence of words with other words in the text.
 
+This is a computationally expensive operation. Therefore, we are going to use
+the three sectors we chose previously (go back to [**this
+section**](#average-word-count-per-sector)).
 
+```{r, eval=TRUE, cache=TRUE}
+selected_sector_responses <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% 
+  dplyr::filter(formNameRecode %in% c("VBG", "Poblacion", "Tecnico")) %>% 
+  pull(response)
+selected_sector_annotated <- as.data.frame(udpipe::udpipe_annotate(udmodel_spanish, x = selected_sector_responses))
+rake <- udpipe::keywords_rake(selected_sector_annotated, term = "lemma", group = "doc_id", 
+                       relevant = selected_sector_annotated$upos %in% c("NOUN", "ADJ"))
+rake$key <- factor(rake$keyword, levels = rev(rake$keyword))
+```
 
-The tokenization and lemmatization are briefly explained in textual data processing part.
+```{r, fig.align='center'}
+lattice::barchart(key ~ rake, data = head(subset(rake, freq > 3), 20), col = "red", 
+         main = "Keywords identified by RAKE", 
+         xlab = "Rake")
+```
+
+#### Top phrases formed by noun and verb in the responses {-}
+
+```{r, fig.align='center'}
+## Using a sequence of POS tags (noun phrases / verb phrases)
+selected_sector_annotated$phrase_tag <- udpipe::as_phrasemachine(selected_sector_annotated$upos, type = "upos")
+phrases <- udpipe::keywords_phrases(x = selected_sector_annotated$phrase_tag, term = tolower(selected_sector_annotated$token), 
+                          pattern = "(A|N)*N(P+D*(A|N)*N)*", 
+                          is_regex = TRUE, detailed = FALSE)
+phrases <- subset(phrases, ngram > 1 & freq > 3)
+phrases$key <- factor(phrases$keyword, levels = rev(phrases$keyword))
+lattice::barchart(key ~ freq, data = head(phrases, 20), col = "cadetblue", 
+         main = "Most common noun phrases", xlab = "Frequency")
+```
+
+```{r, include=FALSE}
+## use this chunk for the example "CoNLL-U file viewer"
+udpipe_example_from_vbg <- "UNFPA ha implementado un espacio seguro para la atención de mujeres en movilidad humana y gestión de casos en Sucumbíos-Puente San Miguel."
+udpipe_example_from_vbg_annotated <- udpipe::udpipe_annotate(udmodel_spanish, x = udpipe_example_from_vbg)
+invisible(udpipe_example_from_vbg_annotated$conllu)
+```
+
+*Universal Dependencies* also provides a visualization tool for the *CoNLL-U format*, see 
+[CoNLL-U file viewer](https://universaldependencies.org/conllu_viewer.html).
+
+For example, an example sentence from the response taken from the
+**Protección_VBG** is visualized via the file viewer tool as below.
+
+**Sentence**
+
+*`r udpipe_example_from_vbg`*
+
+**Visualization**
+
+```{r, out.width = "500px", fig.align='center', fig.cap='A dependency tree visualization from a response in *Protección_VBG*. Created with CoNNL-U file viewer.'}
+knitr::include_graphics(file.path("..", "media", "conllu-tree-vbg-example.png"))
+```
 
 [^6]: Universal Dependencies <https://universaldependencies.org/>
 
 [^7]: Described at <http://universaldependencies.org/format.html> Accessed 2019-09-05.
 
-[^8]: > In morphology, inflection (or inflexion) is a process of word formation, in which a word is modified to express different grammatical categories such as tense, case, voice, aspect, person, number, gender, mood, animacy, and definiteness. <https://en.wikipedia.org/wiki/Inflection> Accessed 2019-09-05.
+[^8]: *"In morphology, inflection (or inflexion) is a process of word formation, in which a word is modified to express different grammatical categories such as tense, case, voice, aspect, person, number, gender, mood, animacy, and definiteness."* <https://en.wikipedia.org/wiki/Inflection>" (Accessed 2019-09-05.)
+
