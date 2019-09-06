@@ -28,7 +28,7 @@ is*.
 Some forseen limitations are are based on the unequal distribution of the data.
 The word count of responses and questions can be related to other things, such
 as the questions require short answers. As a result, the responses tend to be
-shorter; therefore, it might limit the quality of the response analysis.
+shorter; therefore, those might be an obstacle for the analysis.
 
 Additionally, we can have a cross-analysis to test these outcomes. It might be a
 good idea to have a small subset of data and ask an expert to test the

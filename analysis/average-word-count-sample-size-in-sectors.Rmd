@@ -22,13 +22,17 @@ narrative_mean_diff <- local({
 narrative_mean_diff %>% 
   ggplot(aes(sampleSize, mean)) + 
   geom_point() +
-  ggrepel::geom_text_repel(aes(label = formNameRecode), segment.colour = NA, force = .2) +
+  ggrepel::geom_text_repel(data = narrative_mean_diff[narrative_mean_diff$sampleSize <= 100, ], 
+                           aes(label = formNameRecode), segment.colour = NA, force = .2) +
   labs(
     title = "Compare average word count and sample size between sectors",
     subtitle= "Scatter plot to compare averages in word counts with sample sizes"
   ) +
   xlab("Sample size") +
   ylab("Average word count") +
+  gghighlight::gghighlight(sampleSize > 100, label_key = formNameRecode,
+              unhighlighted_colour = ggplot2::alpha("darkgrey", 1)
+              ) +
   theme_ecuador1()
 ```
   
