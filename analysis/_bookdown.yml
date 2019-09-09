@@ -39,7 +39,7 @@ rmd_files: [
   "ngrams.Rmd",
   "most-used-bigrams.Rmd",
   "part-of-speech-tagging.Rmd",
-  "numbers-and-dates-in-text.Rmd",
+  "extract-dates-from-text.Rmd",
   "named-entity-recognition.Rmd",
   "sentiment-analysis.Rmd",
 

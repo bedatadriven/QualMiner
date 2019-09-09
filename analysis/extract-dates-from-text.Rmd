@@ -1,0 +1,131 @@
+# Extract dates and years from the text {-}
+
+```{r LOCALE_SETUP, include=FALSE}
+## temporarily change the system locale:
+old.locale <- Sys.getlocale("LC_TIME")
+Sys.setlocale("LC_TIME", "es_ES.UTF-8")
+new.locale <- Sys.getlocale("LC_TIME")
+stopifnot(identical(new.locale, "es_ES.UTF-8")) ## mini test
+```
+
+The dates used in the responses can refer to an important information that is
+being neglected in the response fields. If certain dates are repeatedly used in
+the text, it should be time to open a new field for it in order to make
+monitoring process more robust and efficient.
+
+The tool to look and extract dates in the text is *regular expressions*. The
+regular expressions[^10], shortly *RegEx*, are character patterns that are used
+to search and manipulate strings.
+
+Although the most common pattern to write dates in Spanish follows the rule of
+*day* - *month* - *year*, not all dates are written in a consistent pattern.
+
+**A good rule of thumb to make this analysis easier, adapt writing dates in the
+*ISO 8601 format*[^11], which is an international standard for writing dates, in
+the future.**
+
+Therefore, we set up a complicated pattern to extract the strings, which covers
+the following cases below:
+
+The explanation of sequences
+(the descriptions adapted from the *POSIX standard*[^12]):
+| sequence | explanation |
+|:---------|:------------|
+| (sign) | a sign such as `~!#$%^&*()_-+=` etc. |
+| `d` | day of the month as decimal number (01–31) |
+| `m` | month as decimal number (01–12) |
+| `Y` | year |
+| `B` | locale's full month name (e.g., January) |
+| `b` | locale's abbreviated month name (e.g., Jan) |
+
+You might try any of these sequences in R by using `format` such as 
+`format(as.Date("25-09-2019"), "%B")`.
+
+```{r}
+formats <- list(
+  format1 = list(
+    regex = "(19|20)\\d{2}",
+    description = "Most of the years start with 19xx and 20xx, so better to choose with this prefix to reduce the number of false positives which are just numbers with four digits."
+  ),
+  format2 = list(
+    regex = "\\d{2}[-|/]\\d{2}[-|/]\\d{4}",
+    description = "day month and year separated by a hyphen or a forward slash"
+  ),
+  format3 = list(
+    regex = "(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+(?:19[7-9]\\d|2\\d{3})",
+    description = "full or abbreviated month name and year"
+  ),
+  format4 = list(
+    regex = "(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+\\d+.*(?:19[7-9]\\d|2\\d{3})",
+    description = "full or abbreviated month name and year and day and year"
+  ),
+  format5 = list(
+    regex = "\\d+\\s+de\\s+(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+(?:19[7-9]\\d|2\\d{3})",
+    description = "A common way writing dates in Spanish"
+  ),
+  format6 = list(
+    regex = "\\d+\\s+de\\s+(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+de\\s+(?:19[7-9]\\d|2\\d{3})",
+    description = "A common way writing dates in Spanish"
+  ),
+  format7 = list(
+    regex =  "\\d+\\s+de\\s+(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+del\\s+(?:19[7-9]\\d|2\\d{3})",
+    description = "A common way writing dates in Spanish"
+  )
+)
+```
+
+| index | format | variants | RegEx | RegEx description |
+|:------|:-------|:---------|:------|:------------------|
+| 1 | `Y` | `2019` | `r formats$format1$regex` | `r formats$format1$description` |
+| 2 | (`d` or `m`)(sign)(`m` or `d`)(sign)`Y` | `25/09/2019`, `25-09-2019`, `09-25-2019` etc. | `r formats$format2$regex` | `r formats$format2$description` |
+| 3 | `B` `Y` | `septiembre 2019`, `sep 2019` |  |
+| 4 | (`B` or `b`) `d`(sign) `Y` | `julio 19 2019`, `jul 9, 2019`, `jul 9. 2019` |
+| 5 | `d` de `B` `Y` | `28 de marzo 2019` |
+| 6 | `d` de `B` de `Y` | `16 de octubre de 2019` |
+| 7 | `d` de `B` del `Y` | `1 de octubre del 2019` | 
+
+After the texts are extracted, they are displayed in a form of that they
+position of dates are shown in the sentences or paragraphs together with the
+adjacent words.
+
+Spanish month names and abbreviated version in *POSIX standard*:
+```{r}
+all.Spanish.months <- data.frame(
+  full = c("enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", 
+           "agosto", "septiembre", "octubre", "noviembre", "diciembre"),
+  abbreviated = c("ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", 
+                  "oct", "nov", "dic"),
+  stringsAsFactors = FALSE
+)
+all.Spanish.months %>% 
+  gt()
+```
+
+```{r}
+rps <- narratives[!is.na(narratives$response),]
+seq_formats <- seq(7L)
+rpss <- unique(do.call(rbind, lapply(seq_formats, function(i) {
+  fname <- paste0("format", i)
+  format <- rps[grep(formats[[fname]][["regex"]],
+                     rps$response, 
+                     perl = TRUE), 
+                "response"]
+})))
+```
+
+[^10]: More precisely, the RegEx engine in R is called as *P*erl-*C*ompatible
+*R*egular *E*xpressions (PCRE) <https://www.pcre.org/original/doc/html/>
+Accessed September 9, 2019.
+
+[^11]: ISO 8601 Date and Time Format
+<https://www.iso.org/iso-8601-date-and-time-format.html> Accessed September 9,
+2019.
+
+[^12]: POSIX 1003.1 - man page for date (posix section 1p)
+<https://www.unix.com/man-page/posix/1p/date/> Accessed September 9, 2019.
+
+```{r LOCALE_BACK_SETUP, include=FALSE}
+## set-up the changed locale back:
+Sys.setlocale("LC_TIME", old.locale)
+```
+
