@@ -1,7 +1,8 @@
 # Partners entering narrative data {-}
 
 Here, we look at the partners entering narrative data. The number of missing
-records (technical saying: `NA`s) are excluded.
+records (namely `NA`s) refer to that the data in `¿Socio?` indicating the name
+of the reporting partner is left blank.
 
 ```{r}
 narratives.part.count <- narratives %>% 

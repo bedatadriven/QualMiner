@@ -178,7 +178,9 @@ knitr::include_graphics("https://raw.githubusercontent.com/bedatadriven/QualMine
 This document explores qualitative indicators from an *ActivityInfo* database
 that is monitoring Ecuador.
 
-The QualMiner project explores the qualitative data used for Venezuelan refugee response by applying text analysis & mining techniques. The project is funded by the UNHCR Innovation Fund.
+The QualMiner project explores the qualitative data used for Venezuelan refugee
+response by applying text analysis & mining techniques. The project is funded by
+the UNHCR Innovation Fund.
 
 &nbsp;
 <hr />

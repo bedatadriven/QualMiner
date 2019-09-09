@@ -17,27 +17,45 @@ across different human languages.
 the essential processes for this part because they are done in previous pages
 (see the [**section**](#textual-data-preparation)).
 
-*UDpipe* returns an output in a format called **CoNLL-U**[^7]. The output format
-is quite extensive and detailed, and we do not use all the features
-existing in the output, mainly the `upos` column is critical for us.
+*UDpipe* returns an output in a format called **CoNLL-U**[^7]. 
 
-We annotate the response tokens after the stopwords are applied. A glance how the data looks like:
+Here is a glance of the data below to show how it looks like behind the scenes:
 
-```{r, eval=TRUE, cache=TRUE}
-annotated <- udpipe::udpipe_annotate(udmodel_spanish, x = response.tokens_stopw$word)
-annotated <- tibble::as_tibble(annotated) %>% 
-  select(token, lemma, upos)
+```{r, eval=TRUE}
+responses_for_udpipe <- narratives %>% 
+  dplyr::filter(!is.na(response)) %>% 
+  pull(response)
+## save the results in disk,
+## (delete the file in `data/` if the `narratives` data changes):
+fname <- "udpipe_annotated_responses.RDS"
+fpath <- file.path("..", "data", fname)
+annotated <- if (file.exists(fpath)) {
+  readRDS(fpath)
+} else {
+  anntd <- udpipe::udpipe_annotate(udmodel_spanish, x = responses_for_udpipe)
+  anntd_tbl <- tibble::as_tibble(anntd)
+  saveRDS(anntd_tbl, fpath)
+  anntd_tbl
+}
+## apply stopwords again on lemmas:
+stopWordsEs <- get_es_stopwords(colname = "token")
+annotated <- annotated %>% anti_join(stopWordsEs, by = "token")
 ```
 
 ```{r}
 rbind(head(annotated, 5), "...") %>% 
+  mutate(sentence = mmy::text_trunc(sentence, 10L)) %>% 
   gt() %>% 
   gt_condensed_style()
 ```
 
+Annotating text with *UD* is a *computationally expensive operation*. The output
+format is quite extensive and detailed, but we do not use all the features
+existing in the output. Mainly, the `upos` column is critical for this part of
+the analysis.
 
-Here is the description of the columns below. Please go to the specified links
-in the table for more detailed answers.
+Here is the description of the columns to be used below. Please go to the
+specified links in the table for more detailed answers.
 
 | Column name | Description |
 |:------------|:------------|
@@ -102,18 +120,9 @@ cowplot::plot_grid(plotlist = POS_PLOT_LIST, nrow = length(POS_PLOT_LIST))
 method to extract keywords in texts. We will use it to find the word
 frequencies with respect to the occurence of words with other words in the text.
 
-This is a computationally expensive operation. Therefore, we are going to use
-the three sectors we chose previously (go back to [**this
-section**](#average-word-count-per-sector)).
-
 ```{r, eval=TRUE, cache=TRUE}
-selected_sector_responses <- narratives %>% 
-  dplyr::filter(!is.na(response)) %>% 
-  dplyr::filter(formNameRecode %in% c("VBG", "Poblacion", "Tecnico")) %>% 
-  pull(response)
-selected_sector_annotated <- as.data.frame(udpipe::udpipe_annotate(udmodel_spanish, x = selected_sector_responses))
-rake <- udpipe::keywords_rake(selected_sector_annotated, term = "lemma", group = "doc_id", 
-                       relevant = selected_sector_annotated$upos %in% c("NOUN", "ADJ"))
+rake <- udpipe::keywords_rake(annotated, term = "lemma", group = "doc_id", 
+                       relevant = annotated$upos %in% c("NOUN", "ADJ"))
 rake$key <- factor(rake$keyword, levels = rev(rake$keyword))
 ```
 
@@ -123,12 +132,23 @@ lattice::barchart(key ~ rake, data = head(subset(rake, freq > 3), 20), col = "re
          xlab = "Rake")
 ```
 
+Alternatively, if we look at the words related with *Venezuela* whose *RAKE*
+scores are calculated:
+
+```{r}
+rake[grep("ven", rake$keyword), ] %>% 
+  arrange(desc(rake)) %>% 
+  gt() %>% 
+  gt_condensed_style()
+```
+
+
 #### Top phrases formed by noun and verb in the responses {-}
 
 ```{r, fig.align='center'}
 ## Using a sequence of POS tags (noun phrases / verb phrases)
-selected_sector_annotated$phrase_tag <- udpipe::as_phrasemachine(selected_sector_annotated$upos, type = "upos")
-phrases <- udpipe::keywords_phrases(x = selected_sector_annotated$phrase_tag, term = tolower(selected_sector_annotated$token), 
+annotated$phrase_tag <- udpipe::as_phrasemachine(annotated$upos, type = "upos")
+phrases <- udpipe::keywords_phrases(annotated$phrase_tag, term = tolower(annotated$token), 
                           pattern = "(A|N)*N(P+D*(A|N)*N)*", 
                           is_regex = TRUE, detailed = FALSE)
 phrases <- subset(phrases, ngram > 1 & freq > 3)
