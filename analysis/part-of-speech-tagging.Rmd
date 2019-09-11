@@ -1,7 +1,7 @@
 # Part of speech tagging {-}
 
 ```{r}
-udpipe_spanish_path <- file.path("data-raw", "spanish-gsd-ud-2.4-190531.udpipe")
+udpipe_spanish_path <- file.path("data-raw", "spanish-ancora-ud-2.4-190531.udpipe")
 udmodel_spanish <- udpipe::udpipe_load_model(file.path("..", udpipe_spanish_path))
 ```
 
@@ -17,14 +17,15 @@ across different human languages.
 the essential processes for this part because they are done in previous pages
 (see the [**section**](#textual-data-preparation)).
 
+We install the corpus called `Spanish-AnCora`[^ancora].
+
 *UDpipe* returns an output in a format called **CoNLL-U**[^7]. 
 
 Here is a glance of the data below to show how it looks like behind the scenes:
 
 ```{r, eval=TRUE}
-responses_for_udpipe <- narratives %>% 
-  dplyr::filter(!is.na(response)) %>% 
-  pull(response)
+non_na_response <- narratives %>% 
+  dplyr::filter(!is.na(response))
 ## save the results in disk,
 ## (delete the file in `data/` if the `narratives` data changes):
 fname <- "udpipe_annotated_responses.RDS"
@@ -32,7 +33,8 @@ fpath <- file.path("..", "data", fname)
 annotated <- if (file.exists(fpath)) {
   readRDS(fpath)
 } else {
-  anntd <- udpipe::udpipe_annotate(udmodel_spanish, x = responses_for_udpipe)
+  anntd <- udpipe::udpipe_annotate(object = udmodel_spanish, 
+                                   x = non_na_response$response)
   anntd_tbl <- tibble::as_tibble(anntd)
   saveRDS(anntd_tbl, fpath)
   anntd_tbl
@@ -78,16 +80,16 @@ The term *Word classes* here refers nouns, verbs, adjectives, and adverbs.
 pos_most_common_plot <- function(upos.type, N, plt.title, fill) {
   annotated %>%
     dplyr::filter(upos == upos.type) %>% 
-    count(token, sort = TRUE) %>% 
+    count(lemma, sort = TRUE) %>% 
     arrange(desc(n)) %>% 
     slice(seq(N)) %>%
-    mutate(TOKEN = reorder(token, n)) %>% 
-    ggplot(aes(TOKEN, n)) +
+    mutate(LEMMA = reorder(lemma, n)) %>% 
+    ggplot(aes(LEMMA, n)) +
     geom_col(color = "black", fill = fill) +
     coord_flip() +
     theme_ecuador1() +
     labs(
-      title = paste0("What are the most common  *", plt.title, "*  in all responses?")
+      title = paste0("What are the most common  * lemma", plt.title, "*  in all responses?")
     ) +
     xlab(NULL) +
     ylab(NULL) +
@@ -148,14 +150,18 @@ rake[grep("ven", rake$keyword), ] %>%
 ```{r, fig.align='center'}
 ## Using a sequence of POS tags (noun phrases / verb phrases)
 annotated$phrase_tag <- udpipe::as_phrasemachine(annotated$upos, type = "upos")
-phrases <- udpipe::keywords_phrases(annotated$phrase_tag, term = tolower(annotated$token), 
+phrases <- udpipe::keywords_phrases(annotated$phrase_tag, term = annotated$lemma, 
                           pattern = "(A|N)*N(P+D*(A|N)*N)*", 
                           is_regex = TRUE, detailed = FALSE)
 phrases <- subset(phrases, ngram > 1 & freq > 3)
+## remove some false positive keywords
+phrases <- subset(phrases, !keyword %in% c("mujer hombre", "hombre mujer"))
 phrases$key <- factor(phrases$keyword, levels = rev(phrases$keyword))
 lattice::barchart(key ~ freq, data = head(phrases, 20), col = "cadetblue", 
-         main = "Most common noun phrases", xlab = "Frequency")
+         main = "Most common simple noun phrases", xlab = "Frequency")
 ```
+
+***
 
 ```{r, include=FALSE}
 ## use this chunk for the example "CoNLL-U file viewer"
@@ -182,7 +188,10 @@ knitr::include_graphics(file.path("..", "media", "conllu-tree-vbg-example.png"))
 
 [^6]: Universal Dependencies <https://universaldependencies.org/>
 
-[^7]: Described at <http://universaldependencies.org/format.html> Accessed 2019-09-05.
+[^ancora]: AnCora <http://clic.ub.edu/corpus/en>
 
-[^8]: *"In morphology, inflection (or inflexion) is a process of word formation, in which a word is modified to express different grammatical categories such as tense, case, voice, aspect, person, number, gender, mood, animacy, and definiteness."* <https://en.wikipedia.org/wiki/Inflection>" (Accessed 2019-09-05.)
+[^7]: Described at <http://universaldependencies.org/format.html> Accessed 5
+September, 2019.
+
+[^8]: *"In morphology, inflection (or inflexion) is a process of word formation, in which a word is modified to express different grammatical categories such as tense, case, voice, aspect, person, number, gender, mood, animacy, and definiteness."* <https://en.wikipedia.org/wiki/Inflection>" Accessed 9 September, 2019.
 
