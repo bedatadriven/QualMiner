@@ -1,0 +1,66 @@
+
+# How does the term frequency change over time in sectors? {-}
+
+We can closely look at some words to see how the term-frequency changes over
+time.
+
+Let's look at how the most frequent terms in the sectors
+**VBG** (*`r unique(narratives[narratives$formNameRecode == "VBG","formName", drop=TRUE])`*),
+**Poblacion** (*`r unique(narratives[narratives$formNameRecode == "Poblacion","formName", drop=TRUE])`*)
+and
+**Tecnico** (*`r unique(narratives[narratives$formNameRecode == "Tecnico","formName", drop=TRUE])`*),
+which are
+chosen after [this analysis](#average-word-count-per-sector),
+change over months.
+
+```{r}
+term_sector_over_time <- function(SELECTED.FORM) {
+  tf_first_per_month <- response.tokens %>% 
+    group_by(formNameRecode, Month) %>% 
+    count(word_stem) %>%
+    dplyr::filter(formNameRecode == {{SELECTED.FORM}}) %>% 
+    tidytext::bind_tf_idf(word_stem, Month, n) %>% 
+    ## filter out some words that can be redundant
+    dplyr::filter(!word_stem %in% c("vbg", "unfpa", "hias", "personar", "mujer")) %>% 
+    ungroup() %>% 
+    select(Month, word_stem, tf) %>% 
+    arrange(desc(tf)) %>%
+    group_by(Month) %>% 
+    slice(seq(3)) %>% 
+    ungroup()
+  
+  tf_first_per_month_ts <-
+    tf_first_per_month %>%
+    mutate(Month = yearmonth(Month)) %>% 
+    tsibble::as_tsibble(index = "Month", key = "word_stem") %>% 
+    tsibble::fill_gaps(tf = 0, .full = TRUE)
+  
+  tf_first_per_month_ts %>% 
+    ggplot(aes(Month, tf, col = word_stem, group = word_stem)) +
+    geom_point() +
+    geom_line() +
+    facet_grid(rows = vars(word_stem), scales = "free_y") +
+    scale_fill_brewer(palette = 2) +
+    scale_x_date(labels = scales::date_format("%Y-%m"), date_breaks = "1 month") +
+    labs(
+      title = paste0("Term frequency over time in '", SELECTED.FORM, "' sector")
+    ) +
+    xlab(NULL) +
+    theme_ecuador1(border=TRUE, panel_spacing = 0.4) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1.1)) +
+    theme(
+      legend.position = "none", 
+      legend.title = element_blank()
+    )
+}
+```
+
+```{r, fig.width=8, fig.height=25, fig.align='center', fig.cap='Term frequency over time in the sectors having the highest sample sizes.'}
+cowplot::plot_grid(
+  term_sector_over_time("VBG"),
+  term_sector_over_time("Poblacion"),
+  term_sector_over_time("Tecnico"),
+  nrow = 3L
+)
+```
+

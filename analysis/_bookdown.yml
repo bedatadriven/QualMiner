@@ -36,6 +36,7 @@ rmd_files: [
   "textual-data-preparation.Rmd",
   "most-common-words.Rmd",
   "key-themes.Rmd",
+  "word-frequency-over-time.Rmd",
   "ngrams.Rmd",
   "most-used-bigrams.Rmd",
   "part-of-speech-tagging.Rmd",
