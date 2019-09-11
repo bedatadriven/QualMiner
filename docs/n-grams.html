@@ -29,7 +29,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="the-key-themes-by-using-term-frequency-and-tf-idf.html"/>
+<link rel="prev" href="how-does-the-term-frequency-change-over-time-in-sectors.html"/>
 <link rel="next" href="most-used-bigrams.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -151,11 +151,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
-<li class="chapter" data-level="" data-path="the-key-themes-by-using-term-frequency-and-tf-idf.html"><a href="the-key-themes-by-using-term-frequency-and-tf-idf.html"><i class="fa fa-check"></i>The key themes (by using term-frequency and tf-idf)</a></li>
+<li class="chapter" data-level="" data-path="the-key-themes-by-tf-and-tf-idf.html"><a href="the-key-themes-by-tf-and-tf-idf.html"><i class="fa fa-check"></i>The key themes by tf and tf-idf</a></li>
+<li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
 <li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
-<li class="chapter" data-level="" data-path="numbers-and-dates-in-the-text.html"><a href="numbers-and-dates-in-the-text.html"><i class="fa fa-check"></i>Numbers and dates in the text</a></li>
+<li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i>Named entity recognition</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -190,7 +191,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jfggchnqfz .gt_table {
+#umxfdhaygd .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -215,13 +216,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table.border.bottom.color */
 }
 
-#jfggchnqfz .gt_heading {
+#umxfdhaygd .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#jfggchnqfz .gt_title {
+#umxfdhaygd .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -232,7 +233,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#jfggchnqfz .gt_subtitle {
+#umxfdhaygd .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -243,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#jfggchnqfz .gt_bottom_border {
+#umxfdhaygd .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -252,7 +253,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* heading.border.bottom.color */
 }
 
-#jfggchnqfz .gt_column_spanner {
+#umxfdhaygd .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -260,7 +261,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-bottom: 4px;
 }
 
-#jfggchnqfz .gt_col_heading {
+#umxfdhaygd .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -273,23 +274,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin: 10px;
 }
 
-#jfggchnqfz .gt_columns_top_border {
+#umxfdhaygd .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#jfggchnqfz .gt_columns_bottom_border {
+#umxfdhaygd .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#jfggchnqfz .gt_sep_right {
+#umxfdhaygd .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#jfggchnqfz .gt_group_heading {
+#umxfdhaygd .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -313,7 +314,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#jfggchnqfz .gt_empty_group_heading {
+#umxfdhaygd .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -337,33 +338,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#jfggchnqfz .gt_striped {
+#umxfdhaygd .gt_striped {
   background-color: #f2f2f2;
 }
 
-#jfggchnqfz .gt_from_md > :first-child {
+#umxfdhaygd .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jfggchnqfz .gt_from_md > :last-child {
+#umxfdhaygd .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jfggchnqfz .gt_row {
+#umxfdhaygd .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#jfggchnqfz .gt_stub {
+#umxfdhaygd .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#jfggchnqfz .gt_summary_row {
+#umxfdhaygd .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -373,7 +374,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* summary_row.text_transform */
 }
 
-#jfggchnqfz .gt_grand_summary_row {
+#umxfdhaygd .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -383,19 +384,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* grand_summary_row.text_transform */
 }
 
-#jfggchnqfz .gt_first_summary_row {
+#umxfdhaygd .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#jfggchnqfz .gt_first_grand_summary_row {
+#umxfdhaygd .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#jfggchnqfz .gt_table_body {
+#umxfdhaygd .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -410,7 +411,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table_body.border.bottom.color */
 }
 
-#jfggchnqfz .gt_footnotes {
+#umxfdhaygd .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -419,7 +420,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnotes.border.top.color */
 }
 
-#jfggchnqfz .gt_footnote {
+#umxfdhaygd .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -427,7 +428,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnote.padding */
 }
 
-#jfggchnqfz .gt_sourcenotes {
+#umxfdhaygd .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -436,48 +437,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* sourcenotes.border.top.color */
 }
 
-#jfggchnqfz .gt_sourcenote {
+#umxfdhaygd .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#jfggchnqfz .gt_center {
+#umxfdhaygd .gt_center {
   text-align: center;
 }
 
-#jfggchnqfz .gt_left {
+#umxfdhaygd .gt_left {
   text-align: left;
 }
 
-#jfggchnqfz .gt_right {
+#umxfdhaygd .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jfggchnqfz .gt_font_normal {
+#umxfdhaygd .gt_font_normal {
   font-weight: normal;
 }
 
-#jfggchnqfz .gt_font_bold {
+#umxfdhaygd .gt_font_bold {
   font-weight: bold;
 }
 
-#jfggchnqfz .gt_font_italic {
+#umxfdhaygd .gt_font_italic {
   font-style: italic;
 }
 
-#jfggchnqfz .gt_super {
+#umxfdhaygd .gt_super {
   font-size: 65%;
 }
 
-#jfggchnqfz .gt_footnote_glyph {
+#umxfdhaygd .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jfggchnqfz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="umxfdhaygd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">word1</th>
@@ -521,7 +522,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table></div></p>
 <p><em>tf-idf</em> values can also be calculated for bigrams, and visualized within each
 reporting/implementing partner, province/canton and so forth.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-64-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-65-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
@@ -530,7 +531,7 @@ reporting/implementing partner, province/canton and so forth.</p>
           </div>
         </div>
       </div>
-<a href="the-key-themes-by-using-term-frequency-and-tf-idf.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="how-does-the-term-frequency-change-over-time-in-sectors.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="most-used-bigrams.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

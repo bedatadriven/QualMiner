@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="most-used-bigrams.html"/>
-<link rel="next" href="numbers-and-dates-in-the-text.html"/>
+<link rel="next" href="dates-and-years-in-the-responses.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -151,11 +151,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
-<li class="chapter" data-level="" data-path="the-key-themes-by-using-term-frequency-and-tf-idf.html"><a href="the-key-themes-by-using-term-frequency-and-tf-idf.html"><i class="fa fa-check"></i>The key themes (by using term-frequency and tf-idf)</a></li>
+<li class="chapter" data-level="" data-path="the-key-themes-by-tf-and-tf-idf.html"><a href="the-key-themes-by-tf-and-tf-idf.html"><i class="fa fa-check"></i>The key themes by tf and tf-idf</a></li>
+<li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
 <li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
-<li class="chapter" data-level="" data-path="numbers-and-dates-in-the-text.html"><a href="numbers-and-dates-in-the-text.html"><i class="fa fa-check"></i>Numbers and dates in the text</a></li>
+<li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i>Named entity recognition</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
@@ -192,15 +193,14 @@ across different human languages.</p>
 <p><em>UDpipe package</em> also offers tokenization and lemmatization; however, they are not
 the essential processes for this part because they are done in previous pages
 (see the <a href="textual-data-preparation.html#textual-data-preparation"><strong>section</strong></a>).</p>
-<p><em>UDpipe</em> returns an output in a format called <strong>CoNLL-U</strong><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>. The output format
-is quite extensive and detailed, and we do not use all the features
-existing in the output, mainly the <code>upos</code> column is critical for us.</p>
-<p>We annotate the response tokens after the stopwords are applied. A glance how the data looks like:</p>
+<p>We install the corpus called <code>Spanish-AnCora</code><a href="#fn6" class="footnote-ref" id="fnref6"><sup>6</sup></a>.</p>
+<p><em>UDpipe</em> returns an output in a format called <strong>CoNLL-U</strong><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a>.</p>
+<p>Here is a glance of the data below to show how it looks like behind the scenes:</p>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xsklnjdwvq .gt_table {
+#pnkstsaofi .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -225,13 +225,13 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* table.border.bottom.color */
 }
 
-#xsklnjdwvq .gt_heading {
+#pnkstsaofi .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#xsklnjdwvq .gt_title {
+#pnkstsaofi .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -242,7 +242,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   border-bottom-width: 0;
 }
 
-#xsklnjdwvq .gt_subtitle {
+#pnkstsaofi .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -253,7 +253,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   border-top-width: 0;
 }
 
-#xsklnjdwvq .gt_bottom_border {
+#pnkstsaofi .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -262,7 +262,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* heading.border.bottom.color */
 }
 
-#xsklnjdwvq .gt_column_spanner {
+#pnkstsaofi .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -270,7 +270,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   padding-bottom: 4px;
 }
 
-#xsklnjdwvq .gt_col_heading {
+#pnkstsaofi .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -283,23 +283,23 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   margin: 10px;
 }
 
-#xsklnjdwvq .gt_columns_top_border {
+#pnkstsaofi .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xsklnjdwvq .gt_columns_bottom_border {
+#pnkstsaofi .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#xsklnjdwvq .gt_sep_right {
+#pnkstsaofi .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#xsklnjdwvq .gt_group_heading {
+#pnkstsaofi .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -323,7 +323,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   vertical-align: middle;
 }
 
-#xsklnjdwvq .gt_empty_group_heading {
+#pnkstsaofi .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -347,33 +347,33 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   vertical-align: middle;
 }
 
-#xsklnjdwvq .gt_striped {
+#pnkstsaofi .gt_striped {
   background-color: #f2f2f2;
 }
 
-#xsklnjdwvq .gt_from_md > :first-child {
+#pnkstsaofi .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xsklnjdwvq .gt_from_md > :last-child {
+#pnkstsaofi .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xsklnjdwvq .gt_row {
+#pnkstsaofi .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#xsklnjdwvq .gt_stub {
+#pnkstsaofi .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#xsklnjdwvq .gt_summary_row {
+#pnkstsaofi .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -383,7 +383,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* summary_row.text_transform */
 }
 
-#xsklnjdwvq .gt_grand_summary_row {
+#pnkstsaofi .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -393,19 +393,19 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* grand_summary_row.text_transform */
 }
 
-#xsklnjdwvq .gt_first_summary_row {
+#pnkstsaofi .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xsklnjdwvq .gt_first_grand_summary_row {
+#pnkstsaofi .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#xsklnjdwvq .gt_table_body {
+#pnkstsaofi .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -420,7 +420,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* table_body.border.bottom.color */
 }
 
-#xsklnjdwvq .gt_footnotes {
+#pnkstsaofi .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -429,7 +429,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* footnotes.border.top.color */
 }
 
-#xsklnjdwvq .gt_footnote {
+#pnkstsaofi .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -437,7 +437,7 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* footnote.padding */
 }
 
-#xsklnjdwvq .gt_sourcenotes {
+#pnkstsaofi .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -446,81 +446,158 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   /* sourcenotes.border.top.color */
 }
 
-#xsklnjdwvq .gt_sourcenote {
+#pnkstsaofi .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#xsklnjdwvq .gt_center {
+#pnkstsaofi .gt_center {
   text-align: center;
 }
 
-#xsklnjdwvq .gt_left {
+#pnkstsaofi .gt_left {
   text-align: left;
 }
 
-#xsklnjdwvq .gt_right {
+#pnkstsaofi .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xsklnjdwvq .gt_font_normal {
+#pnkstsaofi .gt_font_normal {
   font-weight: normal;
 }
 
-#xsklnjdwvq .gt_font_bold {
+#pnkstsaofi .gt_font_bold {
   font-weight: bold;
 }
 
-#xsklnjdwvq .gt_font_italic {
+#pnkstsaofi .gt_font_italic {
   font-style: italic;
 }
 
-#xsklnjdwvq .gt_super {
+#pnkstsaofi .gt_super {
   font-size: 65%;
 }
 
-#xsklnjdwvq .gt_footnote_glyph {
+#pnkstsaofi .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xsklnjdwvq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="pnkstsaofi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">doc_id</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">paragraph_id</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">sentence_id</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">sentence</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">token_id</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">token</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">lemma</th>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">upos</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">xpos</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">feats</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">head_token_id</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">dep_rel</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">deps</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">misc</th>
   </tr>
   <body class="gt_table_body">
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">complementa</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">complementar</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">VERB</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">doc1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Se complem...</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Se</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">él</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">PRON</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">PRON</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Case=Acc,Dat|Person=3|PrepCase=Npr|PronType=Prs|Reflex=Yes</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">obj</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">entrega</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">entregar</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NOUN</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">doc1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Se complem...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">complementa</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">complementar</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">VERB</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">VERB</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Mood=Ind|Number=Sing|Person=3|Tense=Pres|VerbForm=Fin</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">0</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">root</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">realizada</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">realizar</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">VERB</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">doc1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Se complem...</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">entrega</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">entrega</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NOUN</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NOUN</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Gender=Fem|Number=Sing</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">nsubj</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">meses</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">mes</td>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NOUN</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">doc1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Se complem...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">5</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">realizada</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">realizado</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ADJ</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ADJ</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Gender=Fem|Number=Sing|VerbForm=Part</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">amod</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NA</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">anteriores</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">anterior</td>
-      <td class="gt_row gt_left" style="font-size: 14px;">ADJ</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">doc1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Se complem...</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">7</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">meses</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">mes</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NOUN</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NOUN</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Gender=Masc|Number=Plur</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">5</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">obl</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NA</td>
     </tr>
     <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">...</td>
@@ -529,8 +606,12 @@ existing in the output, mainly the <code>upos</code> column is critical for us.<
   
   
 </table></div>
-<p>Here is the description of the columns below. Please go to the specified links
-in the table for more detailed answers.</p>
+<p>Annotating text with <em>UD</em> is a <em>computationally expensive operation</em>. The output
+format is quite extensive and detailed, but we do not use all the features
+existing in the output. Mainly, the <code>upos</code> column is critical for this part of
+the analysis.</p>
+<p>Here is the description of the columns to be used below. Please go to the
+specified links in the table for more detailed answers.</p>
 <table>
 <thead>
 <tr class="header">
@@ -545,7 +626,7 @@ in the table for more detailed answers.</p>
 </tr>
 <tr class="even">
 <td align="left"><code>lemma</code></td>
-<td align="left">non-<em>inflected</em><a href="#fn7" class="footnote-ref" id="fnref7"><sup>7</sup></a> form of word</td>
+<td align="left">non-<em>inflected</em><a href="#fn8" class="footnote-ref" id="fnref8"><sup>8</sup></a> form of word</td>
 </tr>
 <tr class="odd">
 <td align="left"><code>upos</code></td>
@@ -558,7 +639,7 @@ in the table for more detailed answers.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#jutffyrqra .gt_table {
+#eqxpqlphiw .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -583,13 +664,13 @@ in the table for more detailed answers.</p>
   /* table.border.bottom.color */
 }
 
-#jutffyrqra .gt_heading {
+#eqxpqlphiw .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#jutffyrqra .gt_title {
+#eqxpqlphiw .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -600,7 +681,7 @@ in the table for more detailed answers.</p>
   border-bottom-width: 0;
 }
 
-#jutffyrqra .gt_subtitle {
+#eqxpqlphiw .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -611,7 +692,7 @@ in the table for more detailed answers.</p>
   border-top-width: 0;
 }
 
-#jutffyrqra .gt_bottom_border {
+#eqxpqlphiw .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -620,7 +701,7 @@ in the table for more detailed answers.</p>
   /* heading.border.bottom.color */
 }
 
-#jutffyrqra .gt_column_spanner {
+#eqxpqlphiw .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -628,7 +709,7 @@ in the table for more detailed answers.</p>
   padding-bottom: 4px;
 }
 
-#jutffyrqra .gt_col_heading {
+#eqxpqlphiw .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -641,23 +722,23 @@ in the table for more detailed answers.</p>
   margin: 10px;
 }
 
-#jutffyrqra .gt_columns_top_border {
+#eqxpqlphiw .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#jutffyrqra .gt_columns_bottom_border {
+#eqxpqlphiw .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#jutffyrqra .gt_sep_right {
+#eqxpqlphiw .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#jutffyrqra .gt_group_heading {
+#eqxpqlphiw .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -681,7 +762,7 @@ in the table for more detailed answers.</p>
   vertical-align: middle;
 }
 
-#jutffyrqra .gt_empty_group_heading {
+#eqxpqlphiw .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -705,33 +786,33 @@ in the table for more detailed answers.</p>
   vertical-align: middle;
 }
 
-#jutffyrqra .gt_striped {
+#eqxpqlphiw .gt_striped {
   background-color: #f2f2f2;
 }
 
-#jutffyrqra .gt_from_md > :first-child {
+#eqxpqlphiw .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#jutffyrqra .gt_from_md > :last-child {
+#eqxpqlphiw .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#jutffyrqra .gt_row {
+#eqxpqlphiw .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#jutffyrqra .gt_stub {
+#eqxpqlphiw .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#jutffyrqra .gt_summary_row {
+#eqxpqlphiw .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -741,7 +822,7 @@ in the table for more detailed answers.</p>
   /* summary_row.text_transform */
 }
 
-#jutffyrqra .gt_grand_summary_row {
+#eqxpqlphiw .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -751,19 +832,19 @@ in the table for more detailed answers.</p>
   /* grand_summary_row.text_transform */
 }
 
-#jutffyrqra .gt_first_summary_row {
+#eqxpqlphiw .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#jutffyrqra .gt_first_grand_summary_row {
+#eqxpqlphiw .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#jutffyrqra .gt_table_body {
+#eqxpqlphiw .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -778,7 +859,7 @@ in the table for more detailed answers.</p>
   /* table_body.border.bottom.color */
 }
 
-#jutffyrqra .gt_footnotes {
+#eqxpqlphiw .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -787,7 +868,7 @@ in the table for more detailed answers.</p>
   /* footnotes.border.top.color */
 }
 
-#jutffyrqra .gt_footnote {
+#eqxpqlphiw .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -795,7 +876,7 @@ in the table for more detailed answers.</p>
   /* footnote.padding */
 }
 
-#jutffyrqra .gt_sourcenotes {
+#eqxpqlphiw .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -804,48 +885,48 @@ in the table for more detailed answers.</p>
   /* sourcenotes.border.top.color */
 }
 
-#jutffyrqra .gt_sourcenote {
+#eqxpqlphiw .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#jutffyrqra .gt_center {
+#eqxpqlphiw .gt_center {
   text-align: center;
 }
 
-#jutffyrqra .gt_left {
+#eqxpqlphiw .gt_left {
   text-align: left;
 }
 
-#jutffyrqra .gt_right {
+#eqxpqlphiw .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#jutffyrqra .gt_font_normal {
+#eqxpqlphiw .gt_font_normal {
   font-weight: normal;
 }
 
-#jutffyrqra .gt_font_bold {
+#eqxpqlphiw .gt_font_bold {
   font-weight: bold;
 }
 
-#jutffyrqra .gt_font_italic {
+#eqxpqlphiw .gt_font_italic {
   font-style: italic;
 }
 
-#jutffyrqra .gt_super {
+#eqxpqlphiw .gt_super {
   font-size: 65%;
 }
 
-#jutffyrqra .gt_footnote_glyph {
+#eqxpqlphiw .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="jutffyrqra" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="eqxpqlphiw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V1</th>
@@ -867,22 +948,22 @@ in the table for more detailed answers.</p>
   </tr>
   <body class="gt_table_body">
     <tr>
+      <td class="gt_row gt_center" style="font-size: 14px;">PRON</td>
       <td class="gt_row gt_center" style="font-size: 14px;">VERB</td>
       <td class="gt_row gt_center" style="font-size: 14px;">NOUN</td>
       <td class="gt_row gt_center" style="font-size: 14px;">ADJ</td>
       <td class="gt_row gt_center" style="font-size: 14px;">NUM</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">PROPN</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">PUNCT</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">ADP</td>
       <td class="gt_row gt_center" style="font-size: 14px;">NA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">PRON</td>
       <td class="gt_row gt_center" style="font-size: 14px;">AUX</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">PART</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">DET</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">SCONJ</td>
       <td class="gt_row gt_center" style="font-size: 14px;">ADV</td>
       <td class="gt_row gt_center" style="font-size: 14px;">SYM</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">ADP</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">PROPN</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">DET</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">X</td>
       <td class="gt_row gt_center" style="font-size: 14px;">CCONJ</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">SCONJ</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">INTJ</td>
     </tr>
   </body>
   
@@ -892,21 +973,487 @@ in the table for more detailed answers.</p>
 <h4>Most common words by word classes</h4>
 <p>The term <em>Word classes</em> here refers nouns, verbs, adjectives, and adverbs.</p>
 <p>All the plots generated below use free scale on the <em>x-axis</em>.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-78-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-79-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="automated-keywords-extraction" class="section level4 unnumbered">
 <h4>Automated Keywords Extraction</h4>
 <p><em>RAKE</em>, short for Rapid Automatic Keyword Extraction, is a popular unsupervised
 method to extract keywords in texts. We will use it to find the word
 frequencies with respect to the occurence of words with other words in the text.</p>
-<p>This is a computationally expensive operation. Therefore, we are going to use
-the three sectors we chose previously (go back to <a href="average-word-count-per-sector.html#average-word-count-per-sector"><strong>this
-section</strong></a>).</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-80-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>Alternatively, if we look at the words related with <em>Venezuela</em> whose <em>RAKE</em>
+scores are calculated:</p>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#xhzwhauuyh .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: 100%;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+  border-bottom-style: solid;
+  /* table.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table.border.bottom.color */
+}
+
+#xhzwhauuyh .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#xhzwhauuyh .gt_title {
+  color: #000000;
+  font-size: 14px;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xhzwhauuyh .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 2px;
+  padding-bottom: 2px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xhzwhauuyh .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#xhzwhauuyh .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xhzwhauuyh .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#xhzwhauuyh .gt_columns_top_border {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#xhzwhauuyh .gt_columns_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+}
+
+#xhzwhauuyh .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#xhzwhauuyh .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#xhzwhauuyh .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#xhzwhauuyh .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#xhzwhauuyh .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xhzwhauuyh .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xhzwhauuyh .gt_row {
+  padding: 6px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#xhzwhauuyh .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#xhzwhauuyh .gt_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 8px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#xhzwhauuyh .gt_grand_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* grand_summary_row.background.color */
+  padding: 8px;
+  /* grand_summary_row.padding */
+  text-transform: inherit;
+  /* grand_summary_row.text_transform */
+}
+
+#xhzwhauuyh .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#xhzwhauuyh .gt_first_grand_summary_row {
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #A8A8A8;
+}
+
+#xhzwhauuyh .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#xhzwhauuyh .gt_footnotes {
+  border-top-style: solid;
+  /* footnotes.border.top.style */
+  border-top-width: 2px;
+  /* footnotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* footnotes.border.top.color */
+}
+
+#xhzwhauuyh .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  margin: 0px;
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#xhzwhauuyh .gt_sourcenotes {
+  border-top-style: solid;
+  /* sourcenotes.border.top.style */
+  border-top-width: 2px;
+  /* sourcenotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* sourcenotes.border.top.color */
+}
+
+#xhzwhauuyh .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#xhzwhauuyh .gt_center {
+  text-align: center;
+}
+
+#xhzwhauuyh .gt_left {
+  text-align: left;
+}
+
+#xhzwhauuyh .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xhzwhauuyh .gt_font_normal {
+  font-weight: normal;
+}
+
+#xhzwhauuyh .gt_font_bold {
+  font-weight: bold;
+}
+
+#xhzwhauuyh .gt_font_italic {
+  font-style: italic;
+}
+
+#xhzwhauuyh .gt_super {
+  font-size: 65%;
+}
+
+#xhzwhauuyh .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="xhzwhauuyh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <tr>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">keyword</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">ngram</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">freq</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">rake</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">key</th>
+  </tr>
+  <body class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">población venezolano</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">5</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">7.1437249</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">población venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">nacionalidad venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">10</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">6.6184932</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">nacionalidad venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">venta ambulante</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">5</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">6.2500000</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">venta ambulante</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ciudadano venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">6.1386019</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">ciudadano venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">familia venezolano</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">6.0695230</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">familia venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">colombiano venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">5.3315367</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">colombiano venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">mujer venezolano</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">22</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">5.2319461</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">mujer venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">persona venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">12</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">5.2125305</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">persona venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">emprendedor venezolano</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">5.1455464</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">emprendedor venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">emprendedora venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">4.8886019</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">emprendedora venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">prevención persona</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">4.7971429</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">prevención persona</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">hombre venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">4.6968526</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">hombre venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">higiene prevención</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">8</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">4.2857143</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">higiene prevención</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">minoría venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">4.2011019</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">minoría venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">Capacitación prevención</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">3.7857143</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">Capacitación prevención</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">venezolano</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">6</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">3.2011019</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">venezolano</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">evento socio</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">3.1354724</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">evento socio</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">evento deportivo</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">2.6060606</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">evento deportivo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">ventana ventilación</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">2.0000000</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">ventana ventilación</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">intervención</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">11</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">1.9166667</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">intervención</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">evento</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">11</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">1.6060606</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">evento</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">venezolana entrevistado</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_right gt_striped" style="font-size: 14px;">1.2666667</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">venezolana entrevistado</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">venezolana</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">11</td>
+      <td class="gt_row gt_right" style="font-size: 14px;">0.2666667</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">venezolana</td>
+    </tr>
+  </body>
+  
+  
+</table></div>
 </div>
 <div id="top-phrases-formed-by-noun-and-verb-in-the-responses" class="section level4 unnumbered">
 <h4>Top phrases formed by noun and verb in the responses</h4>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
+<hr />
 <p><em>Universal Dependencies</em> also provides a visualization tool for the <em>CoNLL-U format</em>, see
 <a href="https://universaldependencies.org/conllu_viewer.html">CoNLL-U file viewer</a>.</p>
 <p>For example, an example sentence from the response taken from the
@@ -914,10 +1461,10 @@ section</strong></a>).</p>
 <p><strong>Sentence</strong></p>
 <p><em>UNFPA ha implementado un espacio seguro para la atención de mujeres en movilidad humana y gestión de casos en Sucumbíos-Puente San Miguel.</em></p>
 <p><strong>Visualization</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-83"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-85"></span>
 <img src="../media/conllu-tree-vbg-example.png" alt="A dependency tree visualization from a response in *Protección_VBG*. Created with CoNNL-U file viewer." width="500px" />
 <p class="caption">
-Figure 14: A dependency tree visualization from a response in <em>Protección_VBG</em>. Created with CoNNL-U file viewer.
+Figure 15: A dependency tree visualization from a response in <em>Protección_VBG</em>. Created with CoNNL-U file viewer.
 </p>
 </div>
 
@@ -927,8 +1474,10 @@ Figure 14: A dependency tree visualization from a response in <em>Protección_VB
 <hr />
 <ol start="5">
 <li id="fn5"><p>Universal Dependencies <a href="https://universaldependencies.org/" class="uri">https://universaldependencies.org/</a><a href="part-of-speech-tagging.html#fnref5" class="footnote-back">↩</a></p></li>
-<li id="fn6"><p>Described at <a href="http://universaldependencies.org/format.html" class="uri">http://universaldependencies.org/format.html</a> Accessed 2019-09-05.<a href="part-of-speech-tagging.html#fnref6" class="footnote-back">↩</a></p></li>
-<li id="fn7"><p><em>“In morphology, inflection (or inflexion) is a process of word formation, in which a word is modified to express different grammatical categories such as tense, case, voice, aspect, person, number, gender, mood, animacy, and definiteness.”</em> <a href="https://en.wikipedia.org/wiki/Inflection" class="uri">https://en.wikipedia.org/wiki/Inflection</a>&quot; (Accessed 2019-09-05.)<a href="part-of-speech-tagging.html#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn6"><p>AnCora <a href="http://clic.ub.edu/corpus/en" class="uri">http://clic.ub.edu/corpus/en</a><a href="part-of-speech-tagging.html#fnref6" class="footnote-back">↩</a></p></li>
+<li id="fn7"><p>Described at <a href="http://universaldependencies.org/format.html" class="uri">http://universaldependencies.org/format.html</a> Accessed 5
+September, 2019.<a href="part-of-speech-tagging.html#fnref7" class="footnote-back">↩</a></p></li>
+<li id="fn8"><p><em>“In morphology, inflection (or inflexion) is a process of word formation, in which a word is modified to express different grammatical categories such as tense, case, voice, aspect, person, number, gender, mood, animacy, and definiteness.”</em> <a href="https://en.wikipedia.org/wiki/Inflection" class="uri">https://en.wikipedia.org/wiki/Inflection</a>&quot; Accessed 9 September, 2019.<a href="part-of-speech-tagging.html#fnref8" class="footnote-back">↩</a></p></li>
 </ol>
 </div>
             </section>
@@ -937,7 +1486,7 @@ Figure 14: A dependency tree visualization from a response in <em>Protección_VB
         </div>
       </div>
 <a href="most-used-bigrams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="numbers-and-dates-in-the-text.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="dates-and-years-in-the-responses.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

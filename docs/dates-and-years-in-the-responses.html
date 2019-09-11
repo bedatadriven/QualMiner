@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Variance of response word count per sector | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Dates and years in the responses | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Variance of response word count per sector | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Dates and years in the responses | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Variance of response word count per sector | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Dates and years in the responses | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="response-quality.html"/>
-<link rel="next" href="average-word-count-per-sector.html"/>
+<link rel="prev" href="part-of-speech-tagging.html"/>
+<link rel="next" href="named-entity-recognition.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -180,19 +180,138 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="variance-of-response-word-count-per-sector" class="section level1 unnumbered">
-<h1>Variance of response word count per sector</h1>
-<p>If we look at the <em>standard deviation</em>, which is a statistics to show the
-<em>measure of spread</em> in data, of word count of responses in each sector, we can clearly see that
-some of the sectors have high <em>variability</em>.</p>
-<p>That’s important metric to consider which sectors do have responses that are
-worth to conduct analyses.</p>
-<p><br></p>
+<div id="dates-and-years-in-the-responses" class="section level1 unnumbered">
+<h1>Dates and years in the responses</h1>
+<p>The dates used in the responses can refer to an important information that is
+being neglected in the response fields. If certain dates are repeatedly used in
+the text, it should be time to open a new field for it in order to make
+monitoring process more robust and efficient.</p>
+<p>The tool to look and extract dates in the text is <em>regular expressions</em>. The
+regular expressions<a href="#fn9" class="footnote-ref" id="fnref9"><sup>9</sup></a>, shortly <em>RegEx</em>, are character patterns that are used
+to search and manipulate strings.</p>
+<p>Although the most common pattern to write dates in Spanish follows the rule of
+<em>day</em> - <em>month</em> - <em>year</em>, not all dates are written in a consistent pattern.</p>
+<p><strong>A good rule of thumb to make this analysis easier, adapt writing dates in the
+<em>ISO 8601 format</em><a href="#fn10" class="footnote-ref" id="fnref10"><sup>10</sup></a>, which is an international standard for writing dates, in
+the future.</strong></p>
+<p>Therefore, we set up a complicated pattern to extract the strings, which covers
+the following cases below:</p>
+<p>The explanation of sequences
+(the descriptions adapted from the <em>POSIX standard</em><a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a>):</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">sequence</th>
+<th align="left">explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(sign)</td>
+<td align="left">a sign such as <code>~!#$%^&amp;*()_-+=</code> etc.</td>
+</tr>
+<tr class="even">
+<td align="left"><code>d</code></td>
+<td align="left">day of the month as decimal number (01–31)</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>m</code></td>
+<td align="left">month as decimal number (01–12)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>Y</code></td>
+<td align="left">year</td>
+</tr>
+<tr class="odd">
+<td align="left"><code>B</code></td>
+<td align="left">locale’s full month name (e.g., January)</td>
+</tr>
+<tr class="even">
+<td align="left"><code>b</code></td>
+<td align="left">locale’s abbreviated month name (e.g., Jan)</td>
+</tr>
+</tbody>
+</table>
+<p>You might try any of these sequences in R by using <code>format</code> such as
+<code>format(as.Date(&quot;25-09-2019&quot;), &quot;%B&quot;)</code>.</p>
+<table>
+<colgroup>
+<col width="13%" />
+<col width="15%" />
+<col width="19%" />
+<col width="13%" />
+<col width="37%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">index</th>
+<th align="left">format</th>
+<th align="left">variants</th>
+<th align="left">RegEx</th>
+<th align="left">RegEx description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">1</td>
+<td align="left"><code>Y</code></td>
+<td align="left"><code>2019</code></td>
+<td align="left">(19</td>
+<td align="left">20)</td>
+</tr>
+<tr class="even">
+<td align="left">2</td>
+<td align="left">(<code>d</code> or <code>m</code>)(sign)(<code>m</code> or <code>d</code>)(sign)<code>Y</code></td>
+<td align="left"><code>25/09/2019</code>, <code>25-09-2019</code>, <code>09-25-2019</code> etc.</td>
+<td align="left">[-</td>
+<td align="left">/][-</td>
+</tr>
+<tr class="odd">
+<td align="left">3</td>
+<td align="left"><code>B</code> <code>Y</code></td>
+<td align="left"><code>septiembre 2019</code>, <code>sep 2019</code></td>
+<td align="left">(?:ene(?:ro)?</td>
+<td align="left">feb(?:rero)?</td>
+</tr>
+<tr class="even">
+<td align="left">4</td>
+<td align="left">(<code>B</code> or <code>b</code>) <code>d</code>(sign) <code>Y</code></td>
+<td align="left"><code>julio 19 2019</code>, <code>jul 9, 2019</code>, <code>jul 9. 2019</code></td>
+<td align="left">(?:ene(?:ro)?</td>
+<td align="left">feb(?:rero)?</td>
+</tr>
+<tr class="odd">
+<td align="left">5</td>
+<td align="left"><code>d</code> de <code>B</code> <code>Y</code></td>
+<td align="left"><code>28 de marzo 2019</code></td>
+<td align="left">+de+(?:ene(?:ro)?</td>
+<td align="left">feb(?:rero)?</td>
+</tr>
+<tr class="even">
+<td align="left">6</td>
+<td align="left"><code>d</code> de <code>B</code> de <code>Y</code></td>
+<td align="left"><code>16 de octubre de 2019</code></td>
+<td align="left">+de+(?:ene(?:ro)?</td>
+<td align="left">feb(?:rero)?</td>
+</tr>
+<tr class="odd">
+<td align="left">7</td>
+<td align="left"><code>d</code> de <code>B</code> del <code>Y</code></td>
+<td align="left"><code>1 de octubre del 2019</code></td>
+<td align="left">+de+(?:ene(?:ro)?</td>
+<td align="left">feb(?:rero)?</td>
+</tr>
+</tbody>
+</table>
+<p>After the texts are extracted, they are displayed in a form of that they
+position of dates are shown in the sentences or paragraphs together with the
+adjacent words.</p>
+<p>Spanish month names and abbreviated version in <em>POSIX standard</em>:
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cogjeocwzn .gt_table {
+#cvjsjyvmge .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -217,13 +336,13 @@ worth to conduct analyses.</p>
   /* table.border.bottom.color */
 }
 
-#cogjeocwzn .gt_heading {
+#cvjsjyvmge .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#cogjeocwzn .gt_title {
+#cvjsjyvmge .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -234,7 +353,7 @@ worth to conduct analyses.</p>
   border-bottom-width: 0;
 }
 
-#cogjeocwzn .gt_subtitle {
+#cvjsjyvmge .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -245,7 +364,7 @@ worth to conduct analyses.</p>
   border-top-width: 0;
 }
 
-#cogjeocwzn .gt_bottom_border {
+#cvjsjyvmge .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -254,7 +373,7 @@ worth to conduct analyses.</p>
   /* heading.border.bottom.color */
 }
 
-#cogjeocwzn .gt_column_spanner {
+#cvjsjyvmge .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -262,7 +381,7 @@ worth to conduct analyses.</p>
   padding-bottom: 4px;
 }
 
-#cogjeocwzn .gt_col_heading {
+#cvjsjyvmge .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -275,23 +394,23 @@ worth to conduct analyses.</p>
   margin: 10px;
 }
 
-#cogjeocwzn .gt_columns_top_border {
+#cvjsjyvmge .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#cogjeocwzn .gt_columns_bottom_border {
+#cvjsjyvmge .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#cogjeocwzn .gt_sep_right {
+#cvjsjyvmge .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#cogjeocwzn .gt_group_heading {
+#cvjsjyvmge .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -315,7 +434,7 @@ worth to conduct analyses.</p>
   vertical-align: middle;
 }
 
-#cogjeocwzn .gt_empty_group_heading {
+#cvjsjyvmge .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -339,33 +458,33 @@ worth to conduct analyses.</p>
   vertical-align: middle;
 }
 
-#cogjeocwzn .gt_striped {
+#cvjsjyvmge .gt_striped {
   background-color: #f2f2f2;
 }
 
-#cogjeocwzn .gt_from_md > :first-child {
+#cvjsjyvmge .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cogjeocwzn .gt_from_md > :last-child {
+#cvjsjyvmge .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cogjeocwzn .gt_row {
+#cvjsjyvmge .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#cogjeocwzn .gt_stub {
+#cvjsjyvmge .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#cogjeocwzn .gt_summary_row {
+#cvjsjyvmge .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -375,7 +494,7 @@ worth to conduct analyses.</p>
   /* summary_row.text_transform */
 }
 
-#cogjeocwzn .gt_grand_summary_row {
+#cvjsjyvmge .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -385,19 +504,19 @@ worth to conduct analyses.</p>
   /* grand_summary_row.text_transform */
 }
 
-#cogjeocwzn .gt_first_summary_row {
+#cvjsjyvmge .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#cogjeocwzn .gt_first_grand_summary_row {
+#cvjsjyvmge .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#cogjeocwzn .gt_table_body {
+#cvjsjyvmge .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -412,7 +531,7 @@ worth to conduct analyses.</p>
   /* table_body.border.bottom.color */
 }
 
-#cogjeocwzn .gt_footnotes {
+#cvjsjyvmge .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -421,7 +540,7 @@ worth to conduct analyses.</p>
   /* footnotes.border.top.color */
 }
 
-#cogjeocwzn .gt_footnote {
+#cvjsjyvmge .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -429,7 +548,7 @@ worth to conduct analyses.</p>
   /* footnote.padding */
 }
 
-#cogjeocwzn .gt_sourcenotes {
+#cvjsjyvmge .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -438,193 +557,142 @@ worth to conduct analyses.</p>
   /* sourcenotes.border.top.color */
 }
 
-#cogjeocwzn .gt_sourcenote {
+#cvjsjyvmge .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#cogjeocwzn .gt_center {
+#cvjsjyvmge .gt_center {
   text-align: center;
 }
 
-#cogjeocwzn .gt_left {
+#cvjsjyvmge .gt_left {
   text-align: left;
 }
 
-#cogjeocwzn .gt_right {
+#cvjsjyvmge .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cogjeocwzn .gt_font_normal {
+#cvjsjyvmge .gt_font_normal {
   font-weight: normal;
 }
 
-#cogjeocwzn .gt_font_bold {
+#cvjsjyvmge .gt_font_bold {
   font-weight: bold;
 }
 
-#cogjeocwzn .gt_font_italic {
+#cvjsjyvmge .gt_font_italic {
   font-style: italic;
 }
 
-#cogjeocwzn .gt_super {
+#cvjsjyvmge .gt_super {
   font-size: 65%;
 }
 
-#cogjeocwzn .gt_footnote_glyph {
+#cvjsjyvmge .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cogjeocwzn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
-  <thead>
-    <tr>
-      <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center" style>SD and Sample size of response word counts per sector name</th>
-    </tr>
-    <tr>
-      <th colspan="3" class="gt_heading gt_subtitle gt_font_normal gt_center gt_bottom_border" style>Measure the spread with <em>standard deviation</em></th>
-    </tr>
-  </thead>
+<div id="cvjsjyvmge" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
   <tr>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">Sector name</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">SD</th>
-    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">Sample size</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">full</th>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">abbreviated</th>
   </tr>
   <body class="gt_table_body">
     <tr>
-      <td class="gt_row gt_left">Tecnico</td>
-      <td class="gt_row gt_right">48.78</td>
-      <td class="gt_row gt_center">274</td>
+      <td class="gt_row gt_left">enero</td>
+      <td class="gt_row gt_left">ene</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Poblacion</td>
-      <td class="gt_row gt_right gt_striped">60.07</td>
-      <td class="gt_row gt_center gt_striped">170</td>
+      <td class="gt_row gt_left gt_striped">febrero</td>
+      <td class="gt_row gt_left gt_striped">feb</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">VBG</td>
-      <td class="gt_row gt_right">49.60</td>
-      <td class="gt_row gt_center">114</td>
+      <td class="gt_row gt_left">marzo</td>
+      <td class="gt_row gt_left">mar</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Coordinacion</td>
-      <td class="gt_row gt_right gt_striped">86.59</td>
-      <td class="gt_row gt_center gt_striped">67</td>
+      <td class="gt_row gt_left gt_striped">abril</td>
+      <td class="gt_row gt_left gt_striped">abr</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Educacion</td>
-      <td class="gt_row gt_right">55.07</td>
-      <td class="gt_row gt_center">63</td>
+      <td class="gt_row gt_left">mayo</td>
+      <td class="gt_row gt_left">may</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">SocialCohesion</td>
-      <td class="gt_row gt_right gt_striped">31.17</td>
-      <td class="gt_row gt_center gt_striped">63</td>
+      <td class="gt_row gt_left gt_striped">junio</td>
+      <td class="gt_row gt_left gt_striped">jun</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">SectorLaboral</td>
-      <td class="gt_row gt_right">23.51</td>
-      <td class="gt_row gt_center">48</td>
+      <td class="gt_row gt_left">julio</td>
+      <td class="gt_row gt_left">jul</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Proteccion</td>
-      <td class="gt_row gt_right gt_striped">22.74</td>
-      <td class="gt_row gt_center gt_striped">44</td>
+      <td class="gt_row gt_left gt_striped">agosto</td>
+      <td class="gt_row gt_left gt_striped">ago</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Socios</td>
-      <td class="gt_row gt_right">241.91</td>
-      <td class="gt_row gt_center">39</td>
+      <td class="gt_row gt_left">septiembre</td>
+      <td class="gt_row gt_left">sep</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Habitat</td>
-      <td class="gt_row gt_right gt_striped">8.47</td>
-      <td class="gt_row gt_center gt_striped">35</td>
+      <td class="gt_row gt_left gt_striped">octubre</td>
+      <td class="gt_row gt_left gt_striped">oct</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left">Fronteras</td>
-      <td class="gt_row gt_right">42.88</td>
-      <td class="gt_row gt_center">30</td>
+      <td class="gt_row gt_left">noviembre</td>
+      <td class="gt_row gt_left">nov</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped">Agua</td>
-      <td class="gt_row gt_right gt_striped">28.96</td>
-      <td class="gt_row gt_center gt_striped">23</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">Necesidades</td>
-      <td class="gt_row gt_right">16.10</td>
-      <td class="gt_row gt_center">21</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped">Alojamiento</td>
-      <td class="gt_row gt_right gt_striped">65.81</td>
-      <td class="gt_row gt_center gt_striped">14</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">LGBTI</td>
-      <td class="gt_row gt_right">102.74</td>
-      <td class="gt_row gt_center">11</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped">VBG_SSR</td>
-      <td class="gt_row gt_right gt_striped">34.22</td>
-      <td class="gt_row gt_center gt_striped">11</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">Salud</td>
-      <td class="gt_row gt_right">141.10</td>
-      <td class="gt_row gt_center">6</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped">ProteccionInfancia</td>
-      <td class="gt_row gt_right gt_striped">16.35</td>
-      <td class="gt_row gt_center gt_striped">5</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">Trafico</td>
-      <td class="gt_row gt_right">17.01</td>
-      <td class="gt_row gt_center">5</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped">Educacional</td>
-      <td class="gt_row gt_right gt_striped">16.97</td>
-      <td class="gt_row gt_center gt_striped">2</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left">AsistenciaEducacion</td>
-      <td class="gt_row gt_right"><em>NA</em></td>
-      <td class="gt_row gt_center">1</td>
+      <td class="gt_row gt_left gt_striped">diciembre</td>
+      <td class="gt_row gt_left gt_striped">dic</td>
     </tr>
   </body>
   
   
-</table></div>
-<p>The table above clearly shows that some of the sectors are quite different in
-terms of the word count in responses.</p>
-<pre><code>## + **Tecnico** has *274* sample size with a standard deviation of *48.78* 
-## 
-## + **Poblacion** has *170* sample size with a standard deviation of *60.07* 
-## 
-## + **VBG** has *114* sample size with a standard deviation of *49.6*</code></pre>
-<p>On the other hand, some sectors have very low sample size and high deviation.</p>
-<ul>
-<li><strong>Salud</strong> has
-only <em>6</em> records with diverse word counts,
-which are <em>13, 46, 302, 302, 302, 302</em>.</li>
-</ul>
+</table></div></p>
+<pre><code>## # A tibble: 6 x 13
+##   folderName formName formNameRecode Month recordId question response
+##   &lt;chr&gt;      &lt;chr&gt;    &lt;chr&gt;          &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;chr&gt;   
+## 1 Objectivo… Alojami… Alojamiento    2019… jwtsuzg… Qualita… En el a…
+## 2 Objectivo… Alojami… Alojamiento    2019… s078965… Qualita… &quot;Se apo…
+## 3 Objectivo… Alojami… Alojamiento    2019… s186761… Qualita… &quot;Se apo…
+## 4 Objectivo… Manejo … Poblacion      2019… jvmvbgw… Provisi… &quot;Provis…
+## 5 Objectivo… Manejo … Poblacion      2019… jvmvm5x… Entrega… &quot;Se ha …
+## 6 Objectivo… Manejo … Poblacion      2019… jzebecn… Provisi… En el a…
+## # … with 6 more variables: description &lt;chr&gt;, partnerName &lt;chr&gt;,
+## #   subPartnerName &lt;chr&gt;, province &lt;chr&gt;, canton &lt;chr&gt;,
+## #   reportingUsers &lt;list&gt;</code></pre>
+<p>Since this document is being exposed to online, full versions of texts aren’t
+displayed. The full version is available upon a valid request.</p>
 
+</div>
+<div class="footnotes">
+<hr />
+<ol start="9">
+<li id="fn9"><p>More precisely, the RegEx engine in R is called as <em>P</em>erl-<em>C</em>ompatible
+<em>R</em>egular <em>E</em>xpressions (PCRE) <a href="https://www.pcre.org/original/doc/html/" class="uri">https://www.pcre.org/original/doc/html/</a>
+Accessed September 9, 2019.<a href="dates-and-years-in-the-responses.html#fnref9" class="footnote-back">↩</a></p></li>
+<li id="fn10"><p>ISO 8601 Date and Time Format
+<a href="https://www.iso.org/iso-8601-date-and-time-format.html" class="uri">https://www.iso.org/iso-8601-date-and-time-format.html</a> Accessed September 9,
+2019.<a href="dates-and-years-in-the-responses.html#fnref10" class="footnote-back">↩</a></p></li>
+<li id="fn11"><p>POSIX 1003.1 - man page for date (posix section 1p)
+<a href="https://www.unix.com/man-page/posix/1p/date/" class="uri">https://www.unix.com/man-page/posix/1p/date/</a> Accessed September 9, 2019.<a href="dates-and-years-in-the-responses.html#fnref11" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="response-quality.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="average-word-count-per-sector.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="part-of-speech-tagging.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="named-entity-recognition.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
