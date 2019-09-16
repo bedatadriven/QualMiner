@@ -1,0 +1,38 @@
+
+# Most effective question & descriptions {-}
+
+*Which type of question/description get the highest word counts?*
+
+```{r}
+local({
+  trunc <- function(...) mmy::text_trunc(..., 25)
+  narratives.wc %>% 
+    dplyr::filter(!is.na(question) & !is.na(response) & !is.na(description)) %>% 
+    group_by(formNameRecode) %>% 
+    select(formNameRecode, recordId, question, response, description, .responseWordCount) %>%
+    arrange(desc(.responseWordCount)) %>% 
+    slice(seq(10)) %>% 
+    mutate(
+      question = trunc(question),
+      response = trunc(response),
+      description = trunc(description)
+    ) %>% 
+    gt() %>% 
+    gt_condensed_style() %>% 
+    cols_align(
+      align = "center",
+      columns = ".responseWordCount"
+    ) %>% 
+    cols_align(
+      align = "left",
+      columns = c("recordId", "question", "response", "description")
+    ) %>% 
+    cols_label(
+      .responseWordCount = "Word count",
+      question = "Question",
+      response = "Response",
+      description = "Description"
+    )
+})
+```
+
