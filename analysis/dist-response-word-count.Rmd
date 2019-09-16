@@ -30,4 +30,17 @@ narratives.wc %>%
   theme_ecuador1(border = TRUE)
 ```
 
-`TODO`
+#### Logistic regression {-}
+
+We use a logistic regression model to estimate the probability which average
+word counts belong to what sectors.
+
+```{r}
+fit <- narratives.wc %>% 
+  glm(.responseWordCount ~ formName, data = .)
+broom::tidy(fit) %>% 
+  mutate(term = str_replace(term, "formName", "")) %>% 
+  gt() %>% 
+  gt_condensed_style()
+```
+

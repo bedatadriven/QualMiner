@@ -99,7 +99,8 @@ ppartnersAndSub.tbl <- ppartnersAndSub %>%
     `Implementing partner` = subPartnerName,
     `Frequency` = freq,
     `Relative frequency` = prop
-  )
+  ) %>% 
+  dplyr::filter(!is.na(`Implementing partner`)) ## eliminate missing NA partners
 eval(parse(text=glue::glue('
 ppartnersAndSub.tbl %>%
   gt() %>% 
