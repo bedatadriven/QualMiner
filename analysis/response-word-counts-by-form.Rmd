@@ -1,47 +1,67 @@
 
 # Which sectors do receive high word counts in responses? {-}
 
-```{r plot-topic-response-wc, fig.width=8, fig.height=8, fig.align='center'}
+A rule of thumb is to know the distributions separated by the major category,
+which is here the sector name.
+
+```{r plot-topic-response-wc, fig.width=8, fig.height=7, fig.align='center'}
 narratives.wc %>%
-  gather(variable, value, .responseWordCount) %>%
-  mutate(formNameRecode = fct_reorder(formNameRecode, value)) %>% ## reorder by value
-  ggplot(aes(formNameRecode, value, fill = variable)) +
-  geom_boxplot(outlier.colour = "orange", outlier.shape = 23, outlier.alpha = 1) +
+  mutate(formNameRecode = fct_reorder(formNameRecode, .responseWordCount)) %>% 
+  ggplot(aes(formNameRecode, .responseWordCount, fill = formNameRecode)) +
+  geom_boxplot(outlier.fill = "orange", outlier.color = "red", outlier.shape = 23, outlier.alpha = 1) +
   coord_flip() +
-  geom_jitter(shape = 16, alpha = 0.35) +
   labs(
     title = "Response and word counts by sector",
-    subtitle = "A box plot distribution",
+    subtitle = "A box plot distribution showing the variance of word counts in different sectors",
     caption = RECODE.TABLE.CAPTION
   ) +
+  scale_y_continuous(labels = function(x) paste(x, "words")) +
   xlab(NULL) +
   ylab(NULL) +
   guides(fill = FALSE) +
   theme_ecuador1() 
 ```
 
-It's better to know the distributions separated by the major category, which is
-the sector name.
+Box plots are commonly used to visualize the *measure of spread* in the data
+that gives a clear picture about how the variability and dispersion of the raw
+data look like.
 
-Box plots are used to visualize the *measure of spread* showing the variability
-and dispersion of the raw data.
+The boxplot has some characteristics that should be known before diving into the
+interpretation:
 
-In the boxplot above, we see a number of things:
+1) left and right borders of the central rectangle present the
+first and third quartile values of interquartile range (IQR) respectively;
 
-1) each individual black point in a group represents a "response" in the
-records, and it position indicates the value of word count;
+2) the line in the middle of the rectangle indicates the *median* value;
 
-2) left and right borders of the central rectangle (colored red) presents the
-first and third quartile values of IQR respectively;
-
-3) the line in the middle of the rectangle indicates the *median* value;
-
-4) the end of the lines streched from both right and left sides of the central
+3) the end of the lines streched from both right and left sides of the central
 rectangle point the maximum and minimum values;
 
-5) the orange colored points show the *outliers*.
+4) the orange colored points show the *outliers* in the data.
 
-Some insights from this plot can be:
+Therefore, we see a number of things:
 
-`TODO`
+As we have seen in the previous sections talked about the variability and the
+sample size of the data, the sectors are not equally distributed.
+
+```{r, include=FALSE}
+max.response.sector <- narratives.wc[which.max(narratives.wc$.responseWordCount), ]
+max.sectors <- narrative_mean_diff[narrative_mean_diff$sampleSize > 100,]
+```
+
++ The sector *`r max.response.sector$formNameRecode`* 
+(or long name, *`r max.response.sector$formName`*)
+has the longest response among all the responses that is 
+*`r max.response.sector$.responseWordCount`* words 
+(please see the recordId: *`r max.response.sector$recordId`* for more information).
+
++ We have looked the average word count in sample
+sizes in each sector
+([**see the section**](#average-word-count-per-sector)),
+therefore the sectors
+`r mmy::list_en_end(paste0("**", max.sectors$formNameRecode, "**"), add.quotes = TRUE)` 
+have the highest sample size.
+
++ The graph shows that these sectors have several outliers, which are very long
+texts compare to the average.
 

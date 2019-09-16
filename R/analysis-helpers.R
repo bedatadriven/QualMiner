@@ -213,7 +213,8 @@ check_required_packages <- function() {
       "refinr",
       "udpipe",
       "gghighlight",
-      "ggforce"
+      "ggforce",
+      "broom"
     ),
     github = list(
       "sass" = "rstudio/sass",
