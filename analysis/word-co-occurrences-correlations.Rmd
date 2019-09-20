@@ -1,0 +1,32 @@
+
+# Word co-occurrences and correlations {-}
+
+*How many times each pair of words occurs co-together in responses?*
+
+```{r}
+response_co_occur <- response.tokens %>%
+  mutate(uniq_id = paste(formNameRecode, Month, recordId, sep = "-")) %>% 
+  widyr::pairwise_count(word_stem, uniq_id,sort = TRUE, upper = FALSE)
+```
+
+```{r}
+CO_OCCUR_FILTER <- 50L
+```
+
+```{r, fig.align='center', fig.height=6, fig.width=8}
+set.seed(1234)
+response_co_occur %>%
+  dplyr::filter(n >= CO_OCCUR_FILTER) %>%
+  graph_from_data_frame() %>%
+  ggraph(layout = "fr") +
+  geom_edge_link(aes(edge_alpha = n, edge_width = n), edge_colour = "cyan4") +
+  geom_node_point(size = 5) +
+  geom_node_text(aes(label = name), repel = TRUE, 
+                 point.padding = unit(0.2, "lines")) +
+  theme_void() +
+  theme(legend.position = "bottom")
+```
+
+The graph is filtered in the way that only the number of occurrences which are
+greater than or equal to *`r CO_OCCUR_FILTER`* are displayed.
+

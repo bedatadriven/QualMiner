@@ -214,7 +214,9 @@ check_required_packages <- function() {
       "udpipe",
       "gghighlight",
       "ggforce",
-      "broom"
+      "broom",
+      "igraph",
+      "ggraph"
     ),
     github = list(
       "sass" = "rstudio/sass",

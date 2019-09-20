@@ -11,7 +11,7 @@ library(activityinfo)
 check_R_version <- function() {
   rv <- R.version
   current.version <- paste(rv$major, rv$minor, sep = ".")
-  tested.versions <- c("3.5.3", "3.6.0")
+  tested.versions <- c("3.5.3", "3.6.1")
   if (!current.version %in% tested.versions) {
     warning(
       paste(
