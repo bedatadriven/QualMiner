@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>“Qualitativo” questions | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="“Qualitativo” questions | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="“Qualitativo” questions | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="median-word-count-of-responses.html"/>
-<link rel="next" href="most-effective-question-descriptions.html"/>
+<link rel="prev" href="most-effective-question-descriptions.html"/>
+<link rel="next" href="textual-data-preparation.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -182,27 +182,357 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-description-field" class="section level1 unnumbered">
-<h1>The Description field</h1>
-<p>In <em>ActivityInfo</em> forms which constitutes different sectors, the questions can
-have an additional description field which is meant to give extra details about
-the questions.</p>
-<p>The description field is not mandatory, so it is optional, but it may
-help users filling out the form easily and eliminate potential confusions if
-they are leading the users enough.</p>
-<p>Do some questions with the extra description field have better <em>response
-quality</em> than the questions which do not have it?</p>
-<p>Looking at the table containing sector name, question and description fields and
-so on others:</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-51-1.png" width="960" style="display: block; margin: auto;" /></p>
-<p><br></p>
-<p>We see in the plot above that the response word counts per sector and colored if a
-response has a description field or not. Having a description field or not is
-calculated as that a description field has a minimum one word.</p>
-<p>The responses with the longest word counts are the ones with description.
-Nevertheless, it is not so easy to see a clear trend that there’s a correlation
-between response word count and description fields. Interestingly, the sector
-<em>Protección_VBG</em> has no description fields at all in their sectors.</p>
+<div id="qualitativo-questions" class="section level1 unnumbered">
+<h1>“Qualitativo” questions</h1>
+<p><em>Does the questions formed by the word “qualitativo” create lesser or longer responses?</em></p>
+<p>Almost all questions have a form of the term “qualitative” in the question
+fields. Here we are interested in the questions that they have nothing but the
+term “qualitative”.</p>
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#jiohaexpzo .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+  border-bottom-style: solid;
+  /* table.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table.border.bottom.color */
+}
+
+#jiohaexpzo .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#jiohaexpzo .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#jiohaexpzo .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 2px;
+  padding-bottom: 2px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#jiohaexpzo .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#jiohaexpzo .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#jiohaexpzo .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#jiohaexpzo .gt_columns_top_border {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#jiohaexpzo .gt_columns_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+}
+
+#jiohaexpzo .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#jiohaexpzo .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#jiohaexpzo .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#jiohaexpzo .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#jiohaexpzo .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#jiohaexpzo .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#jiohaexpzo .gt_row {
+  padding: 8px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#jiohaexpzo .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#jiohaexpzo .gt_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 8px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#jiohaexpzo .gt_grand_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* grand_summary_row.background.color */
+  padding: 8px;
+  /* grand_summary_row.padding */
+  text-transform: inherit;
+  /* grand_summary_row.text_transform */
+}
+
+#jiohaexpzo .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#jiohaexpzo .gt_first_grand_summary_row {
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #A8A8A8;
+}
+
+#jiohaexpzo .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#jiohaexpzo .gt_footnotes {
+  border-top-style: solid;
+  /* footnotes.border.top.style */
+  border-top-width: 2px;
+  /* footnotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* footnotes.border.top.color */
+}
+
+#jiohaexpzo .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  margin: 0px;
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#jiohaexpzo .gt_sourcenotes {
+  border-top-style: solid;
+  /* sourcenotes.border.top.style */
+  border-top-width: 2px;
+  /* sourcenotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* sourcenotes.border.top.color */
+}
+
+#jiohaexpzo .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#jiohaexpzo .gt_center {
+  text-align: center;
+}
+
+#jiohaexpzo .gt_left {
+  text-align: left;
+}
+
+#jiohaexpzo .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#jiohaexpzo .gt_font_normal {
+  font-weight: normal;
+}
+
+#jiohaexpzo .gt_font_bold {
+  font-weight: bold;
+}
+
+#jiohaexpzo .gt_font_italic {
+  font-style: italic;
+}
+
+#jiohaexpzo .gt_super {
+  font-size: 65%;
+}
+
+#jiohaexpzo .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="jiohaexpzo" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <tr>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">"Qualitative questions"</th>
+  </tr>
+  <body class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_center">Act_1_Cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center gt_striped">Act_2_Cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center">Act_3_Cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center gt_striped">Act_4_Cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center">Act_5_Cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center gt_striped">Act_7_Cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center">cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center gt_striped">Cualitativo</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_center">Qualitative</td>
+    </tr>
+  </body>
+  
+  
+</table></div>
+<pre><code>## # A tibble: 9 x 2
+##   formNameRecode  mean
+##   &lt;chr&gt;          &lt;dbl&gt;
+## 1 Alojamiento     47.1
+## 2 Educacion       77.5
+## 3 Educacional     31  
+## 4 Necesidades     20.5
+## 5 Salud          211. 
+## 6 SectorLaboral   42.2
+## 7 SocialCohesion  60.9
+## 8 Tecnico         60.1
+## 9 VBG             58.2</code></pre>
+<p>The caveat is that we could not perform a <em>t-test</em> here because the data being compared…</p>
+
+</div>
+
+
 
 </div>
             </section>
@@ -210,8 +540,8 @@ between response word count and description fields. Interestingly, the sector
           </div>
         </div>
       </div>
-<a href="median-word-count-of-responses.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="most-effective-question-descriptions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="most-effective-question-descriptions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="textual-data-preparation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

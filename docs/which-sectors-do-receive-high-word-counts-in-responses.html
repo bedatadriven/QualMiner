@@ -148,6 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
 <li class="chapter" data-level="" data-path="median-word-count-of-responses.html"><a href="median-word-count-of-responses.html"><i class="fa fa-check"></i>Median word count of responses</a></li>
 <li class="chapter" data-level="" data-path="the-description-field.html"><a href="the-description-field.html"><i class="fa fa-check"></i>The Description field</a></li>
+<li class="chapter" data-level="" data-path="most-effective-question-descriptions.html"><a href="most-effective-question-descriptions.html"><i class="fa fa-check"></i>Most effective question &amp; descriptions</a></li>
+<li class="chapter" data-level="" data-path="qualitativo-questions.html"><a href="qualitativo-questions.html"><i class="fa fa-check"></i>“Qualitativo” questions</a></li>
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
@@ -155,9 +157,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
 <li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
+<li class="chapter" data-level="" data-path="word-co-occurrences-and-correlations.html"><a href="word-co-occurrences-and-correlations.html"><i class="fa fa-check"></i>Word co-occurrences and correlations</a></li>
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
-<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i>Named entity recognition</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -182,24 +184,40 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="which-sectors-do-receive-high-word-counts-in-responses" class="section level1 unnumbered">
 <h1>Which sectors do receive high word counts in responses?</h1>
+<p>A rule of thumb is to know the distributions separated by the major category,
+which is here the sector name.</p>
 <p><img src="qualminer_files/figure-html/plot-topic-response-wc-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>It’s better to know the distributions separated by the major category, which is
-the sector name.</p>
-<p>Box plots are used to visualize the <em>measure of spread</em> showing the variability
-and dispersion of the raw data.</p>
-<p>In the boxplot above, we see a number of things:</p>
+<p>Box plots are commonly used to visualize the <em>measure of spread</em> in the data
+that gives a clear picture about how the variability and dispersion of the raw
+data look like.</p>
+<p>The boxplot has some characteristics that should be known before diving into the
+interpretation:</p>
 <ol style="list-style-type: decimal">
-<li><p>each individual black point in a group represents a “response” in the
-records, and it position indicates the value of word count;</p></li>
-<li><p>left and right borders of the central rectangle (colored red) presents the
-first and third quartile values of IQR respectively;</p></li>
+<li><p>left and right borders of the central rectangle present the
+first and third quartile values of interquartile range (IQR) respectively;</p></li>
 <li><p>the line in the middle of the rectangle indicates the <em>median</em> value;</p></li>
 <li><p>the end of the lines streched from both right and left sides of the central
 rectangle point the maximum and minimum values;</p></li>
-<li><p>the orange colored points show the <em>outliers</em>.</p></li>
+<li><p>the orange colored points show the <em>outliers</em> in the data.</p></li>
 </ol>
-<p>Some insights from this plot can be:</p>
-<p><code>TODO</code></p>
+<p>Therefore, we see a number of things:</p>
+<p>As we have seen in the previous sections talked about the variability and the
+sample size of the data, the sectors are not equally distributed.</p>
+<ul>
+<li><p>The sector <em>Socios</em>
+(or long name, <em>Manejo de la información para socios y análisis de las necesidades</em>)
+has the longest response among all the responses that is
+<em>1483</em> words
+(please see the recordId: <em>jxyxec3di</em> for more information).</p></li>
+<li><p>We have looked the average word count in sample
+sizes in each sector
+(<a href="average-word-count-per-sector.html#average-word-count-per-sector"><strong>see the section</strong></a>),
+therefore the sectors
+‘<strong>Poblacion</strong>’, ‘<strong>Tecnico</strong>’ and ‘<strong>VBG</strong>’
+have the highest sample size.</p></li>
+<li><p>The graph shows that these sectors have several outliers, which are very long
+texts compare to the average.</p></li>
+</ul>
 
 </div>
             </section>

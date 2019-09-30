@@ -30,7 +30,7 @@
   
   
 <link rel="prev" href="part-of-speech-tagging.html"/>
-<link rel="next" href="named-entity-recognition.html"/>
+<link rel="next" href="sentiment-analysis.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -148,6 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
 <li class="chapter" data-level="" data-path="median-word-count-of-responses.html"><a href="median-word-count-of-responses.html"><i class="fa fa-check"></i>Median word count of responses</a></li>
 <li class="chapter" data-level="" data-path="the-description-field.html"><a href="the-description-field.html"><i class="fa fa-check"></i>The Description field</a></li>
+<li class="chapter" data-level="" data-path="most-effective-question-descriptions.html"><a href="most-effective-question-descriptions.html"><i class="fa fa-check"></i>Most effective question &amp; descriptions</a></li>
+<li class="chapter" data-level="" data-path="qualitativo-questions.html"><a href="qualitativo-questions.html"><i class="fa fa-check"></i>“Qualitativo” questions</a></li>
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
@@ -155,9 +157,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
 <li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
+<li class="chapter" data-level="" data-path="word-co-occurrences-and-correlations.html"><a href="word-co-occurrences-and-correlations.html"><i class="fa fa-check"></i>Word co-occurrences and correlations</a></li>
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
-<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i>Named entity recognition</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -311,7 +313,7 @@ adjacent words.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#cvjsjyvmge .gt_table {
+#gpoubejwji .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -336,13 +338,13 @@ adjacent words.</p>
   /* table.border.bottom.color */
 }
 
-#cvjsjyvmge .gt_heading {
+#gpoubejwji .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#cvjsjyvmge .gt_title {
+#gpoubejwji .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -353,7 +355,7 @@ adjacent words.</p>
   border-bottom-width: 0;
 }
 
-#cvjsjyvmge .gt_subtitle {
+#gpoubejwji .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -364,7 +366,7 @@ adjacent words.</p>
   border-top-width: 0;
 }
 
-#cvjsjyvmge .gt_bottom_border {
+#gpoubejwji .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -373,7 +375,7 @@ adjacent words.</p>
   /* heading.border.bottom.color */
 }
 
-#cvjsjyvmge .gt_column_spanner {
+#gpoubejwji .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -381,7 +383,7 @@ adjacent words.</p>
   padding-bottom: 4px;
 }
 
-#cvjsjyvmge .gt_col_heading {
+#gpoubejwji .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -394,23 +396,23 @@ adjacent words.</p>
   margin: 10px;
 }
 
-#cvjsjyvmge .gt_columns_top_border {
+#gpoubejwji .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#cvjsjyvmge .gt_columns_bottom_border {
+#gpoubejwji .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#cvjsjyvmge .gt_sep_right {
+#gpoubejwji .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#cvjsjyvmge .gt_group_heading {
+#gpoubejwji .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -434,7 +436,7 @@ adjacent words.</p>
   vertical-align: middle;
 }
 
-#cvjsjyvmge .gt_empty_group_heading {
+#gpoubejwji .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -458,33 +460,33 @@ adjacent words.</p>
   vertical-align: middle;
 }
 
-#cvjsjyvmge .gt_striped {
+#gpoubejwji .gt_striped {
   background-color: #f2f2f2;
 }
 
-#cvjsjyvmge .gt_from_md > :first-child {
+#gpoubejwji .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#cvjsjyvmge .gt_from_md > :last-child {
+#gpoubejwji .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#cvjsjyvmge .gt_row {
+#gpoubejwji .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#cvjsjyvmge .gt_stub {
+#gpoubejwji .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#cvjsjyvmge .gt_summary_row {
+#gpoubejwji .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -494,7 +496,7 @@ adjacent words.</p>
   /* summary_row.text_transform */
 }
 
-#cvjsjyvmge .gt_grand_summary_row {
+#gpoubejwji .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -504,19 +506,19 @@ adjacent words.</p>
   /* grand_summary_row.text_transform */
 }
 
-#cvjsjyvmge .gt_first_summary_row {
+#gpoubejwji .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#cvjsjyvmge .gt_first_grand_summary_row {
+#gpoubejwji .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#cvjsjyvmge .gt_table_body {
+#gpoubejwji .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -531,7 +533,7 @@ adjacent words.</p>
   /* table_body.border.bottom.color */
 }
 
-#cvjsjyvmge .gt_footnotes {
+#gpoubejwji .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -540,7 +542,7 @@ adjacent words.</p>
   /* footnotes.border.top.color */
 }
 
-#cvjsjyvmge .gt_footnote {
+#gpoubejwji .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -548,7 +550,7 @@ adjacent words.</p>
   /* footnote.padding */
 }
 
-#cvjsjyvmge .gt_sourcenotes {
+#gpoubejwji .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -557,48 +559,48 @@ adjacent words.</p>
   /* sourcenotes.border.top.color */
 }
 
-#cvjsjyvmge .gt_sourcenote {
+#gpoubejwji .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#cvjsjyvmge .gt_center {
+#gpoubejwji .gt_center {
   text-align: center;
 }
 
-#cvjsjyvmge .gt_left {
+#gpoubejwji .gt_left {
   text-align: left;
 }
 
-#cvjsjyvmge .gt_right {
+#gpoubejwji .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#cvjsjyvmge .gt_font_normal {
+#gpoubejwji .gt_font_normal {
   font-weight: normal;
 }
 
-#cvjsjyvmge .gt_font_bold {
+#gpoubejwji .gt_font_bold {
   font-weight: bold;
 }
 
-#cvjsjyvmge .gt_font_italic {
+#gpoubejwji .gt_font_italic {
   font-style: italic;
 }
 
-#cvjsjyvmge .gt_super {
+#gpoubejwji .gt_super {
   font-size: 65%;
 }
 
-#cvjsjyvmge .gt_footnote_glyph {
+#gpoubejwji .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="cvjsjyvmge" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="gpoubejwji" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">full</th>
@@ -669,8 +671,383 @@ adjacent words.</p>
 ## # … with 6 more variables: description &lt;chr&gt;, partnerName &lt;chr&gt;,
 ## #   subPartnerName &lt;chr&gt;, province &lt;chr&gt;, canton &lt;chr&gt;,
 ## #   reportingUsers &lt;list&gt;</code></pre>
-<p>Since this document is being exposed to online, full versions of texts aren’t
-displayed. The full version is available upon a valid request.</p>
+<p>The found dates are as follows:
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#yzcbxhyvbf .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+  font-size: 16px;
+  background-color: #FFFFFF;
+  /* table.background.color */
+  width: auto;
+  /* table.width */
+  border-top-style: solid;
+  /* table.border.top.style */
+  border-top-width: 2px;
+  /* table.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table.border.top.color */
+  border-bottom-style: solid;
+  /* table.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table.border.bottom.color */
+}
+
+#yzcbxhyvbf .gt_heading {
+  background-color: #FFFFFF;
+  /* heading.background.color */
+  border-bottom-color: #FFFFFF;
+}
+
+#yzcbxhyvbf .gt_title {
+  color: #000000;
+  font-size: 125%;
+  /* heading.title.font.size */
+  padding-top: 4px;
+  /* heading.top.padding */
+  padding-bottom: 4px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#yzcbxhyvbf .gt_subtitle {
+  color: #000000;
+  font-size: 85%;
+  /* heading.subtitle.font.size */
+  padding-top: 2px;
+  padding-bottom: 2px;
+  /* heading.bottom.padding */
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#yzcbxhyvbf .gt_bottom_border {
+  border-bottom-style: solid;
+  /* heading.border.bottom.style */
+  border-bottom-width: 2px;
+  /* heading.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* heading.border.bottom.color */
+}
+
+#yzcbxhyvbf .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#yzcbxhyvbf .gt_col_heading {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* column_labels.background.color */
+  font-size: 16px;
+  /* column_labels.font.size */
+  font-weight: initial;
+  /* column_labels.font.weight */
+  vertical-align: middle;
+  padding: 10px;
+  margin: 10px;
+}
+
+#yzcbxhyvbf .gt_columns_top_border {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#yzcbxhyvbf .gt_columns_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+}
+
+#yzcbxhyvbf .gt_sep_right {
+  border-right: 5px solid #FFFFFF;
+}
+
+#yzcbxhyvbf .gt_group_heading {
+  padding: 8px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#yzcbxhyvbf .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #000000;
+  background-color: #FFFFFF;
+  /* row_group.background.color */
+  font-size: 16px;
+  /* row_group.font.size */
+  font-weight: initial;
+  /* row_group.font.weight */
+  border-top-style: solid;
+  /* row_group.border.top.style */
+  border-top-width: 2px;
+  /* row_group.border.top.width */
+  border-top-color: #A8A8A8;
+  /* row_group.border.top.color */
+  border-bottom-style: solid;
+  /* row_group.border.bottom.style */
+  border-bottom-width: 2px;
+  /* row_group.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* row_group.border.bottom.color */
+  vertical-align: middle;
+}
+
+#yzcbxhyvbf .gt_striped {
+  background-color: #f2f2f2;
+}
+
+#yzcbxhyvbf .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#yzcbxhyvbf .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#yzcbxhyvbf .gt_row {
+  padding: 8px;
+  /* row.padding */
+  margin: 10px;
+  vertical-align: middle;
+}
+
+#yzcbxhyvbf .gt_stub {
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #A8A8A8;
+  padding-left: 12px;
+}
+
+#yzcbxhyvbf .gt_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* summary_row.background.color */
+  padding: 8px;
+  /* summary_row.padding */
+  text-transform: inherit;
+  /* summary_row.text_transform */
+}
+
+#yzcbxhyvbf .gt_grand_summary_row {
+  color: #000000;
+  background-color: #FFFFFF;
+  /* grand_summary_row.background.color */
+  padding: 8px;
+  /* grand_summary_row.padding */
+  text-transform: inherit;
+  /* grand_summary_row.text_transform */
+}
+
+#yzcbxhyvbf .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+}
+
+#yzcbxhyvbf .gt_first_grand_summary_row {
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #A8A8A8;
+}
+
+#yzcbxhyvbf .gt_table_body {
+  border-top-style: solid;
+  /* table_body.border.top.style */
+  border-top-width: 2px;
+  /* table_body.border.top.width */
+  border-top-color: #A8A8A8;
+  /* table_body.border.top.color */
+  border-bottom-style: solid;
+  /* table_body.border.bottom.style */
+  border-bottom-width: 2px;
+  /* table_body.border.bottom.width */
+  border-bottom-color: #A8A8A8;
+  /* table_body.border.bottom.color */
+}
+
+#yzcbxhyvbf .gt_footnotes {
+  border-top-style: solid;
+  /* footnotes.border.top.style */
+  border-top-width: 2px;
+  /* footnotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* footnotes.border.top.color */
+}
+
+#yzcbxhyvbf .gt_footnote {
+  font-size: 90%;
+  /* footnote.font.size */
+  margin: 0px;
+  padding: 4px;
+  /* footnote.padding */
+}
+
+#yzcbxhyvbf .gt_sourcenotes {
+  border-top-style: solid;
+  /* sourcenotes.border.top.style */
+  border-top-width: 2px;
+  /* sourcenotes.border.top.width */
+  border-top-color: #A8A8A8;
+  /* sourcenotes.border.top.color */
+}
+
+#yzcbxhyvbf .gt_sourcenote {
+  font-size: 90%;
+  /* sourcenote.font.size */
+  padding: 4px;
+  /* sourcenote.padding */
+}
+
+#yzcbxhyvbf .gt_center {
+  text-align: center;
+}
+
+#yzcbxhyvbf .gt_left {
+  text-align: left;
+}
+
+#yzcbxhyvbf .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#yzcbxhyvbf .gt_font_normal {
+  font-weight: normal;
+}
+
+#yzcbxhyvbf .gt_font_bold {
+  font-weight: bold;
+}
+
+#yzcbxhyvbf .gt_font_italic {
+  font-style: italic;
+}
+
+#yzcbxhyvbf .gt_super {
+  font-size: 65%;
+}
+
+#yzcbxhyvbf .gt_footnote_glyph {
+  font-style: italic;
+  font-size: 65%;
+}
+</style>
+<div id="yzcbxhyvbf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+  
+  <tr>
+    <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">value</th>
+  </tr>
+  <body class="gt_table_body">
+    <tr>
+      <td class="gt_row gt_left">2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">2018</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2023</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">1973</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2086</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">1956</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2016</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">2030</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">2020</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">2014</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">septiembre 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">abril 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">marzo 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">28 de marzo 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">28 de mayo de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">23 de julio de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">28 de febrero de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">14 de mayo de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">28 de junio de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">21 de mayo de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">30 de enero de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped">10 de abril de 2019</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left">14 de agosto del 2019</td>
+    </tr>
+  </body>
+  
+  
+</table></div></p>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-100"></span>
+<img src="qualminer_files/figure-html/unnamed-chunk-100-1.png" alt="Since this document is being exposed to online, full versions of texts are not displayed. The full version is available upon a valid request." width="672" />
+<p class="caption">
+Figure 16: Since this document is being exposed to online, full versions of texts are not displayed. The full version is available upon a valid request.
+</p>
+</div>
 
 </div>
 <div class="footnotes">
@@ -692,7 +1069,7 @@ Accessed September 9, 2019.<a href="dates-and-years-in-the-responses.html#fnref9
         </div>
       </div>
 <a href="part-of-speech-tagging.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="named-entity-recognition.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="sentiment-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

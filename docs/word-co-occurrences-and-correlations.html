@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>Word co-occurrences and correlations | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="Word co-occurrences and correlations | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="The Description field | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="Word co-occurrences and correlations | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,8 +29,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="median-word-count-of-responses.html"/>
-<link rel="next" href="most-effective-question-descriptions.html"/>
+<link rel="prev" href="most-used-bigrams.html"/>
+<link rel="next" href="part-of-speech-tagging.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
@@ -182,27 +182,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="the-description-field" class="section level1 unnumbered">
-<h1>The Description field</h1>
-<p>In <em>ActivityInfo</em> forms which constitutes different sectors, the questions can
-have an additional description field which is meant to give extra details about
-the questions.</p>
-<p>The description field is not mandatory, so it is optional, but it may
-help users filling out the form easily and eliminate potential confusions if
-they are leading the users enough.</p>
-<p>Do some questions with the extra description field have better <em>response
-quality</em> than the questions which do not have it?</p>
-<p>Looking at the table containing sector name, question and description fields and
-so on others:</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-51-1.png" width="960" style="display: block; margin: auto;" /></p>
-<p><br></p>
-<p>We see in the plot above that the response word counts per sector and colored if a
-response has a description field or not. Having a description field or not is
-calculated as that a description field has a minimum one word.</p>
-<p>The responses with the longest word counts are the ones with description.
-Nevertheless, it is not so easy to see a clear trend that there’s a correlation
-between response word count and description fields. Interestingly, the sector
-<em>Protección_VBG</em> has no description fields at all in their sectors.</p>
+<div id="word-co-occurrences-and-correlations" class="section level1 unnumbered">
+<h1>Word co-occurrences and correlations</h1>
+<p><em>How many times each pair of words occurs co-together in responses?</em></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-83-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>The graph is filtered in the way that only the number of occurrences which are
+greater than or equal to <em>50</em> are displayed.</p>
 
 </div>
             </section>
@@ -210,8 +195,8 @@ between response word count and description fields. Interestingly, the sector
           </div>
         </div>
       </div>
-<a href="median-word-count-of-responses.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="most-effective-question-descriptions.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="most-used-bigrams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="part-of-speech-tagging.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

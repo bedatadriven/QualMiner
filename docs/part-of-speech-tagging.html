@@ -29,7 +29,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="most-used-bigrams.html"/>
+<link rel="prev" href="word-co-occurrences-and-correlations.html"/>
 <link rel="next" href="dates-and-years-in-the-responses.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -148,6 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
 <li class="chapter" data-level="" data-path="median-word-count-of-responses.html"><a href="median-word-count-of-responses.html"><i class="fa fa-check"></i>Median word count of responses</a></li>
 <li class="chapter" data-level="" data-path="the-description-field.html"><a href="the-description-field.html"><i class="fa fa-check"></i>The Description field</a></li>
+<li class="chapter" data-level="" data-path="most-effective-question-descriptions.html"><a href="most-effective-question-descriptions.html"><i class="fa fa-check"></i>Most effective question &amp; descriptions</a></li>
+<li class="chapter" data-level="" data-path="qualitativo-questions.html"><a href="qualitativo-questions.html"><i class="fa fa-check"></i>“Qualitativo” questions</a></li>
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
@@ -155,9 +157,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
 <li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
+<li class="chapter" data-level="" data-path="word-co-occurrences-and-correlations.html"><a href="word-co-occurrences-and-correlations.html"><i class="fa fa-check"></i>Word co-occurrences and correlations</a></li>
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
-<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i>Named entity recognition</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -200,7 +202,7 @@ the essential processes for this part because they are done in previous pages
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#pnkstsaofi .gt_table {
+#icrodvnznb .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -225,13 +227,13 @@ the essential processes for this part because they are done in previous pages
   /* table.border.bottom.color */
 }
 
-#pnkstsaofi .gt_heading {
+#icrodvnznb .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#pnkstsaofi .gt_title {
+#icrodvnznb .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -242,7 +244,7 @@ the essential processes for this part because they are done in previous pages
   border-bottom-width: 0;
 }
 
-#pnkstsaofi .gt_subtitle {
+#icrodvnznb .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -253,7 +255,7 @@ the essential processes for this part because they are done in previous pages
   border-top-width: 0;
 }
 
-#pnkstsaofi .gt_bottom_border {
+#icrodvnznb .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -262,7 +264,7 @@ the essential processes for this part because they are done in previous pages
   /* heading.border.bottom.color */
 }
 
-#pnkstsaofi .gt_column_spanner {
+#icrodvnznb .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -270,7 +272,7 @@ the essential processes for this part because they are done in previous pages
   padding-bottom: 4px;
 }
 
-#pnkstsaofi .gt_col_heading {
+#icrodvnznb .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -283,23 +285,23 @@ the essential processes for this part because they are done in previous pages
   margin: 10px;
 }
 
-#pnkstsaofi .gt_columns_top_border {
+#icrodvnznb .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#pnkstsaofi .gt_columns_bottom_border {
+#icrodvnznb .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#pnkstsaofi .gt_sep_right {
+#icrodvnznb .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#pnkstsaofi .gt_group_heading {
+#icrodvnznb .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -323,7 +325,7 @@ the essential processes for this part because they are done in previous pages
   vertical-align: middle;
 }
 
-#pnkstsaofi .gt_empty_group_heading {
+#icrodvnznb .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -347,33 +349,33 @@ the essential processes for this part because they are done in previous pages
   vertical-align: middle;
 }
 
-#pnkstsaofi .gt_striped {
+#icrodvnznb .gt_striped {
   background-color: #f2f2f2;
 }
 
-#pnkstsaofi .gt_from_md > :first-child {
+#icrodvnznb .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pnkstsaofi .gt_from_md > :last-child {
+#icrodvnznb .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pnkstsaofi .gt_row {
+#icrodvnznb .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#pnkstsaofi .gt_stub {
+#icrodvnznb .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#pnkstsaofi .gt_summary_row {
+#icrodvnznb .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -383,7 +385,7 @@ the essential processes for this part because they are done in previous pages
   /* summary_row.text_transform */
 }
 
-#pnkstsaofi .gt_grand_summary_row {
+#icrodvnznb .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -393,19 +395,19 @@ the essential processes for this part because they are done in previous pages
   /* grand_summary_row.text_transform */
 }
 
-#pnkstsaofi .gt_first_summary_row {
+#icrodvnznb .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#pnkstsaofi .gt_first_grand_summary_row {
+#icrodvnznb .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#pnkstsaofi .gt_table_body {
+#icrodvnznb .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -420,7 +422,7 @@ the essential processes for this part because they are done in previous pages
   /* table_body.border.bottom.color */
 }
 
-#pnkstsaofi .gt_footnotes {
+#icrodvnznb .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -429,7 +431,7 @@ the essential processes for this part because they are done in previous pages
   /* footnotes.border.top.color */
 }
 
-#pnkstsaofi .gt_footnote {
+#icrodvnznb .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -437,7 +439,7 @@ the essential processes for this part because they are done in previous pages
   /* footnote.padding */
 }
 
-#pnkstsaofi .gt_sourcenotes {
+#icrodvnznb .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -446,48 +448,48 @@ the essential processes for this part because they are done in previous pages
   /* sourcenotes.border.top.color */
 }
 
-#pnkstsaofi .gt_sourcenote {
+#icrodvnznb .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#pnkstsaofi .gt_center {
+#icrodvnznb .gt_center {
   text-align: center;
 }
 
-#pnkstsaofi .gt_left {
+#icrodvnznb .gt_left {
   text-align: left;
 }
 
-#pnkstsaofi .gt_right {
+#icrodvnznb .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pnkstsaofi .gt_font_normal {
+#icrodvnznb .gt_font_normal {
   font-weight: normal;
 }
 
-#pnkstsaofi .gt_font_bold {
+#icrodvnznb .gt_font_bold {
   font-weight: bold;
 }
 
-#pnkstsaofi .gt_font_italic {
+#icrodvnznb .gt_font_italic {
   font-style: italic;
 }
 
-#pnkstsaofi .gt_super {
+#icrodvnznb .gt_super {
   font-size: 65%;
 }
 
-#pnkstsaofi .gt_footnote_glyph {
+#icrodvnznb .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="pnkstsaofi" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="icrodvnznb" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">doc_id</th>
@@ -639,7 +641,7 @@ specified links in the table for more detailed answers.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#eqxpqlphiw .gt_table {
+#anpdwevsne .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -664,13 +666,13 @@ specified links in the table for more detailed answers.</p>
   /* table.border.bottom.color */
 }
 
-#eqxpqlphiw .gt_heading {
+#anpdwevsne .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#eqxpqlphiw .gt_title {
+#anpdwevsne .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -681,7 +683,7 @@ specified links in the table for more detailed answers.</p>
   border-bottom-width: 0;
 }
 
-#eqxpqlphiw .gt_subtitle {
+#anpdwevsne .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -692,7 +694,7 @@ specified links in the table for more detailed answers.</p>
   border-top-width: 0;
 }
 
-#eqxpqlphiw .gt_bottom_border {
+#anpdwevsne .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -701,7 +703,7 @@ specified links in the table for more detailed answers.</p>
   /* heading.border.bottom.color */
 }
 
-#eqxpqlphiw .gt_column_spanner {
+#anpdwevsne .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -709,7 +711,7 @@ specified links in the table for more detailed answers.</p>
   padding-bottom: 4px;
 }
 
-#eqxpqlphiw .gt_col_heading {
+#anpdwevsne .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -722,23 +724,23 @@ specified links in the table for more detailed answers.</p>
   margin: 10px;
 }
 
-#eqxpqlphiw .gt_columns_top_border {
+#anpdwevsne .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#eqxpqlphiw .gt_columns_bottom_border {
+#anpdwevsne .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#eqxpqlphiw .gt_sep_right {
+#anpdwevsne .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#eqxpqlphiw .gt_group_heading {
+#anpdwevsne .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -762,7 +764,7 @@ specified links in the table for more detailed answers.</p>
   vertical-align: middle;
 }
 
-#eqxpqlphiw .gt_empty_group_heading {
+#anpdwevsne .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -786,33 +788,33 @@ specified links in the table for more detailed answers.</p>
   vertical-align: middle;
 }
 
-#eqxpqlphiw .gt_striped {
+#anpdwevsne .gt_striped {
   background-color: #f2f2f2;
 }
 
-#eqxpqlphiw .gt_from_md > :first-child {
+#anpdwevsne .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#eqxpqlphiw .gt_from_md > :last-child {
+#anpdwevsne .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#eqxpqlphiw .gt_row {
+#anpdwevsne .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#eqxpqlphiw .gt_stub {
+#anpdwevsne .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#eqxpqlphiw .gt_summary_row {
+#anpdwevsne .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -822,7 +824,7 @@ specified links in the table for more detailed answers.</p>
   /* summary_row.text_transform */
 }
 
-#eqxpqlphiw .gt_grand_summary_row {
+#anpdwevsne .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -832,19 +834,19 @@ specified links in the table for more detailed answers.</p>
   /* grand_summary_row.text_transform */
 }
 
-#eqxpqlphiw .gt_first_summary_row {
+#anpdwevsne .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#eqxpqlphiw .gt_first_grand_summary_row {
+#anpdwevsne .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#eqxpqlphiw .gt_table_body {
+#anpdwevsne .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -859,7 +861,7 @@ specified links in the table for more detailed answers.</p>
   /* table_body.border.bottom.color */
 }
 
-#eqxpqlphiw .gt_footnotes {
+#anpdwevsne .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -868,7 +870,7 @@ specified links in the table for more detailed answers.</p>
   /* footnotes.border.top.color */
 }
 
-#eqxpqlphiw .gt_footnote {
+#anpdwevsne .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -876,7 +878,7 @@ specified links in the table for more detailed answers.</p>
   /* footnote.padding */
 }
 
-#eqxpqlphiw .gt_sourcenotes {
+#anpdwevsne .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -885,48 +887,48 @@ specified links in the table for more detailed answers.</p>
   /* sourcenotes.border.top.color */
 }
 
-#eqxpqlphiw .gt_sourcenote {
+#anpdwevsne .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#eqxpqlphiw .gt_center {
+#anpdwevsne .gt_center {
   text-align: center;
 }
 
-#eqxpqlphiw .gt_left {
+#anpdwevsne .gt_left {
   text-align: left;
 }
 
-#eqxpqlphiw .gt_right {
+#anpdwevsne .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#eqxpqlphiw .gt_font_normal {
+#anpdwevsne .gt_font_normal {
   font-weight: normal;
 }
 
-#eqxpqlphiw .gt_font_bold {
+#anpdwevsne .gt_font_bold {
   font-weight: bold;
 }
 
-#eqxpqlphiw .gt_font_italic {
+#anpdwevsne .gt_font_italic {
   font-style: italic;
 }
 
-#eqxpqlphiw .gt_super {
+#anpdwevsne .gt_super {
   font-size: 65%;
 }
 
-#eqxpqlphiw .gt_footnote_glyph {
+#anpdwevsne .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="eqxpqlphiw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="anpdwevsne" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">V1</th>
@@ -973,21 +975,21 @@ specified links in the table for more detailed answers.</p>
 <h4>Most common words by word classes</h4>
 <p>The term <em>Word classes</em> here refers nouns, verbs, adjectives, and adverbs.</p>
 <p>All the plots generated below use free scale on the <em>x-axis</em>.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-79-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-89-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="automated-keywords-extraction" class="section level4 unnumbered">
 <h4>Automated Keywords Extraction</h4>
 <p><em>RAKE</em>, short for Rapid Automatic Keyword Extraction, is a popular unsupervised
 method to extract keywords in texts. We will use it to find the word
 frequencies with respect to the occurence of words with other words in the text.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-81-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-91-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Alternatively, if we look at the words related with <em>Venezuela</em> whose <em>RAKE</em>
 scores are calculated:</p>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xhzwhauuyh .gt_table {
+#xcpwontoiz .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1012,13 +1014,13 @@ scores are calculated:</p>
   /* table.border.bottom.color */
 }
 
-#xhzwhauuyh .gt_heading {
+#xcpwontoiz .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#xhzwhauuyh .gt_title {
+#xcpwontoiz .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -1029,7 +1031,7 @@ scores are calculated:</p>
   border-bottom-width: 0;
 }
 
-#xhzwhauuyh .gt_subtitle {
+#xcpwontoiz .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1040,7 +1042,7 @@ scores are calculated:</p>
   border-top-width: 0;
 }
 
-#xhzwhauuyh .gt_bottom_border {
+#xcpwontoiz .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1049,7 +1051,7 @@ scores are calculated:</p>
   /* heading.border.bottom.color */
 }
 
-#xhzwhauuyh .gt_column_spanner {
+#xcpwontoiz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1057,7 +1059,7 @@ scores are calculated:</p>
   padding-bottom: 4px;
 }
 
-#xhzwhauuyh .gt_col_heading {
+#xcpwontoiz .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1070,23 +1072,23 @@ scores are calculated:</p>
   margin: 10px;
 }
 
-#xhzwhauuyh .gt_columns_top_border {
+#xcpwontoiz .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xhzwhauuyh .gt_columns_bottom_border {
+#xcpwontoiz .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#xhzwhauuyh .gt_sep_right {
+#xcpwontoiz .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#xhzwhauuyh .gt_group_heading {
+#xcpwontoiz .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1110,7 +1112,7 @@ scores are calculated:</p>
   vertical-align: middle;
 }
 
-#xhzwhauuyh .gt_empty_group_heading {
+#xcpwontoiz .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1134,33 +1136,33 @@ scores are calculated:</p>
   vertical-align: middle;
 }
 
-#xhzwhauuyh .gt_striped {
+#xcpwontoiz .gt_striped {
   background-color: #f2f2f2;
 }
 
-#xhzwhauuyh .gt_from_md > :first-child {
+#xcpwontoiz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xhzwhauuyh .gt_from_md > :last-child {
+#xcpwontoiz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xhzwhauuyh .gt_row {
+#xcpwontoiz .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#xhzwhauuyh .gt_stub {
+#xcpwontoiz .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#xhzwhauuyh .gt_summary_row {
+#xcpwontoiz .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -1170,7 +1172,7 @@ scores are calculated:</p>
   /* summary_row.text_transform */
 }
 
-#xhzwhauuyh .gt_grand_summary_row {
+#xcpwontoiz .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -1180,19 +1182,19 @@ scores are calculated:</p>
   /* grand_summary_row.text_transform */
 }
 
-#xhzwhauuyh .gt_first_summary_row {
+#xcpwontoiz .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xhzwhauuyh .gt_first_grand_summary_row {
+#xcpwontoiz .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#xhzwhauuyh .gt_table_body {
+#xcpwontoiz .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -1207,7 +1209,7 @@ scores are calculated:</p>
   /* table_body.border.bottom.color */
 }
 
-#xhzwhauuyh .gt_footnotes {
+#xcpwontoiz .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -1216,7 +1218,7 @@ scores are calculated:</p>
   /* footnotes.border.top.color */
 }
 
-#xhzwhauuyh .gt_footnote {
+#xcpwontoiz .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -1224,7 +1226,7 @@ scores are calculated:</p>
   /* footnote.padding */
 }
 
-#xhzwhauuyh .gt_sourcenotes {
+#xcpwontoiz .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -1233,48 +1235,48 @@ scores are calculated:</p>
   /* sourcenotes.border.top.color */
 }
 
-#xhzwhauuyh .gt_sourcenote {
+#xcpwontoiz .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#xhzwhauuyh .gt_center {
+#xcpwontoiz .gt_center {
   text-align: center;
 }
 
-#xhzwhauuyh .gt_left {
+#xcpwontoiz .gt_left {
   text-align: left;
 }
 
-#xhzwhauuyh .gt_right {
+#xcpwontoiz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xhzwhauuyh .gt_font_normal {
+#xcpwontoiz .gt_font_normal {
   font-weight: normal;
 }
 
-#xhzwhauuyh .gt_font_bold {
+#xcpwontoiz .gt_font_bold {
   font-weight: bold;
 }
 
-#xhzwhauuyh .gt_font_italic {
+#xcpwontoiz .gt_font_italic {
   font-style: italic;
 }
 
-#xhzwhauuyh .gt_super {
+#xcpwontoiz .gt_super {
   font-size: 65%;
 }
 
-#xhzwhauuyh .gt_footnote_glyph {
+#xcpwontoiz .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xhzwhauuyh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="xcpwontoiz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">keyword</th>
@@ -1452,7 +1454,7 @@ scores are calculated:</p>
 </div>
 <div id="top-phrases-formed-by-noun-and-verb-in-the-responses" class="section level4 unnumbered">
 <h4>Top phrases formed by noun and verb in the responses</h4>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-83-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-93-1.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 <p><em>Universal Dependencies</em> also provides a visualization tool for the <em>CoNLL-U format</em>, see
 <a href="https://universaldependencies.org/conllu_viewer.html">CoNLL-U file viewer</a>.</p>
@@ -1461,7 +1463,7 @@ scores are calculated:</p>
 <p><strong>Sentence</strong></p>
 <p><em>UNFPA ha implementado un espacio seguro para la atención de mujeres en movilidad humana y gestión de casos en Sucumbíos-Puente San Miguel.</em></p>
 <p><strong>Visualization</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-85"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-95"></span>
 <img src="../media/conllu-tree-vbg-example.png" alt="A dependency tree visualization from a response in *Protección_VBG*. Created with CoNNL-U file viewer." width="500px" />
 <p class="caption">
 Figure 15: A dependency tree visualization from a response in <em>Protección_VBG</em>. Created with CoNNL-U file viewer.
@@ -1485,7 +1487,7 @@ September, 2019.<a href="part-of-speech-tagging.html#fnref7" class="footnote-bac
           </div>
         </div>
       </div>
-<a href="most-used-bigrams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="word-co-occurrences-and-correlations.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="dates-and-years-in-the-responses.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>

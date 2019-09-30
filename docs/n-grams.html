@@ -148,6 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
 <li class="chapter" data-level="" data-path="median-word-count-of-responses.html"><a href="median-word-count-of-responses.html"><i class="fa fa-check"></i>Median word count of responses</a></li>
 <li class="chapter" data-level="" data-path="the-description-field.html"><a href="the-description-field.html"><i class="fa fa-check"></i>The Description field</a></li>
+<li class="chapter" data-level="" data-path="most-effective-question-descriptions.html"><a href="most-effective-question-descriptions.html"><i class="fa fa-check"></i>Most effective question &amp; descriptions</a></li>
+<li class="chapter" data-level="" data-path="qualitativo-questions.html"><a href="qualitativo-questions.html"><i class="fa fa-check"></i>“Qualitativo” questions</a></li>
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
@@ -155,9 +157,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
 <li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
+<li class="chapter" data-level="" data-path="word-co-occurrences-and-correlations.html"><a href="word-co-occurrences-and-correlations.html"><i class="fa fa-check"></i>Word co-occurrences and correlations</a></li>
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
-<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i>Named entity recognition</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -191,7 +193,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#umxfdhaygd .gt_table {
+#wzhokkrfzy .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -216,13 +218,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table.border.bottom.color */
 }
 
-#umxfdhaygd .gt_heading {
+#wzhokkrfzy .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#umxfdhaygd .gt_title {
+#wzhokkrfzy .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -233,7 +235,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#umxfdhaygd .gt_subtitle {
+#wzhokkrfzy .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -244,7 +246,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#umxfdhaygd .gt_bottom_border {
+#wzhokkrfzy .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -253,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* heading.border.bottom.color */
 }
 
-#umxfdhaygd .gt_column_spanner {
+#wzhokkrfzy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -261,7 +263,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-bottom: 4px;
 }
 
-#umxfdhaygd .gt_col_heading {
+#wzhokkrfzy .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -274,23 +276,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin: 10px;
 }
 
-#umxfdhaygd .gt_columns_top_border {
+#wzhokkrfzy .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#umxfdhaygd .gt_columns_bottom_border {
+#wzhokkrfzy .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#umxfdhaygd .gt_sep_right {
+#wzhokkrfzy .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#umxfdhaygd .gt_group_heading {
+#wzhokkrfzy .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -314,7 +316,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#umxfdhaygd .gt_empty_group_heading {
+#wzhokkrfzy .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -338,33 +340,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#umxfdhaygd .gt_striped {
+#wzhokkrfzy .gt_striped {
   background-color: #f2f2f2;
 }
 
-#umxfdhaygd .gt_from_md > :first-child {
+#wzhokkrfzy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#umxfdhaygd .gt_from_md > :last-child {
+#wzhokkrfzy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#umxfdhaygd .gt_row {
+#wzhokkrfzy .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#umxfdhaygd .gt_stub {
+#wzhokkrfzy .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#umxfdhaygd .gt_summary_row {
+#wzhokkrfzy .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -374,7 +376,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* summary_row.text_transform */
 }
 
-#umxfdhaygd .gt_grand_summary_row {
+#wzhokkrfzy .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -384,19 +386,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* grand_summary_row.text_transform */
 }
 
-#umxfdhaygd .gt_first_summary_row {
+#wzhokkrfzy .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#umxfdhaygd .gt_first_grand_summary_row {
+#wzhokkrfzy .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#umxfdhaygd .gt_table_body {
+#wzhokkrfzy .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -411,7 +413,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table_body.border.bottom.color */
 }
 
-#umxfdhaygd .gt_footnotes {
+#wzhokkrfzy .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -420,7 +422,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnotes.border.top.color */
 }
 
-#umxfdhaygd .gt_footnote {
+#wzhokkrfzy .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -428,7 +430,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnote.padding */
 }
 
-#umxfdhaygd .gt_sourcenotes {
+#wzhokkrfzy .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -437,48 +439,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* sourcenotes.border.top.color */
 }
 
-#umxfdhaygd .gt_sourcenote {
+#wzhokkrfzy .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#umxfdhaygd .gt_center {
+#wzhokkrfzy .gt_center {
   text-align: center;
 }
 
-#umxfdhaygd .gt_left {
+#wzhokkrfzy .gt_left {
   text-align: left;
 }
 
-#umxfdhaygd .gt_right {
+#wzhokkrfzy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#umxfdhaygd .gt_font_normal {
+#wzhokkrfzy .gt_font_normal {
   font-weight: normal;
 }
 
-#umxfdhaygd .gt_font_bold {
+#wzhokkrfzy .gt_font_bold {
   font-weight: bold;
 }
 
-#umxfdhaygd .gt_font_italic {
+#wzhokkrfzy .gt_font_italic {
   font-style: italic;
 }
 
-#umxfdhaygd .gt_super {
+#wzhokkrfzy .gt_super {
   font-size: 65%;
 }
 
-#umxfdhaygd .gt_footnote_glyph {
+#wzhokkrfzy .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="umxfdhaygd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="wzhokkrfzy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_center" rowspan="1" colspan="1">word1</th>
@@ -522,7 +524,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </table></div></p>
 <p><em>tf-idf</em> values can also be calculated for bigrams, and visualized within each
 reporting/implementing partner, province/canton and so forth.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-65-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-72-1.png" width="960" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

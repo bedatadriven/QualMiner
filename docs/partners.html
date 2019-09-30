@@ -148,6 +148,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
 <li class="chapter" data-level="" data-path="median-word-count-of-responses.html"><a href="median-word-count-of-responses.html"><i class="fa fa-check"></i>Median word count of responses</a></li>
 <li class="chapter" data-level="" data-path="the-description-field.html"><a href="the-description-field.html"><i class="fa fa-check"></i>The Description field</a></li>
+<li class="chapter" data-level="" data-path="most-effective-question-descriptions.html"><a href="most-effective-question-descriptions.html"><i class="fa fa-check"></i>Most effective question &amp; descriptions</a></li>
+<li class="chapter" data-level="" data-path="qualitativo-questions.html"><a href="qualitativo-questions.html"><i class="fa fa-check"></i>“Qualitativo” questions</a></li>
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
@@ -155,9 +157,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
 <li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
 <li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
+<li class="chapter" data-level="" data-path="word-co-occurrences-and-correlations.html"><a href="word-co-occurrences-and-correlations.html"><i class="fa fa-check"></i>Word co-occurrences and correlations</a></li>
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
-<li class="chapter" data-level="" data-path="named-entity-recognition.html"><a href="named-entity-recognition.html"><i class="fa fa-check"></i>Named entity recognition</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
@@ -192,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#qdywvbrdyd .gt_table {
+#tnyjkdwbhl .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -217,13 +219,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table.border.bottom.color */
 }
 
-#qdywvbrdyd .gt_heading {
+#tnyjkdwbhl .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#qdywvbrdyd .gt_title {
+#tnyjkdwbhl .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -234,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#qdywvbrdyd .gt_subtitle {
+#tnyjkdwbhl .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -245,7 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#qdywvbrdyd .gt_bottom_border {
+#tnyjkdwbhl .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -254,7 +256,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* heading.border.bottom.color */
 }
 
-#qdywvbrdyd .gt_column_spanner {
+#tnyjkdwbhl .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -262,7 +264,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-bottom: 4px;
 }
 
-#qdywvbrdyd .gt_col_heading {
+#tnyjkdwbhl .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -275,23 +277,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin: 10px;
 }
 
-#qdywvbrdyd .gt_columns_top_border {
+#tnyjkdwbhl .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#qdywvbrdyd .gt_columns_bottom_border {
+#tnyjkdwbhl .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#qdywvbrdyd .gt_sep_right {
+#tnyjkdwbhl .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#qdywvbrdyd .gt_group_heading {
+#tnyjkdwbhl .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -315,7 +317,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#qdywvbrdyd .gt_empty_group_heading {
+#tnyjkdwbhl .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -339,33 +341,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#qdywvbrdyd .gt_striped {
+#tnyjkdwbhl .gt_striped {
   background-color: #f2f2f2;
 }
 
-#qdywvbrdyd .gt_from_md > :first-child {
+#tnyjkdwbhl .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#qdywvbrdyd .gt_from_md > :last-child {
+#tnyjkdwbhl .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#qdywvbrdyd .gt_row {
+#tnyjkdwbhl .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#qdywvbrdyd .gt_stub {
+#tnyjkdwbhl .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#qdywvbrdyd .gt_summary_row {
+#tnyjkdwbhl .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -375,7 +377,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* summary_row.text_transform */
 }
 
-#qdywvbrdyd .gt_grand_summary_row {
+#tnyjkdwbhl .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -385,19 +387,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* grand_summary_row.text_transform */
 }
 
-#qdywvbrdyd .gt_first_summary_row {
+#tnyjkdwbhl .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#qdywvbrdyd .gt_first_grand_summary_row {
+#tnyjkdwbhl .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#qdywvbrdyd .gt_table_body {
+#tnyjkdwbhl .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -412,7 +414,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table_body.border.bottom.color */
 }
 
-#qdywvbrdyd .gt_footnotes {
+#tnyjkdwbhl .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -421,7 +423,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnotes.border.top.color */
 }
 
-#qdywvbrdyd .gt_footnote {
+#tnyjkdwbhl .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -429,7 +431,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnote.padding */
 }
 
-#qdywvbrdyd .gt_sourcenotes {
+#tnyjkdwbhl .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -438,48 +440,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* sourcenotes.border.top.color */
 }
 
-#qdywvbrdyd .gt_sourcenote {
+#tnyjkdwbhl .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#qdywvbrdyd .gt_center {
+#tnyjkdwbhl .gt_center {
   text-align: center;
 }
 
-#qdywvbrdyd .gt_left {
+#tnyjkdwbhl .gt_left {
   text-align: left;
 }
 
-#qdywvbrdyd .gt_right {
+#tnyjkdwbhl .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#qdywvbrdyd .gt_font_normal {
+#tnyjkdwbhl .gt_font_normal {
   font-weight: normal;
 }
 
-#qdywvbrdyd .gt_font_bold {
+#tnyjkdwbhl .gt_font_bold {
   font-weight: bold;
 }
 
-#qdywvbrdyd .gt_font_italic {
+#tnyjkdwbhl .gt_font_italic {
   font-style: italic;
 }
 
-#qdywvbrdyd .gt_super {
+#tnyjkdwbhl .gt_super {
   font-size: 65%;
 }
 
-#qdywvbrdyd .gt_footnote_glyph {
+#tnyjkdwbhl .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="qdywvbrdyd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="tnyjkdwbhl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center gt_bottom_border" style><strong>Reporting partners in all field types</strong></th>
@@ -603,7 +605,7 @@ of the total records.</p></li>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#futgdkxysa .gt_table {
+#ggomgfiyhs .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -628,13 +630,13 @@ of the total records.</p></li>
   /* table.border.bottom.color */
 }
 
-#futgdkxysa .gt_heading {
+#ggomgfiyhs .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#futgdkxysa .gt_title {
+#ggomgfiyhs .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -645,7 +647,7 @@ of the total records.</p></li>
   border-bottom-width: 0;
 }
 
-#futgdkxysa .gt_subtitle {
+#ggomgfiyhs .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -656,7 +658,7 @@ of the total records.</p></li>
   border-top-width: 0;
 }
 
-#futgdkxysa .gt_bottom_border {
+#ggomgfiyhs .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -665,7 +667,7 @@ of the total records.</p></li>
   /* heading.border.bottom.color */
 }
 
-#futgdkxysa .gt_column_spanner {
+#ggomgfiyhs .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -673,7 +675,7 @@ of the total records.</p></li>
   padding-bottom: 4px;
 }
 
-#futgdkxysa .gt_col_heading {
+#ggomgfiyhs .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -686,23 +688,23 @@ of the total records.</p></li>
   margin: 10px;
 }
 
-#futgdkxysa .gt_columns_top_border {
+#ggomgfiyhs .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#futgdkxysa .gt_columns_bottom_border {
+#ggomgfiyhs .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#futgdkxysa .gt_sep_right {
+#ggomgfiyhs .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#futgdkxysa .gt_group_heading {
+#ggomgfiyhs .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -726,7 +728,7 @@ of the total records.</p></li>
   vertical-align: middle;
 }
 
-#futgdkxysa .gt_empty_group_heading {
+#ggomgfiyhs .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -750,33 +752,33 @@ of the total records.</p></li>
   vertical-align: middle;
 }
 
-#futgdkxysa .gt_striped {
+#ggomgfiyhs .gt_striped {
   background-color: #f2f2f2;
 }
 
-#futgdkxysa .gt_from_md > :first-child {
+#ggomgfiyhs .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#futgdkxysa .gt_from_md > :last-child {
+#ggomgfiyhs .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#futgdkxysa .gt_row {
+#ggomgfiyhs .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#futgdkxysa .gt_stub {
+#ggomgfiyhs .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#futgdkxysa .gt_summary_row {
+#ggomgfiyhs .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -786,7 +788,7 @@ of the total records.</p></li>
   /* summary_row.text_transform */
 }
 
-#futgdkxysa .gt_grand_summary_row {
+#ggomgfiyhs .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -796,19 +798,19 @@ of the total records.</p></li>
   /* grand_summary_row.text_transform */
 }
 
-#futgdkxysa .gt_first_summary_row {
+#ggomgfiyhs .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#futgdkxysa .gt_first_grand_summary_row {
+#ggomgfiyhs .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#futgdkxysa .gt_table_body {
+#ggomgfiyhs .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -823,7 +825,7 @@ of the total records.</p></li>
   /* table_body.border.bottom.color */
 }
 
-#futgdkxysa .gt_footnotes {
+#ggomgfiyhs .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -832,7 +834,7 @@ of the total records.</p></li>
   /* footnotes.border.top.color */
 }
 
-#futgdkxysa .gt_footnote {
+#ggomgfiyhs .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -840,7 +842,7 @@ of the total records.</p></li>
   /* footnote.padding */
 }
 
-#futgdkxysa .gt_sourcenotes {
+#ggomgfiyhs .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -849,48 +851,48 @@ of the total records.</p></li>
   /* sourcenotes.border.top.color */
 }
 
-#futgdkxysa .gt_sourcenote {
+#ggomgfiyhs .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#futgdkxysa .gt_center {
+#ggomgfiyhs .gt_center {
   text-align: center;
 }
 
-#futgdkxysa .gt_left {
+#ggomgfiyhs .gt_left {
   text-align: left;
 }
 
-#futgdkxysa .gt_right {
+#ggomgfiyhs .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#futgdkxysa .gt_font_normal {
+#ggomgfiyhs .gt_font_normal {
   font-weight: normal;
 }
 
-#futgdkxysa .gt_font_bold {
+#ggomgfiyhs .gt_font_bold {
   font-weight: bold;
 }
 
-#futgdkxysa .gt_font_italic {
+#ggomgfiyhs .gt_font_italic {
   font-style: italic;
 }
 
-#futgdkxysa .gt_super {
+#ggomgfiyhs .gt_super {
   font-size: 65%;
 }
 
-#futgdkxysa .gt_footnote_glyph {
+#ggomgfiyhs .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="futgdkxysa" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="ggomgfiyhs" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center gt_bottom_border" style><strong>Reporting &amp; implementing partners in all field types</strong></th>
@@ -917,67 +919,57 @@ of the total records.</p></li>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.257</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center" style="font-size: 14px;">31</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.021</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NRC</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">21</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.014</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NRC</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">21</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.014</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">FUDELA</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">19</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.013</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">FUDELA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">19</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.013</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Federación de mujeres de Sucumbíos</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.005</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">JRS Ecuador</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Federación de mujeres de Sucumbíos</td>
       <td class="gt_row gt_center" style="font-size: 14px;">7</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0.005</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ASA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.002</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">JRS Ecuador</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.005</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">CAI Matilde</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.001</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">ASA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.002</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Fundación Equidad</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">CAI Matilde</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.001</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Mision Scalabriniana</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Fundación Equidad</td>
       <td class="gt_row gt_center" style="font-size: 14px;">2</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0.001</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Mision Scalabriniana</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.001</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">NRC</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NRC</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">168</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.928</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">NRC</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">168</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.928</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">ACNUR</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">10</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.055</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.017</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ACNUR</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">10</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.055</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">OIM</td>
@@ -988,133 +980,123 @@ of the total records.</p></li>
       <td class="gt_row gt_center" style="font-size: 14px;">0.885</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">11</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.097</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">HIAS</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.018</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">HIAS</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.018</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">UNFPA</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNFPA</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">73</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.961</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">UNFPA</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">73</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.961</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">RET</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.039</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">RET</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.039</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">PMA</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">HIAS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">62</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.419</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">HIAS</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">62</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.419</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">ADRA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">16</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.108</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ADRA</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">16</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.108</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Hermanas Salesias</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.047</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Hogar de Cristo</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Hermanas Salesias</td>
       <td class="gt_row gt_center" style="font-size: 14px;">7</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0.047</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Pastoral Social Cáritas Tulcán</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Hogar de Cristo</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.047</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">SJR</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Pastoral Social Cáritas Tulcán</td>
       <td class="gt_row gt_center" style="font-size: 14px;">7</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0.047</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">World Vision</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">SJR</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.047</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Alas de Colibri</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">5</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.034</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">World Vision</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">7</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.047</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Casa Matilde</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Alas de Colibri</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">5</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.034</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Fundación de Mujeres de Sucumbios</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Casa Matilde</td>
       <td class="gt_row gt_center" style="font-size: 14px;">5</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0.034</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Fundación Tarabita</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Fundación de Mujeres de Sucumbios</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">5</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.034</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Patronato</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Fundación Tarabita</td>
       <td class="gt_row gt_center" style="font-size: 14px;">5</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0.034</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Parroquia Eclesiástica San Francisco</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">4</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.027</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Patronato</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">5</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.034</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">Fundación Pan de Vida</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.020</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Parroquia Eclesiástica San Francisco</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">4</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.027</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Monasterio de Santa Clara</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">2</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.014</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">Fundación Pan de Vida</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.020</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">PMA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.007</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">Monasterio de Santa Clara</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">2</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.014</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">PMA</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.007</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">UNICEF</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">HIAS</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">58</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.387</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">HIAS</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">58</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.387</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">ADRA</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">32</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.213</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">ADRA</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">32</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.213</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNICEF</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">24</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.160</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center" style="font-size: 14px;">23</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.153</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">UNICEF</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">24</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.160</td>
     </tr>
     <tr>
       <td class="gt_row gt_left gt_striped" style="font-size: 14px;">NRC</td>
@@ -1134,23 +1116,13 @@ of the total records.</p></li>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">37</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.627</td>
     </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center" style="font-size: 14px;">22</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.373</td>
-    </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">CARE</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">CARE</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">35</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.547</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center" style="font-size: 14px;">29</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.453</td>
+      <td class="gt_row gt_left" style="font-size: 14px;">CARE</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">35</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">0.547</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">JRS Ecuador</td>
@@ -1213,39 +1185,29 @@ of the total records.</p></li>
       <td class="gt_row gt_center" style="font-size: 14px;">7</td>
       <td class="gt_row gt_center" style="font-size: 14px;">0.875</td>
     </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.125</td>
-    </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">PNUD</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">PNUD</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">7</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">PNUD</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">7</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1.000</td>
+    </tr>
+    <tr class="gt_group_heading_row">
+      <td colspan="3" class="gt_group_heading" style="font-weight: bold;">UNESCO</td>
+    </tr>
+    <tr>
+      <td class="gt_row gt_left" style="font-size: 14px;">UNESCO</td>
+      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
       <td class="gt_row gt_center" style="font-size: 14px;">1.000</td>
     </tr>
     <tr class="gt_group_heading_row">
       <td colspan="3" class="gt_group_heading" style="font-weight: bold;">World Vision</td>
     </tr>
     <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;"><em>NA</em></td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">6</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.667</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left" style="font-size: 14px;">World Vision</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center" style="font-size: 14px;">0.333</td>
-    </tr>
-    <tr class="gt_group_heading_row">
-      <td colspan="3" class="gt_group_heading" style="font-weight: bold;">UNESCO</td>
-    </tr>
-    <tr>
-      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">UNESCO</td>
+      <td class="gt_row gt_left gt_striped" style="font-size: 14px;">World Vision</td>
       <td class="gt_row gt_center gt_striped" style="font-size: 14px;">3</td>
-      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">1.000</td>
+      <td class="gt_row gt_center gt_striped" style="font-size: 14px;">0.333</td>
     </tr>
   </body>
   
@@ -1272,7 +1234,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#oowkewremt .gt_table {
+#tfnqiwsfxv .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1297,13 +1259,13 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* table.border.bottom.color */
 }
 
-#oowkewremt .gt_heading {
+#tfnqiwsfxv .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#oowkewremt .gt_title {
+#tfnqiwsfxv .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -1314,7 +1276,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   border-bottom-width: 0;
 }
 
-#oowkewremt .gt_subtitle {
+#tfnqiwsfxv .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1325,7 +1287,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   border-top-width: 0;
 }
 
-#oowkewremt .gt_bottom_border {
+#tfnqiwsfxv .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1334,7 +1296,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* heading.border.bottom.color */
 }
 
-#oowkewremt .gt_column_spanner {
+#tfnqiwsfxv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1342,7 +1304,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   padding-bottom: 4px;
 }
 
-#oowkewremt .gt_col_heading {
+#tfnqiwsfxv .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1355,23 +1317,23 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   margin: 10px;
 }
 
-#oowkewremt .gt_columns_top_border {
+#tfnqiwsfxv .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#oowkewremt .gt_columns_bottom_border {
+#tfnqiwsfxv .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#oowkewremt .gt_sep_right {
+#tfnqiwsfxv .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#oowkewremt .gt_group_heading {
+#tfnqiwsfxv .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1395,7 +1357,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   vertical-align: middle;
 }
 
-#oowkewremt .gt_empty_group_heading {
+#tfnqiwsfxv .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1419,33 +1381,33 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   vertical-align: middle;
 }
 
-#oowkewremt .gt_striped {
+#tfnqiwsfxv .gt_striped {
   background-color: #f2f2f2;
 }
 
-#oowkewremt .gt_from_md > :first-child {
+#tfnqiwsfxv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#oowkewremt .gt_from_md > :last-child {
+#tfnqiwsfxv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#oowkewremt .gt_row {
+#tfnqiwsfxv .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#oowkewremt .gt_stub {
+#tfnqiwsfxv .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#oowkewremt .gt_summary_row {
+#tfnqiwsfxv .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -1455,7 +1417,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* summary_row.text_transform */
 }
 
-#oowkewremt .gt_grand_summary_row {
+#tfnqiwsfxv .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -1465,19 +1427,19 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* grand_summary_row.text_transform */
 }
 
-#oowkewremt .gt_first_summary_row {
+#tfnqiwsfxv .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#oowkewremt .gt_first_grand_summary_row {
+#tfnqiwsfxv .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#oowkewremt .gt_table_body {
+#tfnqiwsfxv .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -1492,7 +1454,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* table_body.border.bottom.color */
 }
 
-#oowkewremt .gt_footnotes {
+#tfnqiwsfxv .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -1501,7 +1463,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* footnotes.border.top.color */
 }
 
-#oowkewremt .gt_footnote {
+#tfnqiwsfxv .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -1509,7 +1471,7 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* footnote.padding */
 }
 
-#oowkewremt .gt_sourcenotes {
+#tfnqiwsfxv .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -1518,48 +1480,48 @@ of reporting comes from the <strong>UNICEF</strong> itself.</p></li>
   /* sourcenotes.border.top.color */
 }
 
-#oowkewremt .gt_sourcenote {
+#tfnqiwsfxv .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#oowkewremt .gt_center {
+#tfnqiwsfxv .gt_center {
   text-align: center;
 }
 
-#oowkewremt .gt_left {
+#tfnqiwsfxv .gt_left {
   text-align: left;
 }
 
-#oowkewremt .gt_right {
+#tfnqiwsfxv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#oowkewremt .gt_font_normal {
+#tfnqiwsfxv .gt_font_normal {
   font-weight: normal;
 }
 
-#oowkewremt .gt_font_bold {
+#tfnqiwsfxv .gt_font_bold {
   font-weight: bold;
 }
 
-#oowkewremt .gt_font_italic {
+#tfnqiwsfxv .gt_font_italic {
   font-style: italic;
 }
 
-#oowkewremt .gt_super {
+#tfnqiwsfxv .gt_super {
   font-size: 65%;
 }
 
-#oowkewremt .gt_footnote_glyph {
+#tfnqiwsfxv .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="oowkewremt" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="tfnqiwsfxv" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center gt_bottom_border" style><strong>Reporting partners in <em>Narrative</em> field type</strong></th>
@@ -1678,7 +1640,7 @@ of the total records.</p></li>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#stvvgnsswl .gt_table {
+#adwxirqhyy .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1703,13 +1665,13 @@ of the total records.</p></li>
   /* table.border.bottom.color */
 }
 
-#stvvgnsswl .gt_heading {
+#adwxirqhyy .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#stvvgnsswl .gt_title {
+#adwxirqhyy .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -1720,7 +1682,7 @@ of the total records.</p></li>
   border-bottom-width: 0;
 }
 
-#stvvgnsswl .gt_subtitle {
+#adwxirqhyy .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1731,7 +1693,7 @@ of the total records.</p></li>
   border-top-width: 0;
 }
 
-#stvvgnsswl .gt_bottom_border {
+#adwxirqhyy .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1740,7 +1702,7 @@ of the total records.</p></li>
   /* heading.border.bottom.color */
 }
 
-#stvvgnsswl .gt_column_spanner {
+#adwxirqhyy .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1748,7 +1710,7 @@ of the total records.</p></li>
   padding-bottom: 4px;
 }
 
-#stvvgnsswl .gt_col_heading {
+#adwxirqhyy .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1761,23 +1723,23 @@ of the total records.</p></li>
   margin: 10px;
 }
 
-#stvvgnsswl .gt_columns_top_border {
+#adwxirqhyy .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#stvvgnsswl .gt_columns_bottom_border {
+#adwxirqhyy .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#stvvgnsswl .gt_sep_right {
+#adwxirqhyy .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#stvvgnsswl .gt_group_heading {
+#adwxirqhyy .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1801,7 +1763,7 @@ of the total records.</p></li>
   vertical-align: middle;
 }
 
-#stvvgnsswl .gt_empty_group_heading {
+#adwxirqhyy .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1825,33 +1787,33 @@ of the total records.</p></li>
   vertical-align: middle;
 }
 
-#stvvgnsswl .gt_striped {
+#adwxirqhyy .gt_striped {
   background-color: #f2f2f2;
 }
 
-#stvvgnsswl .gt_from_md > :first-child {
+#adwxirqhyy .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#stvvgnsswl .gt_from_md > :last-child {
+#adwxirqhyy .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#stvvgnsswl .gt_row {
+#adwxirqhyy .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#stvvgnsswl .gt_stub {
+#adwxirqhyy .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#stvvgnsswl .gt_summary_row {
+#adwxirqhyy .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -1861,7 +1823,7 @@ of the total records.</p></li>
   /* summary_row.text_transform */
 }
 
-#stvvgnsswl .gt_grand_summary_row {
+#adwxirqhyy .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -1871,19 +1833,19 @@ of the total records.</p></li>
   /* grand_summary_row.text_transform */
 }
 
-#stvvgnsswl .gt_first_summary_row {
+#adwxirqhyy .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#stvvgnsswl .gt_first_grand_summary_row {
+#adwxirqhyy .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#stvvgnsswl .gt_table_body {
+#adwxirqhyy .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -1898,7 +1860,7 @@ of the total records.</p></li>
   /* table_body.border.bottom.color */
 }
 
-#stvvgnsswl .gt_footnotes {
+#adwxirqhyy .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -1907,7 +1869,7 @@ of the total records.</p></li>
   /* footnotes.border.top.color */
 }
 
-#stvvgnsswl .gt_footnote {
+#adwxirqhyy .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -1915,7 +1877,7 @@ of the total records.</p></li>
   /* footnote.padding */
 }
 
-#stvvgnsswl .gt_sourcenotes {
+#adwxirqhyy .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -1924,48 +1886,48 @@ of the total records.</p></li>
   /* sourcenotes.border.top.color */
 }
 
-#stvvgnsswl .gt_sourcenote {
+#adwxirqhyy .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#stvvgnsswl .gt_center {
+#adwxirqhyy .gt_center {
   text-align: center;
 }
 
-#stvvgnsswl .gt_left {
+#adwxirqhyy .gt_left {
   text-align: left;
 }
 
-#stvvgnsswl .gt_right {
+#adwxirqhyy .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#stvvgnsswl .gt_font_normal {
+#adwxirqhyy .gt_font_normal {
   font-weight: normal;
 }
 
-#stvvgnsswl .gt_font_bold {
+#adwxirqhyy .gt_font_bold {
   font-weight: bold;
 }
 
-#stvvgnsswl .gt_font_italic {
+#adwxirqhyy .gt_font_italic {
   font-style: italic;
 }
 
-#stvvgnsswl .gt_super {
+#adwxirqhyy .gt_super {
   font-size: 65%;
 }
 
-#stvvgnsswl .gt_footnote_glyph {
+#adwxirqhyy .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="stvvgnsswl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="adwxirqhyy" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center gt_bottom_border" style><strong>Reporting &amp; implementing partners in in <em>Narrative</em> field type</strong></th>
