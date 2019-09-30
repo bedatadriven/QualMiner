@@ -21,6 +21,8 @@ check_required_packages()
 ## `conflicted` strategy to avoid namespace clashes.
 ## See https://github.com/r-lib/conflicted
 library(conflicted)
+conflict_prefer("filter", "dplyr")
+conflict_prefer("geom_treemap", "treemapify")
 ## Libraries
 library(tidyverse)
 library(tidytext)

@@ -112,13 +112,43 @@ rpss <- unique(do.call(rbind, lapply(seq_formats, function(i) {
                      perl = TRUE), 
                 "response"]
 })))
+matches <- lapply(seq_formats, function(i) {
+  fname <- paste0("format", i)
+  regmatches(rps$response, gregexpr(formats[[fname]][["regex"]], rps$response, perl = TRUE))  
+})
 rpss.full <- rps %>% 
   inner_join(rpss, by = "response")
-head(rpss.full)
+rpss.full %>% 
+  head()
 ```
 
-Since this document is being exposed to online, full versions of texts aren't
-displayed. The full version is available upon a valid request.
+The found dates are as follows:
+```{r}
+found_dates_unique <- unique(do.call(c, purrr::flatten(Filter(function(x) length(x) > 0, purrr::flatten(matches)))))
+found_dates_unique %>% 
+  enframe() %>% 
+  select(value) %>% 
+  gt()
+```
+
+```{r, fig.cap="Since this document is being exposed to online, full versions of texts are not displayed. The full version is available upon a valid request.", fig.width=7, fig.height=2, fig.align="center"}
+library(ggpage) # fun to create with ggpage
+rpss.full_ggpage <- 
+  rpss.full %>% 
+  select(recordId, response) %>% 
+  dplyr::filter(nchar(response) < median(nchar(rpss.full$response))) %>% # filter bcs long responses breaks
+  transmute(text = response, book = recordId)
+
+rpss.full_ggpage %>% 
+  ggpage_build() %>% 
+  mutate(matching_word = stringr::str_detect(word, paste(found_dates_unique, collapse = "|"))) %>% 
+  ggpage_plot(aes(fill = matching_word)) +
+  scale_fill_manual(values = c("grey80", "red"), 
+                    labels = c("No date", "Date"),
+                    name = "Dates in the responses") +
+  theme(legend.position = "bottom")
+  
+```
 
 [^10]: More precisely, the RegEx engine in R is called as *P*erl-*C*ompatible
 *R*egular *E*xpressions (PCRE) <https://www.pcre.org/original/doc/html/>

@@ -31,6 +31,8 @@ rmd_files: [
   "response-word-counts-by-form.Rmd",
   "median-response-wcs.Rmd",
   "description-field.Rmd",
+  "most-effective-question-description.Rmd",
+  "qualitativo-questions.Rmd",
 
   "PART-text-mining.Rmd",
   "textual-data-preparation.Rmd",
@@ -39,9 +41,9 @@ rmd_files: [
   "word-frequency-over-time.Rmd",
   "ngrams.Rmd",
   "most-used-bigrams.Rmd",
+  "word-co-occurrences-correlations.Rmd",
   "part-of-speech-tagging.Rmd",
   "extract-dates-from-text.Rmd",
-  "named-entity-recognition.Rmd",
   "sentiment-analysis.Rmd",
 
   "references.Rmd"
