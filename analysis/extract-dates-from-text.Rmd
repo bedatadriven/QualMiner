@@ -140,7 +140,7 @@ rpss.full_ggpage <-
   transmute(text = response, book = recordId)
 
 rpss.full_ggpage %>% 
-  ggpage_build() %>% 
+  ggpage_build(character_height = 7) %>% 
   mutate(matching_word = stringr::str_detect(word, paste(found_dates_unique, collapse = "|"))) %>% 
   ggpage_plot(aes(fill = matching_word)) +
   scale_fill_manual(values = c("grey80", "red"), 

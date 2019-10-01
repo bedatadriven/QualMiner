@@ -238,7 +238,7 @@ get_unique_users_from_records <- function(subFormIds, table.all) {
       history <- get_record_history(sfId, recId)
       entries <- history[["entries"]]
       ## count `userEmail` as 'unique users':
-      emails <- unique(sapply(seq_along(entries), function(e) entries[[e]][["userId"]]))
+      emails <- unique(sapply(seq_along(entries), function(e) entries[[e]][["userEmail"]]))
       data.frame(
         id = sfId,
         recordId = recId,
