@@ -49,26 +49,30 @@ formats <- list(
     description = "Most of the years start with 19xx and 20xx, so better to choose with this prefix to reduce the number of false positives which are just numbers with four digits."
   ),
   format2 = list(
+    regex = "(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)",
+    description = "Months in Spanish"
+  ),
+  format3 = list(
     regex = "\\d{2}[-|/]\\d{2}[-|/]\\d{4}",
     description = "day month and year separated by a hyphen or a forward slash"
   ),
-  format3 = list(
+  format4 = list(
     regex = "(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+(?:19[7-9]\\d|2\\d{3})",
     description = "full or abbreviated month name and year"
   ),
-  format4 = list(
+  format5 = list(
     regex = "(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+\\d+.*(?:19[7-9]\\d|2\\d{3})",
     description = "full or abbreviated month name and year and day and year"
   ),
-  format5 = list(
+  format6 = list(
     regex = "\\d+\\s+de\\s+(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+(?:19[7-9]\\d|2\\d{3})",
     description = "A common way writing dates in Spanish"
   ),
-  format6 = list(
+  format7 = list(
     regex = "\\d+\\s+de\\s+(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+de\\s+(?:19[7-9]\\d|2\\d{3})",
     description = "A common way writing dates in Spanish"
   ),
-  format7 = list(
+  format8 = list(
     regex =  "\\d+\\s+de\\s+(?:ene(?:ro)?|feb(?:rero)?|mar(?:zo)?|abr(?:il)?|may(?:o)?|jun(?:io)?|jul(?:io)?|ago(?:sto)?|sep(?:tiembre)?|oct(?:ubre)?|nov(?:iembre)?|dic(?:iembre)?)\\s+del\\s+(?:19[7-9]\\d|2\\d{3})",
     description = "A common way writing dates in Spanish"
   )
@@ -78,12 +82,13 @@ formats <- list(
 | index | format | variants | RegEx | RegEx description |
 |:------|:-------|:---------|:------|:------------------|
 | 1 | `Y` | `2019` | `r formats$format1$regex` | `r formats$format1$description` |
-| 2 | (`d` or `m`)(sign)(`m` or `d`)(sign)`Y` | `25/09/2019`, `25-09-2019`, `09-25-2019` etc. | `r formats$format2$regex` | `r formats$format2$description` |
-| 3 | `B` `Y` | `septiembre 2019`, `sep 2019` |  `r formats$format3$regex` | `r formats$format3$description` |
-| 4 | (`B` or `b`) `d`(sign) `Y` | `julio 19 2019`, `jul 9, 2019`, `jul 9. 2019` | `r formats$format4$regex` | `r formats$format4$description` |
-| 5 | `d` de `B` `Y` | `28 de marzo 2019` | `r formats$format5$regex` | `r formats$format5$description` |
-| 6 | `d` de `B` de `Y` | `16 de octubre de 2019` | `r formats$format6$regex` | `r formats$format6$description` |
-| 7 | `d` de `B` del `Y` | `1 de octubre del 2019` | `r formats$format7$regex` | `r formats$format7$description` |
+| 2 | `B` | `septiembre` | `r formats$format2$regex` | `r formats$format2$description` |
+| 3 | (`d` or `m`)(sign)(`m` or `d`)(sign)`Y` | `25/09/2019`, `25-09-2019`, `09-25-2019` etc. | `r formats$format3$regex` | `r formats$format3$description` |
+| 4 | `B` `Y` | `septiembre 2019`, `sep 2019` |  `r formats$format4$regex` | `r formats$format4$description` |
+| 5 | (`B` or `b`) `d`(sign) `Y` | `julio 19 2019`, `jul 9, 2019`, `jul 9. 2019` | `r formats$format5$regex` | `r formats$format5$description` |
+| 6 | `d` de `B` `Y` | `28 de marzo 2019` | `r formats$format6$regex` | `r formats$format6$description` |
+| 7 | `d` de `B` de `Y` | `16 de octubre de 2019` | `r formats$format7$regex` | `r formats$format7$description` |
+| 8 | `d` de `B` del `Y` | `1 de octubre del 2019` | `r formats$format8$regex` | `r formats$format8$description` |
 
 After the texts are extracted, they are displayed in a form of that they
 position of dates are shown in the sentences or paragraphs together with the
@@ -104,7 +109,7 @@ all.Spanish.months %>%
 
 ```{r}
 rps <- narratives[!is.na(narratives$response),]
-seq_formats <- seq(7L)
+seq_formats <- seq(8L)
 rpss <- unique(do.call(rbind, lapply(seq_formats, function(i) {
   fname <- paste0("format", i)
   format <- rps[grep(formats[[fname]][["regex"]],
@@ -124,11 +129,47 @@ rpss.full %>%
 
 The found dates are as follows:
 ```{r}
-found_dates_unique <- unique(do.call(c, purrr::flatten(Filter(function(x) length(x) > 0, purrr::flatten(matches)))))
+found_dates <- do.call(c, purrr::flatten(Filter(function(x) length(x) > 0, purrr::flatten(matches))))
+found_dates_unique <- unique(found_dates)
 found_dates_unique %>% 
   enframe() %>% 
   select(value) %>% 
   gt()
+```
+
+The most common dates used in the responses:
+```{r}
+enframe(found_dates) %>% 
+  count(value) %>% 
+  arrange(desc(n)) %>% 
+  slice(seq(20)) %>% 
+  gt()
+```
+
+```{r}
+rpss_words <- rpss.full %>% 
+  filter(formNameRecode %in% c("VBG", "Poblacion", "Tecnico")) %>% 
+  mutate(matching_word = as.character(stringr::str_match(response, paste(found_dates_unique, collapse = "|")))) %>% 
+  unnest(cols = c(matching_word))
+rpss_words %>% 
+  group_by(formNameRecode) %>% 
+  count(matching_word) %>% 
+  arrange(desc(n)) %>% 
+  ggplot(aes(matching_word, n, color = formNameRecode)) +
+  geom_point() +
+  ggplot2::coord_flip() +
+  xlab(NULL) +
+  ylab("Number of occurences") +
+  labs(
+    title = "The dates in sectors",
+    subtitle = "The chosen sectors are those with high sample sizes: *VBG*, *Poblacion*, and *Tecnico*"
+  ) +
+  theme_ecuador1() +
+  theme(legend.title = element_blank()) +
+  theme(
+    plot.title = ggtext::element_markdown(lineheight = 1.1),
+    plot.subtitle = ggtext::element_markdown(lineheight = 1.1)
+  )
 ```
 
 ```{r, fig.cap="Since this document is being exposed to online, full versions of texts are not displayed. The full version is available upon a valid request.", fig.width=7, fig.height=2, fig.align="center"}

@@ -1,7 +1,7 @@
 
 # "Qualitativo" questions {-}
 
-*Does the questions formed by the word "qualitativo" create lesser or longer responses?*
+*Do the questions formed by the word "qualitativo" create lesser or longer responses?*
 
 Almost all questions have a form of the term "qualitative" in the question
 fields. Here we are interested in the questions that they have nothing but the
