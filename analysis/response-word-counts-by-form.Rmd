@@ -11,7 +11,7 @@ narratives.wc %>%
   geom_boxplot(outlier.fill = "orange", outlier.color = "red", outlier.shape = 23, outlier.alpha = 1) +
   coord_flip() +
   labs(
-    title = "Response and word counts by sector",
+    title = "Response word counts by sector",
     subtitle = "A box plot distribution showing the variance of word counts in different sectors",
     caption = RECODE.TABLE.CAPTION
   ) +

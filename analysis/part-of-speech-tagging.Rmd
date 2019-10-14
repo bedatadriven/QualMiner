@@ -51,6 +51,8 @@ rbind(head(annotated, 5), "...") %>%
   gt_condensed_style()
 ```
 
+<br>
+
 Annotating text with *UD* is a *computationally expensive operation*. The output
 format is quite extensive and detailed, but we do not use all the features
 existing in the output. Mainly, the `upos` column is critical for this part of
