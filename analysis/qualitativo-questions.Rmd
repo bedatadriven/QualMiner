@@ -22,23 +22,149 @@ cual_matches <- local({
 ```
 
 ```{r}
-tibble(`"Qualitative questions"` = cual_matches) %>% 
+tibble::as_tibble(as.data.frame(t(cual_matches))) %>% 
   arrange(.[[1]]) %>% 
   gt() %>% 
+  gt_condensed_style() %>% 
   cols_align(
     align = "center"
   )
 ```
 
+<br/>
+
 ```{r}
+## narratives with 'qualitative' question:
 qual_narr_wc <- narratives.wc %>% 
   dplyr::filter(question %in% cual_matches)
+
+## narratives without 'qualitative' question:
+non_qual_narr_wc <- narratives.wc %>% 
+  anti_join(qual_narr_wc, by = c("folderName", "formNameRecode", "Month", "recordId"))
+```
+
+#### Compare the responses with which has a question called qualitative (and variants) with the rest of the responses {-}
+
+We look at the specific sectors such as **VBG**, **Poblacion** and **Tecnico**
+as they have higher sample sizes. This situation is explained in this
+[**section**](#average-word-count-per-sector).
+
+```{r}
+plot_narr_qual <- function(data, 
+                           plot.title, plot.subtitle,
+                           plot.fill.color.palette) {
+  {{data}} %>% 
+    filter(formNameRecode %in% c("VBG", "Poblacion", "Tecnico")) %>%
+    ggplot(aes(formNameRecode, .responseWordCount, fill = formNameRecode)) +
+    geom_boxplot(outlier.fill = "orange", outlier.color = "red", outlier.shape = 23, outlier.alpha = 1) +
+    geom_jitter(alpha = 0.4) +
+    coord_flip() +
+    labs(
+      title = plot.title,
+      subtitle = plot.subtitle,
+      caption = RECODE.TABLE.CAPTION
+    ) +
+    xlab(NULL) +
+    ylab(NULL) +
+    guides(fill = FALSE) +
+    theme_ecuador1() +
+    theme(
+      plot.title = ggtext::element_markdown(lineheight = 1.1),
+      plot.subtitle = ggtext::element_markdown(lineheight = 1.1)
+    ) +
+    ggplot2::scale_fill_brewer(type = "div", palette = plot.fill.color.palette)
+}
 ```
 
 ```{r}
-qual_narr_wc %>% 
-  group_by(formNameRecode) %>% 
-  summarise(mean = mean(.responseWordCount))
+plot_narr_qual(
+  qual_narr_wc,
+  plot.title = "Response word counts by sector ***with 'qualitative'***",
+  plot.subtitle = paste(
+    "A box plot distribution where individual points show only the responses for which the responses",
+    "have a 'qualitative' (or a variant) word in its question",
+    sep = "<br>"
+  ),
+  plot.fill.color.palette = 1
+)
 ```
 
-The caveat is that we could not perform a *t-test* here because the data being compared...
+```{r}
+plot_narr_qual(
+  non_qual_narr_wc,
+  plot.title = "Response word counts by sector ***without 'qualitative'***",
+  plot.subtitle = paste(
+    "A box plot distribution where individual points show only the responses for which the responses",
+    "don't have any 'qualitative' (or a variant) word in its question",
+    sep = "<br>"
+  ),
+  plot.fill.color.palette = 5
+)
+```
+
+We can perform an independent *t-test* on these sample data to determine whether
+there is a statistically significant difference between the means in word count
+of these groups.
+
+The sample data we have at hand is that:
+
+1. Responses with which its question has a 'qualitative' or a variant word in it,
+
+2. Responses with whose question doesn't have any 'qualitative' or variant
+words.
+
+Therefore, we can define the null and alternative hypotheses as that:
+
+$$H_0 : \mu_1 = \mu_2$$
+$$H_A : \mu_1 \neq \mu_2$$
+
+The *t-test* has an assumption that the *sample* data must be normally distributed.
+
+First, we look at the distribution of the sample data, for both responses.
+
+```{r}
+## rbind unequal data.frames with `merge + all = TRUE` combination
+qual_resp_rbind <- as_tibble(merge(
+  tibble(qualitative_resp_wc = qual_narr_wc$.responseWordCount),
+  tibble(non_qualitative_resp_wc = non_qual_narr_wc$.responseWordCount),
+  by = "row.names",
+  all = TRUE
+)) %>%
+  select(-Row.names)
+
+qual_resp_rbind %>% 
+  inspect_num() %>% 
+  show_plot()
+```
+
+The distribution in the first group looks less variant than the second one.
+
+Second, we observe the QQ test:
+
+```{r}
+qqnorm(qual_resp_rbind$qualitative_resp_wc)
+qqnorm(qual_resp_rbind$non_qualitative_resp_wc)
+```
+
+We can additionally run the Shapiro–Wilk normality test.
+
+```{r}
+bind_rows(
+  bind_cols(
+    tibble(sample = "Qualitative"), broom::tidy(shapiro.test(qual_resp_rbind$qualitative_resp_wc))
+  ),
+  bind_cols(
+    tibble(sample = "Non-qualitative"), broom::tidy(shapiro.test(qual_resp_rbind$non_qualitative_resp_wc))
+  )
+) %>% 
+  gt()
+```
+
+```{r}
+t.test(qual_resp_rbind$qualitative_resp_wc, qual_resp_rbind$non_qualitative_resp_wc)
+```
+
+It seems that we fail to reject null the hypothesis *at the p < 0.05 level* that
+there is no statistically significant difference between means of these two
+samples.
+
