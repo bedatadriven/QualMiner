@@ -223,7 +223,8 @@ check_required_packages <- function() {
       "gt" = "rstudio/gt",
       "mmy" = "strboul/mmy",
       "inspectdf" = "alastairrushworth/inspectdf",
-      "ggtext" = "clauswilke/ggtext"
+      "ggtext" = "clauswilke/ggtext",
+      "wordcloud2" = "lchiffon/wordcloud2"
     )
   )
   which.cran <- packages$cran %in% installed.packages()

@@ -1,0 +1,16 @@
+
+# Wordcloud responses {-}
+
+```{r}
+wordcloudFreq <- response.tokens %>% 
+  count(word_stem) %>% 
+  arrange(desc(n)) %>% 
+  slice(seq(200))
+```
+
+*An interactive wordcloud...*
+
+```{r}
+wordcloud2::wordcloud2(wordcloudFreq, size = 0.6, color = "random-light", backgroundColor = "grey25")
+```
+

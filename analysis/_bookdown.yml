@@ -45,6 +45,7 @@ rmd_files: [
   "part-of-speech-tagging.Rmd",
   "extract-dates-from-text.Rmd",
   "sentiment-analysis.Rmd",
+  "wordcloud.Rmd",
 
   "references.Rmd"
 ]
