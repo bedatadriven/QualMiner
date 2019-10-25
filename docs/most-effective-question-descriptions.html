@@ -45,6 +45,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
 
 
 <style type="text/css">
@@ -161,6 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="wordcloud-responses.html"><a href="wordcloud-responses.html"><i class="fa fa-check"></i>Wordcloud responses</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
@@ -189,7 +195,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#bfffuxpvfl .gt_table {
+#narvvgztvf .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -214,13 +220,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table.border.bottom.color */
 }
 
-#bfffuxpvfl .gt_heading {
+#narvvgztvf .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#bfffuxpvfl .gt_title {
+#narvvgztvf .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -231,7 +237,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-bottom-width: 0;
 }
 
-#bfffuxpvfl .gt_subtitle {
+#narvvgztvf .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -242,7 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   border-top-width: 0;
 }
 
-#bfffuxpvfl .gt_bottom_border {
+#narvvgztvf .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -251,7 +257,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* heading.border.bottom.color */
 }
 
-#bfffuxpvfl .gt_column_spanner {
+#narvvgztvf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -259,7 +265,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   padding-bottom: 4px;
 }
 
-#bfffuxpvfl .gt_col_heading {
+#narvvgztvf .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -272,23 +278,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   margin: 10px;
 }
 
-#bfffuxpvfl .gt_columns_top_border {
+#narvvgztvf .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#bfffuxpvfl .gt_columns_bottom_border {
+#narvvgztvf .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#bfffuxpvfl .gt_sep_right {
+#narvvgztvf .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#bfffuxpvfl .gt_group_heading {
+#narvvgztvf .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -312,7 +318,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#bfffuxpvfl .gt_empty_group_heading {
+#narvvgztvf .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -336,33 +342,33 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   vertical-align: middle;
 }
 
-#bfffuxpvfl .gt_striped {
+#narvvgztvf .gt_striped {
   background-color: #f2f2f2;
 }
 
-#bfffuxpvfl .gt_from_md > :first-child {
+#narvvgztvf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bfffuxpvfl .gt_from_md > :last-child {
+#narvvgztvf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bfffuxpvfl .gt_row {
+#narvvgztvf .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#bfffuxpvfl .gt_stub {
+#narvvgztvf .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#bfffuxpvfl .gt_summary_row {
+#narvvgztvf .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -372,7 +378,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* summary_row.text_transform */
 }
 
-#bfffuxpvfl .gt_grand_summary_row {
+#narvvgztvf .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -382,19 +388,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* grand_summary_row.text_transform */
 }
 
-#bfffuxpvfl .gt_first_summary_row {
+#narvvgztvf .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#bfffuxpvfl .gt_first_grand_summary_row {
+#narvvgztvf .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#bfffuxpvfl .gt_table_body {
+#narvvgztvf .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -409,7 +415,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* table_body.border.bottom.color */
 }
 
-#bfffuxpvfl .gt_footnotes {
+#narvvgztvf .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -418,7 +424,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnotes.border.top.color */
 }
 
-#bfffuxpvfl .gt_footnote {
+#narvvgztvf .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -426,7 +432,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* footnote.padding */
 }
 
-#bfffuxpvfl .gt_sourcenotes {
+#narvvgztvf .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -435,48 +441,48 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   /* sourcenotes.border.top.color */
 }
 
-#bfffuxpvfl .gt_sourcenote {
+#narvvgztvf .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#bfffuxpvfl .gt_center {
+#narvvgztvf .gt_center {
   text-align: center;
 }
 
-#bfffuxpvfl .gt_left {
+#narvvgztvf .gt_left {
   text-align: left;
 }
 
-#bfffuxpvfl .gt_right {
+#narvvgztvf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bfffuxpvfl .gt_font_normal {
+#narvvgztvf .gt_font_normal {
   font-weight: normal;
 }
 
-#bfffuxpvfl .gt_font_bold {
+#narvvgztvf .gt_font_bold {
   font-weight: bold;
 }
 
-#bfffuxpvfl .gt_font_italic {
+#narvvgztvf .gt_font_italic {
   font-style: italic;
 }
 
-#bfffuxpvfl .gt_super {
+#narvvgztvf .gt_super {
   font-size: 65%;
 }
 
-#bfffuxpvfl .gt_footnote_glyph {
+#narvvgztvf .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="bfffuxpvfl" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="narvvgztvf" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   
   <tr>
     <th class="gt_col_heading gt_columns_bottom_border gt_columns_top_border gt_left" rowspan="1" colspan="1">recordId</th>

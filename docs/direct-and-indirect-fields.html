@@ -45,6 +45,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
 
 
 <style type="text/css">
@@ -161,6 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="wordcloud-responses.html"><a href="wordcloud-responses.html"><i class="fa fa-check"></i>Wordcloud responses</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
@@ -193,7 +199,7 @@ the funds of another partner.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#gifckejuly .gt_table {
+#sqpxfzzfol .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -218,13 +224,13 @@ the funds of another partner.</p>
   /* table.border.bottom.color */
 }
 
-#gifckejuly .gt_heading {
+#sqpxfzzfol .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#gifckejuly .gt_title {
+#sqpxfzzfol .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -235,7 +241,7 @@ the funds of another partner.</p>
   border-bottom-width: 0;
 }
 
-#gifckejuly .gt_subtitle {
+#sqpxfzzfol .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -246,7 +252,7 @@ the funds of another partner.</p>
   border-top-width: 0;
 }
 
-#gifckejuly .gt_bottom_border {
+#sqpxfzzfol .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -255,7 +261,7 @@ the funds of another partner.</p>
   /* heading.border.bottom.color */
 }
 
-#gifckejuly .gt_column_spanner {
+#sqpxfzzfol .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -263,7 +269,7 @@ the funds of another partner.</p>
   padding-bottom: 4px;
 }
 
-#gifckejuly .gt_col_heading {
+#sqpxfzzfol .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -276,23 +282,23 @@ the funds of another partner.</p>
   margin: 10px;
 }
 
-#gifckejuly .gt_columns_top_border {
+#sqpxfzzfol .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#gifckejuly .gt_columns_bottom_border {
+#sqpxfzzfol .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#gifckejuly .gt_sep_right {
+#sqpxfzzfol .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#gifckejuly .gt_group_heading {
+#sqpxfzzfol .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -316,7 +322,7 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#gifckejuly .gt_empty_group_heading {
+#sqpxfzzfol .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -340,33 +346,33 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#gifckejuly .gt_striped {
+#sqpxfzzfol .gt_striped {
   background-color: #f2f2f2;
 }
 
-#gifckejuly .gt_from_md > :first-child {
+#sqpxfzzfol .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gifckejuly .gt_from_md > :last-child {
+#sqpxfzzfol .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gifckejuly .gt_row {
+#sqpxfzzfol .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#gifckejuly .gt_stub {
+#sqpxfzzfol .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#gifckejuly .gt_summary_row {
+#sqpxfzzfol .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -376,7 +382,7 @@ the funds of another partner.</p>
   /* summary_row.text_transform */
 }
 
-#gifckejuly .gt_grand_summary_row {
+#sqpxfzzfol .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -386,19 +392,19 @@ the funds of another partner.</p>
   /* grand_summary_row.text_transform */
 }
 
-#gifckejuly .gt_first_summary_row {
+#sqpxfzzfol .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#gifckejuly .gt_first_grand_summary_row {
+#sqpxfzzfol .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#gifckejuly .gt_table_body {
+#sqpxfzzfol .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -413,7 +419,7 @@ the funds of another partner.</p>
   /* table_body.border.bottom.color */
 }
 
-#gifckejuly .gt_footnotes {
+#sqpxfzzfol .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -422,7 +428,7 @@ the funds of another partner.</p>
   /* footnotes.border.top.color */
 }
 
-#gifckejuly .gt_footnote {
+#sqpxfzzfol .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -430,7 +436,7 @@ the funds of another partner.</p>
   /* footnote.padding */
 }
 
-#gifckejuly .gt_sourcenotes {
+#sqpxfzzfol .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -439,48 +445,48 @@ the funds of another partner.</p>
   /* sourcenotes.border.top.color */
 }
 
-#gifckejuly .gt_sourcenote {
+#sqpxfzzfol .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#gifckejuly .gt_center {
+#sqpxfzzfol .gt_center {
   text-align: center;
 }
 
-#gifckejuly .gt_left {
+#sqpxfzzfol .gt_left {
   text-align: left;
 }
 
-#gifckejuly .gt_right {
+#sqpxfzzfol .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gifckejuly .gt_font_normal {
+#sqpxfzzfol .gt_font_normal {
   font-weight: normal;
 }
 
-#gifckejuly .gt_font_bold {
+#sqpxfzzfol .gt_font_bold {
   font-weight: bold;
 }
 
-#gifckejuly .gt_font_italic {
+#sqpxfzzfol .gt_font_italic {
   font-style: italic;
 }
 
-#gifckejuly .gt_super {
+#sqpxfzzfol .gt_super {
   font-size: 65%;
 }
 
-#gifckejuly .gt_footnote_glyph {
+#sqpxfzzfol .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="gifckejuly" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="sqpxfzzfol" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal gt_center" style>The number of direct and indirect fields per <strong>sector name</strong></th>
@@ -667,7 +673,7 @@ the funds of another partner.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#yyuovfehzq .gt_table {
+#megghvflas .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -692,13 +698,13 @@ the funds of another partner.</p>
   /* table.border.bottom.color */
 }
 
-#yyuovfehzq .gt_heading {
+#megghvflas .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#yyuovfehzq .gt_title {
+#megghvflas .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -709,7 +715,7 @@ the funds of another partner.</p>
   border-bottom-width: 0;
 }
 
-#yyuovfehzq .gt_subtitle {
+#megghvflas .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -720,7 +726,7 @@ the funds of another partner.</p>
   border-top-width: 0;
 }
 
-#yyuovfehzq .gt_bottom_border {
+#megghvflas .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -729,7 +735,7 @@ the funds of another partner.</p>
   /* heading.border.bottom.color */
 }
 
-#yyuovfehzq .gt_column_spanner {
+#megghvflas .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -737,7 +743,7 @@ the funds of another partner.</p>
   padding-bottom: 4px;
 }
 
-#yyuovfehzq .gt_col_heading {
+#megghvflas .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -750,23 +756,23 @@ the funds of another partner.</p>
   margin: 10px;
 }
 
-#yyuovfehzq .gt_columns_top_border {
+#megghvflas .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#yyuovfehzq .gt_columns_bottom_border {
+#megghvflas .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#yyuovfehzq .gt_sep_right {
+#megghvflas .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#yyuovfehzq .gt_group_heading {
+#megghvflas .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -790,7 +796,7 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#yyuovfehzq .gt_empty_group_heading {
+#megghvflas .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -814,33 +820,33 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#yyuovfehzq .gt_striped {
+#megghvflas .gt_striped {
   background-color: #f2f2f2;
 }
 
-#yyuovfehzq .gt_from_md > :first-child {
+#megghvflas .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#yyuovfehzq .gt_from_md > :last-child {
+#megghvflas .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#yyuovfehzq .gt_row {
+#megghvflas .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#yyuovfehzq .gt_stub {
+#megghvflas .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#yyuovfehzq .gt_summary_row {
+#megghvflas .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -850,7 +856,7 @@ the funds of another partner.</p>
   /* summary_row.text_transform */
 }
 
-#yyuovfehzq .gt_grand_summary_row {
+#megghvflas .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -860,19 +866,19 @@ the funds of another partner.</p>
   /* grand_summary_row.text_transform */
 }
 
-#yyuovfehzq .gt_first_summary_row {
+#megghvflas .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#yyuovfehzq .gt_first_grand_summary_row {
+#megghvflas .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#yyuovfehzq .gt_table_body {
+#megghvflas .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -887,7 +893,7 @@ the funds of another partner.</p>
   /* table_body.border.bottom.color */
 }
 
-#yyuovfehzq .gt_footnotes {
+#megghvflas .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -896,7 +902,7 @@ the funds of another partner.</p>
   /* footnotes.border.top.color */
 }
 
-#yyuovfehzq .gt_footnote {
+#megghvflas .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -904,7 +910,7 @@ the funds of another partner.</p>
   /* footnote.padding */
 }
 
-#yyuovfehzq .gt_sourcenotes {
+#megghvflas .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -913,48 +919,48 @@ the funds of another partner.</p>
   /* sourcenotes.border.top.color */
 }
 
-#yyuovfehzq .gt_sourcenote {
+#megghvflas .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#yyuovfehzq .gt_center {
+#megghvflas .gt_center {
   text-align: center;
 }
 
-#yyuovfehzq .gt_left {
+#megghvflas .gt_left {
   text-align: left;
 }
 
-#yyuovfehzq .gt_right {
+#megghvflas .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#yyuovfehzq .gt_font_normal {
+#megghvflas .gt_font_normal {
   font-weight: normal;
 }
 
-#yyuovfehzq .gt_font_bold {
+#megghvflas .gt_font_bold {
   font-weight: bold;
 }
 
-#yyuovfehzq .gt_font_italic {
+#megghvflas .gt_font_italic {
   font-style: italic;
 }
 
-#yyuovfehzq .gt_super {
+#megghvflas .gt_super {
   font-size: 65%;
 }
 
-#yyuovfehzq .gt_footnote_glyph {
+#megghvflas .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="yyuovfehzq" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="megghvflas" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal gt_center" style>The number of direct and indirect fields per <strong>canton</strong></th>
@@ -1183,7 +1189,7 @@ the funds of another partner.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#gzzwrvnplj .gt_table {
+#rvmwmunfkh .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -1208,13 +1214,13 @@ the funds of another partner.</p>
   /* table.border.bottom.color */
 }
 
-#gzzwrvnplj .gt_heading {
+#rvmwmunfkh .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#gzzwrvnplj .gt_title {
+#rvmwmunfkh .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -1225,7 +1231,7 @@ the funds of another partner.</p>
   border-bottom-width: 0;
 }
 
-#gzzwrvnplj .gt_subtitle {
+#rvmwmunfkh .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -1236,7 +1242,7 @@ the funds of another partner.</p>
   border-top-width: 0;
 }
 
-#gzzwrvnplj .gt_bottom_border {
+#rvmwmunfkh .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -1245,7 +1251,7 @@ the funds of another partner.</p>
   /* heading.border.bottom.color */
 }
 
-#gzzwrvnplj .gt_column_spanner {
+#rvmwmunfkh .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -1253,7 +1259,7 @@ the funds of another partner.</p>
   padding-bottom: 4px;
 }
 
-#gzzwrvnplj .gt_col_heading {
+#rvmwmunfkh .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -1266,23 +1272,23 @@ the funds of another partner.</p>
   margin: 10px;
 }
 
-#gzzwrvnplj .gt_columns_top_border {
+#rvmwmunfkh .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#gzzwrvnplj .gt_columns_bottom_border {
+#rvmwmunfkh .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#gzzwrvnplj .gt_sep_right {
+#rvmwmunfkh .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#gzzwrvnplj .gt_group_heading {
+#rvmwmunfkh .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1306,7 +1312,7 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#gzzwrvnplj .gt_empty_group_heading {
+#rvmwmunfkh .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -1330,33 +1336,33 @@ the funds of another partner.</p>
   vertical-align: middle;
 }
 
-#gzzwrvnplj .gt_striped {
+#rvmwmunfkh .gt_striped {
   background-color: #f2f2f2;
 }
 
-#gzzwrvnplj .gt_from_md > :first-child {
+#rvmwmunfkh .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gzzwrvnplj .gt_from_md > :last-child {
+#rvmwmunfkh .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gzzwrvnplj .gt_row {
+#rvmwmunfkh .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#gzzwrvnplj .gt_stub {
+#rvmwmunfkh .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#gzzwrvnplj .gt_summary_row {
+#rvmwmunfkh .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -1366,7 +1372,7 @@ the funds of another partner.</p>
   /* summary_row.text_transform */
 }
 
-#gzzwrvnplj .gt_grand_summary_row {
+#rvmwmunfkh .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -1376,19 +1382,19 @@ the funds of another partner.</p>
   /* grand_summary_row.text_transform */
 }
 
-#gzzwrvnplj .gt_first_summary_row {
+#rvmwmunfkh .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#gzzwrvnplj .gt_first_grand_summary_row {
+#rvmwmunfkh .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#gzzwrvnplj .gt_table_body {
+#rvmwmunfkh .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -1403,7 +1409,7 @@ the funds of another partner.</p>
   /* table_body.border.bottom.color */
 }
 
-#gzzwrvnplj .gt_footnotes {
+#rvmwmunfkh .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -1412,7 +1418,7 @@ the funds of another partner.</p>
   /* footnotes.border.top.color */
 }
 
-#gzzwrvnplj .gt_footnote {
+#rvmwmunfkh .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -1420,7 +1426,7 @@ the funds of another partner.</p>
   /* footnote.padding */
 }
 
-#gzzwrvnplj .gt_sourcenotes {
+#rvmwmunfkh .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -1429,48 +1435,48 @@ the funds of another partner.</p>
   /* sourcenotes.border.top.color */
 }
 
-#gzzwrvnplj .gt_sourcenote {
+#rvmwmunfkh .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#gzzwrvnplj .gt_center {
+#rvmwmunfkh .gt_center {
   text-align: center;
 }
 
-#gzzwrvnplj .gt_left {
+#rvmwmunfkh .gt_left {
   text-align: left;
 }
 
-#gzzwrvnplj .gt_right {
+#rvmwmunfkh .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gzzwrvnplj .gt_font_normal {
+#rvmwmunfkh .gt_font_normal {
   font-weight: normal;
 }
 
-#gzzwrvnplj .gt_font_bold {
+#rvmwmunfkh .gt_font_bold {
   font-weight: bold;
 }
 
-#gzzwrvnplj .gt_font_italic {
+#rvmwmunfkh .gt_font_italic {
   font-style: italic;
 }
 
-#gzzwrvnplj .gt_super {
+#rvmwmunfkh .gt_super {
   font-size: 65%;
 }
 
-#gzzwrvnplj .gt_footnote_glyph {
+#rvmwmunfkh .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="gzzwrvnplj" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="rvmwmunfkh" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="5" class="gt_heading gt_title gt_font_normal gt_center" style>The number of direct and indirect fields per <strong>partners</strong></th>

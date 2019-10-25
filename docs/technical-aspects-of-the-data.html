@@ -45,6 +45,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
 
 
 <style type="text/css">
@@ -161,6 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="wordcloud-responses.html"><a href="wordcloud-responses.html"><i class="fa fa-check"></i>Wordcloud responses</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
@@ -196,8 +202,10 @@ to generate the visualizations in this page.</p>
 Figure 3: The column types in the data frame
 </p>
 </div>
-<p>Almost all columns are character vector, except
-<em>required</em>.</p>
+<ul>
+<li>Almost all columns are character vector, except
+<em>required</em>.</li>
+</ul>
 <hr>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-6"></span>
 <img src="qualminer_files/figure-html/unnamed-chunk-6-1.png" alt="Summarising categorical features in the data frame" width="672" />
@@ -205,8 +213,10 @@ Figure 3: The column types in the data frame
 Figure 4: Summarising categorical features in the data frame
 </p>
 </div>
-<p>We see that the <em>response</em> field has many unique levels which has a solid color
-in the chart.</p>
+<ul>
+<li>We see that the <em>response</em> field has many unique levels which has a solid color
+in the chart.</li>
+</ul>
 <hr>
 <div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-7"></span>
 <img src="qualminer_files/figure-html/unnamed-chunk-7-1.png" alt="See the most frequently occurring categorical level in each column." width="672" />
@@ -228,8 +238,10 @@ Figure 6: The prevalance of NAs (missing values) in the colums.
 Figure 7: The size of each column in the data frame.
 </p>
 </div>
-<p>As seen in the plot, the <em>response</em> column has the most size because it holds
-long text fields.</p>
+<ul>
+<li>As seen in the plot, the <em>response</em> column has the most size because it holds
+long text fields.</li>
+</ul>
 <hr>
 <p>Look at below to have a glimpse of the raw data.</p>
 <pre><code>## # A tibble: 5 x 22

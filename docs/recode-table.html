@@ -45,6 +45,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
 
 
 <style type="text/css">
@@ -161,6 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="wordcloud-responses.html"><a href="wordcloud-responses.html"><i class="fa fa-check"></i>Wordcloud responses</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
@@ -186,18 +192,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1>Recode table</h1>
 <div id="shorten-sector-names" class="section level4 unnumbered">
 <h4><i>Shorten sector names</i></h4>
-<p>Since the sector names in the database are quite long, we perform some recoding
-by shortening them into a length of maximum one or two words.</p>
-<p>Shortened sector names make tables and plots used in the analysis better because
-they will not be disarrayed due to the unequal lengths of the long names.</p>
+<p>Since the sector names in the database are quite long, we first perform some recoding
+by shortening them into a length which equals to one or two words at maximum.</p>
+<p>Shortened sector names make tables and plots used in the analysis look better as
+they do not get disarrayed due to the unequal lengths of the long sector names.</p>
 <p>The table below is referred as <strong>recode table</strong> across this documentation.
-It can be consulted here whenever it is needed.</p>
+The table can be consulted here whenever it is needed.</p>
 <p><br></p>
 <style>html {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#zgowzwvyqd .gt_table {
+#mncwuermmn .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -222,13 +228,13 @@ It can be consulted here whenever it is needed.</p>
   /* table.border.bottom.color */
 }
 
-#zgowzwvyqd .gt_heading {
+#mncwuermmn .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#zgowzwvyqd .gt_title {
+#mncwuermmn .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -239,7 +245,7 @@ It can be consulted here whenever it is needed.</p>
   border-bottom-width: 0;
 }
 
-#zgowzwvyqd .gt_subtitle {
+#mncwuermmn .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -250,7 +256,7 @@ It can be consulted here whenever it is needed.</p>
   border-top-width: 0;
 }
 
-#zgowzwvyqd .gt_bottom_border {
+#mncwuermmn .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -259,7 +265,7 @@ It can be consulted here whenever it is needed.</p>
   /* heading.border.bottom.color */
 }
 
-#zgowzwvyqd .gt_column_spanner {
+#mncwuermmn .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -267,7 +273,7 @@ It can be consulted here whenever it is needed.</p>
   padding-bottom: 4px;
 }
 
-#zgowzwvyqd .gt_col_heading {
+#mncwuermmn .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -280,23 +286,23 @@ It can be consulted here whenever it is needed.</p>
   margin: 10px;
 }
 
-#zgowzwvyqd .gt_columns_top_border {
+#mncwuermmn .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#zgowzwvyqd .gt_columns_bottom_border {
+#mncwuermmn .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#zgowzwvyqd .gt_sep_right {
+#mncwuermmn .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#zgowzwvyqd .gt_group_heading {
+#mncwuermmn .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -320,7 +326,7 @@ It can be consulted here whenever it is needed.</p>
   vertical-align: middle;
 }
 
-#zgowzwvyqd .gt_empty_group_heading {
+#mncwuermmn .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -344,33 +350,33 @@ It can be consulted here whenever it is needed.</p>
   vertical-align: middle;
 }
 
-#zgowzwvyqd .gt_striped {
+#mncwuermmn .gt_striped {
   background-color: #f2f2f2;
 }
 
-#zgowzwvyqd .gt_from_md > :first-child {
+#mncwuermmn .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#zgowzwvyqd .gt_from_md > :last-child {
+#mncwuermmn .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#zgowzwvyqd .gt_row {
+#mncwuermmn .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#zgowzwvyqd .gt_stub {
+#mncwuermmn .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#zgowzwvyqd .gt_summary_row {
+#mncwuermmn .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -380,7 +386,7 @@ It can be consulted here whenever it is needed.</p>
   /* summary_row.text_transform */
 }
 
-#zgowzwvyqd .gt_grand_summary_row {
+#mncwuermmn .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -390,19 +396,19 @@ It can be consulted here whenever it is needed.</p>
   /* grand_summary_row.text_transform */
 }
 
-#zgowzwvyqd .gt_first_summary_row {
+#mncwuermmn .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#zgowzwvyqd .gt_first_grand_summary_row {
+#mncwuermmn .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#zgowzwvyqd .gt_table_body {
+#mncwuermmn .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -417,7 +423,7 @@ It can be consulted here whenever it is needed.</p>
   /* table_body.border.bottom.color */
 }
 
-#zgowzwvyqd .gt_footnotes {
+#mncwuermmn .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -426,7 +432,7 @@ It can be consulted here whenever it is needed.</p>
   /* footnotes.border.top.color */
 }
 
-#zgowzwvyqd .gt_footnote {
+#mncwuermmn .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -434,7 +440,7 @@ It can be consulted here whenever it is needed.</p>
   /* footnote.padding */
 }
 
-#zgowzwvyqd .gt_sourcenotes {
+#mncwuermmn .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -443,48 +449,48 @@ It can be consulted here whenever it is needed.</p>
   /* sourcenotes.border.top.color */
 }
 
-#zgowzwvyqd .gt_sourcenote {
+#mncwuermmn .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#zgowzwvyqd .gt_center {
+#mncwuermmn .gt_center {
   text-align: center;
 }
 
-#zgowzwvyqd .gt_left {
+#mncwuermmn .gt_left {
   text-align: left;
 }
 
-#zgowzwvyqd .gt_right {
+#mncwuermmn .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#zgowzwvyqd .gt_font_normal {
+#mncwuermmn .gt_font_normal {
   font-weight: normal;
 }
 
-#zgowzwvyqd .gt_font_bold {
+#mncwuermmn .gt_font_bold {
   font-weight: bold;
 }
 
-#zgowzwvyqd .gt_font_italic {
+#mncwuermmn .gt_font_italic {
   font-style: italic;
 }
 
-#zgowzwvyqd .gt_super {
+#mncwuermmn .gt_super {
   font-size: 65%;
 }
 
-#zgowzwvyqd .gt_footnote_glyph {
+#mncwuermmn .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="zgowzwvyqd" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="mncwuermmn" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal gt_center" style><strong>Recode table</strong></th>

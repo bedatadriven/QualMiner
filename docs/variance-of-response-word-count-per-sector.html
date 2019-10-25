@@ -45,6 +45,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
 
 
 <style type="text/css">
@@ -161,6 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="wordcloud-responses.html"><a href="wordcloud-responses.html"><i class="fa fa-check"></i>Wordcloud responses</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
@@ -194,7 +200,7 @@ worth to conduct analyses.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#xyvqcgwdtw .gt_table {
+#feohheuler .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -219,13 +225,13 @@ worth to conduct analyses.</p>
   /* table.border.bottom.color */
 }
 
-#xyvqcgwdtw .gt_heading {
+#feohheuler .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#xyvqcgwdtw .gt_title {
+#feohheuler .gt_title {
   color: #000000;
   font-size: 125%;
   /* heading.title.font.size */
@@ -236,7 +242,7 @@ worth to conduct analyses.</p>
   border-bottom-width: 0;
 }
 
-#xyvqcgwdtw .gt_subtitle {
+#feohheuler .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -247,7 +253,7 @@ worth to conduct analyses.</p>
   border-top-width: 0;
 }
 
-#xyvqcgwdtw .gt_bottom_border {
+#feohheuler .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -256,7 +262,7 @@ worth to conduct analyses.</p>
   /* heading.border.bottom.color */
 }
 
-#xyvqcgwdtw .gt_column_spanner {
+#feohheuler .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -264,7 +270,7 @@ worth to conduct analyses.</p>
   padding-bottom: 4px;
 }
 
-#xyvqcgwdtw .gt_col_heading {
+#feohheuler .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -277,23 +283,23 @@ worth to conduct analyses.</p>
   margin: 10px;
 }
 
-#xyvqcgwdtw .gt_columns_top_border {
+#feohheuler .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xyvqcgwdtw .gt_columns_bottom_border {
+#feohheuler .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#xyvqcgwdtw .gt_sep_right {
+#feohheuler .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#xyvqcgwdtw .gt_group_heading {
+#feohheuler .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -317,7 +323,7 @@ worth to conduct analyses.</p>
   vertical-align: middle;
 }
 
-#xyvqcgwdtw .gt_empty_group_heading {
+#feohheuler .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -341,33 +347,33 @@ worth to conduct analyses.</p>
   vertical-align: middle;
 }
 
-#xyvqcgwdtw .gt_striped {
+#feohheuler .gt_striped {
   background-color: #f2f2f2;
 }
 
-#xyvqcgwdtw .gt_from_md > :first-child {
+#feohheuler .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#xyvqcgwdtw .gt_from_md > :last-child {
+#feohheuler .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#xyvqcgwdtw .gt_row {
+#feohheuler .gt_row {
   padding: 8px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#xyvqcgwdtw .gt_stub {
+#feohheuler .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#xyvqcgwdtw .gt_summary_row {
+#feohheuler .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -377,7 +383,7 @@ worth to conduct analyses.</p>
   /* summary_row.text_transform */
 }
 
-#xyvqcgwdtw .gt_grand_summary_row {
+#feohheuler .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -387,19 +393,19 @@ worth to conduct analyses.</p>
   /* grand_summary_row.text_transform */
 }
 
-#xyvqcgwdtw .gt_first_summary_row {
+#feohheuler .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#xyvqcgwdtw .gt_first_grand_summary_row {
+#feohheuler .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#xyvqcgwdtw .gt_table_body {
+#feohheuler .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -414,7 +420,7 @@ worth to conduct analyses.</p>
   /* table_body.border.bottom.color */
 }
 
-#xyvqcgwdtw .gt_footnotes {
+#feohheuler .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -423,7 +429,7 @@ worth to conduct analyses.</p>
   /* footnotes.border.top.color */
 }
 
-#xyvqcgwdtw .gt_footnote {
+#feohheuler .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -431,7 +437,7 @@ worth to conduct analyses.</p>
   /* footnote.padding */
 }
 
-#xyvqcgwdtw .gt_sourcenotes {
+#feohheuler .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -440,48 +446,48 @@ worth to conduct analyses.</p>
   /* sourcenotes.border.top.color */
 }
 
-#xyvqcgwdtw .gt_sourcenote {
+#feohheuler .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#xyvqcgwdtw .gt_center {
+#feohheuler .gt_center {
   text-align: center;
 }
 
-#xyvqcgwdtw .gt_left {
+#feohheuler .gt_left {
   text-align: left;
 }
 
-#xyvqcgwdtw .gt_right {
+#feohheuler .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#xyvqcgwdtw .gt_font_normal {
+#feohheuler .gt_font_normal {
   font-weight: normal;
 }
 
-#xyvqcgwdtw .gt_font_bold {
+#feohheuler .gt_font_bold {
   font-weight: bold;
 }
 
-#xyvqcgwdtw .gt_font_italic {
+#feohheuler .gt_font_italic {
   font-style: italic;
 }
 
-#xyvqcgwdtw .gt_super {
+#feohheuler .gt_super {
   font-size: 65%;
 }
 
-#xyvqcgwdtw .gt_footnote_glyph {
+#feohheuler .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="xyvqcgwdtw" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="feohheuler" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="3" class="gt_heading gt_title gt_font_normal gt_center" style>SD and Sample size of response word counts per sector name</th>

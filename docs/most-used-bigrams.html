@@ -45,6 +45,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
 
 
 <style type="text/css">
@@ -161,6 +166,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
 <li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="wordcloud-responses.html"><a href="wordcloud-responses.html"><i class="fa fa-check"></i>Wordcloud responses</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
@@ -211,7 +217,7 @@ so on.</p>
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
 }
 
-#mroadwjduz .gt_table {
+#iplolqfncp .gt_table {
   display: table;
   border-collapse: collapse;
   margin-left: auto;
@@ -236,13 +242,13 @@ so on.</p>
   /* table.border.bottom.color */
 }
 
-#mroadwjduz .gt_heading {
+#iplolqfncp .gt_heading {
   background-color: #FFFFFF;
   /* heading.background.color */
   border-bottom-color: #FFFFFF;
 }
 
-#mroadwjduz .gt_title {
+#iplolqfncp .gt_title {
   color: #000000;
   font-size: 14px;
   /* heading.title.font.size */
@@ -253,7 +259,7 @@ so on.</p>
   border-bottom-width: 0;
 }
 
-#mroadwjduz .gt_subtitle {
+#iplolqfncp .gt_subtitle {
   color: #000000;
   font-size: 85%;
   /* heading.subtitle.font.size */
@@ -264,7 +270,7 @@ so on.</p>
   border-top-width: 0;
 }
 
-#mroadwjduz .gt_bottom_border {
+#iplolqfncp .gt_bottom_border {
   border-bottom-style: solid;
   /* heading.border.bottom.style */
   border-bottom-width: 2px;
@@ -273,7 +279,7 @@ so on.</p>
   /* heading.border.bottom.color */
 }
 
-#mroadwjduz .gt_column_spanner {
+#iplolqfncp .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
@@ -281,7 +287,7 @@ so on.</p>
   padding-bottom: 4px;
 }
 
-#mroadwjduz .gt_col_heading {
+#iplolqfncp .gt_col_heading {
   color: #000000;
   background-color: #FFFFFF;
   /* column_labels.background.color */
@@ -294,23 +300,23 @@ so on.</p>
   margin: 10px;
 }
 
-#mroadwjduz .gt_columns_top_border {
+#iplolqfncp .gt_columns_top_border {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#mroadwjduz .gt_columns_bottom_border {
+#iplolqfncp .gt_columns_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #A8A8A8;
 }
 
-#mroadwjduz .gt_sep_right {
+#iplolqfncp .gt_sep_right {
   border-right: 5px solid #FFFFFF;
 }
 
-#mroadwjduz .gt_group_heading {
+#iplolqfncp .gt_group_heading {
   padding: 8px;
   color: #000000;
   background-color: #FFFFFF;
@@ -334,7 +340,7 @@ so on.</p>
   vertical-align: middle;
 }
 
-#mroadwjduz .gt_empty_group_heading {
+#iplolqfncp .gt_empty_group_heading {
   padding: 0.5px;
   color: #000000;
   background-color: #FFFFFF;
@@ -358,33 +364,33 @@ so on.</p>
   vertical-align: middle;
 }
 
-#mroadwjduz .gt_striped {
+#iplolqfncp .gt_striped {
   background-color: #f2f2f2;
 }
 
-#mroadwjduz .gt_from_md > :first-child {
+#iplolqfncp .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#mroadwjduz .gt_from_md > :last-child {
+#iplolqfncp .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#mroadwjduz .gt_row {
+#iplolqfncp .gt_row {
   padding: 6px;
   /* row.padding */
   margin: 10px;
   vertical-align: middle;
 }
 
-#mroadwjduz .gt_stub {
+#iplolqfncp .gt_stub {
   border-right-style: solid;
   border-right-width: 2px;
   border-right-color: #A8A8A8;
   padding-left: 12px;
 }
 
-#mroadwjduz .gt_summary_row {
+#iplolqfncp .gt_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* summary_row.background.color */
@@ -394,7 +400,7 @@ so on.</p>
   /* summary_row.text_transform */
 }
 
-#mroadwjduz .gt_grand_summary_row {
+#iplolqfncp .gt_grand_summary_row {
   color: #000000;
   background-color: #FFFFFF;
   /* grand_summary_row.background.color */
@@ -404,19 +410,19 @@ so on.</p>
   /* grand_summary_row.text_transform */
 }
 
-#mroadwjduz .gt_first_summary_row {
+#iplolqfncp .gt_first_summary_row {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #A8A8A8;
 }
 
-#mroadwjduz .gt_first_grand_summary_row {
+#iplolqfncp .gt_first_grand_summary_row {
   border-top-style: double;
   border-top-width: 6px;
   border-top-color: #A8A8A8;
 }
 
-#mroadwjduz .gt_table_body {
+#iplolqfncp .gt_table_body {
   border-top-style: solid;
   /* table_body.border.top.style */
   border-top-width: 2px;
@@ -431,7 +437,7 @@ so on.</p>
   /* table_body.border.bottom.color */
 }
 
-#mroadwjduz .gt_footnotes {
+#iplolqfncp .gt_footnotes {
   border-top-style: solid;
   /* footnotes.border.top.style */
   border-top-width: 2px;
@@ -440,7 +446,7 @@ so on.</p>
   /* footnotes.border.top.color */
 }
 
-#mroadwjduz .gt_footnote {
+#iplolqfncp .gt_footnote {
   font-size: 90%;
   /* footnote.font.size */
   margin: 0px;
@@ -448,7 +454,7 @@ so on.</p>
   /* footnote.padding */
 }
 
-#mroadwjduz .gt_sourcenotes {
+#iplolqfncp .gt_sourcenotes {
   border-top-style: solid;
   /* sourcenotes.border.top.style */
   border-top-width: 2px;
@@ -457,48 +463,48 @@ so on.</p>
   /* sourcenotes.border.top.color */
 }
 
-#mroadwjduz .gt_sourcenote {
+#iplolqfncp .gt_sourcenote {
   font-size: 90%;
   /* sourcenote.font.size */
   padding: 4px;
   /* sourcenote.padding */
 }
 
-#mroadwjduz .gt_center {
+#iplolqfncp .gt_center {
   text-align: center;
 }
 
-#mroadwjduz .gt_left {
+#iplolqfncp .gt_left {
   text-align: left;
 }
 
-#mroadwjduz .gt_right {
+#iplolqfncp .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#mroadwjduz .gt_font_normal {
+#iplolqfncp .gt_font_normal {
   font-weight: normal;
 }
 
-#mroadwjduz .gt_font_bold {
+#iplolqfncp .gt_font_bold {
   font-weight: bold;
 }
 
-#mroadwjduz .gt_font_italic {
+#iplolqfncp .gt_font_italic {
   font-style: italic;
 }
 
-#mroadwjduz .gt_super {
+#iplolqfncp .gt_super {
   font-size: 65%;
 }
 
-#mroadwjduz .gt_footnote_glyph {
+#iplolqfncp .gt_footnote_glyph {
   font-style: italic;
   font-size: 65%;
 }
 </style>
-<div id="mroadwjduz" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
+<div id="iplolqfncp" style="overflow-x:auto;overflow-y:auto;width:auto;height:auto;"><table class="gt_table">
   <thead>
     <tr>
       <th colspan="2" class="gt_heading gt_title gt_font_normal gt_center" style><strong>Most used bigrams in all responses</strong></th>
