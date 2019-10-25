@@ -180,7 +180,7 @@ knitr::include_graphics("https://raw.githubusercontent.com/bedatadriven/QualMine
 ```
 
 This document explores qualitative indicators from an *ActivityInfo* database
-that is monitoring Ecuador.
+that is a monitoring system for the Venezuelan Response plan in Ecuador.
 
 The QualMiner project explores the qualitative data used for Venezuelan refugee
 response by applying text analysis & mining techniques. The project is funded by

@@ -1,7 +1,7 @@
 
 # Data preparation {-}
 
-This section gives some ideas how the raw data of Ecuador monitoring looks like. 
+This section gives some ideas how the raw data in the monitoring database looks like. 
 
 * The data has been
 extracted from *ActivityInfo* by using the *ActivityInfo API* and pre-processed

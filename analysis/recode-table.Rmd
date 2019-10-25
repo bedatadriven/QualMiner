@@ -3,14 +3,14 @@
 
 #### <i>Shorten sector names</i> {-}
 
-Since the sector names in the database are quite long, we perform some recoding
-by shortening them into a length of maximum one or two words.
+Since the sector names in the database are quite long, we first perform some recoding
+by shortening them into a length which equals to one or two words at maximum.
 
-Shortened sector names make tables and plots used in the analysis better because
-they will not be disarrayed due to the unequal lengths of the long names.
+Shortened sector names make tables and plots used in the analysis look better as
+they do not get disarrayed due to the unequal lengths of the long sector names.
 
 The table below is referred as **recode table** across this documentation. 
-It can be consulted here whenever it is needed.
+The table can be consulted here whenever it is needed.
 
 <br>
 

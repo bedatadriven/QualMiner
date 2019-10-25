@@ -19,7 +19,7 @@ inspect_types(form.table) %>%
   show_plot()
 ```
 
-Almost all columns are character vector, except 
++ Almost all columns are character vector, except 
 *`r colnames(form.table)[sapply(form.table, class) %in% "logical"]`*.
 
 <hr>
@@ -29,7 +29,7 @@ inspect_cat(form.table) %>%
   show_plot()
 ```
 
-We see that the *response* field has many unique levels which has a solid color
++ We see that the *response* field has many unique levels which has a solid color
 in the chart.
 
 <hr>
@@ -53,7 +53,7 @@ inspect_mem(form.table) %>%
   show_plot()
 ```
 
-As seen in the plot, the *response* column has the most size because it holds
++ As seen in the plot, the *response* column has the most size because it holds
 long text fields.
 
 <hr>
