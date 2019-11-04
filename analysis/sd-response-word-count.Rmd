@@ -44,7 +44,7 @@ rwc.sd.sample.join %>%
 The table above clearly shows that some of the sectors are quite different in
 terms of the word count in responses. 
 
-```{r}
+```{r, results='asis'}
 top.high.sample.size <- rwc.sd.sample.join %>% arrange(desc(sample_size)) %>% slice(seq(3))
 for (i in seq(nrow(top.high.sample.size))) {
   top <- top.high.sample.size[i, ]

@@ -4,6 +4,16 @@
 We will focus on word count of response field because the data we are interested
 in lies there.
 
+```{r, fig.align='center'}
+plot(
+  narratives.wc$.responseWordCount,
+  type = "l",
+  xlab = "",
+  ylab = "",
+  main = "Frequency of response word counts"
+)
+```
+
 There's a lot of variation in response word count. The response word count has a
 distribution with a tail is on the left side meaning that most of the values are
 accumulated on the left. So this distribution has a negative skew.
