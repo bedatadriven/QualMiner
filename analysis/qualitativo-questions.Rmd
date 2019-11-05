@@ -1,11 +1,18 @@
 
-# "Qualitativo" questions {-}
+# The "Qualitativo" questions {-}
 
-*Do the questions formed by the word "qualitativo" create lesser or longer responses?*
+#### Do the responses have a question consisted of the word "qualitativo" lead to lesser word counts than the others? {-}
 
-Almost all questions have a form of the term "qualitative" in the question
-fields. Here we are interested in the questions that they have nothing but the
-term "qualitative".
+Every response field in *ActivityInfo* forms has a question field. Particularly,
+in the Ecuador monitoring database, some responses have question field, which is
+only filled as one-word length "qualitative" or similar variants, and the other
+responses have different question fields, which seem to look like that they are
+formed as proper questions.
+
+Let's say that we are interested in that there are any meaningful differences
+between the word counts of these responses: one the one hand, the responses
+whose question field has "qualitative", and on the other hand, the remaining
+responses.
 
 ```{r, include=FALSE}
 cual_matches <- local({
@@ -21,17 +28,8 @@ cual_matches <- local({
 })
 ```
 
-```{r}
-tibble::as_tibble(as.data.frame(t(cual_matches))) %>% 
-  arrange(.[[1]]) %>% 
-  gt() %>% 
-  gt_condensed_style() %>% 
-  cols_align(
-    align = "center"
-  )
-```
-
-<br/>
+The variants of "qualitative" term in the question fields are as follows:
+`r mmy::list_en_end(paste0("*", sort(cual_matches), "*"), add.quotes = TRUE)`
 
 ```{r}
 ## narratives with 'qualitative' question:
@@ -43,11 +41,11 @@ non_qual_narr_wc <- narratives.wc %>%
   anti_join(qual_narr_wc, by = c("folderName", "formNameRecode", "Month", "recordId"))
 ```
 
-#### Compare the responses with which has a question called qualitative (and variants) with the rest of the responses {-}
-
-We look at the specific sectors such as **VBG**, **Poblacion** and **Tecnico**
-as they have higher sample sizes. This situation is explained in this
-[**section**](#average-word-count-per-sector).
+For this kind of analysis, we look at specific sectors such as **VBG**,
+**Poblacion** and **Tecnico** because of a couple of reasons. First, they have
+higher and similar sample sizes compared to the other sectors in the database.
+Second, their variances are similar. The rationale behind this choice is
+explained in the [**section**](#average-word-count-per-sector).
 
 ```{r}
 plot_narr_qual <- function(data, 
@@ -102,29 +100,23 @@ plot_narr_qual(
 )
 ```
 
-We can perform an independent *t-test* on these sample data to determine whether
-there is a statistically significant difference between the means in word count
-of these groups.
+#### Comparison of two groups by their means {-}
 
-The sample data we have at hand is that:
+After all, we have two groups (which they can also be called as 
+*random processes* due to their distinct characteristics) that are from these
+sectors:
 
-1. Responses with which its question has a 'qualitative' or a variant word in it,
+1. **Qualitative group**: Responses with which their questions have a
+'qualitative' or a variant word.
 
-2. Responses with whose question doesn't have any 'qualitative' or variant
-words.
+2. **Non-qualitative group**: Responses with which their questions do not have
+any 'qualitative' or any variant words.
 
-Therefore, we can define the null and alternative hypotheses as that:
-
-$$H_0 : \mu_1 = \mu_2$$
-$$H_A : \mu_1 \neq \mu_2$$
-
-The *t-test* has an assumption that the *sample* data must be normally distributed.
-
-First, we look at the distribution of the sample data, for both responses.
+To begin with, we try to identify the underlying distribution of these groups:
 
 ```{r}
 ## rbind unequal data.frames with `merge + all = TRUE` combination
-qual_resp_rbind <- as_tibble(merge(
+qual_resp_cbind <- as_tibble(merge(
   tibble(qualitative_resp_wc = qual_narr_wc$.responseWordCount),
   tibble(non_qualitative_resp_wc = non_qual_narr_wc$.responseWordCount),
   by = "row.names",
@@ -132,39 +124,76 @@ qual_resp_rbind <- as_tibble(merge(
 )) %>%
   select(-Row.names)
 
-qual_resp_rbind %>% 
+qual_resp_cbind %>% 
   inspect_num() %>% 
   show_plot()
 ```
 
-The distribution in the first group looks less variant than the second one.
+In the histograms above, we can clearly see that the distribution in the first
+group looks less deviated than the distribution of the second one.
 
-Second, we observe the QQ test:
-
-```{r}
-qqnorm(qual_resp_rbind$qualitative_resp_wc)
-qqnorm(qual_resp_rbind$non_qualitative_resp_wc)
-```
-
-We can additionally run the Shapiro–Wilk normality test.
+In addition to the histograms, we can generate the *Q-Q (quantile-quantile)
+plots* to assess from a different way whether the grouped data deviates from
+normal:
 
 ```{r}
-bind_rows(
-  bind_cols(
-    tibble(sample = "Qualitative"), broom::tidy(shapiro.test(qual_resp_rbind$qualitative_resp_wc))
-  ),
-  bind_cols(
-    tibble(sample = "Non-qualitative"), broom::tidy(shapiro.test(qual_resp_rbind$non_qualitative_resp_wc))
-  )
-) %>% 
-  gt()
+qq_plot <- function(x, title) {
+  qqnorm(x, main = title)
+  qqline(x)
+}
+par(mfrow=c(1,2))
+qq_plot(qual_resp_cbind$qualitative_resp_wc, "Qualitative group")
+qq_plot(qual_resp_cbind$non_qualitative_resp_wc, "Non-qualitative group")
 ```
+
+The first Q-Q plot shows that the deviations from the straight line are high.
+This should indicate that the data does not deviate from normal. The
+observations in the second plot are more aligned with its line.
+
+```{r,include=FALSE}
+N_bootstrap <- 1000
+```
+
+Since the assumption of normality is violated in these *random processes*, we
+consider performing *bootstrapping*, which resamples the data with replacements
+so that the observations can be selected more than once, 
+with *`r N_bootstrap`* samples. After that, we can use the bootstrapped data to
+calculate the confidence intervals.
+
+```{r, include=FALSE}
+library(boot)
+mean_difference <- function(df, cols, indices) {
+  m1 <- mean(df[indices, cols[1], drop=TRUE], na.rm = TRUE)
+  m2 <- mean(df[indices, cols[2], drop=TRUE], na.rm = TRUE)
+  m1 - m2
+}
+results <- boot(
+  as.data.frame(qual_resp_cbind),
+  statistic = mean_difference,
+  cols = c("qualitative_resp_wc", "non_qualitative_resp_wc"),
+  R = N_bootstrap
+)
+```
+
+After bootstrapping, the distribution of groups looks pretty normal:
 
 ```{r}
-t.test(qual_resp_rbind$qualitative_resp_wc, qual_resp_rbind$non_qualitative_resp_wc)
+plot(results)
 ```
 
-It seems that we fail to reject null the hypothesis *at the p < 0.05 level* that
-there is no statistically significant difference between means of these two
-samples.
+We calculate the *bootstrap confidence intervals* at the confidence levels of
+*90*, *95* and *99* in order to see the difference between the means in response
+word count of these groups.
+
+```{r}
+(ci <- boot.ci(results, conf = c(0.90, 0.95, 0.99), type="bca"))
+```
+
+As a result, based on the resampled data, the difference in mean between those
+groups at *95%* confidence level are 
+in between *`r round(ci$bca[2,4], 2)`* and *`r round(ci$bca[2,5], 2)`*. 
+A crude interpretation of this would be that the mean interval does not show too
+much significance that the terms in the question fields do not affect the word
+count in the response fields. A further either quantiative or qualitative study
+is recommended.
 

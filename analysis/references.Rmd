@@ -1,5 +1,9 @@
 # References {-}
 
++ NCSS, & LLC. (n.d.). NCSS Statistical Software NCSS.com 206-1 Two-Sample
+  T-Test, 1–39. Retrieved from
+  <https://ncss-wpengine.netdna-ssl.com/wp-content/themes/ncss/pdf/Procedures/NCSS/Two-Sample_T-Test.pdf>
+
 + R4V Response for Venezuelans. (2019, August 1). 62. 
   Retrieved from <https://r4v.info/es/documents/download/67282>
 
