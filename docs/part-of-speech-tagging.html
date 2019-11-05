@@ -154,7 +154,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="median-word-count-of-responses.html"><a href="median-word-count-of-responses.html"><i class="fa fa-check"></i>Median word count of responses</a></li>
 <li class="chapter" data-level="" data-path="the-description-field.html"><a href="the-description-field.html"><i class="fa fa-check"></i>The Description field</a></li>
 <li class="chapter" data-level="" data-path="most-effective-question-descriptions.html"><a href="most-effective-question-descriptions.html"><i class="fa fa-check"></i>Most effective question &amp; descriptions</a></li>
-<li class="chapter" data-level="" data-path="qualitativo-questions.html"><a href="qualitativo-questions.html"><i class="fa fa-check"></i>“Qualitativo” questions</a></li>
+<li class="chapter" data-level="" data-path="the-qualitativo-questions.html"><a href="the-qualitativo-questions.html"><i class="fa fa-check"></i>The “Qualitativo” questions</a></li>
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
 <li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
@@ -982,14 +982,14 @@ specified links in the table for more detailed answers.</p>
 <h4>Most common words by word classes</h4>
 <p>The term <em>Word classes</em> here refers nouns, verbs, adjectives, and adverbs.</p>
 <p>All the plots generated below use free scale on the <em>x-axis</em>.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-95-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-97-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="automated-keywords-extraction" class="section level4 unnumbered">
 <h4>Automated Keywords Extraction</h4>
 <p><em>RAKE</em>, short for Rapid Automatic Keyword Extraction, is a popular unsupervised
 method to extract keywords in texts. We will use it to find the word
 frequencies with respect to the occurence of words with other words in the text.</p>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-97-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-99-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>Alternatively, if we look at the words related with <em>Venezuela</em> whose <em>RAKE</em>
 scores are calculated:</p>
 <style>html {
@@ -1461,7 +1461,7 @@ scores are calculated:</p>
 </div>
 <div id="top-phrases-formed-by-noun-and-verb-in-the-responses" class="section level4 unnumbered">
 <h4>Top phrases formed by noun and verb in the responses</h4>
-<p><img src="qualminer_files/figure-html/unnamed-chunk-99-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-101-1.png" width="672" style="display: block; margin: auto;" /></p>
 <hr />
 <p><em>Universal Dependencies</em> also provides a visualization tool for the <em>CoNLL-U format</em>, see
 <a href="https://universaldependencies.org/conllu_viewer.html">CoNLL-U file viewer</a>.</p>
@@ -1470,7 +1470,7 @@ scores are calculated:</p>
 <p><strong>Sentence</strong></p>
 <p><em>UNFPA ha implementado un espacio seguro para la atención de mujeres en movilidad humana y gestión de casos en Sucumbíos-Puente San Miguel.</em></p>
 <p><strong>Visualization</strong></p>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-101"></span>
+<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-103"></span>
 <img src="../media/conllu-tree-vbg-example.png" alt="A dependency tree visualization from a response in *Protección_VBG*. Created with CoNNL-U file viewer." width="500px" />
 <p class="caption">
 Figure 15: A dependency tree visualization from a response in <em>Protección_VBG</em>. Created with CoNNL-U file viewer.
@@ -1542,20 +1542,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

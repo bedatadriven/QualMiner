@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
+  <title>The “Qualitativo” questions | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador</title>
   <meta name="description" content="Exploring qualitative indicators via text mining methods" />
   <meta name="generator" content="bookdown 0.13 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta property="og:title" content="The “Qualitativo” questions | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   <meta name="github-repo" content="bedatadriven/QualMiner" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="How much does the average word count differ between sectors? | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
+  <meta name="twitter:title" content="The “Qualitativo” questions | QualMiner: Text mining for the Venezuelan Humanitarian Response in Ecuador" />
   
   <meta name="twitter:description" content="Exploring qualitative indicators via text mining methods" />
   
@@ -29,7 +29,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="diversion-of-response-word-count-per-sector.html"/>
+<link rel="prev" href="most-effective-question-descriptions.html"/>
 <link rel="next" href="textual-data-preparation.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -45,6 +45,11 @@
 
 
 
+<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
+<script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
+<script src="libs/wordcloud2-0.0.1/hover.js"></script>
+<script src="libs/wordcloud2-binding-0.2.2/wordcloud2.js"></script>
 
 
 <style type="text/css">
@@ -142,29 +147,26 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="" data-path="how-many-individuals-are-entering-data.html"><a href="how-many-individuals-are-entering-data.html"><i class="fa fa-check"></i>How many individuals are entering data?</a></li>
 <li class="part"><span><b>III Response quality</b></span></li>
 <li class="chapter" data-level="" data-path="response-quality.html"><a href="response-quality.html"><i class="fa fa-check"></i>Response quality</a></li>
+<li class="chapter" data-level="" data-path="variance-of-response-word-count-per-sector.html"><a href="variance-of-response-word-count-per-sector.html"><i class="fa fa-check"></i>Variance of response word count per sector</a></li>
+<li class="chapter" data-level="" data-path="average-word-count-per-sector.html"><a href="average-word-count-per-sector.html"><i class="fa fa-check"></i>How much does the average word count differ between sectors?</a></li>
+<li class="chapter" data-level="" data-path="distribution-of-word-counts-in-response-fields.html"><a href="distribution-of-word-counts-in-response-fields.html"><i class="fa fa-check"></i>Distribution of word counts in response fields</a></li>
+<li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
 <li class="chapter" data-level="" data-path="median-word-count-of-responses.html"><a href="median-word-count-of-responses.html"><i class="fa fa-check"></i>Median word count of responses</a></li>
 <li class="chapter" data-level="" data-path="the-description-field.html"><a href="the-description-field.html"><i class="fa fa-check"></i>The Description field</a></li>
-<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html"><i class="fa fa-check"></i>Word count</a><ul>
-<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#correlation"><i class="fa fa-check"></i>Correlation</a></li>
-<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#the-regression-lines"><i class="fa fa-check"></i>The regression lines</a></li>
-<li class="chapter" data-level="" data-path="word-count.html"><a href="word-count.html#logistic-regression"><i class="fa fa-check"></i>Logistic regression</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="which-sectors-do-receive-high-word-counts-in-responses.html"><a href="which-sectors-do-receive-high-word-counts-in-responses.html"><i class="fa fa-check"></i>Which sectors do receive high word counts in responses?</a></li>
-<li class="chapter" data-level="" data-path="diversion-of-response-word-count-per-sector.html"><a href="diversion-of-response-word-count-per-sector.html"><i class="fa fa-check"></i>Diversion of response word count per sector</a></li>
-<li class="chapter" data-level="" data-path="how-much-does-the-average-word-count-differ-between-sectors.html"><a href="how-much-does-the-average-word-count-differ-between-sectors.html"><i class="fa fa-check"></i>How much does the average word count differ between sectors?</a></li>
+<li class="chapter" data-level="" data-path="most-effective-question-descriptions.html"><a href="most-effective-question-descriptions.html"><i class="fa fa-check"></i>Most effective question &amp; descriptions</a></li>
+<li class="chapter" data-level="" data-path="the-qualitativo-questions.html"><a href="the-qualitativo-questions.html"><i class="fa fa-check"></i>The “Qualitativo” questions</a></li>
 <li class="part"><span><b>IV Text mining</b></span></li>
 <li class="chapter" data-level="" data-path="textual-data-preparation.html"><a href="textual-data-preparation.html"><i class="fa fa-check"></i>Textual data preparation</a></li>
-<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a><ul>
-<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses"><i class="fa fa-check"></i>The most common words in all responses</a></li>
-<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-questions"><i class="fa fa-check"></i>The most common words in all questions</a></li>
-<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html#the-most-common-words-in-all-responses-per-sector-name"><i class="fa fa-check"></i>The most common words in all responses per sector name</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="the-key-themes-by-using-term-frequency-and-tf-idf.html"><a href="the-key-themes-by-using-term-frequency-and-tf-idf.html"><i class="fa fa-check"></i>The key themes (by using term-frequency and tf-idf)</a></li>
-<li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a><ul>
-<li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html#higher-order-n-grams"><i class="fa fa-check"></i>Higher order n-grams</a></li>
-</ul></li>
-<li class="chapter" data-level="" data-path="term-frequency-matrix.html"><a href="term-frequency-matrix.html"><i class="fa fa-check"></i>Term-frequency matrix</a></li>
+<li class="chapter" data-level="" data-path="most-common-words.html"><a href="most-common-words.html"><i class="fa fa-check"></i>Most common words</a></li>
+<li class="chapter" data-level="" data-path="the-key-themes-by-tf-and-tf-idf.html"><a href="the-key-themes-by-tf-and-tf-idf.html"><i class="fa fa-check"></i>The key themes by tf and tf-idf</a></li>
+<li class="chapter" data-level="" data-path="how-does-the-term-frequency-change-over-time-in-sectors.html"><a href="how-does-the-term-frequency-change-over-time-in-sectors.html"><i class="fa fa-check"></i>How does the term frequency change over time in sectors?</a></li>
+<li class="chapter" data-level="" data-path="n-grams.html"><a href="n-grams.html"><i class="fa fa-check"></i>n-grams</a></li>
+<li class="chapter" data-level="" data-path="most-used-bigrams.html"><a href="most-used-bigrams.html"><i class="fa fa-check"></i>Most used bigrams</a></li>
+<li class="chapter" data-level="" data-path="word-co-occurrences-and-correlations.html"><a href="word-co-occurrences-and-correlations.html"><i class="fa fa-check"></i>Word co-occurrences and correlations</a></li>
+<li class="chapter" data-level="" data-path="part-of-speech-tagging.html"><a href="part-of-speech-tagging.html"><i class="fa fa-check"></i>Part of speech tagging</a></li>
+<li class="chapter" data-level="" data-path="dates-and-years-in-the-responses.html"><a href="dates-and-years-in-the-responses.html"><i class="fa fa-check"></i>Dates and years in the responses</a></li>
 <li class="chapter" data-level="" data-path="sentiment-analysis.html"><a href="sentiment-analysis.html"><i class="fa fa-check"></i>Sentiment analysis</a></li>
+<li class="chapter" data-level="" data-path="wordcloud-responses.html"><a href="wordcloud-responses.html"><i class="fa fa-check"></i>Wordcloud responses</a></li>
 <li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
 <li class="divider"></li>
 <li><a href="https://bookdown.org/" target="blank">Published with bookdown</a></li>
@@ -186,30 +188,83 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="how-much-does-the-average-word-count-differ-between-sectors" class="section level1 unnumbered">
-<h1>How much does the average word count differ between sectors?</h1>
-<div class="figure" style="text-align: center"><span id="fig:unnamed-chunk-45"></span>
-<img src="qualminer_files/figure-html/unnamed-chunk-45-1.png" alt="Average word count and sample size" width="960" />
-<p class="caption">
-Figure 10: Average word count and sample size
-</p>
+<div id="the-qualitativo-questions" class="section level1 unnumbered">
+<h1>The “Qualitativo” questions</h1>
+<div id="do-the-responses-have-a-question-consisted-of-the-word-qualitativo-lead-to-lesser-word-counts-than-the-others" class="section level4 unnumbered">
+<h4>Do the responses have a question consisted of the word “qualitativo” lead to lesser word counts than the others?</h4>
+<p>Every response field in <em>ActivityInfo</em> forms has a question field. Particularly,
+in the Ecuador monitoring database, some responses have question field, which is
+only filled as one-word length “qualitative” or similar variants, and the other
+responses have different question fields, which seem to look like that they are
+formed as proper questions.</p>
+<p>Let’s say that we are interested in that there are any meaningful differences
+between the word counts of these responses: one the one hand, the responses
+whose question field has “qualitative”, and on the other hand, the remaining
+responses.</p>
+<p>The variants of “qualitative” term in the question fields are as follows:
+‘<em>Act_1_Cualitativo</em>’, ‘<em>Act_2_Cualitativo</em>’, ‘<em>Act_3_Cualitativo</em>’, ‘<em>Act_4_Cualitativo</em>’, ‘<em>Act_5_Cualitativo</em>’, ‘<em>Act_7_Cualitativo</em>’, ‘<em>cualitativo</em>’, ‘<em>Cualitativo</em>’ and ‘<em>Qualitative</em>’</p>
+<p>For this kind of analysis, we look at specific sectors such as <strong>VBG</strong>,
+<strong>Poblacion</strong> and <strong>Tecnico</strong> because of a couple of reasons. First, they have
+higher and similar sample sizes compared to the other sectors in the database.
+Second, their variances are similar. The rationale behind this choice is
+explained in the <a href="average-word-count-per-sector.html#average-word-count-per-sector"><strong>section</strong></a>.</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
 </div>
-<p>Looking at the sample size of each sector is important to see the variation
-between them because some of them just look like that they are based on very
-small observations.</p>
-<p>It’s important of being careful before making to any conclusions on a single
-graph that shows a single statistics of word count on all sectors. Here is a
-plot showing the average of word counts in sectors with their sample size, which
-is the number of narrative records in the group.</p>
-<p>In that consideration, for text mining, it would be better to consider the
-sectors with which the average word count value is greater than and equal to
-<em>100</em>. Therefore, those sectors are:</p>
-<ul>
-<li><p><strong>Poblacion</strong> (M = <em>35.11</em>, SD = <em>60.07</em>) with <em>170</em> sample size</p></li>
-<li><p><strong>Tecnico</strong> (M = <em>54.45</em>, SD = <em>48.78</em>) with <em>274</em> sample size</p></li>
-<li><p><strong>VBG</strong> (M = <em>54.07</em>, SD = <em>49.60</em>) with <em>114</em> sample size</p></li>
-</ul>
+<div id="comparison-of-two-groups-by-their-means" class="section level4 unnumbered">
+<h4>Comparison of two groups by their means</h4>
+<p>After all, we have two groups (which they can also be called as
+<em>random processes</em> due to their distinct characteristics) that are from these
+sectors:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Qualitative group</strong>: Responses with which their questions have a
+‘qualitative’ or a variant word.</p></li>
+<li><p><strong>Non-qualitative group</strong>: Responses with which their questions do not have
+any ‘qualitative’ or any variant words.</p></li>
+</ol>
+<p>To begin with, we try to identify the underlying distribution of these groups:</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<p>In the histograms above, we can clearly see that the distribution in the first
+group looks less deviated than the distribution of the second one.</p>
+<p>In addition to the histograms, we can generate the <em>Q-Q (quantile-quantile)
+plots</em> to assess from a different way whether the grouped data deviates from
+normal:</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-60-1.png" width="672" /></p>
+<p>The first Q-Q plot shows that the deviations from the straight line are high.
+This should indicate that the data does not deviate from normal. The
+observations in the second plot are more aligned with its line.</p>
+<p>Since the assumption of normality is violated in these <em>random processes</em>, we
+consider performing <em>bootstrapping</em>, which resamples the data with replacements
+so that the observations can be selected more than once,
+with <em>1000</em> samples. After that, we can use the bootstrapped data to
+calculate the confidence intervals.</p>
+<p>After bootstrapping, the distribution of groups looks pretty normal:</p>
+<p><img src="qualminer_files/figure-html/unnamed-chunk-63-1.png" width="672" /></p>
+<p>We calculate the <em>bootstrap confidence intervals</em> at the confidence levels of
+<em>90</em>, <em>95</em> and <em>99</em> in order to see the difference between the means in response
+word count of these groups.</p>
+<pre><code>## BOOTSTRAP CONFIDENCE INTERVAL CALCULATIONS
+## Based on 1000 bootstrap replicates
+## 
+## CALL : 
+## boot.ci(boot.out = results, conf = c(0.9, 0.95, 0.99), type = &quot;bca&quot;)
+## 
+## Intervals : 
+## Level       BCa          
+## 90%   (-2.219, 10.905 )   
+## 95%   (-4.386, 11.511 )   
+## 99%   (-7.391, 13.737 )  
+## Calculations and Intervals on Original Scale
+## Some BCa intervals may be unstable</code></pre>
+<p>As a result, based on the resampled data, the difference in mean between those
+groups at <em>95%</em> confidence level are
+in between <em>-4.39</em> and <em>11.51</em>.
+A crude interpretation of this would be that the mean interval does not show too
+much significance that the terms in the question fields do not affect the word
+count in the response fields. A further either quantiative or qualitative study
+is recommended.</p>
 
+</div>
 </div>
 
 
@@ -220,7 +275,7 @@ sectors with which the average word count value is greater than and equal to
           </div>
         </div>
       </div>
-<a href="diversion-of-response-word-count-per-sector.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="most-effective-question-descriptions.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
 <a href="textual-data-preparation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
