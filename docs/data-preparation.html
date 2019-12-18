@@ -45,7 +45,7 @@
 
 
 
-<script src="libs/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
 <link href="libs/wordcloud2-0.0.1/wordcloud.css" rel="stylesheet" />
 <script src="libs/wordcloud2-0.0.1/wordcloud2-all.js"></script>
 <script src="libs/wordcloud2-0.0.1/hover.js"></script>
@@ -69,7 +69,7 @@ a.sourceLine { text-indent: -1em; padding-left: 1em; }
 pre.numberSource a.sourceLine
   { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+  { content: attr(title);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
     border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
@@ -248,7 +248,7 @@ raw data, you must have an access for it, that can be done by sourcing the
 </tr>
 <tr class="odd">
 <td align="left"><code>Month</code></td>
-<td align="left">month information for each record as <code>YYYY-MM</code> format e.g. <code>2019-05</code></td>
+<td align="left">month information for each record as <code>YYYY-MM</code> format e.g. <code>2019-05</code></td>
 </tr>
 <tr class="even">
 <td align="left"><code>code</code></td>
@@ -306,12 +306,12 @@ during the data cleaning process.</p>
 with almost the same name are found in the data. They are merged into one
 because they imply the same partner.</p>
 <p>This is fixed by using one of the “approximate string matching” algorithms that is readily provided by Open Refine<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">example_duplicate_partners &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="st">&quot;Federación de Mujeres de Sucumbios&quot;</span>,</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="st">&quot;Federación de mujeres de sucumbíos&quot;</span></a>
-<a class="sourceLine" id="cb2-4" data-line-number="4">)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">example_collison &lt;-<span class="st"> </span>refinr<span class="op">::</span><span class="kw">key_collision_merge</span>(example_duplicate_partners)</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6"><span class="kw">unique</span>(example_collison)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">example_duplicate_partners &lt;-<span class="st"> </span><span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="st">&quot;Federación de Mujeres de Sucumbios&quot;</span>,</a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="st">&quot;Federación de mujeres de sucumbíos&quot;</span></a>
+<a class="sourceLine" id="cb2-4" title="4">)</a>
+<a class="sourceLine" id="cb2-5" title="5">example_collison &lt;-<span class="st"> </span>refinr<span class="op">::</span><span class="kw">key_collision_merge</span>(example_duplicate_partners)</a>
+<a class="sourceLine" id="cb2-6" title="6"><span class="kw">unique</span>(example_collison)</a></code></pre></div>
 <pre><code>## [1] &quot;Federación de Mujeres de Sucumbios&quot;</code></pre>
 
 </div>
