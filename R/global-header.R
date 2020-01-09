@@ -11,7 +11,7 @@ library(activityinfo)
 check_R_version <- function() {
   rv <- R.version
   current.version <- paste(rv$major, rv$minor, sep = ".")
-  tested.versions <- c("3.5.3", "3.6.1")
+  tested.versions <- c("3.6.2")
   if (!current.version %in% tested.versions) {
     warning(
       paste(
@@ -28,7 +28,13 @@ check_R_version <- function() {
   } else {
     invisible(NULL)
   }
+
+  if(packageVersion("activityinfo") < 4) {
+    stop("Please update your activityinfo R package: See https://github.com/bedatadriven/activityinfo-R")
+  }
 }
+
+
 check_R_version()
 
 ### ----------------------------------------------------------------- ###

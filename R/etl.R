@@ -5,10 +5,9 @@
 
 source(file.path("R", "global-header.R"))
 source(file.path("R", "etl-methods.R"))
-source(file.path("R", "api-calls.R"))
 
 ## 'ECUADOR_MONITOREO' database:
-database.id <- "10297"
+database.id <- "d0000010297"
 
 db.resources <- database_resources(database.id)
 
@@ -30,10 +29,13 @@ all <- merge(all.form.tbl, wide.db.resources, by.x = "id", by.y = "idSubForms")
 all <- merge(all, unique(db.resources[c("databaseName", "databaseId")]), by.x = "databaseId", by.y = "databaseId")
 
 ## add number of individuals enter data per sub-form:
-sub_form_ids <- unique(all$id)
-reportingUsersPerRecord <- get_unique_users_from_records(sub_form_ids, all)
+#sub_form_ids <- unique(all$id)
+#reportingUsersPerRecord <- get_unique_users_from_records(sub_form_ids, all)
 
-allUs <- merge(all, reportingUsersPerRecord, by = c("id", "recordId"))
+#allUs <- merge(all, reportingUsersPerRecord, by = c("id", "recordId"))
+allUs <- all
+allUs$reportingUsers <- NA
+
 
 ## rename canton names based on this
 ## https://en.wikipedia.org/wiki/Provinces_of_Ecuador

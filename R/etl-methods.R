@@ -1,6 +1,6 @@
 
 database_resources <- function(databaseId) {
-  database <- get_database_tree(databaseId)
+  database <- getDatabaseTree(databaseId)
   activities <- do.call(rbind, lapply(database$resources, function(x) {
     data.frame(
       id = x$id,
@@ -22,7 +22,7 @@ database_resources <- function(databaseId) {
 
 #' Flatten form schema as a table
 #'
-#' @param form.schema A list returned by \code{get_form_schema}.
+#' @param form.schema A list returned by \code{getFormSchema}.
 flatten_form_schema <- function(form.schema) {
 
   form <- form.schema
@@ -49,7 +49,7 @@ flatten_form_schema <- function(form.schema) {
     if ("typeParameters" %in% names(element)) {
       element <- element[-which(names(element) == "typeParameters")]
     }
-    data.frame(element,
+    data.frame(unclass(element),
                stringsAsFactors = FALSE)
   }))
 
@@ -95,7 +95,7 @@ get_query_element <- function(formId, field.code.names) {
   stopifnot(is.character(formId))
   stopifnot(is.character(field.code.names))
 
-  queryTable <- get_query_table(formId)
+  queryTable <- activityinfo:::getResource(paste("form", formId, "query/rows", sep = "/"))
 
   if (length(queryTable) > 0) {
     cat("getting query table: \033[1m", formId, "\033[0m\n")
@@ -111,7 +111,9 @@ get_query_element <- function(formId, field.code.names) {
 
     ## first convert NULL to NA:
     nulls <- sapply(qt, is.null)
-    qt[nulls] <- NA_character_
+    if(length(nulls)) {
+      qt[nulls] <- NA_character_
+    }
 
     qnames <- names(qt)
     code.names <- qnames[qnames %in% field.code.names]
@@ -173,7 +175,7 @@ get_query_element <- function(formId, field.code.names) {
 make_question_response_tbl <- function(formId) {
 
   # pull form and sub-form schemas:
-  form.schema <- get_form_schema(formId)
+  form.schema <- getFormSchema(formId)
 
   # form schema as data.frame:
   fields <- flatten_form_schema(form.schema)
@@ -235,7 +237,7 @@ get_unique_users_from_records <- function(subFormIds, table.all) {
                     "getting record history",
                     paste0("(", i, "/", recordIds.len, ")")
                   )))
-      history <- get_record_history(sfId, recId)
+      history <- getRecordHistory(sfId, recId)
       entries <- history[["entries"]]
       ## count `userEmail` as 'unique users':
       emails <- unique(sapply(seq_along(entries), function(e) entries[[e]][["userEmail"]]))
