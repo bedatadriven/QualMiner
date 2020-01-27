@@ -144,9 +144,9 @@ get_query_element <- function(formId, field.code.names) {
       cantonParentName = "Cant[o|ó]n.parent.name"
     )
     found.rel.names <- sapply(base::as.character(relative.names), function(x) {
-      names(qt)[grep(x, names(qt))]
+      names(qt)[grepl(x, names(qt))]
     }, USE.NAMES = FALSE)
-    req.names <- c(fix.names, found.rel.names)
+    req.names <- unlist(fix.names, found.rel.names)
 
     res <- cbind(data.frame(qt[req.names], stringsAsFactors = FALSE), qt.t)
 
