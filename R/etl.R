@@ -3,8 +3,8 @@
 ### RETRIEVE, CLEAN AND TRANSFORM DATA FROM ACTIVITYINFO ----
 ### ----------------------------------------------------------------- ###
 
-source(file.path("R", "global-header.R"))
-source(file.path("R", "etl-methods.R"))
+debugSource(file.path("R", "global-header.R"))
+debugSource(file.path("R", "etl-methods.R"))
 
 ## 'ECUADOR_MONITOREO' database:
 database.id <- "d0000010297"
@@ -66,6 +66,8 @@ for (i in seq_along(cols)) {
   colnames(allUs)[colnames(allUs) == cols[[i]]] <- names(cols)[i]
 }
 allUs <- allUs[names(cols)]
+
+write.csv(allUs, file = "export.csv")
 
 ## Writing data to disk
 ## Use JSON format bcs CSV isn't very suitable for storing textual data (e.g.
