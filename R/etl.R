@@ -3,8 +3,8 @@
 ### RETRIEVE, CLEAN AND TRANSFORM DATA FROM ACTIVITYINFO ----
 ### ----------------------------------------------------------------- ###
 
-debugSource(file.path("R", "global-header.R"))
-debugSource(file.path("R", "etl-methods.R"))
+source(file.path("R", "global-header.R"))
+source(file.path("R", "etl-methods.R"))
 
 ## 'ECUADOR_MONITOREO' database:
 database.id <- "d0000010297"
