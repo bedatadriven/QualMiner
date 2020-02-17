@@ -139,9 +139,9 @@ get_query_element <- function(formId, field.code.names) {
     fix.names <- c("Month", "@id")
     ## a note: some names contain Spanish ó (U+00F3) don't know why...
     relative.names <- list(
-      partnerName = "Partner.label",
-      cantonName = "Cant[o|ó]n.name",
-      cantonParentName = "Cant[o|ó]n.parent.name"
+      partnerName = "Partner\\.label",
+      cantonName = "Cant.n\\.name",
+      cantonParentName = "Cant.n\\.parent\\.name"
     )
     found.rel.names <- sapply(base::as.character(relative.names), function(x) {
       names(qt)[grepl(pattern = x, names(qt), ignore.case = TRUE)]
