@@ -1,4 +1,3 @@
-
 database_resources <- function(databaseId) {
   database <- getDatabaseTree(databaseId)
   activities <- do.call(rbind, lapply(database$resources, function(x) {
@@ -23,7 +22,8 @@ database_resources <- function(databaseId) {
 #' Flatten form schema as a table
 #'
 #' @param form.schema A list returned by \code{getFormSchema}.
-flatten_form_schema <- function(form.schema) {
+#' @param coded.only A logical to indicate if only fields with codes should be included.
+flatten_form_schema <- function(form.schema, coded.only = TRUE) {
 
   form <- form.schema
 
@@ -54,13 +54,15 @@ flatten_form_schema <- function(form.schema) {
   }))
 
   res <- data.frame(
-      as.data.frame(form.sans.elements, stringsAsFactors = FALSE),
-      elements,
-      stringsAsFactors = FALSE
-    )
+    as.data.frame(form.sans.elements, stringsAsFactors = FALSE),
+    elements,
+    stringsAsFactors = FALSE
+  )
 
-  ## remove rows where code is NA:
-  res <- res[!is.na(res$code), ]
+  if (isTRUE(coded.only)) {
+    ## remove rows where code is NA:
+    res <- res[!is.na(res$code),]
+  }
 
   ### prettify data --------------------------------------- ###
   ## drop columns:
@@ -90,6 +92,10 @@ flatten_form_schema <- function(form.schema) {
 #' @param formId form ID as character.
 #' @param field.code.names character vector containing form field code names
 #'   (subsetted by the same formId).
+#' @details For the 2020 database we are only querying subforms. The fields
+#' with a code (as contained in \code{field.code.names} include fields which
+#' are common to most, if not all, subforms in the database. These common fields
+#' provide metadata for fields with quantitative and narrative information.
 #' @noRd
 get_query_element <- function(formId, field.code.names) {
   stopifnot(is.character(formId))
@@ -111,12 +117,32 @@ get_query_element <- function(formId, field.code.names) {
 
     ## first convert NULL to NA:
     nulls <- sapply(qt, is.null)
-    if(length(nulls)) {
+    if (length(nulls)) {
       qt[nulls] <- NA_character_
     }
 
+    # common names are fields (in the subform) which are not quantity
+    # or quantitative fields, but provide additional information such
+    # as the reporting month,activity type, and donor:
+    common.names <- list(
+      Month = "Month$|\\w*Mes$",
+      Activity = "\\w*Act$",
+      Donor = "\\w*Donor(\\.Agency)?$", # reference field!
+      PRRM = "\\w*PRRM$",
+      COVID = "\\w*COVID$",
+      Implementation = "\\w*Impl$",
+      Meta = "\\w*Meta$",
+      Modality = "\\w*Mod$",
+      Comment = "\\w*FREE_TEXT$|\\w*TEXTO_LIBRE$"
+    )
+    found.common.codes <- sapply(common.names, function(x) {
+      grep(pattern = x, field.code.names, ignore.case = TRUE, value = TRUE)
+    }, USE.NAMES = FALSE)
+
     qnames <- names(qt)
-    code.names <- qnames[qnames %in% field.code.names]
+    # only retrieve data from fields with codes and where is code is not marked
+    # as being a common field among multiple subforms:
+    code.names <- setdiff(qnames[qnames %in% field.code.names], found.common.codes)
 
     qt.sub <- qt[code.names]
 
@@ -128,33 +154,32 @@ get_query_element <- function(formId, field.code.names) {
     qt.sub.df <- data.frame(qt.sub, stringsAsFactors = FALSE)
 
     ## convert into long format:
-    qt.t <- local({
-      p <- data.frame(response = t(qt.sub.df), stringsAsFactors = FALSE)
-      p[["code"]] <- rownames(p)
-      rownames(p) <- NULL
-      p[c("code", "response")]
-    })
+    qt.t <- data.frame(code = names(qt.sub), response = unname(unlist(qt.sub)))
 
-    ## also add those names which should be apparent at all times:
-    fix.names <- c("Month", "@id")
-    ## a note: some names contain Spanish ó (U+00F3) don't know why...
+    # the query result always includes the record identifier:
+    fix.names <- list(recordId = "@id")
+    # relative names are (generally) fields in a parent form:
     relative.names <- list(
-      partnerName = "Partner\\.label",
+      userName = "Parent\\.\\w*User\\.Name$",
+      partnerName = "Partner\\.label|Parent\\.Socio\\.Name$",
       cantonName = "Cant.n\\.name",
       cantonParentName = "Cant.n\\.parent\\.name"
     )
-    found.rel.names <- sapply(base::as.character(relative.names), function(x) {
-      names(qt)[grepl(pattern = x, names(qt), ignore.case = TRUE)]
-    }, USE.NAMES = FALSE)
-    req.names <- unlist(c(fix.names, found.rel.names))
+    all.nms <- c(fix.names, relative.names, common.names)
+    extract <- lapply(all.nms, function(pattern) {
+      i <- grep(pattern, names(qt), ignore.case = TRUE)
+      if (length(i) == 0L) return(NA_character_)
+      if (length(i) == 1L) return(qt[[i]])
+      if (length(i) > 1L) return(qt[[i[1]]])
+    })
 
-    res <- cbind(data.frame(qt[req.names], stringsAsFactors = FALSE), qt.t)
+    res <- cbind(data.frame(extract, stringsAsFactors = FALSE), qt.t)
 
     ## rename columns:
-    colnames(res)[which(colnames(res) == "X.id")] <- "recordId"
-    for (ni in seq_along(relative.names)) {
-      colnames(res)[grep(base::as.character(found.rel.names)[ni], colnames(res))] <- names(relative.names)[ni]
-    }
+    #colnames(res)[which(colnames(res) == "X.id")] <- "recordId"
+    #for (ni in seq_along(relative.names)) {
+    #  colnames(res)[grep(base::as.character(found.rel.names)[ni], colnames(res))] <- names(relative.names)[ni]
+    #}
     ## reorder columns:
     first.cols <- c("recordId", "Month")
     res <- res[, c(first.cols, setdiff(names(res), first.cols))]
@@ -178,11 +203,11 @@ make_question_response_tbl <- function(formId) {
   form.schema <- getFormSchema(formId)
 
   # form schema as data.frame:
-  fields <- flatten_form_schema(form.schema)
+  fields <- flatten_form_schema(form.schema, coded.only = FALSE)
 
   fields.form.ids <- unique(fields$formId)
 
-  field.questions <- fields[fields$formId == formId, ]
+  field.questions <- fields[fields$formId == formId,]
   field.responses <- get_query_element(formId, field.questions$code)
 
   if (is.null(field.responses)) {

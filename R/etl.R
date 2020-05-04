@@ -6,14 +6,14 @@
 source(file.path("R", "global-header.R"))
 source(file.path("R", "etl-methods.R"))
 
-## 'ECUADOR_MONITOREO' database:
-database.id <- "d0000010297"
+## 'Ecuador_Monitoreo_2020' database:
+database.id <- "ck5wize8z4"
 
 db.resources <- database_resources(database.id)
 
 ## exclude FOLDER and P.IDs (partner) in order to select FORM and SUB_FORM:
 form.ids <- subset(db.resources,
-                   type != "FOLDER" & visibility != "REFERENCE",
+                   type == "SUB_FORM" & visibility != "REFERENCE",
                    "id", drop = TRUE)
 
 all.form.tbl <- do.call(rbind, lapply(form.ids, function(x) {
@@ -34,7 +34,7 @@ all <- merge(all, unique(db.resources[c("databaseName", "databaseId")]), by.x = 
 
 #allUs <- merge(all, reportingUsersPerRecord, by = c("id", "recordId"))
 allUs <- all
-allUs$reportingUsers <- NA
+#allUs$reportingUsers <- NA
 
 
 ## rename canton names based on this
@@ -65,9 +65,12 @@ cols <- list(
 for (i in seq_along(cols)) {
   colnames(allUs)[colnames(allUs) == cols[[i]]] <- names(cols)[i]
 }
-allUs <- allUs[names(cols)]
 
-write.csv(allUs, file = "export.csv")
+# keep only records where the response is not missing:
+allUs <- allUs[!is.na(allUs$response),]
+
+OUTFILE <- paste(Sys.Date(), "export.csv", sep = "-")
+write.csv(allUs, file = OUTFILE, row.names = FALSE)
 
 ## Writing data to disk
 ## Use JSON format bcs CSV isn't very suitable for storing textual data (e.g.
