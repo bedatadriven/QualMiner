@@ -101,7 +101,8 @@ get_query_element <- function(formId, field.code.names) {
   stopifnot(is.character(formId))
   stopifnot(is.character(field.code.names))
 
-  queryTable <- activityinfo:::getResource(paste("form", formId, "query/rows", sep = "/"))
+  queryTable <- activityinfo:::getResource(path = paste("form", formId, "query/rows", sep = "/"),
+                                           queryParams = list("_truncate" = "false"))
 
   if (length(queryTable) > 0) {
     cat("getting query table: \033[1m", formId, "\033[0m\n")
@@ -132,8 +133,7 @@ get_query_element <- function(formId, field.code.names) {
       COVID = "\\w*COVID$",
       Implementation = "\\w*Impl$",
       Meta = "\\w*Meta$",
-      Modality = "\\w*Mod$",
-      Comment = "\\w*FREE_TEXT$|\\w*TEXTO_LIBRE$"
+      Modality = "\\w*Mod$"
     )
     found.common.codes <- sapply(common.names, function(x) {
       grep(pattern = x, field.code.names, ignore.case = TRUE, value = TRUE)
