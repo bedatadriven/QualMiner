@@ -129,12 +129,14 @@ partners_raw <- form.table %>%
 ## merge duplicate partner names:
 partners <- partners_raw %>% 
   mutate(subPartnerName = refinr::key_collision_merge(subPartnerName))
+```
 
+```{r eval = FALSE}
 ## (test):
 uniq.subpartners <- unique(partners_raw$subPartnerName)
 uniq.collided.subpartners <- unique(refinr::key_collision_merge(partners_raw$subPartnerName))
-stopifnot(identical(length(setdiff(uniq.subpartners, uniq.collided.subpartners)), 1L))
-## (test2):
+message("Duplicate partner names removed: ", paste(setdiff(uniq.subpartners, uniq.collided.subpartners), collapse = ", "))
+## (test):
 partners_raw[partners$subPartnerName != partners_raw$subPartnerName, ]
 ```
 

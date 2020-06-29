@@ -34,8 +34,7 @@ all <- merge(all, unique(db.resources[c("databaseName", "databaseId")]), by.x = 
 
 #allUs <- merge(all, reportingUsersPerRecord, by = c("id", "recordId"))
 allUs <- all
-allUs$reportingUsers <- NA
-
+allUs$reportingUsers <- 0 # cannot set to 'NA' as jsonlite::toJSON() will then ignore this column
 
 ## rename canton names based on this
 ## https://en.wikipedia.org/wiki/Provinces_of_Ecuador
