@@ -13,6 +13,7 @@ library(shinyWidgets)
 library(tidyverse)
 library("tidytext")
 library(DT)
+source("R/etl-methods.R")
 
 database.id <- "c7qgckzkykaan9v5"
 
